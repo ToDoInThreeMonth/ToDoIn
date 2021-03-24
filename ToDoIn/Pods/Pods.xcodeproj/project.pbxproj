@@ -69,7 +69,7 @@
 		361EE39606F77A62E58D3A8534B4F6D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		3EE65CBB48DE93C146B28DDF713CD557 /* Layoutable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Layoutable.swift; path = Sources/Layoutable.swift; sourceTree = "<group>"; };
 		4210121FA8D3AE8DF311EE7342C413FB /* Pods-ToDoIn-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ToDoIn-dummy.m"; sourceTree = "<group>"; };
-		49A1B30EADC8BCAF734D81E271752CDD /* PinLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PinLayout.framework; path = PinLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49A1B30EADC8BCAF734D81E271752CDD /* PinLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PinLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A534676424B4F8ED44D5391CA0E9C9A /* Types+Description.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Types+Description.swift"; path = "Sources/Types+Description.swift"; sourceTree = "<group>"; };
 		4BE8274350B410836805A57F18E5D233 /* Layoutable+PinLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Layoutable+PinLayout.swift"; path = "Sources/Layoutable+PinLayout.swift"; sourceTree = "<group>"; };
 		4D98B0B0451086AE1297E9DD3C11DF12 /* PinLayout+Size.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PinLayout+Size.swift"; path = "Sources/PinLayout+Size.swift"; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		8B01979346FFC2B92D3A36FEB842941B /* Pods-ToDoIn-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ToDoIn-frameworks.sh"; sourceTree = "<group>"; };
 		975A4EC7040590DE6F6C62E4B9088896 /* Pods-ToDoIn-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ToDoIn-Info.plist"; sourceTree = "<group>"; };
 		99397D0E94B4EE7F8A29B87E47961585 /* Pods-ToDoIn.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ToDoIn.modulemap"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E3A805117A3073DDC10DB477119DD1A /* Filters.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Filters.swift; path = Sources/Filters.swift; sourceTree = "<group>"; };
 		A670B32B3B11BCE8E740D4510AE95154 /* SizeCalculable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SizeCalculable.swift; path = Sources/SizeCalculable.swift; sourceTree = "<group>"; };
 		A7908928579CCAA8A5BEF3BB226DC5A3 /* PinLayout+WrapContent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PinLayout+WrapContent.swift"; path = "Sources/PinLayout+WrapContent.swift"; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		D7371494BBAE91C3AA31EC8D28EFA692 /* PinLayoutObjCImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PinLayoutObjCImpl.swift; path = Sources/ObjectiveC/PinLayoutObjCImpl.swift; sourceTree = "<group>"; };
 		D8E750C09B84546ADA7EABE76BCC6AFD /* PinLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PinLayout-prefix.pch"; sourceTree = "<group>"; };
 		DD436B8653657F4C7A78274919EC67D1 /* PinLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PinLayout.release.xcconfig; sourceTree = "<group>"; };
-		E4C34C10BA90781BDC63169EFFAEA5B0 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ToDoIn.framework; path = "Pods-ToDoIn.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4C34C10BA90781BDC63169EFFAEA5B0 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E531F78F77BC364340A445E4786A0700 /* PinLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PinLayout.swift; path = Sources/PinLayout.swift; sourceTree = "<group>"; };
 		EF6BA9FA48CAEB3060D8CEE53821B4EC /* Percent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Percent.swift; path = Sources/Impl/Percent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -243,7 +243,6 @@
 				0E624598C4BA02A9F37CCD091D95709C /* UIView+PinLayout.swift */,
 				BB71DCF49E8B62C29B082A263DA44C18 /* Support Files */,
 			);
-			name = PinLayout;
 			path = PinLayout;
 			sourceTree = "<group>";
 		};
@@ -313,7 +312,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 9.3";
@@ -487,7 +486,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/PinLayout/PinLayout-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/PinLayout/PinLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -558,7 +557,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/PinLayout/PinLayout-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/PinLayout/PinLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
