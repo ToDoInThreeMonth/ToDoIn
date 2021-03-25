@@ -1,10 +1,15 @@
 import UIKit
 
-protocol MainCoordinator {
+protocol MainCoordinator: class {
 // Раскомментировать когда появятся стеки UINavigationController
 //    var childCoordinator: [ChildCoordinator] { get set }
     var tabBarController: UITabBarController { get set }
     var viewController: UIViewController { get set }
+    func start()
+}
+
+protocol ChildCoordinator: class {
+    var navigationController: UINavigationController { get set }
     func start()
 }
 

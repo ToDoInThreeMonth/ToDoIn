@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    weak var coordinator: MainChildCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
