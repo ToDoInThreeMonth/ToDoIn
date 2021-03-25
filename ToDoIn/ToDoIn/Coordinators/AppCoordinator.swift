@@ -1,10 +1,8 @@
 import UIKit
 
 protocol MainCoordinator: class {
-// Раскомментировать когда появятся стеки UINavigationController
-//    var childCoordinator: [ChildCoordinator] { get set }
+    var childCoordinators: [ChildCoordinator] { get set }
     var tabBarController: UITabBarController { get set }
-    var viewController: UIViewController { get set }
     func start()
 }
 
@@ -16,23 +14,21 @@ protocol ChildCoordinator: class {
 // Основной координатор - сборщик проекта, отвечает за UITabBarController
 class AppCoordinator: MainCoordinator {
     var tabBarController: UITabBarController
-    var viewController: UIViewController
-//    var childCoordinators: [ChildCoordinator]
+    var childCoordinators: [ChildCoordinator]
     
-// При появлении стеков UINavigationController заменить viewController на childCoordinators: [ChildCoordinator]
-    init(tabBarController: UITabBarController, viewController: UIViewController) {
+    init(tabBarController: UITabBarController, childCoordinators: [ChildCoordinator] = []) {
         self.tabBarController = tabBarController
-        self.viewController = viewController
+        self.childCoordinators = childCoordinators
     }
     
+// Запускает основной координатор (отображает UITabBarController с его viewController'ами)
     func start() {
-        tabBarController.viewControllers = [viewController]
+        var navigationControllers = [UINavigationController]()
+        for coordinator in childCoordinators {
+            navigationControllers.append(coordinator.navigationController)
+            coordinator.start()
+        }
         
-// Раскомментировать когда появятся стеки UINavigationController
-//        var navigationControllers = [UINavigationController]()
-//        for coordinator in childCoordinators {
-//            navigationControllers.append(coordinator.navigationController)
-//            coordinator.start()
-//        }
+        tabBarController.viewControllers = navigationControllers
     }
 }

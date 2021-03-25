@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        appCoordinator = AppCoordinator(tabBarController: UITabBarController(), viewController: ViewController())
+        let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController())
+        
+        appCoordinator = AppCoordinator(tabBarController: UITabBarController(), childCoordinators: [mainFlowCoordinator])
         appCoordinator?.start()
         
         window = UIWindow(frame: UIScreen.main.bounds)

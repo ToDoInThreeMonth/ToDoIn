@@ -13,12 +13,15 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func start() {
-        let controller = ViewController()
-        controller.coordinator = self
-//        Пример настройки tabBar'a
-//        controller.tabBarItem = TabBarModel.items[.profile]
+        let viewController = ViewController()
+        viewController.coordinator = self
+        // Пример настройки tabBar'a
+        viewController.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "checkmark"), selectedImage: UIImage(systemName: "checkmark"))
+        // Пример настройки viewController
+        viewController.view.backgroundColor = .white
+        viewController.title = "MainViewController"
         
-        navigationController.pushViewController(controller, animated: false)
+        navigationController.pushViewController(viewController, animated: false)
     }
     
 //  Пока заглушки. Эти методы для вызова экранов добавления секции и задачи
