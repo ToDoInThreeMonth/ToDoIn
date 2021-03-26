@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController())
         
-        appCoordinator = AppCoordinator(tabBarController: UITabBarController(), childCoordinators: [mainFlowCoordinator])
+        let acountFlowCoordinator = AccountFlowCoordinator(navigationController: UINavigationController())
+        
+        let settingsFlowCoordinator = SettingsFlowCoordinator(navigationController: UINavigationController())
+        
+        appCoordinator = AppCoordinator(tabBarController: CustomTabBarController(), childCoordinators: [mainFlowCoordinator, acountFlowCoordinator, settingsFlowCoordinator])
         appCoordinator?.start()
         
         window = UIWindow(frame: UIScreen.main.bounds)

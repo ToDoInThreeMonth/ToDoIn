@@ -2,7 +2,7 @@ import UIKit
 
 protocol MainCoordinator: class {
     var childCoordinators: [ChildCoordinator] { get set }
-    var tabBarController: UITabBarController { get set }
+    var tabBarController: CustomTabBarController { get set }
     func start()
 }
 
@@ -13,10 +13,10 @@ protocol ChildCoordinator: class {
 
 // Основной координатор - сборщик проекта, отвечает за UITabBarController
 class AppCoordinator: MainCoordinator {
-    var tabBarController: UITabBarController
+    var tabBarController: CustomTabBarController
     var childCoordinators: [ChildCoordinator]
     
-    init(tabBarController: UITabBarController, childCoordinators: [ChildCoordinator] = []) {
+    init(tabBarController: CustomTabBarController, childCoordinators: [ChildCoordinator] = []) {
         self.tabBarController = tabBarController
         self.childCoordinators = childCoordinators
     }
