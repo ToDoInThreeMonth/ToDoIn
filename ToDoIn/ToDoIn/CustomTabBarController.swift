@@ -17,7 +17,6 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
 //
     private let buttonView = UIView()
     private let button = UIButton()
-    private let vectorImage = UIImageView(image: UIImage(named: "vector"))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +32,13 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         self.delegate = self
         self.selectedIndex = 0
         
-        // Кнопка аккаунта
-        button.setBackgroundImage(UIImage(named: "account"), for: .normal)
+        // Кнопка главная
+        button.setBackgroundImage(UIImage(named: "main"), for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.1
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         
-        buttonView.addSubview(button)
-        buttonView.addSubview(vectorImage)
-        self.tabBar.addSubview(buttonView)
+        self.tabBar.addSubview(button)
         
         button.addTarget(self, action: #selector(accountButtonAction), for: .touchUpInside)
         
@@ -50,11 +47,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     
     override func viewDidLayoutSubviews() {
-//        let tabBarHeight = tabBar.frame.height
-        buttonView.pin.bottom(view.pin.safeArea.bottom).hCenter()
-        button.pin.bottomCenter(10).size(CGSize(width: 60, height: 60))
-        vectorImage.pin.bottomCenter()
-//        vectorImage.pin.bottom(view.pin.safeArea.bottom).hCenter()
+        button.pin.bottomCenter(view.pin.safeArea.bottom).size(CGSize(width: 90, height: 90))
     }
     
 

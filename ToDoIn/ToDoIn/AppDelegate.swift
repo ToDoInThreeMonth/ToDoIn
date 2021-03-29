@@ -15,13 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), imageName: "main", title: "Главная")
+        let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), imageName: "", title: "Главная")
         
-        let acountFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), imageName: "", title: "Аккаунт")
+        let acountFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), imageName: "account", title: "Аккаунт")
         
         let settingsFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), imageName: "settings", title: "Настройки")
         
-        appCoordinator = AppCoordinator(tabBarController: CustomTabBarController(), childCoordinators: [mainFlowCoordinator, acountFlowCoordinator, settingsFlowCoordinator])
+        appCoordinator = AppCoordinator(tabBarController: CustomTabBarController(), childCoordinators: [acountFlowCoordinator, mainFlowCoordinator, settingsFlowCoordinator])
         appCoordinator?.start()
         
         window = UIWindow(frame: UIScreen.main.bounds)

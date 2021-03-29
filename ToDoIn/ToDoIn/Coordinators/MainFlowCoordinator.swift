@@ -21,69 +21,30 @@ class MainFlowCoordinator: MainChildCoordinator {
         let viewController = ViewController()
         viewController.coordinator = self
         var tabBarImage: UIImage?
-        if imageName == "" {
-            tabBarImage = nil
-        } else {
-            tabBarImage = UIImage(named: imageName)
-        }
+        tabBarImage = (imageName == "") ? nil : UIImage(named: imageName)
+        
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
-        // Пример настройки viewController
+        
+        // Пример настройки viewController (title и barButtonItem)
         viewController.view.backgroundColor = .white
         viewController.title = title
+        if imageName == "" {
+            let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(showGroups))
+            viewController.navigationItem.leftBarButtonItem = leftBarButtonItem
+        }
         
         navigationController.pushViewController(viewController, animated: false)
     }
     
+    
 //  Пока заглушки. Эти методы для вызова экранов добавления секции и задачи
     func showAddSection() {}
     func showAddTask() {}
+    
+    
+// Селектор для View с комнатами
+    @objc func showGroups() {
+        print(#function)
+    }
 }
-
-//class AccountFlowCoordinator: MainChildCoordinator {
-//    var navigationController: UINavigationController
-//
-//    init(navigationController: UINavigationController) {
-//        self.navigationController = navigationController
-//    }
-//
-//    func start() {
-//        let viewController = ViewController()
-//        viewController.coordinator = self
-//        // Пример настройки tabBar'a
-//        viewController.tabBarItem = UITabBarItem(title: "Account", image: nil, selectedImage: nil)
-//        // Пример настройки viewController
-//        viewController.view.backgroundColor = .white
-//        viewController.title = "Аккаунт"
-//
-//        navigationController.pushViewController(viewController, animated: false)
-//    }
-//
-////  Пока заглушки. Эти методы для вызова экранов добавления секции и задачи
-//    func showAddSection() {}
-//    func showAddTask() {}
-//}
-//
-//class SettingsFlowCoordinator: MainChildCoordinator {
-//    var navigationController: UINavigationController
-//
-//    init(navigationController: UINavigationController) {
-//        self.navigationController = navigationController
-//    }
-//
-//    func start() {
-//        let viewController = ViewController()
-//        viewController.coordinator = self
-//        // Пример настройки tabBar'a
-//        viewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal))
-//        // Пример настройки viewController
-//        viewController.view.backgroundColor = .white
-//        viewController.title = "Настройки"
-//
-//        navigationController.pushViewController(viewController, animated: false)
-//    }
-//
-////  Пока заглушки. Эти методы для вызова экранов добавления секции и задачи
-//    func showAddSection() {}
-//    func showAddTask() {}
-//}
