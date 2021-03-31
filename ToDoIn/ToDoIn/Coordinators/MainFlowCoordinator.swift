@@ -13,12 +13,12 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func start() {
-        let viewController = ViewController()
+        let viewController = AccountViewController()
         viewController.coordinator = self
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "checkmark"), selectedImage: UIImage(systemName: "checkmark"))
         // Пример настройки viewController
-        viewController.view.backgroundColor = .white
+//        viewController.view.backgroundColor = .white
         viewController.title = "MainViewController"
         
         navigationController.pushViewController(viewController, animated: false)

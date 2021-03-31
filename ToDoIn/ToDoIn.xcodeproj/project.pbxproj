@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1561C56C2612571B0098F8DB /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1561C56B2612571B0098F8DB /* UIView + extension.swift */; };
+		1561C570261271800098F8DB /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1561C56F261271800098F8DB /* AccountTableViewCell.swift */; };
+		157D16D42613D16E00A2D372 /* AccountHeaderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D16D32613D16E00A2D372 /* AccountHeaderTableView.swift */; };
+		157D16D92613D6C300A2D372 /* AccountUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D16D82613D6C300A2D372 /* AccountUserView.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
+		15C4171B26124C4E00773165 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C4171A26124C4E00773165 /* AccountViewController.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
 		4313B440260BBFA500E6381A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* ViewController.swift */; };
 		4313B445260BBFA800E6381A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4313B444260BBFA800E6381A /* Assets.xcassets */; };
@@ -17,8 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1561C56B2612571B0098F8DB /* UIView + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
+		1561C56F261271800098F8DB /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
+		157D16D32613D16E00A2D372 /* AccountHeaderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderTableView.swift; sourceTree = "<group>"; };
+		157D16D82613D6C300A2D372 /* AccountUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUserView.swift; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		15C4171A26124C4E00773165 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4313B43B260BBFA500E6381A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +52,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1561C56A261257060098F8DB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1561C56B2612571B0098F8DB /* UIView + extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		157D16D62613D5B800A2D372 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1561C56F261271800098F8DB /* AccountTableViewCell.swift */,
+				157D16D32613D16E00A2D372 /* AccountHeaderTableView.swift */,
+				157D16D82613D6C300A2D372 /* AccountUserView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		157D16D72613D5C600A2D372 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				15C4171A26124C4E00773165 /* AccountViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		15B4E1E2260C8CEB00599AF4 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -49,6 +85,15 @@
 				15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		15C4172026124FA600773165 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				157D16D72613D5C600A2D372 /* Controller */,
+				157D16D62613D5B800A2D372 /* View */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		3F81D43B9AFA4F14842C4978 /* Frameworks */ = {
@@ -80,6 +125,8 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				1561C56A261257060098F8DB /* Extensions */,
+				15C4172026124FA600773165 /* Account */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
@@ -212,8 +259,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157D16D42613D16E00A2D372 /* AccountHeaderTableView.swift in Sources */,
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
+				157D16D92613D6C300A2D372 /* AccountUserView.swift in Sources */,
+				15C4171B26124C4E00773165 /* AccountViewController.swift in Sources */,
+				1561C56C2612571B0098F8DB /* UIView + extension.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
+				1561C570261271800098F8DB /* AccountTableViewCell.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 			);
