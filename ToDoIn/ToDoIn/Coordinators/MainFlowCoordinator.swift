@@ -29,10 +29,6 @@ class MainFlowCoordinator: MainChildCoordinator {
         // Пример настройки viewController (title и barButtonItem)
         viewController.view.backgroundColor = .white
         viewController.title = title
-        if imageName == "" {
-            let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(showGroups))
-            viewController.navigationItem.leftBarButtonItem = leftBarButtonItem
-        }
         
         navigationController.pushViewController(viewController, animated: false)
     }
@@ -41,10 +37,4 @@ class MainFlowCoordinator: MainChildCoordinator {
 //  Пока заглушки. Эти методы для вызова экранов добавления секции и задачи
     func showAddSection() {}
     func showAddTask() {}
-    
-    
-// Селектор для View с комнатами
-    @objc func showGroups() {
-        print(#function)
-    }
 }
