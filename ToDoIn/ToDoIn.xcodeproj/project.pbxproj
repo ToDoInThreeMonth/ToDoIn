@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		154ED859261536A80044531E /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154ED858261536A80044531E /* SearchTextField.swift */; };
+		154ED85D26153CBB0044531E /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154ED85C26153CBB0044531E /* FriendModel.swift */; };
 		1561C56C2612571B0098F8DB /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1561C56B2612571B0098F8DB /* UIView + extension.swift */; };
 		1561C570261271800098F8DB /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1561C56F261271800098F8DB /* AccountTableViewCell.swift */; };
-		157D16D42613D16E00A2D372 /* AccountHeaderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D16D32613D16E00A2D372 /* AccountHeaderTableView.swift */; };
-		157D16D92613D6C300A2D372 /* AccountUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D16D82613D6C300A2D372 /* AccountUserView.swift */; };
+		1567A36826169CF70024AB2F /* UIViewController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1567A36726169CF70024AB2F /* UIViewController + extension.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		15C4171B26124C4E00773165 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C4171A26124C4E00773165 /* AccountViewController.swift */; };
@@ -22,10 +23,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		154ED858261536A80044531E /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		154ED85C26153CBB0044531E /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
 		1561C56B2612571B0098F8DB /* UIView + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
 		1561C56F261271800098F8DB /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
-		157D16D32613D16E00A2D372 /* AccountHeaderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderTableView.swift; sourceTree = "<group>"; };
-		157D16D82613D6C300A2D372 /* AccountUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUserView.swift; sourceTree = "<group>"; };
+		1567A36726169CF70024AB2F /* UIViewController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + extension.swift"; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		15C4171A26124C4E00773165 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -52,10 +54,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		154ED85B26153CA90044531E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				154ED85C26153CBB0044531E /* FriendModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1561C56A261257060098F8DB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				1561C56B2612571B0098F8DB /* UIView + extension.swift */,
+				1567A36726169CF70024AB2F /* UIViewController + extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -64,8 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				1561C56F261271800098F8DB /* AccountTableViewCell.swift */,
-				157D16D32613D16E00A2D372 /* AccountHeaderTableView.swift */,
-				157D16D82613D6C300A2D372 /* AccountUserView.swift */,
+				154ED858261536A80044531E /* SearchTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -90,6 +100,7 @@
 		15C4172026124FA600773165 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				154ED85B26153CA90044531E /* Model */,
 				157D16D72613D5C600A2D372 /* Controller */,
 				157D16D62613D5B800A2D372 /* View */,
 			);
@@ -259,11 +270,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				157D16D42613D16E00A2D372 /* AccountHeaderTableView.swift in Sources */,
+				154ED85D26153CBB0044531E /* FriendModel.swift in Sources */,
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
-				157D16D92613D6C300A2D372 /* AccountUserView.swift in Sources */,
 				15C4171B26124C4E00773165 /* AccountViewController.swift in Sources */,
 				1561C56C2612571B0098F8DB /* UIView + extension.swift in Sources */,
+				1567A36826169CF70024AB2F /* UIViewController + extension.swift in Sources */,
+				154ED859261536A80044531E /* SearchTextField.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				1561C570261271800098F8DB /* AccountTableViewCell.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
@@ -408,12 +420,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C9Z7P63FZX;
 				INFOPLIST_FILE = ToDoIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -427,12 +440,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C9Z7P63FZX;
 				INFOPLIST_FILE = ToDoIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
