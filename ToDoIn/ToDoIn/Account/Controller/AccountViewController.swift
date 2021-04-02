@@ -51,7 +51,7 @@ class AccountViewController: UIViewController {
     private lazy var searchTextField: UITextField = CustomSearchTextField()
     
     private lazy var friendsTableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.clear
@@ -64,8 +64,6 @@ class AccountViewController: UIViewController {
     private lazy var exitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 25)
         button.setTitle("Выйти", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
@@ -77,8 +75,6 @@ class AccountViewController: UIViewController {
     private lazy var notificationButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "OnNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 25)
         button.setTitle("Уведомления", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 8)
         button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
@@ -111,7 +107,6 @@ class AccountViewController: UIViewController {
                          exitButton,
                          notificationButton)
         userDownView.addSubviews(userUpView, userImageView)
-        
     }
 
     private func setupLayouts() {
@@ -199,8 +194,11 @@ class AccountViewController: UIViewController {
     }
     
     private func setupInsets() {
-//        friendsTableView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         friendsTableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: friendsTableView.bounds.width - 8)
+//        [exitButton, notificationButton].forEach{
+//            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+//            $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 25)
+//        }
     }
     
     @objc
@@ -227,24 +225,9 @@ extension AccountViewController: UITableViewDataSource {
         cell.friend = FriendModel.friends[indexPath.row]
         return cell
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-//        scrollView.coordinateSpace.bounds
-    }
 }
 
 extension AccountViewController: UITableViewDelegate {
 
-}
-
-
-private final class ActionButton: UIButton {
-    init(image: UIImage) {
-        super.init(frame: .zero)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

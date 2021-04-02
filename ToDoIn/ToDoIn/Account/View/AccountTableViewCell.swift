@@ -17,12 +17,13 @@ class AccountTableViewCell: UITableViewCell {
     }()
     private lazy var friendView: UIView = {
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
     private lazy var friendName: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1)
         label.text = "Kamnev Vladimir Sergeevich Djan"
         return label
@@ -30,13 +31,20 @@ class AccountTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear.withAlphaComponent(0)
         setupViews()
-        setupLayouts()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        contentView.pin.width(size.width)
+        setupLayouts()
+        configureViews()
+        return CGSize(width: contentView.frame.width, height: friendView.frame.height + 10)
     }
     
     private func setupViews() {
@@ -46,11 +54,10 @@ class AccountTableViewCell: UITableViewCell {
     }
     private func setupLayouts() {
         friendView.pin
-            .size(50)
             .top()
-            .bottom()
-            .start()
-            .marginStart(20)
+            .bottom(5)
+            .start(20)
+            .size(45)
         friendAvatar.pin
             .all()
             .margin(3)
@@ -60,14 +67,16 @@ class AccountTableViewCell: UITableViewCell {
             .marginStart(10)
             .vCenter(to: friendView.edge.vCenter)
             .sizeToFit()
-        
-        friendView.makeRound()
-        friendAvatar.makeRound()
-        
-        friendView.insertBackLayer()
-        friendView.addOneMoreShadow(color: .black, alpha: 0.2, x: 1, y: 1, blur: 2, cornerRadius: friendView.layer.cornerRadius)
-        friendView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 2, cornerRadius: friendView.layer.cornerRadius)
     }
     
-    
+    private func configureViews() {
+        if friendView.layer.cornerRadius == 0 {
+            friendView.makeRound()
+            friendAvatar.makeRound()
+
+            friendView.insertBackLayer()
+            friendView.addOneMoreShadow(color: .black, alpha: 0.2, x: 1, y: 1, blur: 2, cornerRadius: friendView.layer.cornerRadius)
+            friendView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 2, cornerRadius: friendView.layer.cornerRadius)
+        }
+    }
 }
