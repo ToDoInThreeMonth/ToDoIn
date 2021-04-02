@@ -16,6 +16,9 @@
 		4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322866D260E04A20096C905 /* CustomTabBarController.swift */; };
 		43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228670260E08FA0096C905 /* CustomTabBar.swift */; };
 		43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228673260E33980096C905 /* UIColor+extenstion.swift */; };
+		43C4FAA6261733AA0019816F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA5261733AA0019816F /* Group.swift */; };
+		43C4FAA9261737C20019816F /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupCell.swift */; };
+		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
 		43DDECDE2614DDF6000FFC78 /* GroupsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDECDD2614DDF6000FFC78 /* GroupsFlowCoordinator.swift */; };
 		43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDECE12614DE4B000FFC78 /* GroupsController.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
@@ -34,6 +37,9 @@
 		4322866D260E04A20096C905 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		43228670260E08FA0096C905 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		43228673260E33980096C905 /* UIColor+extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extenstion.swift"; sourceTree = "<group>"; };
+		43C4FAA5261733AA0019816F /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		43C4FAA8261737C20019816F /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
+		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		43DDECDD2614DDF6000FFC78 /* GroupsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFlowCoordinator.swift; sourceTree = "<group>"; };
 		43DDECE12614DE4B000FFC78 /* GroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsController.swift; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +97,7 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				43C4FAA42617339C0019816F /* Model */,
 				43DDECE02614DE2F000FFC78 /* Views */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
@@ -104,11 +111,21 @@
 			path = ToDoIn;
 			sourceTree = "<group>";
 		};
+		43C4FAA42617339C0019816F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				43C4FAA5261733AA0019816F /* Group.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		43DDECE02614DE2F000FFC78 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
 				43DDECE12614DE4B000FFC78 /* GroupsController.swift */,
+				43C4FAA8261737C20019816F /* GroupCell.swift */,
+				43C4FAAB2617555C0019816F /* GroupController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,7 +254,10 @@
 			files = (
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
+				43C4FAA9261737C20019816F /* GroupCell.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
+				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
+				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
 				43DDECDE2614DDF6000FFC78 /* GroupsFlowCoordinator.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
