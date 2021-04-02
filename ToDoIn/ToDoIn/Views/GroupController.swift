@@ -10,8 +10,17 @@ import PinLayout
 
 class GroupController: UIViewController {
     
-    var label = UILabel()
-
+    private let label = UILabel()
+    
+    init(group: Group) {
+        label.text = group.name
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +32,7 @@ class GroupController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        label.pin.center()
+        label.pin.center().sizeToFit()
     }
 
 }

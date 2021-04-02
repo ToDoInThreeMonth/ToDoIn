@@ -7,9 +7,10 @@
 
 import UIKit
 
-class GroupCell: UITableViewCell {
+class GroupCell: UICollectionViewCell {
     
     // MARK: - Properties
+    static let identifier = "GroupCell"
     
     var groupView = UIView()
     var groupLabel = UILabel()
@@ -17,16 +18,26 @@ class GroupCell: UITableViewCell {
 
     // MARK: - Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        [groupLabel, groupImageView].forEach { groupView.addSubview($0)}
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        [groupLabel, groupImageView].forEach {groupView.addSubview($0)}
         addSubview(groupView)
         
         configureGroupView()
         configureGroupLabel()
         configureGroupImageView()
     }
+    
+//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+//        super.init(style: style, reuseIdentifier: reuseIdentifier)
+//
+//        [groupLabel, groupImageView].forEach { groupView.addSubview($0)}
+//        addSubview(groupView)
+//
+//        configureGroupView()
+//        configureGroupLabel()
+//        configureGroupImageView()
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -39,11 +50,11 @@ class GroupCell: UITableViewCell {
         
         groupView.pin
             .horizontally(30)
-            .vertically(20)
+            .vertically(10)
         
         groupImageView.pin
             .left(20).vCenter()
-            .size(50)
+            .size(groupView.frame.height - 20)
         
         groupLabel.pin
             .after(of: groupImageView, aligned: .center)
@@ -57,7 +68,7 @@ class GroupCell: UITableViewCell {
     }
     
     func configureGroupView() {
-        groupView.layer.cornerRadius = 30
+        groupView.layer.cornerRadius = self.frame.height / 2.5
         groupView.backgroundColor = .darkAccentColor
         groupView.layer.shadowOffset = CGSize(width: 0, height: 0)
         groupView.layer.shadowRadius = 10

@@ -12,46 +12,68 @@ class GroupsController: UIViewController {
     
     var groups = [Group(name: "Дача", image: "group"), Group(name: "Шашлыки", image: "group"), Group(name: "Дача", image: "group"), Group(name: "Шашлыки", image: "group")]
     
-    private let tableView = UITableView()
+    
+    weak var collectionView: UICollectionView!
+    
+    override func loadView() {
+            super.loadView()
 
+            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+//            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(collectionView)
+            self.collectionView = collectionView
+        }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
-        // Do any additional setup after loading the view.
+        configureCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
-        tableView.pin.all()
+        collectionView.pin.all()
     }
     
-    func configureTableView() {
-        tableView.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
+    func configureCollectionView() {
+        collectionView.register(GroupCell.self, forCellWithReuseIdentifier: GroupCell.identifier)
         
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+        //        collectionView.separatorStyle = .none
+        collectionView.backgroundColor = .white
         
-        view.addSubview(tableView)
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.collectionView.alwaysBounceVertical = true
         
-        tableView.rowHeight = 110
+        view.addSubview(collectionView)
     }
-
+    
 }
 
+extension GroupsController: UICollectionViewDataSource {
 
-extension GroupsController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
-        cell.backgroundColor = .white
-        cell.tintColor = .white
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
         cell.setUp(group: groups[indexPath.row])
         return cell
     }
-    
+}
+
+extension GroupsController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let groupController = GroupController(group: groups[indexPath.row])
+        navigationController?.pushViewController(groupController, animated: true)
+    }
+}
+
+extension GroupsController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 7)
+    }
 }
