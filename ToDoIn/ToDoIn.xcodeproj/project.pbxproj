@@ -97,8 +97,8 @@
 				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
 				43228670260E08FA0096C905 /* CustomTabBar.swift */,
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
-				43228673260E33980096C905 /* UIColor+extenstion.swift */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
+				43228673260E33980096C905 /* UIColor+extenstion.swift */,
 				4313B449260BBFA800E6381A /* Info.plist */,
 			);
 			path = ToDoIn;
