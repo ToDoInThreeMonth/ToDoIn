@@ -55,6 +55,7 @@ class GroupController: UIViewController {
     
     func configureCollectionView() {
         collectionView.register(TaskCell.self, forCellWithReuseIdentifier: TaskCell.identifier)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         
         //        collectionView.separatorStyle = .none
         collectionView.backgroundColor = .white
@@ -73,17 +74,32 @@ class GroupController: UIViewController {
 // MARK: - Extensions
 
 extension GroupController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return group.owners.count
+    }
 
     // количество ячеек
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return group.tasks.count
+        return group.owners[section].tasks.count
+    }
+    
+    // заголовок секции
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+        sectionHeaderView.setUp(owner: group.owners[indexPath.section].owner)
+        return sectionHeaderView
     }
 
     // дизайн ячейки
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TaskCell.identifier, for: indexPath) as! TaskCell
-        cell.setUp(task: group.tasks[indexPath.row])
+        cell.setUp(task: group.owners[indexPath.section].tasks[indexPath.row])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 200, height: collectionView.bounds.height / 12)
     }
 }
 

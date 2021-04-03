@@ -15,13 +15,12 @@ class GroupsController: UIViewController {
     weak var collectionView: UICollectionView!
     
     override func loadView() {
-            super.loadView()
-
-            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-//            collectionView.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(collectionView)
-            self.collectionView = collectionView
-        }
+        super.loadView()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        //            collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collectionView)
+        self.collectionView = collectionView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +37,6 @@ class GroupsController: UIViewController {
     func configureCollectionView() {
         collectionView.register(GroupCell.self, forCellWithReuseIdentifier: GroupCell.identifier)
         
-        //        collectionView.separatorStyle = .none
         collectionView.backgroundColor = .white
         
         collectionView.delegate = self

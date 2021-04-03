@@ -3,11 +3,36 @@ import Foundation
 class Group {
     var name: String
     var image: String
-    var tasks: [Task]
+    var owners: [Owners]
     
-    init(name: String, image: String, tasks: [Task]) {
+    init(name: String, image: String, owners: [Owners]) {
         self.name = name
         self.image = image
+        self.owners = owners
+    }
+}
+
+class Owners {
+    var owner: String
+    var tasks: [Task]
+    
+    init(owner: String, tasks: [Task]) {
+        self.owner = owner
         self.tasks = tasks
+    }
+}
+
+class Task {
+    var owner: String
+    var name: String
+    var description: String
+    var date: Date
+    var isDone: Bool = false
+    
+    init(owner: String, name: String, description: String, date: Date) {
+        self.owner = owner
+        self.name = name
+        self.description = description
+        self.date = date
     }
 }

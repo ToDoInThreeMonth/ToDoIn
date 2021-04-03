@@ -10,7 +10,7 @@ class TaskCell: UICollectionViewCell {
     var isDoneView = UIView()
     
     
-    private let taskViewPadding: CGFloat = 10
+    private let taskViewPadding: CGFloat = 5
     private let isDoneViewPadding: CGFloat = 5
     
 
