@@ -22,10 +22,20 @@ class CustomTabBar: UITabBar {
         shapeLayer.fillColor = UIColor.darkAccentColor.cgColor
         shapeLayer.lineWidth = 1.0
         
-        shapeLayer.shadowOffset = CGSize(width: 0, height: 0)
-        shapeLayer.shadowRadius = 7
-        shapeLayer.fillColor = UIColor.darkAccentColor.cgColor
-        shapeLayer.shadowOpacity = 0.2
+        shapeLayer.shadowColor = UIColor.white.cgColor
+        shapeLayer.shadowOffset = CGSize(width: 1, height: 1)
+        shapeLayer.shadowRadius = 1
+        shapeLayer.shadowOpacity = 1
+
+        shapeLayer.shadowColor = UIColor.black.cgColor
+        shapeLayer.shadowOffset = CGSize(width: 0, height: -1)
+        shapeLayer.shadowRadius = 2
+        shapeLayer.shadowOpacity = 0.10
+        
+//        shapeLayer.shadowOffset = CGSize(width: 0, height: 0)
+//        shapeLayer.shadowRadius = 7
+//        shapeLayer.fillColor = UIColor.darkAccentColor.cgColor
+//        shapeLayer.shadowOpacity = 0.2
         
         if let oldShapeLayer = self.shapeLayer {
             self.layer.replaceSublayer(oldShapeLayer, with: shapeLayer)
