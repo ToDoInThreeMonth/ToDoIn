@@ -29,15 +29,14 @@ class GroupsController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         collectionView.pin
-            .marginTop(80)
-            .marginHorizontal(20)
             .all()
     }
     
     func configureCollectionView() {
         collectionView.register(GroupCell.self, forCellWithReuseIdentifier: GroupCell.identifier)
+        collectionView.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.identifier)
         
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .lightAccentColor
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -64,6 +63,18 @@ extension GroupsController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
         cell.setUp(group: groups[indexPath.row])
         return cell
+    }
+    
+    // дизайн header'a
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.identifier, for: indexPath) as! HeaderCollectionView
+        header.setUp(label: "")
+        return header
+    }
+    
+    // размер header'a
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 200, height: 15)
     }
 }
 

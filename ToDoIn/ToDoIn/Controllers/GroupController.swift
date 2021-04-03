@@ -48,8 +48,6 @@ class GroupController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         collectionView.pin
-            .marginTop(80)
-            .marginHorizontal(10)
             .all()
     }
     
@@ -58,7 +56,7 @@ class GroupController: UIViewController {
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         
         //        collectionView.separatorStyle = .none
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .lightAccentColor
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -90,6 +88,11 @@ extension GroupController: UICollectionViewDataSource {
         sectionHeaderView.setUp(owner: group.owners[indexPath.section].owner)
         return sectionHeaderView
     }
+    
+    // размер секции
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 200, height: collectionView.bounds.height / 12)
+    }
 
     // дизайн ячейки
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -97,17 +100,13 @@ extension GroupController: UICollectionViewDataSource {
         cell.setUp(task: group.owners[indexPath.section].tasks[indexPath.row])
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 200, height: collectionView.bounds.height / 12)
-    }
 }
 
 extension GroupController: UICollectionViewDelegateFlowLayout {
 
     // размер ячейки в CollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 12)
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 15)
     }
 }
 

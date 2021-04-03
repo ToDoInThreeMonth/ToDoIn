@@ -43,7 +43,7 @@ class GroupCell: UICollectionViewCell {
     
     func setupLayouts() {
         groupView.pin
-            .horizontally(30)
+            .horizontally(50)
             .vertically(groupViewPadding)
         
         groupImageView.pin
@@ -65,7 +65,7 @@ class GroupCell: UICollectionViewCell {
     
     func configureGroupView() {
         groupView.layer.cornerRadius = self.frame.height / 2.6
-        groupView.backgroundColor = .lightAccentColor
+        groupView.backgroundColor = .darkAccentColor
         groupView.insertBackLayer()
         groupView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
         groupView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: groupView.layer.cornerRadius)

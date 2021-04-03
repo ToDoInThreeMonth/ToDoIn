@@ -16,6 +16,7 @@
 		4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322866D260E04A20096C905 /* CustomTabBarController.swift */; };
 		43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228670260E08FA0096C905 /* CustomTabBar.swift */; };
 		43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228673260E33980096C905 /* UIColor+extenstion.swift */; };
+		4346BEBF26189F0A00AE8199 /* HeaderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346BEBE26189F0A00AE8199 /* HeaderCollectionView.swift */; };
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
 		4351797F26184DF5009F898B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* Data.swift */; };
 		4351798226185190009F898B /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskCell.swift */; };
@@ -41,6 +42,7 @@
 		4322866D260E04A20096C905 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		43228670260E08FA0096C905 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		43228673260E33980096C905 /* UIColor+extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extenstion.swift"; sourceTree = "<group>"; };
+		4346BEBE26189F0A00AE8199 /* HeaderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionView.swift; sourceTree = "<group>"; };
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		4351797E26184DF5009F898B /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		4351798126185190009F898B /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				43C4FAA8261737C20019816F /* GroupCell.swift */,
 				4351798126185190009F898B /* TaskCell.swift */,
 				43DA628B261881D00057F063 /* SectionHeaderView.swift */,
+				4346BEBE26189F0A00AE8199 /* HeaderCollectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
 				43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */,
 				4351798226185190009F898B /* TaskCell.swift in Sources */,
+				4346BEBF26189F0A00AE8199 /* HeaderCollectionView.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 				43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */,
 			);
