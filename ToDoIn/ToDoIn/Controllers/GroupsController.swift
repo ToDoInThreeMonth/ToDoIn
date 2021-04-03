@@ -10,8 +10,7 @@ import PinLayout
 
 class GroupsController: UIViewController {
     
-    var groups = [Group(name: "Дача", image: "group"), Group(name: "Шашлыки", image: "group"), Group(name: "Дача", image: "group"), Group(name: "Шашлыки", image: "group")]
-    
+    var groups = Data.groups
     
     weak var collectionView: UICollectionView!
     
@@ -30,7 +29,10 @@ class GroupsController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        collectionView.pin.margin(20).all()
+        collectionView.pin
+            .marginTop(80)
+            .marginHorizontal(20)
+            .all()
     }
     
     func configureCollectionView() {
@@ -49,12 +51,17 @@ class GroupsController: UIViewController {
     
 }
 
+
+// MARK: - Extensions
+
 extension GroupsController: UICollectionViewDataSource {
 
+    // количество ячеек
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
     }
 
+    // дизайн ячейки
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
         cell.setUp(group: groups[indexPath.row])
@@ -62,17 +69,19 @@ extension GroupsController: UICollectionViewDataSource {
     }
 }
 
-extension GroupsController: UICollectionViewDelegate {
+extension GroupsController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let groupController = GroupController(group: groups[indexPath.row])
-        navigationController?.pushViewController(groupController, animated: true)
+    // размер ячейки в CollectionView
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 10)
     }
 }
 
-extension GroupsController: UICollectionViewDelegateFlowLayout {
+extension GroupsController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 10)
+    // нажатие на комнату
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let groupController = GroupController(group: groups[indexPath.row])
+        navigationController?.pushViewController(groupController, animated: true)
     }
 }

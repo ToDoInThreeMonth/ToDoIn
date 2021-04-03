@@ -17,6 +17,9 @@
 		43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228670260E08FA0096C905 /* CustomTabBar.swift */; };
 		43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228673260E33980096C905 /* UIColor+extenstion.swift */; };
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
+		4351797C26184D29009F898B /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797B26184D29009F898B /* Task.swift */; };
+		4351797F26184DF5009F898B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* Data.swift */; };
+		4351798226185190009F898B /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskCell.swift */; };
 		43C4FAA6261733AA0019816F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA5261733AA0019816F /* Group.swift */; };
 		43C4FAA9261737C20019816F /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupCell.swift */; };
 		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
@@ -39,6 +42,9 @@
 		43228670260E08FA0096C905 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		43228673260E33980096C905 /* UIColor+extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extenstion.swift"; sourceTree = "<group>"; };
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
+		4351797B26184D29009F898B /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		4351797E26184DF5009F898B /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		4351798126185190009F898B /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		43C4FAA5261733AA0019816F /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		43C4FAA8261737C20019816F /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
@@ -127,6 +133,7 @@
 				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
 				43228670260E08FA0096C905 /* CustomTabBar.swift */,
 				43C4FAA8261737C20019816F /* GroupCell.swift */,
+				4351798126185190009F898B /* TaskCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -135,6 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				43C4FAA5261733AA0019816F /* Group.swift */,
+				4351797B26184D29009F898B /* Task.swift */,
+				4351797E26184DF5009F898B /* Data.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -272,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
+				4351797F26184DF5009F898B /* Data.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupCell.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
@@ -282,7 +292,9 @@
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
 				43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */,
+				4351798226185190009F898B /* TaskCell.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
+				4351797C26184D29009F898B /* Task.swift in Sources */,
 				43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
