@@ -30,7 +30,7 @@ class GroupsController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        collectionView.pin.all()
+        collectionView.pin.margin(20).all()
     }
     
     func configureCollectionView() {
@@ -55,8 +55,7 @@ extension GroupsController: UICollectionViewDataSource {
         return groups.count
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
         cell.setUp(group: groups[indexPath.row])
         return cell
@@ -74,6 +73,6 @@ extension GroupsController: UICollectionViewDelegate {
 extension GroupsController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 7)
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 10)
     }
 }

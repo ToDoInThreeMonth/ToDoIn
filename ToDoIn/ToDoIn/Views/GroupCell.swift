@@ -15,6 +15,9 @@ class GroupCell: UICollectionViewCell {
     var groupView = UIView()
     var groupLabel = UILabel()
     var groupImageView = UIImageView()
+    
+    private let imagePadding: CGFloat = 6
+    private let groupViewPadding: CGFloat = 10
 
     // MARK: - Init
     
@@ -50,11 +53,11 @@ class GroupCell: UICollectionViewCell {
         
         groupView.pin
             .horizontally(30)
-            .vertically(10)
+            .vertically(groupViewPadding)
         
         groupImageView.pin
             .left(20).vCenter()
-            .size(groupView.frame.height - 20)
+            .size(groupView.frame.height - imagePadding * 2)
         
         groupLabel.pin
             .after(of: groupImageView, aligned: .center)
@@ -68,8 +71,12 @@ class GroupCell: UICollectionViewCell {
     }
     
     func configureGroupView() {
-        groupView.layer.cornerRadius = self.frame.height / 2.5
+        groupView.layer.cornerRadius = self.frame.height / 2.6
         groupView.backgroundColor = .darkAccentColor
+//        groupView.insertBackLayer()
+//        groupView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
+//        groupView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
+        
         groupView.layer.shadowOffset = CGSize(width: 0, height: 0)
         groupView.layer.shadowRadius = 10
         groupView.layer.shadowOpacity = 0.3
@@ -81,7 +88,8 @@ class GroupCell: UICollectionViewCell {
     }
     
     func configureGroupImageView() {
-        groupImageView.layer.cornerRadius = 25
+        groupImageView.layer.cornerRadius = (self.frame.height - (imagePadding + groupViewPadding) * 2) / 2
+        groupImageView.layer.masksToBounds = false
         groupImageView.clipsToBounds = true
     }
     

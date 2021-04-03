@@ -16,6 +16,7 @@
 		4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322866D260E04A20096C905 /* CustomTabBarController.swift */; };
 		43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228670260E08FA0096C905 /* CustomTabBar.swift */; };
 		43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228673260E33980096C905 /* UIColor+extenstion.swift */; };
+		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
 		43C4FAA6261733AA0019816F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA5261733AA0019816F /* Group.swift */; };
 		43C4FAA9261737C20019816F /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupCell.swift */; };
 		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
@@ -37,6 +38,7 @@
 		4322866D260E04A20096C905 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		43228670260E08FA0096C905 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		43228673260E33980096C905 /* UIColor+extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extenstion.swift"; sourceTree = "<group>"; };
+		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		43C4FAA5261733AA0019816F /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		43C4FAA8261737C20019816F /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
@@ -97,18 +99,36 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				43DDECE02614DE2F000FFC78 /* Controllers */,
+				43517976261837F4009F898B /* Views */,
 				43C4FAA42617339C0019816F /* Model */,
-				43DDECE02614DE2F000FFC78 /* Views */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
-				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
-				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
-				43228670260E08FA0096C905 /* CustomTabBar.swift */,
+				43517975261837C7009F898B /* Extensions */,
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
-				43228673260E33980096C905 /* UIColor+extenstion.swift */,
+				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
 			);
 			path = ToDoIn;
+			sourceTree = "<group>";
+		};
+		43517975261837C7009F898B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				43228673260E33980096C905 /* UIColor+extenstion.swift */,
+				435179782618390D009F898B /* UIView+extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		43517976261837F4009F898B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
+				43228670260E08FA0096C905 /* CustomTabBar.swift */,
+				43C4FAA8261737C20019816F /* GroupCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		43C4FAA42617339C0019816F /* Model */ = {
@@ -119,15 +139,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		43DDECE02614DE2F000FFC78 /* Views */ = {
+		43DDECE02614DE2F000FFC78 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
 				43DDECE12614DE4B000FFC78 /* GroupsController.swift */,
-				43C4FAA8261737C20019816F /* GroupCell.swift */,
 				43C4FAAB2617555C0019816F /* GroupController.swift */,
 			);
-			path = Views;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		47D7D90511AFDE7F91945ED5 /* Pods */ = {
@@ -256,6 +275,7 @@
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupCell.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
+				435179792618390D009F898B /* UIView+extension.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
 				43DDECDE2614DDF6000FFC78 /* GroupsFlowCoordinator.swift in Sources */,
