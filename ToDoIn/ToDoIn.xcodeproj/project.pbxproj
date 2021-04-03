@@ -91,7 +91,7 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
-				43DDECE02614DE2F000FFC78 /* Views */,
+				43DDECE02614DE2F000FFC78 /* Controllers */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
 				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
@@ -104,13 +104,13 @@
 			path = ToDoIn;
 			sourceTree = "<group>";
 		};
-		43DDECE02614DE2F000FFC78 /* Views */ = {
+		43DDECE02614DE2F000FFC78 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
 				43DDECE12614DE4B000FFC78 /* GroupsController.swift */,
 			);
-			path = Views;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		47D7D90511AFDE7F91945ED5 /* Pods */ = {
