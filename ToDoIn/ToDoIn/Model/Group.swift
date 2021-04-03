@@ -1,10 +1,3 @@
-//
-//  Group.swift
-//  ToDoIn
-//
-//  Created by Дарья on 02.04.2021.
-//
-
 import Foundation
 
 class Group {

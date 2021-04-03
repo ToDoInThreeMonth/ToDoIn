@@ -1,10 +1,3 @@
-//
-//  UIView+extension.swift
-//  ToDoIn
-//
-//  Created by Дарья on 03.04.2021.
-//
-
 import UIKit
 
 enum SidesBlur {

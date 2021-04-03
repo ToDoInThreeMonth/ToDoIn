@@ -1,10 +1,3 @@
-//
-//  UIColor+.swift
-//  ToDoIn
-//
-//  Created by Дарья on 26.03.2021.
-//
-
 import UIKit
 
 extension UIColor {
