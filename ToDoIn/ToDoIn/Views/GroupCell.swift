@@ -65,7 +65,7 @@ class GroupCell: UICollectionViewCell {
     
     func configureGroupView() {
         groupView.layer.cornerRadius = self.frame.height / 2.6
-        groupView.backgroundColor = .darkAccentColor
+        groupView.backgroundColor = .accentColor
         groupView.insertBackLayer()
         groupView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
         groupView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: groupView.layer.cornerRadius)

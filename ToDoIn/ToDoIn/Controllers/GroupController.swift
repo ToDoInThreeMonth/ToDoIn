@@ -32,23 +32,29 @@ class GroupController: UIViewController {
     // MARK: - Handlers
     
     override func loadView() {
-            super.loadView()
-
-            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-//            collectionView.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(collectionView)
-            self.collectionView = collectionView
-        }
+        super.loadView()
+        
+        setBackground()
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        self.view.addSubview(collectionView)
+        self.collectionView = collectionView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         configureCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
-        collectionView.pin
-            .all()
+        collectionView.pin.all()
+    }
+    
+    func setBackground()  {
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "background")
+        backgroundImage.contentMode = .scaleAspectFill
+        view.insertSubview(backgroundImage, at: 0)
     }
     
     func configureCollectionView() {
@@ -56,7 +62,7 @@ class GroupController: UIViewController {
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         
         //        collectionView.separatorStyle = .none
-        collectionView.backgroundColor = .lightAccentColor
+        collectionView.backgroundColor = .clear
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -73,6 +79,7 @@ class GroupController: UIViewController {
 
 extension GroupController: UICollectionViewDataSource {
     
+    // количество секций
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return group.owners.count
     }

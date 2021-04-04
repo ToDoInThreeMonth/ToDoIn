@@ -10,12 +10,20 @@ import PinLayout
 
 class GroupsController: UIViewController {
     
+    // MARK: - Properties
+    
     var groups = Data.groups
     
     weak var collectionView: UICollectionView!
     
+    
+    // MARK: - Handlers
+    
     override func loadView() {
         super.loadView()
+        
+        setBackground()
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         //            collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
@@ -28,15 +36,21 @@ class GroupsController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        collectionView.pin
-            .all()
+        collectionView.pin.all()
+    }
+    
+    func setBackground()  {
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "background")
+        backgroundImage.contentMode = .scaleAspectFill
+        view.insertSubview(backgroundImage, at: 0)
     }
     
     func configureCollectionView() {
         collectionView.register(GroupCell.self, forCellWithReuseIdentifier: GroupCell.identifier)
         collectionView.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.identifier)
         
-        collectionView.backgroundColor = .lightAccentColor
+        collectionView.backgroundColor = .clear
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -88,7 +102,7 @@ extension GroupsController: UICollectionViewDelegateFlowLayout {
 
 extension GroupsController: UICollectionViewDelegate {
 
-    // нажатие на комнату
+    // нажатие на ячейку
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let groupController = GroupController(group: groups[indexPath.row])
         navigationController?.pushViewController(groupController, animated: true)
