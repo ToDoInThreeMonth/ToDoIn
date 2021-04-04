@@ -65,15 +65,17 @@ class GroupCell: UICollectionViewCell {
     
     func configureGroupView() {
         groupView.layer.cornerRadius = self.frame.height / 2.6
-        groupView.backgroundColor = .accentColor
+        // градиент
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = groupView.bounds
+        gradientLayer.cornerRadius = groupView.layer.cornerRadius
+        gradientLayer.colors = [ UIColor.white.cgColor, UIColor.accentColor.cgColor ]
+        groupView.layer.insertSublayer(gradientLayer, at: 0)
+        
         groupView.insertBackLayer()
+        groupView.backgroundColor = UIColor(red: 243/255, green: 247/255, blue: 250/255, alpha: 1)
         groupView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
         groupView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
-        
-        
-//        groupView.layer.shadowOffset = CGSize(width: 0, height: 0)
-//        groupView.layer.shadowRadius = 10
-//        groupView.layer.shadowOpacity = 0.3
     }
     
     func configureGroupLabel() {

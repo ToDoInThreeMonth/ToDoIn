@@ -60,7 +60,13 @@ class TaskCell: UICollectionViewCell {
     
     func configureTaskView() {
         taskView.layer.cornerRadius = self.frame.height / 2.6
-        taskView.backgroundColor = .accentColor
+        // градиент
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = taskView.bounds
+        gradientLayer.cornerRadius = taskView.layer.cornerRadius
+        gradientLayer.colors = [ UIColor.white.cgColor, UIColor.accentColor.cgColor ]
+        taskView.layer.insertSublayer(gradientLayer, at: 0)
+        
         taskView.insertBackLayer()
         taskView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: taskView.layer.cornerRadius)
         taskView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: taskView.layer.cornerRadius)
