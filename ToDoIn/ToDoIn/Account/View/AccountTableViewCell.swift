@@ -23,7 +23,7 @@ class AccountTableViewCell: UITableViewCell {
     }()
     private lazy var friendName: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1)
         label.text = "Kamnev Vladimir Sergeevich Djan"
         return label
@@ -57,7 +57,7 @@ class AccountTableViewCell: UITableViewCell {
             .top()
             .bottom(5)
             .start(20)
-            .size(45)
+            .size(53)
         friendAvatar.pin
             .all()
             .margin(3)

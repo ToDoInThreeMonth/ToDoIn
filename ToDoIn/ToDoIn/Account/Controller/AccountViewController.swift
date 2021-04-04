@@ -48,7 +48,11 @@ class AccountViewController: UIViewController {
         return view
     }()
     
-    private lazy var searchTextField: UITextField = CustomSearchTextField()
+    private lazy var searchTextField: CustomSearchTextField = {
+        let textField = CustomSearchTextField()
+        textField.addTarget(self, action: #selector(searchTFDidChanged), for: .editingChanged)
+        return textField
+    }()
     
     private lazy var friendsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -74,7 +78,7 @@ class AccountViewController: UIViewController {
     
     private lazy var notificationButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "OnNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(UIImage(named: "turnedNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("Уведомления", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 8)
         button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
@@ -86,12 +90,18 @@ class AccountViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         hideKeyboardWhenTappedAround()
+
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setupLayouts()
-        setupSublayers()
+       
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configureViews()
         setupInsets()
     }
     
@@ -165,7 +175,7 @@ class AccountViewController: UIViewController {
             .marginTop(20)
     }
     
-    private func setupSublayers() {
+    private func configureViews() {
        
         userUpView.makeRound()
         userDownView.addOneMoreShadow(color: .black, alpha: 0.15, x: 10, y: 10, blur: 10, cornerRadius: userUpView.layer.cornerRadius)
@@ -195,22 +205,29 @@ class AccountViewController: UIViewController {
     
     private func setupInsets() {
         friendsTableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: friendsTableView.bounds.width - 8)
-//        [exitButton, notificationButton].forEach{
-//            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
-//            $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 25)
-//        }
+        [exitButton, notificationButton].forEach{
+            $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: $0.frame.width - 45 - $0.imageView!.frame.width)
+        }
     }
     
     @objc
     private func exitButtonTapped() {
         let alertVC = UIAlertController(title: "Выход из аккаунта", message: "Вы действительно хотите выйти ?", preferredStyle: .alert)
         let agreeButton = UIAlertAction(title: "Нет", style: .default, handler: nil)
-        let disagreeButton = UIAlertAction(title: "Да", style: .cancel) {[unowned self] _ in
+        let disagreeButton = UIAlertAction(title: "Да", style: .destructive) {[unowned self] _ in
             //  заглушка
         }
-        alertVC.addAction(agreeButton)
         alertVC.addAction(disagreeButton)
+        alertVC.addAction(agreeButton)
         present(alertVC, animated: true, completion: nil)
+    }
+    
+    @objc
+    private func searchTFDidChanged() {
+//        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+//            print("Friends not found")
+//        }
     }
 }
 
