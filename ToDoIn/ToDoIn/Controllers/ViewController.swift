@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = UIColor.white.withAlphaComponent(0)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(MainOfflineTableViewCell.self, forCellReuseIdentifier: String(describing: MainOfflineTableViewCell.self))
@@ -73,7 +73,7 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MainOfflineTableViewCell.self), for: indexPath) as! MainOfflineTableViewCell
-        cell.textLabel?.text = "123"
+//        cell.textLabel?.text = "123"
         return cell
     }
     
