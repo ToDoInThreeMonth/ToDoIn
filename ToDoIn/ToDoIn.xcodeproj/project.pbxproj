@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		158A53F42619F0E5003F4F3A /* UIView + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A53F32619F0E5003F4F3A /* UIView + extensions.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		15D099552619ED4F006E17F7 /* MainOfflineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		158A53F32619F0E5003F4F3A /* UIView + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extensions.swift"; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineTableViewCell.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
+				158A53F32619F0E5003F4F3A /* UIView + extensions.swift */,
 			);
 			path = ToDoIn;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				158A53F42619F0E5003F4F3A /* UIView + extensions.swift in Sources */,
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				15D099552619ED4F006E17F7 /* MainOfflineTableViewCell.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
