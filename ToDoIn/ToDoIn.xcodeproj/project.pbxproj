@@ -51,6 +51,28 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		15D099512619ECD1006E17F7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4313B43F260BBFA500E6381A /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		15D099522619ECDF006E17F7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		15D099532619ECE4006E17F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		3F81D43B9AFA4F14842C4978 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,9 +102,11 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				15D099532619ECE4006E17F7 /* Models */,
+				15D099522619ECDF006E17F7 /* Views */,
+				15D099512619ECD1006E17F7 /* Controllers */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
-				4313B43F260BBFA500E6381A /* ViewController.swift */,
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
