@@ -1,13 +1,6 @@
-//
-//  GroupCell.swift
-//  ToDoIn
-//
-//  Created by Дарья on 02.04.2021.
-//
-
 import UIKit
 
-class GroupCell: UICollectionViewCell {
+class GroupCell: UITableViewCell {
     
     // MARK: - Properties
     static let identifier = "GroupCell"
@@ -16,15 +9,19 @@ class GroupCell: UICollectionViewCell {
     var groupLabel = UILabel()
     var groupImageView = UIImageView()
     
+    var dimmingView = UIView()
+    
     private let imagePadding: CGFloat = 6
     private let groupViewPadding: CGFloat = 10
     
 
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        [groupLabel, groupImageView].forEach {groupView.addSubview($0)}
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .clear
+        selectionStyle = .none
+        [groupLabel, groupImageView, dimmingView].forEach {groupView.addSubview($0)}
         addSubview(groupView)
     }
     
@@ -54,10 +51,15 @@ class GroupCell: UICollectionViewCell {
             .after(of: groupImageView, aligned: .center)
             .marginLeft(20)
             .sizeToFit()
+        
+        dimmingView.pin
+            .horizontally(50)
+            .vertically(groupViewPadding)
     }
     
     func setupSublayers() {
         configureGroupView()
+        configureDimmingView()
         configureGroupLabel()
         configureGroupImageView()
     }
@@ -65,7 +67,8 @@ class GroupCell: UICollectionViewCell {
     
     func configureGroupView() {
         groupView.layer.cornerRadius = self.frame.height / 2.6
-        // градиент
+        
+        // градиент на фоне ячейки
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = groupView.bounds
         gradientLayer.cornerRadius = groupView.layer.cornerRadius
@@ -89,10 +92,25 @@ class GroupCell: UICollectionViewCell {
         groupImageView.clipsToBounds = true
     }
     
+    func configureDimmingView() {
+        dimmingView.frame = groupView.bounds
+        dimmingView.backgroundColor = .clear
+        dimmingView.layer.cornerRadius = self.frame.height / 2.6
+    }
+    
     
     func setUp(group: Group) {
         groupLabel.text = group.name
         groupImageView.image = UIImage(named: group.image)
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        if highlighted {
+            dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        } else {
+            dimmingView.backgroundColor = .clear
+        }
     }
     
 }

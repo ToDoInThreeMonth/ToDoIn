@@ -10,6 +10,6 @@ class Data {
                          Group(name: "Шашлыки", image: "group", owners: owners),
                          Group(name: "Кальяночка", image: "group", owners: owners),
                          Group(name: "Баня", image: "group", owners: owners),
-                         Group(name: "Денья рождения", image: "group", owners: owners),
+                         Group(name: "День рождения", image: "group", owners: owners),
                          Group(name: "Новый год", image: "group", owners: owners)]
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-class TaskCell: UICollectionViewCell {
+class TaskCell: UITableViewCell {
     
     // MARK: - Properties
     static let identifier = "TaskCell"
@@ -16,8 +16,10 @@ class TaskCell: UICollectionViewCell {
 
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .clear
+        selectionStyle = .none
         taskView.addSubviews(taskLabel, isDoneView)
         addSubview(taskView)
     }

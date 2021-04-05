@@ -1,10 +1,3 @@
-//
-//  GroupController.swift
-//  ToDoIn
-//
-//  Created by Дарья on 31.03.2021.
-//
-
 import UIKit
 import PinLayout
 
@@ -14,29 +7,24 @@ class GroupsController: UIViewController {
     
     var groups = Data.groups
     
-    weak var collectionView: UICollectionView!
+    private let tableView = UITableView()
     
     
     // MARK: - Handlers
     
     override func loadView() {
         super.loadView()
-        
         setBackground()
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        //            collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(collectionView)
-        self.collectionView = collectionView
+        self.view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionView()
+        configureTableView()
     }
     
     override func viewDidLayoutSubviews() {
-        collectionView.pin.all()
+        tableView.pin.all().marginTop(view.pin.safeArea.top + 15)
     }
     
     func setBackground()  {
@@ -46,18 +34,16 @@ class GroupsController: UIViewController {
         view.insertSubview(backgroundImage, at: 0)
     }
     
-    func configureCollectionView() {
-        collectionView.register(GroupCell.self, forCellWithReuseIdentifier: GroupCell.identifier)
-        collectionView.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.identifier)
+    func configureTableView() {
+        tableView.register(GroupCell.self, forCellReuseIdentifier: GroupCell.identifier)
         
-        collectionView.backgroundColor = .clear
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         
-        self.collectionView.alwaysBounceVertical = true
-        
-        view.addSubview(collectionView)
+        view.addSubview(tableView)
     }
     
 }
@@ -65,46 +51,34 @@ class GroupsController: UIViewController {
 
 // MARK: - Extensions
 
-extension GroupsController: UICollectionViewDataSource {
-
+extension GroupsController: UITableViewDataSource {
+    
     // количество ячеек
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
-
+    
     // дизайн ячейки
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
+//        cell.selectedBackgroundView = UIView()
+//        cell.selectedBackgroundView?.backgroundColor = .clear
+        cell.layer.cornerRadius = cell.frame.height / 2.6
         cell.setUp(group: groups[indexPath.row])
         return cell
     }
-    
-    // дизайн header'a
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.identifier, for: indexPath) as! HeaderCollectionView
-        header.setUp(label: "")
-        return header
-    }
-    
-    // размер header'a
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 200, height: 15)
-    }
 }
 
-extension GroupsController: UICollectionViewDelegateFlowLayout {
-
-    // размер ячейки в CollectionView
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 10)
-    }
-}
-
-extension GroupsController: UICollectionViewDelegate {
+extension GroupsController: UITableViewDelegate {
 
     // нажатие на ячейку
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let groupController = GroupController(group: groups[indexPath.row])
         navigationController?.pushViewController(groupController, animated: true)
+    }
+    
+    // размер ячейки
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.bounds.height / 10
     }
 }
