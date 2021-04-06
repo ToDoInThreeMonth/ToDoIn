@@ -46,7 +46,7 @@ extension UIView {
                    power: Float = 10,
                    alpha: Float = 0.1,
                    offset: CGFloat = 10) {
-        // Добавляет тень на корневой слой View
+        // Тень на корневой слой View
         if type == .single {
             layer.shadowColor = color.cgColor
             layer.shadowOffset = CGSize(width: offset, height: offset)
@@ -54,9 +54,9 @@ extension UIView {
             layer.shadowOpacity = alpha
         }
         
-        // Радиальная внутренняя тень
+        // Внутренняя тень
         if type == .innearLinear || type == .innearRadial {
-            // Ограничение на размытие
+            /// Ограничение на размытие
             var powerBlur: Float = 1.0
             switch power {
             case ..<0:
@@ -66,7 +66,7 @@ extension UIView {
             default:
                 powerBlur = 1
             }
-            // Слой - родитель, по которому будет обрезаться внутренняя тень
+            /// Слой - родитель, по которому будет обрезаться внутренняя тень
             let superLayer = CALayer()
             superLayer.frame = bounds
             superLayer.cornerRadius = layer.cornerRadius
@@ -78,7 +78,7 @@ extension UIView {
             superLayer.addSublayer(gradientLayer)
             
             guard type == .innearRadial else {
-                // Выбор направления линейной тени
+                /// Выбор направления линейной тени
                 switch side {
                 case .topLeft:
                     gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
@@ -105,14 +105,14 @@ extension UIView {
                     gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
                     gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
                 }
-                
+                /// Настройка линейной тени
                 gradientLayer.name = "linearShadow"
                 gradientLayer.colors = [color.cgColor, UIColor.white.withAlphaComponent(0), UIColor.white.withAlphaComponent(0), UIColor.white.withAlphaComponent(0)]
                 gradientLayer.locations = [0, NSNumber(value: powerBlur), NSNumber(value: 1 - powerBlur), 1]
                 gradientLayer.cornerRadius = layer.cornerRadius
                 return
             }
-            // Выбор стороны смещения радиальной тени
+            /// Выбор стороны смещения радиальной тени
             switch side {
             case .topLeft:
                 gradientLayer.frame = CGRect(x: bounds.minX - offset / 10,
@@ -137,7 +137,7 @@ extension UIView {
             default:
                 gradientLayer.frame = bounds
             }
-            
+            // Настройка радиальной тени
             gradientLayer.type = .radial
             gradientLayer.name = "radialShadow"
             gradientLayer.colors = [
@@ -154,11 +154,11 @@ extension UIView {
         
         // Внешняя множественная тень
         var isHaveBackground = false
-        // Проверяем, добавлен слой, замещающий фон
+        /// Проверяем, добавлен слой, замещающий фон
         layer.sublayers?.forEach {
             if $0.name == "background" { isHaveBackground = true }
         }
-        // Добавляем фоновый слой
+        /// Добавляем фоновый слой
         if !isHaveBackground {
             let oldLayer = CALayer()
             oldLayer.name = "background"
@@ -168,8 +168,9 @@ extension UIView {
             oldLayer.masksToBounds = false
             layer.insertSublayer(oldLayer, at: 0)
         }
-        
+    
         let outsideShadowLayer = CALayer()
+        /// Настройка внешней тени
         outsideShadowLayer.name = "outsideShadow"
         outsideShadowLayer.shadowColor = color.cgColor
         outsideShadowLayer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius).cgPath
