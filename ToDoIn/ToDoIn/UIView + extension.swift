@@ -148,100 +148,16 @@ extension UIView {
         gradientLayer.locations = [0, NSNumber(value: 1 - power), 1]
         layer.masksToBounds = true
     }
+  
     
-    /// Добавляет размытый подслой с помощью градиента на View.
-    /// Можно делать как радиальное, так и обычное размытие. В случае обычного размытия, параметр isRadial можно не указывать.
-    ///
-    /// Для обычного размытия: выбираете сторону, где нужно размыть.
-    /// Параметр offset влияет только на радиальное размытие.
-    ///
-    /// Для радиального размытия указываете isRadial: true
-    /// Параметр offset указывает куда сдвинуть размытие.
-    ///
-    /// power - длина размытия, alpha - прозрачность подслоя.
-    /// СТРОГО не совмещать с setShadowWithColor на одном View.
-    func addBlurLayer(side: SidesBlur = .topCenter,
-                      color1: UIColor = UIColor.black,
-                      power: Float = 0.1,
-                      alpha: Float = 1,
-                      isRadial: Bool = false,
-                      offset: CGSize = .zero) {
+    func addLinearGradient() {
         let gradientLayer = CAGradientLayer()
         layer.insertSublayer(gradientLayer, at: 0)
-        
-        let x = offset.width
-        let y = offset.height
-        switch (x, y) {
-        case (0..., 0...):
-            gradientLayer.frame = CGRect(x: bounds.minX - offset.width / 10,
-                                         y: bounds.minY - offset.height / 10,
-                                         width: bounds.width + offset.width,
-                                         height: bounds.height + offset.height)
-        case (..<0, ..<0):
-            gradientLayer.frame = CGRect(x: bounds.minX + offset.width * (1 - 1 / 10),
-                                         y: bounds.minY + offset.height * (1 - 1 / 10),
-                                         width: bounds.width + abs(offset.width),
-                                         height: bounds.height + abs(offset.height))
-        case (..<0, 0...):
-            gradientLayer.frame = CGRect(x: bounds.minX + offset.width * (1 - 1 / 10),
-                                         y: bounds.minY + offset.height / 10,
-                                         width: bounds.width + abs(offset.width),
-                                         height: bounds.height + offset.height)
-        case (0..., ..<0):
-            gradientLayer.frame = CGRect(x: bounds.minX - offset.width / 10,
-                                         y: bounds.minY + offset.height * (1 - 1 / 10),
-                                         width: bounds.width + offset.width,
-                                         height: bounds.height + abs(offset.height))
-        default:
-            gradientLayer.frame = bounds
-        }
-        gradientLayer.opacity = alpha
-        
-        guard isRadial else {
-            switch side {
-            case .topLeft:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-            case .topCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-            case .topRight:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
-            case .leftCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-            case .rightCenter:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.5)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
-            case .bottomLeft:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
-            case .bottomCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
-            case .bottomRight:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-            }
-            
-            gradientLayer.colors = [color1.cgColor, color1.cgColor, (backgroundColor ?? UIColor.clear).cgColor]
-            
-            gradientLayer.locations = [0, NSNumber(value: 1 - power), 1]
-            gradientLayer.cornerRadius = layer.cornerRadius
-            return
-        }
-        gradientLayer.type = .radial
-        
-        gradientLayer.colors = [
-            color1.cgColor,
-            color1.cgColor,
-            (backgroundColor ?? UIColor.clear).cgColor
-        ]
-        
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.locations = [0, NSNumber(value: 1 - power), 1]
+        gradientLayer.frame = bounds
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.colors = [UIColor.black.cgColor, (backgroundColor ?? UIColor.clear).cgColor]
+        gradientLayer.locations = [0, 1]
         layer.masksToBounds = true
     }
 }

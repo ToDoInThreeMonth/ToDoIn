@@ -15,9 +15,9 @@ class ViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+//        tableView.allowsSelection = false
         tableView.backgroundColor = UIColor.white.withAlphaComponent(0)
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         tableView.register(MainOfflineTableViewCell.self, forCellReuseIdentifier: String(describing: MainOfflineTableViewCell.self))
         return tableView
     }()
@@ -81,6 +81,12 @@ extension ViewController: UITableViewDataSource {
 }
 
 extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? MainOfflineTableViewCell else { return }
+        cell.cellDidTapped()
+    }
+    
     
 }
 
