@@ -11,12 +11,7 @@ class AccountViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var userDownView: UIView = UIView()
-    private lazy var userUpView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 240 / 255, green: 238 / 255, blue: 239 / 255, alpha: 1)
-        return view
-    }()
+    private lazy var userView: UIView = UIView()
 
     private lazy var userUpNameLabel: UILabel = {
         let label = UILabel()
@@ -107,7 +102,7 @@ class AccountViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
-        view.addSubviews(userDownView,
+        view.addSubviews(userView,
                          userUpNameLabel,
                          userDownNameLabel,
                          friendsLabel,
@@ -116,19 +111,18 @@ class AccountViewController: UIViewController {
                          friendsTableView,
                          exitButton,
                          notificationButton)
-        userDownView.addSubviews(userUpView, userImageView)
+        userView.addSubviews(userImageView)
     }
 
     private func setupLayouts() {
-        userDownView.pin
+        userView.pin
             .topCenter(view.pin.safeArea.top)
             .margin(30)
             .size(CGSize(width: 150, height: 150))
-        userUpView.pin.all()
         userImageView.pin
             .all().margin(20)
         userUpNameLabel.pin
-            .top(to: userDownView.edge.bottom)
+            .top(to: userView.edge.bottom)
             .hCenter()
             .marginTop(20)
             .sizeToFit()
@@ -177,30 +171,26 @@ class AccountViewController: UIViewController {
     
     private func configureViews() {
        
-        userUpView.makeRound()
-        userDownView.addOneMoreShadow(color: .black, alpha: 0.15, x: 10, y: 10, blur: 10, cornerRadius: userUpView.layer.cornerRadius)
-        userDownView.addOneMoreShadow(color: .white, alpha: 0.5, x: -10, y: -10, blur: 10, cornerRadius: userUpView.layer.cornerRadius)
-        userUpView.addInnerShadow(color1: UIColor.white, power: 0.1, alpha: 1, isRadial: true, offset: CGSize(width: 15, height: 15))
-        userUpView.addInnerShadow(power: 0.1, alpha: 0.1, isRadial: true, offset: CGSize(width: -15, height: -15))
+        userView.makeRound()
+        userView.backgroundColor = UIColor(red: 240 / 255, green: 238 / 255, blue: 239 / 255, alpha: 1)
+        userView.addShadow(side: .bottomRight, type: .outside, alpha: 0.15)
+        userView.addShadow(side: .bottomRight, type: .outside, color: .white, alpha: 1, offset: -10)
+        userView.addShadow(side: .topLeft, type: .innearRadial, color: .white, power: 0.15, alpha: 1, offset: 10)
+        userView.addShadow(side: .bottomRight, type: .innearRadial, power: 0.15, offset: 10)
         
         userImageView.makeRound()
-        userImageView.addInnerShadow(power: 0.09, alpha: 0.3, isRadial: true, offset: CGSize(width: 10, height: 10))
-        userImageView.addInnerShadow(color1: .white, power: 0.1, alpha: 0.5, isRadial: true, offset: CGSize(width: -10, height: -10))
+        userImageView.addShadow(side: .topLeft, type: .innearRadial, power: 0.1, alpha: 0.3, offset: 10)
+        userImageView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.1, alpha: 0.5, offset: 10)
         
         searchTextField.layer.cornerRadius = 20
-        searchTextField.insertBackLayer()
-        searchTextField.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: searchTextField.layer.cornerRadius)
-        searchTextField.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: searchTextField.layer.cornerRadius)
+        searchTextField.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
+        searchTextField.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
         
-        exitButton.layer.cornerRadius = 15
-        exitButton.insertBackLayer()
-        exitButton.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -2, blur: 1, cornerRadius: searchTextField.layer.cornerRadius)
-        exitButton.addOneMoreShadow(color: .black, alpha: 0.12, x: -1, y: 2, blur: 1, cornerRadius: searchTextField.layer.cornerRadius)
-        
-        notificationButton.layer.cornerRadius = 15
-        notificationButton.insertBackLayer()
-        notificationButton.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -2, blur: 1, cornerRadius: searchTextField.layer.cornerRadius)
-        notificationButton.addOneMoreShadow(color: .black, alpha: 0.12, x: -1, y: 2, blur: 1, cornerRadius: searchTextField.layer.cornerRadius)
+        [exitButton, notificationButton].forEach{
+            $0.layer.cornerRadius = 15
+            $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
+            $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 2)
+        }
     }
     
     private func setupInsets() {

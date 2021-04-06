@@ -74,9 +74,8 @@ class AccountTableViewCell: UITableViewCell {
             friendView.makeRound()
             friendAvatar.makeRound()
 
-            friendView.insertBackLayer()
-            friendView.addOneMoreShadow(color: .black, alpha: 0.2, x: 1, y: 1, blur: 2, cornerRadius: friendView.layer.cornerRadius)
-            friendView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 2, cornerRadius: friendView.layer.cornerRadius)
+            friendView.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
+            friendView.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 3)
         }
     }
 }

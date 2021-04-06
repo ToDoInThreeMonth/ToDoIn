@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appCoordinator?.start()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = appCoordinator?.tabBarController
+        window?.rootViewController = AccountViewController()
         window?.makeKeyAndVisible()
         
         return true
