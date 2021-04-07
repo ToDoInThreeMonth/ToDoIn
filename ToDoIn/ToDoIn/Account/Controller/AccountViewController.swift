@@ -3,50 +3,30 @@ import PinLayout
 
 class AccountViewController: UIViewController {
     weak var coordinator: MainChildCoordinator?
-    private lazy var userImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "nlo")
-        imageView.backgroundColor = .systemGray4
-        return imageView
-    }()
     
-    private lazy var userView: UIView = UIView()
-
-    private lazy var userUpNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Неопознанный объект"
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1)
-        return label
-    }()
+    private lazy var userImageView = AccountModel.userImageView
+    private lazy var userBackView = AccountModel.userBackView
+    private lazy var userNameLabel = AccountModel.userNameLabel
+    private lazy var toDoInLabel = AccountModel.toDoInLabel
+    private lazy var friendsLabel = AccountModel.friendsLabel
+    private lazy var friendUnderlineView = AccountModel.friendUnderlineView
     
-    private lazy var userDownNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Пользователь ToDoIn"
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 0.5)
-        return label
-    }()
-    
-    private lazy var friendsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Друзья"
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1)
-        return label
-    }()
-    
-    private lazy var friendsDownView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 200 / 255, green: 14 / 255, blue: 14 / 255, alpha: 1)
-        return view
-    }()
-    
-    private lazy var searchTextField: CustomSearchTextField = {
-        let textField = CustomSearchTextField()
+    private lazy var searchTextField: UITextField = {
+        let textField = AccountModel.searchTextField
         textField.addTarget(self, action: #selector(searchTFDidChanged), for: .editingChanged)
         return textField
+    }()
+    
+    private lazy var exitButton: UIButton = {
+        let button = AccountModel.exitButton
+        button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var notificationButton: UIButton = {
+        let button = AccountModel.notificationButton
+        button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        return button
     }()
     
     private lazy var friendsTableView: UITableView = {
@@ -58,27 +38,6 @@ class AccountViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         return tableView
-    }()
-    
-    private lazy var exitButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.setTitle("Выйти", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
-        button.tintColor = UIColor(red: 2 / 255, green: 44 / 255, blue: 114 / 255, alpha: 1)
-        button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var notificationButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "turnedNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.setTitle("Уведомления", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 8)
-        button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
-        button.tintColor = UIColor(red: 2 / 255, green: 44 / 255, blue: 114 / 255, alpha: 1)
-        return button
     }()
 
     override func viewDidLoad() {
@@ -102,40 +61,40 @@ class AccountViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
-        view.addSubviews(userView,
-                         userUpNameLabel,
-                         userDownNameLabel,
+        view.addSubviews(userBackView,
+                         userNameLabel,
+                         toDoInLabel,
                          friendsLabel,
                          searchTextField,
-                         friendsDownView,
+                         friendUnderlineView,
                          friendsTableView,
                          exitButton,
                          notificationButton)
-        userView.addSubviews(userImageView)
+        userBackView.addSubviews(userImageView)
     }
 
     private func setupLayouts() {
-        userView.pin
+        userBackView.pin
             .topCenter(view.pin.safeArea.top)
             .margin(30)
             .size(CGSize(width: 150, height: 150))
         userImageView.pin
             .all().margin(20)
-        userUpNameLabel.pin
-            .top(to: userView.edge.bottom)
+        userNameLabel.pin
+            .top(to: userBackView.edge.bottom)
             .hCenter()
             .marginTop(20)
             .sizeToFit()
-        userDownNameLabel.pin
-            .top(to: userUpNameLabel.edge.bottom)
+        toDoInLabel.pin
+            .top(to: userNameLabel.edge.bottom)
             .hCenter()
             .sizeToFit()
         friendsLabel.pin
-            .top(to: userDownNameLabel.edge.bottom)
+            .top(to: toDoInLabel.edge.bottom)
             .start(40)
             .sizeToFit()
             .marginTop(35)
-        friendsDownView.pin
+        friendUnderlineView.pin
             .top(to:  friendsLabel.edge.bottom)
             .marginTop(3)
             .hCenter(to: friendsLabel.edge.hCenter)
@@ -145,11 +104,11 @@ class AccountViewController: UIViewController {
             .end(40)
             .start(to: friendsLabel.edge.end)
             .marginStart(30)
-            .bottom(to: friendsDownView.edge.bottom)
+            .bottom(to: friendUnderlineView.edge.bottom)
             .top(to: friendsLabel.edge.top)
             .marginTop(-5)
         notificationButton.pin
-            .top(to: friendsDownView.edge.bottom)
+            .top(to: friendUnderlineView.edge.bottom)
             .end(-20)
             .width(130)
             .height(40)
@@ -161,7 +120,7 @@ class AccountViewController: UIViewController {
             .height(40)
             .marginTop(20)
         friendsTableView.pin
-            .top(to: friendsDownView.edge.bottom)
+            .top(to: friendUnderlineView.edge.bottom)
             .start(20)
             .end(to: exitButton.edge.start)
             .bottom(view.pin.safeArea.bottom)
@@ -170,26 +129,18 @@ class AccountViewController: UIViewController {
     }
     
     private func configureViews() {
-       
-        userView.makeRound()
-        userView.backgroundColor = UIColor(red: 240 / 255, green: 238 / 255, blue: 239 / 255, alpha: 1)
-        userView.addShadow(side: .bottomRight, type: .outside, alpha: 0.15)
-        userView.addShadow(side: .bottomRight, type: .outside, color: .white, alpha: 1, offset: -10)
-        userView.addShadow(side: .topLeft, type: .innearRadial, color: .white, power: 0.15, alpha: 1, offset: 10)
-        userView.addShadow(side: .bottomRight, type: .innearRadial, power: 0.15, offset: 10)
+        userBackView.makeRound()
+        AccountModel.getUserBackShadow(userBackView)
         
         userImageView.makeRound()
-        userImageView.addShadow(side: .topLeft, type: .innearRadial, power: 0.1, alpha: 0.3, offset: 10)
-        userImageView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.1, alpha: 0.5, offset: 10)
+        AccountModel.getUserImageViewShadow(userImageView)
         
         searchTextField.layer.cornerRadius = 20
-        searchTextField.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
-        searchTextField.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
+        AccountModel.getSearchTFShadow(searchTextField)
         
         [exitButton, notificationButton].forEach{
             $0.layer.cornerRadius = 15
-            $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
-            $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 2)
+            AccountModel.getSettingButtonShadow($0)
         }
     }
     
@@ -209,10 +160,11 @@ class AccountViewController: UIViewController {
     }
     
     @objc
+    private func notificationButtonTapped() {
+    }
+    
+    @objc
     private func searchTFDidChanged() {
-//        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
-//            print("Friends not found")
-//        }
     }
 }
 
