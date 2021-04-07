@@ -203,13 +203,8 @@ class AccountViewController: UIViewController {
     
     @objc
     private func exitButtonTapped() {
-        let alertVC = UIAlertController(title: "Выход из аккаунта", message: "Вы действительно хотите выйти ?", preferredStyle: .alert)
-        let agreeButton = UIAlertAction(title: "Нет", style: .default, handler: nil)
-        let disagreeButton = UIAlertAction(title: "Да", style: .destructive) {[unowned self] _ in
-            //  заглушка
-        }
-        alertVC.addAction(disagreeButton)
-        alertVC.addAction(agreeButton)
+        let alertVC = LogOutAlertController(title: "Выход из аккаунта", message: "Вы действительно хотите выйти ?", preferredStyle: .alert)
+     
         present(alertVC, animated: true, completion: nil)
     }
     
