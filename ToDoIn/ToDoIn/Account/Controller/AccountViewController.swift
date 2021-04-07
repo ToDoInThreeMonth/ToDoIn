@@ -228,9 +228,10 @@ extension AccountViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AccountTableViewCell.self), for: indexPath) as! AccountTableViewCell
-        cell.friend = FriendBase.friends[indexPath.row]
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AccountTableViewCell.self), for: indexPath) as? AccountTableViewCell
+        guard let safeCell = cell else { return UITableViewCell() }
+        safeCell.friend = FriendBase.friends[indexPath.row]
+        return safeCell
     }
         
 }
