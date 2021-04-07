@@ -224,12 +224,12 @@ class AccountViewController: UIViewController {
 //MARK: - UITableViewDataSource
 extension AccountViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return FriendModel.friends.count - 1
+        return FriendBase.friends.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AccountTableViewCell.self), for: indexPath) as! AccountTableViewCell
-        cell.friend = FriendModel.friends[indexPath.row]
+        cell.friend = FriendBase.friends[indexPath.row]
         return cell
     }
         
