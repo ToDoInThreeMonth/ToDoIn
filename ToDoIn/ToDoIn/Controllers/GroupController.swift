@@ -9,6 +9,9 @@ class GroupController: UIViewController {
     
     private let group: Group
     
+    @objc private let settingsButton = UIBarButtonItem()
+    private let addingTaskButton = UIBarButtonItem()
+    
     
     // MARK: - Init
     
@@ -27,12 +30,14 @@ class GroupController: UIViewController {
     override func loadView() {
         super.loadView()
         setBackground()
+        title = group.name
         self.view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        configureBarButtonItems()
     }
     
     override func viewDidLayoutSubviews() {
@@ -48,7 +53,6 @@ class GroupController: UIViewController {
     
     func configureTableView() {
         tableView.register(TaskCell.self, forCellReuseIdentifier: TaskCell.identifier)
-//        tableView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -59,6 +63,33 @@ class GroupController: UIViewController {
         self.tableView.alwaysBounceVertical = true
         
         view.addSubview(tableView)
+    }
+    
+    func configureBarButtonItems() {
+        configureSettingButton()
+        configureAddingTaskButton()
+        navigationItem.setRightBarButtonItems([settingsButton, addingTaskButton], animated: true)
+    }
+    
+    func configureSettingButton() {
+        settingsButton.image = UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal)
+        settingsButton.target = self
+        settingsButton.action = #selector(settingsButtonTapped)
+    }
+    
+    func configureAddingTaskButton() {
+        addingTaskButton.image = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
+        addingTaskButton.target = self
+        addingTaskButton.action = #selector(addingTaskButtonTapped)
+    }
+    
+    @objc
+    func settingsButtonTapped(sender: UIBarButtonItem) {
+    }
+    
+    @objc
+    func addingTaskButtonTapped(sender: UIBarButtonItem) {
+        present(AddingTaskController(group: group), animated: true, completion: nil)
     }
 
 }

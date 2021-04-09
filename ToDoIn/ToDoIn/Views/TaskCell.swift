@@ -69,9 +69,7 @@ class TaskCell: UITableViewCell {
         gradientLayer.colors = [ UIColor.white.cgColor, UIColor.accentColor.cgColor ]
         taskView.layer.insertSublayer(gradientLayer, at: 0)
         
-        taskView.insertBackLayer()
-        taskView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: taskView.layer.cornerRadius)
-        taskView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: taskView.layer.cornerRadius)
+        taskView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
     }
     
     func configureTaskLabel() {
@@ -83,9 +81,7 @@ class TaskCell: UITableViewCell {
     func configureIsDoneView() {
         isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2
         isDoneView.backgroundColor = .accentColor
-        isDoneView.insertBackLayer()
-        isDoneView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: isDoneView.layer.cornerRadius)
-        isDoneView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: isDoneView.layer.cornerRadius)
+        isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .black, power: 0.2, alpha: 0.05, offset: 0)
     }
     
     

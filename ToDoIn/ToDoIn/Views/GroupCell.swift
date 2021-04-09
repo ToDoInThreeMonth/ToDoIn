@@ -44,12 +44,11 @@ class GroupCell: UITableViewCell {
             .vertically(groupViewPadding)
         
         groupImageView.pin
-            .left(20).vCenter()
+            .right(20).vCenter()
             .size(groupView.frame.height - imagePadding * 2)
         
         groupLabel.pin
-            .after(of: groupImageView, aligned: .center)
-            .marginLeft(20)
+            .left(20).vCenter()
             .sizeToFit()
         
         dimmingView.pin
@@ -75,10 +74,8 @@ class GroupCell: UITableViewCell {
         gradientLayer.colors = [ UIColor.white.cgColor, UIColor.accentColor.cgColor ]
         groupView.layer.insertSublayer(gradientLayer, at: 0)
         
-        groupView.insertBackLayer()
         groupView.backgroundColor = UIColor(red: 243/255, green: 247/255, blue: 250/255, alpha: 1)
-        groupView.addOneMoreShadow(color: .white, alpha: 1, x: -1, y: -1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
-        groupView.addOneMoreShadow(color: .black, alpha: 0.15, x: -1, y: 1, blur: 1, cornerRadius: groupView.layer.cornerRadius)
+        groupView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
     }
     
     func configureGroupLabel() {

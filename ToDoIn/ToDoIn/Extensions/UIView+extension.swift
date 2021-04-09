@@ -1,17 +1,24 @@
 import UIKit
 
-enum SidesBlur {
-    case topLeft
-    case topCenter
-    case topRight
-    case leftCenter
-    case rightCenter
-    case bottomLeft
-    case bottomCenter
-    case bottomRight
-}
-
 extension UIView {
+    enum SidesBlur {
+        case topLeft
+        case topCenter
+        case topRight
+        case leftCenter
+        case rightCenter
+        case bottomLeft
+        case bottomCenter
+        case bottomRight
+    }
+    
+    enum TypeShadow {
+        case single
+        case outside
+        case innearRadial
+        case innearLinear
+    }
+    
     /// Позволяет добавить subview к указанному View через запятую
     func addSubviews(_ views: UIView...) {
         for view in views {
@@ -24,225 +31,153 @@ extension UIView {
         layer.cornerRadius = bounds.width / 2
     }
     
-    /// Делает слой - подложку с цветом как у View. Нужен для добавления нескольких теней к одному и тому же View.
-    func insertBackLayer() {
-        let oldLayer = CALayer()
-        oldLayer.backgroundColor = backgroundColor?.cgColor
-        oldLayer.cornerRadius = layer.cornerRadius
-        oldLayer.frame = layer.bounds
-        oldLayer.masksToBounds = false
-        layer.insertSublayer(oldLayer, at: 0)
-    }
-    
-    /// Добавляет теневой подслой к указанному View. Обязательно перед первым добавлением вызвать метод insertBackLayer
-    func addOneMoreShadow(color: UIColor = .black, alpha: Float = 0.5, x: CGFloat = 0, y: CGFloat = 2, blur: CGFloat = 4, cornerRadius: CGFloat = 0) {
-        let shadowLayer = CALayer()
-        shadowLayer.shadowColor = color.cgColor
-        shadowLayer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
-        shadowLayer.shadowOffset = CGSize(width: x, height: y)
-        shadowLayer.shadowRadius = blur
-        shadowLayer.shadowOpacity = alpha
-        
-        layer.insertSublayer(shadowLayer, at: 0)
-    }
-    
-    /// Задает параметры тени у слоя указанного View
-    func setupShadow(color: UIColor = .black, alpha: Float = 0.5, x: CGFloat = 0, y: CGFloat = 2, blur: CGFloat = 4) {
-        layer.shadowColor = color.cgColor
-        layer.shadowOffset = CGSize(width: x, height: y)
-        layer.shadowRadius = blur
-        layer.shadowOpacity = alpha
-    }
-    
-    /// Добавляет внутреннюю тень с помощью градиента на View.
-    /// Можно делать как радиальную, так и обычную тень. В случае обычной тени, параметр isRadial можно не указывать.
-    ///
-    /// Для обычной тени:
-    /// side - сторона тени
-    /// Параметр offset влияет только на радиальную тень.
-    ///
-    /// Для радиальной тени: указываете isRadial: true
-    /// Указываете offset - то, куда сдвинуть тень.
-    ///
-    /// power - длина тени, alpha - прозрачность.
-    /// СТРОГО не совмещать с setShadowWithColor
-    func addInnerShadow(side: SidesBlur = .topCenter,
-                        color1: UIColor = UIColor.black,
-                        power: Float = 0.1,
-                        alpha: Float = 0.5,
-                        isRadial: Bool = false,
-                        offset: CGSize = .zero) {
-        let gradientLayer = CAGradientLayer()
-        layer.insertSublayer(gradientLayer, at: 0)
-        let x = offset.width
-        let y = offset.height
-        
-        switch (x, y) {
-        case (0..., 0...):
-            gradientLayer.frame = CGRect(x: bounds.minX - offset.width / 10,
-                                         y: bounds.minY - offset.height / 10,
-                                         width: bounds.width + offset.width,
-                                         height: bounds.height + offset.height)
-        case (..<0, ..<0):
-            gradientLayer.frame = CGRect(x: bounds.minX + offset.width * (1 - 1 / 10),
-                                         y: bounds.minY + offset.height * (1 - 1 / 10),
-                                         width: bounds.width + abs(offset.width),
-                                         height: bounds.height + abs(offset.height))
-        case (..<0, 0...):
-            gradientLayer.frame = CGRect(x: bounds.minX + offset.width * (1 - 1 / 10),
-                                         y: bounds.minY + offset.height / 10,
-                                         width: bounds.width + abs(offset.width),
-                                         height: bounds.height + offset.height)
-        case (0..., ..<0):
-            gradientLayer.frame = CGRect(x: bounds.minX - offset.width / 10,
-                                         y: bounds.minY + offset.height * (1 - 1 / 10),
-                                         width: bounds.width + offset.width,
-                                         height: bounds.height + abs(offset.height))
-        default:
-            gradientLayer.frame = bounds
+    /**
+     Это универсальный метод добавления тени. В зависимости от параметров можно добавить обычную/множественную внешнюю/внутреннюю тень
+     - Parameter side: Указатель смещения тени. 9 направлений для innearLinear. Для innearRadial 4 направления в разные углы. Не влияет на другие виды тени.
+     - Parameter type: Указатель на вид тени. single - обычная тень без подслоев. outside - внешняя множественная тень. innear - внутренняя тень
+     - Parameter color: Цвет тени.
+     - Parameter power: для внутренней тени в диапазоне от 0 до 1. Для других от 0. Задает силу размытия. Для любой внешней тени = 10. Для внутренней = 1 (по умолчанию)
+     - Parameter alpha: Прозрачность тени.
+     - Parameter offset: Смещение тени. Для линейной множественной тени можно выбрать 9 через side направлений смещения. Для других теней положительное значение смещает в нижний правый угол, отрицательное - в верхний левый.
+     */
+    func addShadow(side: SidesBlur = .bottomRight,
+                   type: TypeShadow = .single,
+                   color: UIColor = UIColor.black,
+                   power: Float = 10,
+                   alpha: Float = 0.1,
+                   offset: CGFloat = 10) {
+        // Тень на корневой слой View
+        if type == .single {
+            layer.shadowColor = color.cgColor
+            layer.shadowOffset = CGSize(width: offset, height: offset)
+            layer.shadowRadius = CGFloat(power)
+            layer.shadowOpacity = alpha
         }
         
-        gradientLayer.opacity = alpha
-        
-        guard isRadial else {
+        // Внутренняя тень
+        if type == .innearLinear || type == .innearRadial {
+            /// Ограничение на размытие
+            var powerBlur: Float = 1.0
+            switch power {
+            case ..<0:
+                powerBlur = 0
+            case 0...1:
+                powerBlur = power
+            default:
+                powerBlur = 1
+            }
+            /// Слой - родитель, по которому будет обрезаться внутренняя тень
+            let superLayer = CALayer()
+            superLayer.frame = bounds
+            superLayer.cornerRadius = layer.cornerRadius
+            superLayer.masksToBounds = true
+            layer.addSublayer(superLayer)
+            // Внутренняя тень
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.opacity = alpha
+            superLayer.addSublayer(gradientLayer)
+            
+            guard type == .innearRadial else {
+                /// Выбор направления линейной тени
+                switch side {
+                case .topLeft:
+                    gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+                    gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+                case .topCenter:
+                    gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+                    gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+                case .topRight:
+                    gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+                    gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
+                case .leftCenter:
+                    gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+                    gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+                case .rightCenter:
+                    gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.5)
+                    gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
+                case .bottomLeft:
+                    gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+                    gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
+                case .bottomCenter:
+                    gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+                    gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+                case .bottomRight:
+                    gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
+                    gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+                }
+                /// Настройка линейной тени
+                gradientLayer.name = "linearShadow"
+                gradientLayer.colors = [color.cgColor, UIColor.white.withAlphaComponent(0), UIColor.white.withAlphaComponent(0), UIColor.white.withAlphaComponent(0)]
+                gradientLayer.locations = [0, NSNumber(value: powerBlur), NSNumber(value: 1 - powerBlur), 1]
+                gradientLayer.cornerRadius = layer.cornerRadius
+                return
+            }
+            /// Выбор стороны смещения радиальной тени
             switch side {
             case .topLeft:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-            case .topCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-            case .topRight:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
-            case .leftCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-            case .rightCenter:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.5)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
-            case .bottomLeft:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
-            case .bottomCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+                gradientLayer.frame = CGRect(x: bounds.minX - offset / 10,
+                                             y: bounds.minY - offset / 10,
+                                             width: bounds.width + offset,
+                                             height: bounds.height + offset)
             case .bottomRight:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+                gradientLayer.frame = CGRect(x: bounds.minX - offset * (1 - 1 / 10),
+                                             y: bounds.minY - offset * (1 - 1 / 10),
+                                             width: bounds.width + offset,
+                                             height: bounds.height + offset)
+            case .bottomLeft:
+                gradientLayer.frame = CGRect(x: bounds.minX - offset / 10,
+                                             y: bounds.minY - offset * (1 - 1 / 10),
+                                             width: bounds.width + offset,
+                                             height: bounds.height + offset)
+            case .topRight:
+                gradientLayer.frame = CGRect(x: bounds.minX - offset * (1 - 1 / 10),
+                                             y: bounds.minY - offset * 1 / 10,
+                                             width: bounds.width + offset,
+                                             height: bounds.height + offset)
+            default:
+                gradientLayer.frame = bounds
             }
+            // Настройка радиальной тени
+            gradientLayer.type = .radial
+            gradientLayer.name = "radialShadow"
+            gradientLayer.colors = [
+                UIColor.white.withAlphaComponent(0).cgColor,
+                UIColor.white.withAlphaComponent(0).cgColor,
+                color.cgColor
+            ]
             
-            gradientLayer.colors = [color1.cgColor, (backgroundColor ?? UIColor.clear).cgColor, (backgroundColor ?? UIColor.clear).cgColor, (backgroundColor ?? UIColor.clear).cgColor]
-            gradientLayer.locations = [0, NSNumber(value: power), NSNumber(value: 1 - power), 1]
-            gradientLayer.cornerRadius = layer.cornerRadius
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+            gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+            gradientLayer.locations = [0, NSNumber(value: 1 - powerBlur), 1]
             return
         }
-        gradientLayer.type = .radial
-        gradientLayer.colors = [
-            UIColor.white.withAlphaComponent(0).cgColor,
-            UIColor.white.withAlphaComponent(0).cgColor,
-            color1.cgColor
-        ]
         
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.locations = [0, NSNumber(value: 1 - power), 1]
-        layer.masksToBounds = true
-    }
+        // Внешняя множественная тень
+        var isHaveBackground = false
+        /// Проверяем, добавлен слой, замещающий фон
+        layer.sublayers?.forEach {
+            if $0.name == "background" { isHaveBackground = true }
+        }
+        /// Добавляем фоновый слой
+        if !isHaveBackground {
+            let oldLayer = CALayer()
+            oldLayer.name = "background"
+            oldLayer.backgroundColor = backgroundColor?.cgColor
+            oldLayer.cornerRadius = layer.cornerRadius
+            oldLayer.frame = layer.bounds
+            oldLayer.masksToBounds = false
+            layer.insertSublayer(oldLayer, at: 0)
+        }
     
-    /// Добавляет размытый подслой с помощью градиента на View.
-    /// Можно делать как радиальное, так и обычное размытие. В случае обычного размытия, параметр isRadial можно не указывать.
-    ///
-    /// Для обычного размытия: выбираете сторону, где нужно размыть.
-    /// Параметр offset влияет только на радиальное размытие.
-    ///
-    /// Для радиального размытия указываете isRadial: true
-    /// Параметр offset указывает куда сдвинуть размытие.
-    ///
-    /// power - длина размытия, alpha - прозрачность подслоя.
-    /// СТРОГО не совмещать с setShadowWithColor на одном View.
-    func addBlurLayer(side: SidesBlur = .topCenter,
-                      color1: UIColor = UIColor.black,
-                      power: Float = 0.1,
-                      alpha: Float = 1,
-                      isRadial: Bool = false,
-                      offset: CGSize = .zero) {
-        let gradientLayer = CAGradientLayer()
-        layer.insertSublayer(gradientLayer, at: 0)
+        let outsideShadowLayer = CALayer()
+        /// Настройка внешней тени
+        outsideShadowLayer.name = "outsideShadow"
+        outsideShadowLayer.shadowColor = color.cgColor
+        outsideShadowLayer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius).cgPath
+        outsideShadowLayer.shadowOffset = CGSize(width: offset, height: offset)
+        outsideShadowLayer.shadowRadius = CGFloat(power)
+        outsideShadowLayer.shadowOpacity = alpha
         
-        let x = offset.width
-        let y = offset.height
-        switch (x, y) {
-        case (0..., 0...):
-            gradientLayer.frame = CGRect(x: bounds.minX - offset.width / 10,
-                                         y: bounds.minY - offset.height / 10,
-                                         width: bounds.width + offset.width,
-                                         height: bounds.height + offset.height)
-        case (..<0, ..<0):
-            gradientLayer.frame = CGRect(x: bounds.minX + offset.width * (1 - 1 / 10),
-                                         y: bounds.minY + offset.height * (1 - 1 / 10),
-                                         width: bounds.width + abs(offset.width),
-                                         height: bounds.height + abs(offset.height))
-        case (..<0, 0...):
-            gradientLayer.frame = CGRect(x: bounds.minX + offset.width * (1 - 1 / 10),
-                                         y: bounds.minY + offset.height / 10,
-                                         width: bounds.width + abs(offset.width),
-                                         height: bounds.height + offset.height)
-        case (0..., ..<0):
-            gradientLayer.frame = CGRect(x: bounds.minX - offset.width / 10,
-                                         y: bounds.minY + offset.height * (1 - 1 / 10),
-                                         width: bounds.width + offset.width,
-                                         height: bounds.height + abs(offset.height))
-        default:
-            gradientLayer.frame = bounds
-        }
-        gradientLayer.opacity = alpha
-        
-        guard isRadial else {
-            switch side {
-            case .topLeft:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-            case .topCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-            case .topRight:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
-            case .leftCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-            case .rightCenter:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.5)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
-            case .bottomLeft:
-                gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
-            case .bottomCenter:
-                gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
-            case .bottomRight:
-                gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
-                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-            }
-            
-            gradientLayer.colors = [color1.cgColor, color1.cgColor, (backgroundColor ?? UIColor.clear).cgColor]
-            
-            gradientLayer.locations = [0, NSNumber(value: 1 - power), 1]
-            gradientLayer.cornerRadius = layer.cornerRadius
-            return
-        }
-        gradientLayer.type = .radial
-        
-        gradientLayer.colors = [
-            color1.cgColor,
-            color1.cgColor,
-            (backgroundColor ?? UIColor.clear).cgColor
-        ]
-        
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.locations = [0, NSNumber(value: 1 - power), 1]
-        layer.masksToBounds = true
+        layer.insertSublayer(outsideShadowLayer, at: 0)
     }
 }

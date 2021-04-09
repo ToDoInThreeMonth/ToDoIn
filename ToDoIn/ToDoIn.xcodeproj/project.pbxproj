@@ -20,6 +20,10 @@
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
 		4351797F26184DF5009F898B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* Data.swift */; };
 		4351798226185190009F898B /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskCell.swift */; };
+		4354B312261CC2ED0080F577 /* AddingTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4354B311261CC2ED0080F577 /* AddingTaskController.swift */; };
+		439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439AE9A4262051D50051BB01 /* CustomTextField.swift */; };
+		439AE9A926207AA70051BB01 /* UserPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439AE9A826207AA70051BB01 /* UserPickerCell.swift */; };
+		439AE9AC26207C280051BB01 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439AE9AB26207C280051BB01 /* CustomButton.swift */; };
 		43C4FAA6261733AA0019816F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA5261733AA0019816F /* Group.swift */; };
 		43C4FAA9261737C20019816F /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupCell.swift */; };
 		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
@@ -46,6 +50,10 @@
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		4351797E26184DF5009F898B /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		4351798126185190009F898B /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		4354B311261CC2ED0080F577 /* AddingTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTaskController.swift; sourceTree = "<group>"; };
+		439AE9A4262051D50051BB01 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		439AE9A826207AA70051BB01 /* UserPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPickerCell.swift; sourceTree = "<group>"; };
+		439AE9AB26207C280051BB01 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		43C4FAA5261733AA0019816F /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		43C4FAA8261737C20019816F /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
@@ -138,6 +146,9 @@
 				4351798126185190009F898B /* TaskCell.swift */,
 				43DA628B261881D00057F063 /* SectionHeaderView.swift */,
 				4346BEBE26189F0A00AE8199 /* HeaderCollectionView.swift */,
+				439AE9A4262051D50051BB01 /* CustomTextField.swift */,
+				439AE9A826207AA70051BB01 /* UserPickerCell.swift */,
+				439AE9AB26207C280051BB01 /* CustomButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -157,6 +168,7 @@
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
 				43DDECE12614DE4B000FFC78 /* GroupsController.swift */,
 				43C4FAAB2617555C0019816F /* GroupController.swift */,
+				4354B311261CC2ED0080F577 /* AddingTaskController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -286,11 +298,15 @@
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				4351797F26184DF5009F898B /* Data.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
+				4354B312261CC2ED0080F577 /* AddingTaskController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupCell.swift in Sources */,
+				439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,
+				439AE9A926207AA70051BB01 /* UserPickerCell.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
+				439AE9AC26207C280051BB01 /* CustomButton.swift in Sources */,
 				43DDECDE2614DDF6000FFC78 /* GroupsFlowCoordinator.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */,
