@@ -11,6 +11,10 @@ protocol ChildCoordinator: class {
     func start()
 }
 
+protocol CoordinatorOutput: UIViewController {
+    var coordinator: MainChildCoordinator? { get set }
+}
+
 // Основной координатор - сборщик проекта, отвечает за UITabBarController
 class AppCoordinator: MainCoordinator {
     var tabBarController: CustomTabBarController

@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CoordinatorOutput {
     weak var coordinator: MainChildCoordinator?
     
 

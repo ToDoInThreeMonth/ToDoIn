@@ -1,6 +1,6 @@
 import UIKit
 
-class GroupsController: UIViewController {
+class GroupsController: UIViewController, CoordinatorOutput {
     
     weak var coordinator: MainChildCoordinator?
     

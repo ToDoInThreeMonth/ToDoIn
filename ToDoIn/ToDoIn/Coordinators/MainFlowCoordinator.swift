@@ -18,7 +18,19 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func start() {
-        let viewController = ViewController()
+        let viewController: CoordinatorOutput
+        
+        switch title {
+        case "Главная":
+            viewController = ViewController()
+        case "Комнаты":
+            viewController = ViewController()
+        case "Аккаунт":
+            viewController = GroupsController()
+        default:
+            viewController = ViewController()
+        }
+        
         viewController.coordinator = self
         var tabBarImage: UIImage?
         tabBarImage = (imageName == "") ? nil : UIImage(named: imageName)
