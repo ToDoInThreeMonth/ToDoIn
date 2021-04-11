@@ -1,10 +1,10 @@
 import Foundation
 
 class Data {
-    static var owners = [Owners(owner: "Я", tasks: [Task(owner: "Я", name: "Купить кальян", description: "", date: Date())]),
-                         Owners(owner: "Вова", tasks: [Task(owner: "Вова", name: "Взять колонку", description: "", date: Date()), Task(owner: "Вова", name: "Купить еще кальян", description: "", date: Date())]),
-                         Owners(owner: "Вася", tasks: [Task(owner: "Вася", name: "Купить еще кальян", description: "", date: Date())]),
-                         Owners(owner: "Филипп", tasks: [Task(owner: "Филипп", name: "Купить еще кальян", description: "", date: Date())])]
+    static var owners = [Owners(owner: "Я", image: "user", tasks: [Task(owner: "Я", name: "Купить кальян", description: "", date: Date())]),
+                         Owners(owner: "Вова", image: "user", tasks: [Task(owner: "Вова", name: "Взять колонку", description: "", date: Date()), Task(owner: "Вова", name: "Купить еще кальян", description: "", date: Date())]),
+                         Owners(owner: "Вася", image: "user", tasks: [Task(owner: "Вася", name: "Купить еще кальян", description: "", date: Date())]),
+                         Owners(owner: "Филипп", image: "user", tasks: [Task(owner: "Филипп", name: "Купить еще кальян", description: "", date: Date())])]
     
     static var groups = [Group(name: "Дача", image: "group", owners: owners),
                          Group(name: "Шашлыки", image: "group", owners: owners),

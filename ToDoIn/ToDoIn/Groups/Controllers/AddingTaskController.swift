@@ -16,10 +16,13 @@ class AddingTaskController: UIViewController {
     private let datePicker = UIDatePicker()
     private let userPicker = UIPickerView()
     private let shadowUserPickerSubview = UIView()
-    private let addButton = CustomButton(title: "Добавить")
+    private let addButton = UIButton()
     
+    private let userPickerSize = CGSize(width: 240, height: 40)
+    private let buttonHeight: CGFloat = 40
     private let cornerRadius: CGFloat = 15
     private let horizontalPadding: CGFloat = 40
+    private let placeholderText = "Подготовиться к рк на следующую неделю"
     
     // MARK: - Init
     
@@ -43,7 +46,10 @@ class AddingTaskController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
+        setBackground()
+        hideKeyboardWhenTappedAround()
+        
         configureLabels()
         configureNameTextField()
         configureDescriptionTextView()
@@ -82,7 +88,7 @@ class AddingTaskController: UIViewController {
         descriptionTextView.pin
             .below(of: descriptionLabel)
             .marginTop(15)
-            .horizontally(15)
+            .horizontally(10)
             .height(140)
         
         datePicker.pin
@@ -95,18 +101,18 @@ class AddingTaskController: UIViewController {
             .below(of: datePicker)
             .hCenter()
             .marginTop(10)
-            .size(CGSize(width: 200, height: 40))
+            .size(userPickerSize)
         
         userPicker.pin
             .below(of: datePicker)
+            .hCenter()
             .marginTop(10)
-            .horizontally(horizontalPadding)
-            .height(horizontalPadding)
+            .size(userPickerSize)
         
         addButton.pin
             .bottom(15)
             .horizontally(horizontalPadding)
-            .height(horizontalPadding)
+            .height(buttonHeight)
     }
     
     func configureLabels() {
@@ -120,17 +126,20 @@ class AddingTaskController: UIViewController {
         nameTextField.placeholder = "Поботать"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
-        nameTextField.addMyShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
+        nameTextField.addSimpleShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
     }
     
     func configureDescriptionTextView() {
         shadowDescriptionSubview.backgroundColor = .white
         shadowDescriptionSubview.layer.cornerRadius = cornerRadius
-        shadowDescriptionSubview.addMyShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
+        shadowDescriptionSubview.addSimpleShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
         
         descriptionTextView.layer.cornerRadius = cornerRadius
-        descriptionTextView.textColor = .darkTextColor
+        descriptionTextView.text = placeholderText
+        descriptionTextView.textColor = .lightTextColor
         descriptionTextView.backgroundColor = .white
+        
+        descriptionTextView.delegate = self
         
         shadowDescriptionSubview.insertSubview(descriptionTextView, at: 0)
     }
@@ -143,19 +152,28 @@ class AddingTaskController: UIViewController {
     func configureUserPicker() {
         shadowUserPickerSubview.backgroundColor = .white
         shadowUserPickerSubview.layer.cornerRadius = cornerRadius
-        shadowUserPickerSubview.addMyShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
+        shadowUserPickerSubview.addSimpleShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
         
         userPicker.dataSource = self
         userPicker.delegate = self
         userPicker.backgroundColor = .white
         userPicker.layer.cornerRadius = cornerRadius
         
-        
         shadowUserPickerSubview.insertSubview(userPicker, at: 0)
     }
 
     func configureAddButton() {
+        addButton.setTitle("Добавить", for: .normal)
+        addButton.setTitleColor(.darkTextColor, for: .normal)
         addButton.layer.cornerRadius = cornerRadius
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - horizontalPadding * 2, height: buttonHeight)
+        gradientLayer.cornerRadius = addButton.layer.cornerRadius
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
+        addButton.layer.insertSublayer(gradientLayer, at: 0)
+        
+        addButton.addSimpleShadow(color: .black, offset: CGSize(width: 1, height: 1), radius: 2, opacity: 0.10)
     }
 }
 
@@ -169,24 +187,51 @@ extension AddingTaskController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return group.owners.count
+        return group.owners.count + 1
     }
-    
-    
+
 }
 
 extension AddingTaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let userView = UserPickerCell(userName: group.owners[row].owner)
+        if row == 0 {
+            return UserPickerCell("Адресовать пользователю")
+        }
+        let userView = UserPickerCell(userName: group.owners[row - 1].owner)
         return userView
     }
+    
+}
+
+extension AddingTaskController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == placeholderText {
+            textView.text = ""
+            textView.textColor = .darkTextColor
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = placeholderText
+            textView.textColor = .lightTextColor
+        }
+    }
+    
 }
 
 
 extension UIView {
     
-    func addMyShadow(color: UIColor, offset: CGSize, radius: CGFloat, opacity: Float) {
+    func addSimpleShadow(color: UIColor, offset: CGSize, radius: CGFloat, opacity: Float) {
         layer.shadowColor = color.cgColor
         layer.shadowOffset = offset
         layer.shadowRadius = radius

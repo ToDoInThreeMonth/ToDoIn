@@ -1,6 +1,6 @@
 import UIKit
 
-class TaskCell: UITableViewCell {
+class TaskTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     static let identifier = "TaskCell"
@@ -62,12 +62,8 @@ class TaskCell: UITableViewCell {
     
     func configureTaskView() {
         taskView.layer.cornerRadius = self.frame.height / 2.6
-        // градиент
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = taskView.bounds
-        gradientLayer.cornerRadius = taskView.layer.cornerRadius
-        gradientLayer.colors = [ UIColor.white.cgColor, UIColor.accentColor.cgColor ]
-        taskView.layer.insertSublayer(gradientLayer, at: 0)
+
+        taskView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
         
         taskView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
     }

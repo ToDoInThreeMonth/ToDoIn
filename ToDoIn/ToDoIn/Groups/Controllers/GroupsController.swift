@@ -14,12 +14,12 @@ class GroupsController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        setBackground()
         self.view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setBackground()
         configureTableView()
     }
     
@@ -27,23 +27,14 @@ class GroupsController: UIViewController {
         tableView.pin.all().marginTop(view.pin.safeArea.top + 15)
     }
     
-    func setBackground()  {
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "background")
-        backgroundImage.contentMode = .scaleAspectFill
-        view.insertSubview(backgroundImage, at: 0)
-    }
-    
     func configureTableView() {
-        tableView.register(GroupCell.self, forCellReuseIdentifier: GroupCell.identifier)
+        tableView.register(GroupTableViewCell.self, forCellReuseIdentifier: GroupTableViewCell.identifier)
         
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        view.addSubview(tableView)
     }
     
 }
@@ -60,7 +51,7 @@ extension GroupsController: UITableViewDataSource {
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as! GroupTableViewCell
 //        cell.selectedBackgroundView = UIView()
 //        cell.selectedBackgroundView?.backgroundColor = .clear
         cell.layer.cornerRadius = cell.frame.height / 2.6

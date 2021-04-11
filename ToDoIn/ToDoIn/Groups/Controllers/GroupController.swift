@@ -5,7 +5,7 @@ class GroupController: UIViewController {
     
     // MARK: - Properties
     
-    private var tableView = UITableView()
+    private let tableView = UITableView()
     
     private let group: Group
     
@@ -44,15 +44,9 @@ class GroupController: UIViewController {
         tableView.pin.all()
     }
     
-    func setBackground()  {
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "background")
-        backgroundImage.contentMode = .scaleAspectFill
-        view.insertSubview(backgroundImage, at: 0)
-    }
     
     func configureTableView() {
-        tableView.register(TaskCell.self, forCellReuseIdentifier: TaskCell.identifier)
+        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.identifier)
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -85,6 +79,7 @@ class GroupController: UIViewController {
     
     @objc
     func settingsButtonTapped(sender: UIBarButtonItem) {
+        show(GroupSettingsController(group: group), sender: settingsButton)
     }
     
     @objc
@@ -106,7 +101,7 @@ extension GroupController: UITableViewDataSource {
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TaskCell.identifier, for: indexPath) as! TaskCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as! TaskTableViewCell
         cell.setUp(task: group.owners[indexPath.section].tasks[indexPath.row])
         return cell
     }

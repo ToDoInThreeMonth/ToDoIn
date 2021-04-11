@@ -11,6 +11,13 @@ class UserPickerCell: UIView {
         addSubview(userlabel)
     }
     
+    init(_ title: String) {
+        super.init(frame: .zero)
+        userlabel.text = title
+        userlabel.textColor = .lightTextColor
+        addSubview(userlabel)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

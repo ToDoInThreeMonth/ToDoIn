@@ -1,6 +1,6 @@
 import UIKit
 
-class GroupCell: UITableViewCell {
+class GroupTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     static let identifier = "GroupCell"
@@ -67,12 +67,7 @@ class GroupCell: UITableViewCell {
     func configureGroupView() {
         groupView.layer.cornerRadius = self.frame.height / 2.6
         
-        // градиент на фоне ячейки
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = groupView.bounds
-        gradientLayer.cornerRadius = groupView.layer.cornerRadius
-        gradientLayer.colors = [ UIColor.white.cgColor, UIColor.accentColor.cgColor ]
-        groupView.layer.insertSublayer(gradientLayer, at: 0)
+        groupView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
         
         groupView.backgroundColor = UIColor(red: 243/255, green: 247/255, blue: 250/255, alpha: 1)
         groupView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
@@ -84,7 +79,7 @@ class GroupCell: UITableViewCell {
     }
     
     func configureGroupImageView() {
-        groupImageView.layer.cornerRadius = (self.frame.height - (imagePadding + groupViewPadding) * 2) / 2
+        groupImageView.makeRound()
         groupImageView.layer.masksToBounds = false
         groupImageView.clipsToBounds = true
     }

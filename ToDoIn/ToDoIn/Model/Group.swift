@@ -14,10 +14,12 @@ class Group {
 
 class Owners {
     var owner: String
+    var image: String
     var tasks: [Task]
     
-    init(owner: String, tasks: [Task]) {
+    init(owner: String, image: String, tasks: [Task]) {
         self.owner = owner
+        self.image = image
         self.tasks = tasks
     }
 }
