@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let acountFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), imageName: "account", title: "Аккаунт")
         
-        let groupsFlowCoordinator = GroupsFlowCoordinator(navigationController: UINavigationController(), imageName: "groups", title: "Комнаты")
+        let groupsFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), imageName: "groups", title: "Комнаты")
         
         appCoordinator = AppCoordinator(tabBarController: CustomTabBarController(), childCoordinators: [acountFlowCoordinator, mainFlowCoordinator, groupsFlowCoordinator])
         appCoordinator?.start()

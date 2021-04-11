@@ -26,7 +26,7 @@ class MainFlowCoordinator: MainChildCoordinator {
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
         
-        // Пример настройки viewController (title и barButtonItem)
+        // Пример настройки viewController
         viewController.view.backgroundColor = .white
         viewController.title = title
         

@@ -91,24 +91,40 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				43829AFA2622C336008E5B53 /* Views */,
+				43829AF82622C2DF008E5B53 /* Groups */,
 				43DDECE02614DE2F000FFC78 /* Controllers */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
-				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
-				43228670260E08FA0096C905 /* CustomTabBar.swift */,
+				43228673260E33980096C905 /* UIColor+extenstion.swift */,
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
-				43228673260E33980096C905 /* UIColor+extenstion.swift */,
 				4313B449260BBFA800E6381A /* Info.plist */,
 			);
 			path = ToDoIn;
+			sourceTree = "<group>";
+		};
+		43829AF82622C2DF008E5B53 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				43DDECE12614DE4B000FFC78 /* GroupsController.swift */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
+		43829AFA2622C336008E5B53 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
+				43228670260E08FA0096C905 /* CustomTabBar.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		43DDECE02614DE2F000FFC78 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
-				43DDECE12614DE4B000FFC78 /* GroupsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
