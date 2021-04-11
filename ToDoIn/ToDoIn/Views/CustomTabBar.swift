@@ -1,19 +1,18 @@
-//
-//  TabBarViewController.swift
-//  ToDoIn
-//
-//  Created by Дарья on 26.03.2021.
-//
-
 import UIKit
 
 class CustomTabBar: UITabBar {
 
     private var shapeLayer: CALayer?
     
-//    override func sizeThatFits(_ size: CGSize) -> CGSize {
-//        return CGSize(width: size.width, height: size.height + 50)
-//    }
+    struct LayersConstants {
+        static let centerArcRadius: CGFloat = 40
+        static let sideArcRadius: CGFloat = 20
+        static let centerArcWidth = sin(CGFloat.pi / 2 - angle) * centerArcRadius
+        static let yCenterArc = cos(CGFloat.pi / 2 - angle) * LayersConstants.centerArcRadius
+        static let angle: CGFloat = CGFloat.pi * 10 / 180
+        static let startAngle: CGFloat = -angle
+        static let endAngle: CGFloat = -CGFloat.pi + angle
+    }
     
     private func addShape(_ rect: CGRect) {
         let shapeLayer = CAShapeLayer()
@@ -26,7 +25,6 @@ class CustomTabBar: UITabBar {
         shapeLayer.shadowOffset = CGSize(width: 0, height: -1)
         shapeLayer.shadowRadius = 2
         shapeLayer.shadowOpacity = 0.10
-    
         
         if let oldShapeLayer = self.shapeLayer {
             self.layer.replaceSublayer(oldShapeLayer, with: shapeLayer)
@@ -37,6 +35,7 @@ class CustomTabBar: UITabBar {
     }
     
     override func draw(_ rect: CGRect) {
+        super.draw(rect)
         self.addShape(rect)
         self.unselectedItemTintColor = UIColor.lightTextColor
         self.tintColor = UIColor.darkTextColor
@@ -45,21 +44,22 @@ class CustomTabBar: UITabBar {
     func createNewPath(_ rect: CGRect) -> CGPath {
         let path = UIBezierPath()
         let screenCenter = rect.width / 2
-        let mainRadius: CGFloat = 40
-        let radius: CGFloat = 20
-        let angle: CGFloat = CGFloat.pi * 10 / 180 // угол 10 градусов
-        let yArcCenter = cos(CGFloat.pi / 2 - angle) * mainRadius
-        let minRadius = sin(CGFloat.pi / 2 - angle) * mainRadius
-        let startAngle: CGFloat = -angle
-        let endAngle: CGFloat = -CGFloat.pi + angle
         
-        path.move(to: CGPoint(x: 0, y: radius))
-        path.addArc(withCenter: CGPoint(x: radius, y: radius), radius: radius, startAngle: -CGFloat.pi, endAngle: -CGFloat.pi / 2, clockwise: true)
-        path.addLine(to: CGPoint(x: screenCenter - minRadius, y: 0))
-        path.addArc(withCenter: CGPoint(x: screenCenter, y: yArcCenter), radius: mainRadius, startAngle: endAngle, endAngle: startAngle, clockwise: true)
-        path.addLine(to: CGPoint(x: screenCenter + minRadius, y: 0))
-        path.addLine(to: CGPoint(x: self.frame.width - radius, y: 0))
-        path.addArc(withCenter: CGPoint(x: self.frame.width - radius, y: radius), radius: radius, startAngle: -CGFloat.pi / 2, endAngle: .zero, clockwise: true)
+        let leftArcStartPoint = CGPoint(x: 0, y: LayersConstants.sideArcRadius)
+        let leftArcCenterPoint = CGPoint(x: LayersConstants.sideArcRadius, y: LayersConstants.sideArcRadius)
+        let rightArcStartPoint = CGPoint(x: self.frame.width - LayersConstants.sideArcRadius, y: 0)
+        let rightArcCenterPoint = CGPoint(x: self.frame.width - LayersConstants.sideArcRadius, y: LayersConstants.sideArcRadius)
+        let centerArcStartPoint = CGPoint(x: screenCenter - LayersConstants.centerArcWidth, y: 0)
+        let centerArcCenterPoint = CGPoint(x: screenCenter, y: LayersConstants.yCenterArc)
+        let centerArcEndPoint = CGPoint(x: screenCenter + LayersConstants.centerArcWidth, y: 0)
+        
+        path.move(to: leftArcStartPoint)
+        path.addArc(withCenter: leftArcCenterPoint, radius: LayersConstants.sideArcRadius, startAngle: -CGFloat.pi, endAngle: -CGFloat.pi / 2, clockwise: true)
+        path.addLine(to: centerArcStartPoint)
+        path.addArc(withCenter: centerArcCenterPoint, radius: LayersConstants.centerArcRadius, startAngle: LayersConstants.endAngle, endAngle: LayersConstants.startAngle, clockwise: true)
+        path.addLine(to: centerArcEndPoint)
+        path.addLine(to: rightArcStartPoint)
+        path.addArc(withCenter: rightArcCenterPoint, radius: LayersConstants.sideArcRadius, startAngle: -CGFloat.pi / 2, endAngle: .zero, clockwise: true)
         path.addLine(to: CGPoint(x: self.frame.width, y: self.frame.height))
         path.addLine(to: CGPoint(x: 0, y: self.frame.height))
         path.close()

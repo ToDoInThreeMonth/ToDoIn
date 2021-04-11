@@ -5,6 +5,8 @@ class GroupController: UIViewController {
     
     // MARK: - Properties
     
+    weak var coordinator: MainChildCoordinator?
+    
     private let tableView = UITableView()
     
     private let group: Group
@@ -84,7 +86,7 @@ class GroupController: UIViewController {
     
     @objc
     func addingTaskButtonTapped(sender: UIBarButtonItem) {
-        present(AddingTaskController(group: group), animated: true, completion: nil)
+        coordinator?.showAddTask(group: group)
     }
 
 }

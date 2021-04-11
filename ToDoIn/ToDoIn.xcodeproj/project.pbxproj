@@ -29,7 +29,6 @@
 		43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupTableViewCell.swift */; };
 		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
 		43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DA628B261881D00057F063 /* SectionHeaderView.swift */; };
-		43DDECDE2614DDF6000FFC78 /* GroupsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDECDD2614DDF6000FFC78 /* GroupsFlowCoordinator.swift */; };
 		43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDECE12614DE4B000FFC78 /* GroupsController.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
@@ -60,7 +59,6 @@
 		43C4FAA8261737C20019816F /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		43DA628B261881D00057F063 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
-		43DDECDD2614DDF6000FFC78 /* GroupsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFlowCoordinator.swift; sourceTree = "<group>"; };
 		43DDECE12614DE4B000FFC78 /* GroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsController.swift; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0B3DC4BF660E53D2E6FE999 /* Pods-ToDoIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.debug.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,7 +81,6 @@
 			children = (
 				15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */,
 				15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */,
-				43DDECDD2614DDF6000FFC78 /* GroupsFlowCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -334,7 +331,6 @@
 				439AE9A926207AA70051BB01 /* UserPickerCell.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
-				43DDECDE2614DDF6000FFC78 /* GroupsFlowCoordinator.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,

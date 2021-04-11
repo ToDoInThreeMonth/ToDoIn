@@ -56,6 +56,11 @@ class AddingTaskController: UIViewController {
         configureDataPicker()
         configureUserPicker()
         configureAddButton()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        configureShadows()
     }
     
     override func viewDidLayoutSubviews() {
@@ -126,13 +131,11 @@ class AddingTaskController: UIViewController {
         nameTextField.placeholder = "Поботать"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
-        nameTextField.addSimpleShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
     }
     
     func configureDescriptionTextView() {
         shadowDescriptionSubview.backgroundColor = .white
         shadowDescriptionSubview.layer.cornerRadius = cornerRadius
-        shadowDescriptionSubview.addSimpleShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
         
         descriptionTextView.layer.cornerRadius = cornerRadius
         descriptionTextView.text = placeholderText
@@ -152,7 +155,6 @@ class AddingTaskController: UIViewController {
     func configureUserPicker() {
         shadowUserPickerSubview.backgroundColor = .white
         shadowUserPickerSubview.layer.cornerRadius = cornerRadius
-        shadowUserPickerSubview.addSimpleShadow(color: .black, offset: CGSize(width: 0, height: -1), radius: 2, opacity: 0.10)
         
         userPicker.dataSource = self
         userPicker.delegate = self
@@ -172,8 +174,11 @@ class AddingTaskController: UIViewController {
         gradientLayer.cornerRadius = addButton.layer.cornerRadius
         gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
         addButton.layer.insertSublayer(gradientLayer, at: 0)
-        
-        addButton.addSimpleShadow(color: .black, offset: CGSize(width: 1, height: 1), radius: 2, opacity: 0.10)
+    }
+    
+    func configureShadows() {
+        [nameTextField, shadowDescriptionSubview, shadowUserPickerSubview, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+        [nameTextField, shadowDescriptionSubview, shadowUserPickerSubview, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
     }
 }
 
@@ -227,15 +232,3 @@ extension AddingTaskController: UITextViewDelegate {
     }
     
 }
-
-
-extension UIView {
-    
-    func addSimpleShadow(color: UIColor, offset: CGSize, radius: CGFloat, opacity: Float) {
-        layer.shadowColor = color.cgColor
-        layer.shadowOffset = offset
-        layer.shadowRadius = radius
-        layer.shadowOpacity = opacity
-    }
-}
-

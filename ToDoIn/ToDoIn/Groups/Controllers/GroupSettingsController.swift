@@ -46,6 +46,10 @@ class GroupSettingsController: UIViewController {
         configureAddUserButton()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        configureShadows()
+    }
+    
     override func viewDidLayoutSubviews() {
         groupTitle.pin
             .top(view.pin.safeArea.top + 10)
@@ -85,8 +89,6 @@ class GroupSettingsController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 20
         imageView.image = UIImage(named: group.image)
-
-
     }
     
     func configureTableView() {
@@ -107,9 +109,12 @@ class GroupSettingsController: UIViewController {
         addUserButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         addUserButton.backgroundColor = .accentColor
         addUserButton.layer.cornerRadius = cornerRadius
-        addUserButton.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
-        addUserButton.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 2)
         addUserButton.addTarget(self, action: #selector(addUserButtonTapped), for: .touchUpInside)
+    }
+    
+    func configureShadows() {
+        addUserButton.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
+        addUserButton.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
     }
     
     @objc

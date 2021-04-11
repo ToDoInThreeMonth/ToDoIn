@@ -4,6 +4,7 @@ import PinLayout
 class GroupsController: UIViewController {
     
     // MARK: - Properties
+    weak var coordinator: MainChildCoordinator?
     
     var groups = Data.groups
     
@@ -42,7 +43,7 @@ class GroupsController: UIViewController {
 
 // MARK: - Extensions
 
-extension GroupsController: UITableViewDataSource {
+extension GroupsController: UITableViewDataSource, CoordinatorOutput {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,8 +65,7 @@ extension GroupsController: UITableViewDelegate {
 
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let groupController = GroupController(group: groups[indexPath.row])
-        navigationController?.pushViewController(groupController, animated: true)
+        coordinator?.showGroupController(group: groups[indexPath.row])
     }
     
     // размер ячейки

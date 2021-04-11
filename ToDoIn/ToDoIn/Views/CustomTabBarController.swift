@@ -1,20 +1,8 @@
-//
-//  CustomTabBarViewController.swift
-//  ToDoIn
-//
-//  Created by Дарья on 26.03.2021.
-//
-
-import Foundation
 import UIKit
 import PinLayout
 
 class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
     
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
-//
     private let buttonView = UIView()
     private let button = UIButton()
     
