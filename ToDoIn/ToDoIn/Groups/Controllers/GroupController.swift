@@ -11,7 +11,7 @@ class GroupController: UIViewController {
     
     private let group: Group
     
-    @objc private let settingsButton = UIBarButtonItem()
+    private let settingsButton = UIBarButtonItem()
     private let addingTaskButton = UIBarButtonItem()
     
     
@@ -81,7 +81,7 @@ class GroupController: UIViewController {
     
     @objc
     func settingsButtonTapped(sender: UIBarButtonItem) {
-        show(GroupSettingsController(group: group), sender: settingsButton)
+        coordinator?.showSettingsGroupController(group: group)
     }
     
     @objc

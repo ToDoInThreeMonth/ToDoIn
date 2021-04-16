@@ -1,12 +1,13 @@
 import UIKit
 import PinLayout
 
-class GroupsController: UIViewController {
+class GroupsController: UIViewController, CoordinatorOutput {
     
     // MARK: - Properties
+    
     weak var coordinator: MainChildCoordinator?
     
-    var groups = Data.groups
+    private var groups = Groups()
     
     private let tableView = UITableView()
     
@@ -43,20 +44,18 @@ class GroupsController: UIViewController {
 
 // MARK: - Extensions
 
-extension GroupsController: UITableViewDataSource, CoordinatorOutput {
+extension GroupsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return groups.groups.count
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as! GroupTableViewCell
-//        cell.selectedBackgroundView = UIView()
-//        cell.selectedBackgroundView?.backgroundColor = .clear
         cell.layer.cornerRadius = cell.frame.height / 2.6
-        cell.setUp(group: groups[indexPath.row])
+        cell.setUp(group: groups.groups[indexPath.row])
         return cell
     }
 }
@@ -65,7 +64,7 @@ extension GroupsController: UITableViewDelegate {
 
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.showGroupController(group: groups[indexPath.row])
+        coordinator?.showGroupController(group: groups.groups[indexPath.row])
     }
     
     // размер ячейки

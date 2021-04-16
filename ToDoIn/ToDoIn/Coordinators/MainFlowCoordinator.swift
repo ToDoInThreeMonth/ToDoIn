@@ -4,6 +4,7 @@ protocol MainChildCoordinator: ChildCoordinator {
     func showAddSection()
     func showAddTask(group: Group)
     func showGroupController(group: Group)
+    func showSettingsGroupController(group: Group)
 }
 
 class MainFlowCoordinator: MainChildCoordinator {
@@ -47,14 +48,20 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     
-//  Пока заглушки. Эти методы для вызова экранов добавления секции и задачи
     func showAddSection() {}
+    
     func showAddTask(group: Group) {
         navigationController.viewControllers.last?.present(AddingTaskController(group: group), animated: true, completion: nil)
     }
+    
     func showGroupController(group: Group) {
         let groupController = GroupController(group: group)
         groupController.coordinator = self
         navigationController.pushViewController(groupController, animated: true)
+    }
+    
+    func showSettingsGroupController(group: Group) {
+        let settingsGroupController = GroupSettingsController(group: group)
+        navigationController.pushViewController(settingsGroupController, animated: true)
     }
 }

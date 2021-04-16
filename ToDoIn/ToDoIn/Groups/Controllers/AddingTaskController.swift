@@ -7,22 +7,26 @@ class AddingTaskController: UIViewController {
     
     private let group: Group
     
+    struct LayersConstants {
+        static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        static let textFieldCornerRadius: CGFloat = 15
+        static let buttonHeight: CGFloat = 40
+        static let cornerRadius: CGFloat = 15
+        static let horizontalPadding: CGFloat = 40
+    }
+    
+    private let placeholderText = "Подготовиться к рк на следующую неделю"
+    
     private let titleLabel = UILabel()
     private let nameLabel = UILabel()
-    private let nameTextField = CustomTextField(insets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15), cornerRadius: 15)
+    private let nameTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
     private let descriptionLabel = UILabel()
     private let descriptionTextView = UITextView()
     private let shadowDescriptionSubview = UIView()
-    private let datePicker = UIDatePicker()
-    private let userPicker = UIPickerView()
-    private let shadowUserPickerSubview = UIView()
+    private let dateTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
+    private let timeTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
+    private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
     private let addButton = UIButton()
-    
-    private let userPickerSize = CGSize(width: 240, height: 40)
-    private let buttonHeight: CGFloat = 40
-    private let cornerRadius: CGFloat = 15
-    private let horizontalPadding: CGFloat = 40
-    private let placeholderText = "Подготовиться к рк на следующую неделю"
     
     // MARK: - Init
     
@@ -41,7 +45,7 @@ class AddingTaskController: UIViewController {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .accentColor
-        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, datePicker, userPicker, addButton, shadowDescriptionSubview, shadowUserPickerSubview)
+        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, timeTextField, userTextField, addButton, shadowDescriptionSubview)
     }
     
     override func viewDidLoad() {
@@ -53,8 +57,7 @@ class AddingTaskController: UIViewController {
         configureLabels()
         configureNameTextField()
         configureDescriptionTextView()
-        configureDataPicker()
-        configureUserPicker()
+        configurePickers()
         configureAddButton()
         
     }
@@ -76,7 +79,7 @@ class AddingTaskController: UIViewController {
         nameTextField.pin
             .below(of: nameLabel)
             .marginTop(15)
-            .horizontally(horizontalPadding)
+            .horizontally(LayersConstants.horizontalPadding)
             .height(35)
         
         descriptionLabel.pin
@@ -87,37 +90,37 @@ class AddingTaskController: UIViewController {
         shadowDescriptionSubview.pin
             .below(of: descriptionLabel)
             .marginTop(15)
-            .horizontally(horizontalPadding)
-            .height(140)
+            .horizontally(LayersConstants.horizontalPadding)
+            .height(200)
         
         descriptionTextView.pin
             .below(of: descriptionLabel)
             .marginTop(15)
             .horizontally(10)
-            .height(140)
+            .height(200)
         
-        datePicker.pin
+        dateTextField.pin
             .below(of: descriptionTextView)
-            .hCenter()
-            .marginTop(10)
-            .sizeToFit()
+            .marginTop(30)
+            .horizontally(LayersConstants.horizontalPadding * 3)
+            .height(35)
         
-        shadowUserPickerSubview.pin
-            .below(of: datePicker)
-            .hCenter()
-            .marginTop(10)
-            .size(userPickerSize)
+        timeTextField.pin
+            .below(of: dateTextField)
+            .marginTop(15)
+            .horizontally(LayersConstants.horizontalPadding * 3)
+            .height(35)
         
-        userPicker.pin
-            .below(of: datePicker)
-            .hCenter()
-            .marginTop(10)
-            .size(userPickerSize)
+        userTextField.pin
+            .below(of: timeTextField)
+            .marginTop(30)
+            .horizontally(LayersConstants.horizontalPadding * 2)
+            .height(35)
         
         addButton.pin
             .bottom(15)
-            .horizontally(horizontalPadding)
-            .height(buttonHeight)
+            .horizontally(LayersConstants.horizontalPadding)
+            .height(LayersConstants.buttonHeight)
     }
     
     func configureLabels() {
@@ -135,9 +138,9 @@ class AddingTaskController: UIViewController {
     
     func configureDescriptionTextView() {
         shadowDescriptionSubview.backgroundColor = .white
-        shadowDescriptionSubview.layer.cornerRadius = cornerRadius
+        shadowDescriptionSubview.layer.cornerRadius = LayersConstants.cornerRadius
         
-        descriptionTextView.layer.cornerRadius = cornerRadius
+        descriptionTextView.layer.cornerRadius = LayersConstants.cornerRadius
         descriptionTextView.text = placeholderText
         descriptionTextView.textColor = .lightTextColor
         descriptionTextView.backgroundColor = .white
@@ -147,67 +150,81 @@ class AddingTaskController: UIViewController {
         shadowDescriptionSubview.insertSubview(descriptionTextView, at: 0)
     }
     
-    func configureDataPicker() {
-        datePicker.backgroundColor = .clear
-        datePicker.minimumDate = Date()
-    }
-    
-    func configureUserPicker() {
-        shadowUserPickerSubview.backgroundColor = .white
-        shadowUserPickerSubview.layer.cornerRadius = cornerRadius
+    func configurePickers() {
+        [dateTextField, timeTextField, userTextField].forEach {
+            $0.textColor = .darkTextColor
+            $0.backgroundColor = .white
+            $0.textAlignment = .center
+        }
+        dateTextField.placeholder = "Выбрать дату"
+        timeTextField.placeholder = "Выбрать время"
+        userTextField.placeholder = "Адресовать пользователю"
+
+        self.dateTextField.setInputViewTimePicker(target: self, selector: #selector(doneDateTapped), mode: UIDatePicker.Mode.date)
+        self.timeTextField.setInputViewTimePicker(target: self, selector: #selector(doneTimeTapped), mode: UIDatePicker.Mode.time)
         
+        let screenWidth = UIScreen.main.bounds.width
+        let userPicker = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
         userPicker.dataSource = self
         userPicker.delegate = self
-        userPicker.backgroundColor = .white
-        userPicker.layer.cornerRadius = cornerRadius
-        
-        shadowUserPickerSubview.insertSubview(userPicker, at: 0)
+        self.userTextField.setInputViewUserPicker(with: userPicker, target: self, selector: #selector(doneUserTapped))
+
     }
 
     func configureAddButton() {
         addButton.setTitle("Добавить", for: .normal)
         addButton.setTitleColor(.darkTextColor, for: .normal)
-        addButton.layer.cornerRadius = cornerRadius
+        addButton.layer.cornerRadius = LayersConstants.cornerRadius
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - horizontalPadding * 2, height: buttonHeight)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
         gradientLayer.cornerRadius = addButton.layer.cornerRadius
         gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
         addButton.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func configureShadows() {
-        [nameTextField, shadowDescriptionSubview, shadowUserPickerSubview, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-        [nameTextField, shadowDescriptionSubview, shadowUserPickerSubview, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+        [nameTextField, shadowDescriptionSubview, dateTextField, timeTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+        [nameTextField, shadowDescriptionSubview, dateTextField, timeTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+    }
+    
+    @objc
+    func doneDateTapped() {
+        if let datePicker = self.dateTextField.inputView as? UIDatePicker {
+            let dateformatter = DateFormatter()
+            dateformatter.dateStyle = .short
+            self.dateTextField.text = dateformatter.string(from: datePicker.date)
+        }
+        self.dateTextField.resignFirstResponder()
+    }
+    
+    @objc
+    func doneTimeTapped() {
+        if let datePicker = self.timeTextField.inputView as? UIDatePicker {
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "hh:mm"
+            self.timeTextField.text = dateformatter.string(from: datePicker.date)
+        }
+        self.timeTextField.resignFirstResponder()
+    }
+    
+    @objc
+    func doneUserTapped() {
+        if let userPicker = self.userTextField.inputView as? UIPickerView {
+            self.userTextField.text = group.owners[userPicker.selectedRow(inComponent: 0)].owner
+        }
+        self.userTextField.resignFirstResponder()
+    }
+    
+    @objc
+    func addButtonTapped() {
+        // добавление задачи в комнату
     }
 }
 
 
 // MARK: - Extensions
-
-extension AddingTaskController: UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return group.owners.count + 1
-    }
-
-}
-
-extension AddingTaskController: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        if row == 0 {
-            return UserPickerCell("Адресовать пользователю")
-        }
-        let userView = UserPickerCell(userName: group.owners[row - 1].owner)
-        return userView
-    }
-    
-}
 
 extension AddingTaskController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -231,4 +248,25 @@ extension AddingTaskController: UITextViewDelegate {
         }
     }
     
+}
+
+
+extension AddingTaskController: UIPickerViewDataSource {
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return group.owners.count
+    }
+
+}
+
+extension AddingTaskController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return group.owners[row].owner
+    }
+
 }
