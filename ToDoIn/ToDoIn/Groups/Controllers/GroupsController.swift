@@ -1,16 +1,27 @@
 import UIKit
 import PinLayout
 
-class GroupsController: UIViewController, CoordinatorOutput {
+class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
     
     // MARK: - Properties
     
+    lazy var presenter = GroupsPresenter(groupsView: self)
     weak var coordinator: MainChildCoordinator?
     
     private var groups = Groups()
     
     private let tableView = UITableView()
     
+    // MARK: - Init
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        groups = presenter.getGroups()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Handlers
     

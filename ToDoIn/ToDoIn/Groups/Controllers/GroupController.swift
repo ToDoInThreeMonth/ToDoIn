@@ -1,15 +1,16 @@
 import UIKit
 import PinLayout
 
-class GroupController: UIViewController {
+class GroupController: UIViewController, GroupView {
     
     // MARK: - Properties
     
+    lazy var presenter = GroupPresenter(groupView: self)
     weak var coordinator: MainChildCoordinator?
     
     private let tableView = UITableView()
     
-    private let group: Group
+    private var group = Group()
     
     private let settingsButton = UIBarButtonItem()
     private let addingTaskButton = UIBarButtonItem()
@@ -18,8 +19,8 @@ class GroupController: UIViewController {
     // MARK: - Init
     
     init(group: Group) {
-        self.group = group
         super.init(nibName: nil, bundle: nil)
+        self.group = group
     }
     
     required init?(coder: NSCoder) {

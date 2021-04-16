@@ -18,3 +18,17 @@ class Groups {
                   Group(name: "Новый год", image: "group", owners: owners)]
     }
 }
+
+
+class GroupsService {
+    
+    private var data = Groups()
+    
+    func getGroups() -> Groups {
+        return data
+    }
+    
+    func getGroup(by index: Int) -> Group {
+        return data.groups[index]
+    }
+}

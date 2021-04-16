@@ -10,6 +10,12 @@ class Group {
         self.image = image
         self.owners = owners
     }
+    
+    init() {
+        self.name = ""
+        self.image = ""
+        self.owners = [Owners]()
+    }
 }
 
 class Owners {

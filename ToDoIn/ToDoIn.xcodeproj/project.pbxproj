@@ -16,6 +16,10 @@
 		4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322866D260E04A20096C905 /* CustomTabBarController.swift */; };
 		43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228670260E08FA0096C905 /* CustomTabBar.swift */; };
 		43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43228673260E33980096C905 /* UIColor+extenstion.swift */; };
+		4335D6392629DF1100DA47DA /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D6382629DF1100DA47DA /* Protocols.swift */; };
+		4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D63C2629E05000DA47DA /* GroupsPresenter.swift */; };
+		4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D63F2629E3E200DA47DA /* GroupPresenter.swift */; };
+		4335D6432629E7CE00DA47DA /* AddingTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D6422629E7CE00DA47DA /* AddingTaskPresenter.swift */; };
 		4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8B32621740400069AB6 /* UserTableViewCell.swift */; };
 		4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */; };
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
@@ -45,6 +49,10 @@
 		4322866D260E04A20096C905 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		43228670260E08FA0096C905 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		43228673260E33980096C905 /* UIColor+extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extenstion.swift"; sourceTree = "<group>"; };
+		4335D6382629DF1100DA47DA /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		4335D63C2629E05000DA47DA /* GroupsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsPresenter.swift; sourceTree = "<group>"; };
+		4335D63F2629E3E200DA47DA /* GroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPresenter.swift; sourceTree = "<group>"; };
+		4335D6422629E7CE00DA47DA /* AddingTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTaskPresenter.swift; sourceTree = "<group>"; };
 		4349D8B32621740400069AB6 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
@@ -125,6 +133,16 @@
 			path = ToDoIn;
 			sourceTree = "<group>";
 		};
+		4335D63B2629E03F00DA47DA /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				4335D63C2629E05000DA47DA /* GroupsPresenter.swift */,
+				4335D63F2629E3E200DA47DA /* GroupPresenter.swift */,
+				4335D6422629E7CE00DA47DA /* AddingTaskPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
 		43517975261837C7009F898B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +174,8 @@
 		43D56C1726219B830045F451 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
+				4335D6382629DF1100DA47DA /* Protocols.swift */,
+				4335D63B2629E03F00DA47DA /* Presenters */,
 				43D56C1826219B8C0045F451 /* Controllers */,
 				43C4FAA42617339C0019816F /* Model */,
 				43D56C1926219B940045F451 /* Views */,
@@ -322,17 +342,21 @@
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
 				4354B312261CC2ED0080F577 /* AddingTaskController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */,
+				4335D6432629E7CE00DA47DA /* AddingTaskPresenter.swift in Sources */,
 				439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
+				4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
+				4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */,
 				43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
 				43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */,
 				439CEDEE262088510005091A /* GroupSettingsController.swift in Sources */,
 				4351798226185190009F898B /* TaskTableViewCell.swift in Sources */,
+				4335D6392629DF1100DA47DA /* Protocols.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 				43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */,
 				4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */,

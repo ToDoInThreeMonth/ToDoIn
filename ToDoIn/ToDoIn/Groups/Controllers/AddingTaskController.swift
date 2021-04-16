@@ -1,11 +1,13 @@
 import UIKit
 import PinLayout
 
-class AddingTaskController: UIViewController {
+class AddingTaskController: UIViewController, AddingTaskView {
     
     // MARK: - Properties
     
-    private let group: Group
+    lazy var presenter = AddingTaskPresenter(addingTaskView: self)
+    
+    private var group = Group()
     
     struct LayersConstants {
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
@@ -31,8 +33,8 @@ class AddingTaskController: UIViewController {
     // MARK: - Init
     
     init(group: Group) {
-        self.group = group
         super.init(nibName: nil, bundle: nil)
+        self.group = group
     }
     
     required init?(coder: NSCoder) {
