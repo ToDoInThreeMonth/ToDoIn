@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-class GroupSettingsController: UIViewController {
+class GroupSettingsController: UIViewController, GroupSettingsView {
     
     // MARK: - Properties
     
@@ -136,13 +136,13 @@ extension GroupSettingsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return group.owners.count
+        return group.users.count
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as! UserTableViewCell
-        cell.setUp(userName: group.owners[indexPath.row].owner, userImage: group.owners[indexPath.row].image)
+        cell.setUp(userName: group.users[indexPath.row].name, userImage: group.users[indexPath.row].image)
         return cell
     }
 }

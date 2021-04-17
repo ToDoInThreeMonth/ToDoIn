@@ -3,13 +3,13 @@ import Foundation
 // GroupsController
 
 protocol GroupsView: class {
-    
+    func setGroups(groups: [Group])
 }
 
 
 protocol GroupsViewPresenter {
     init(groupsView: GroupsView)
-    func getGroups() -> Groups
+    func getGroups()
 }
 
 
@@ -28,12 +28,15 @@ protocol GroupViewPresenter {
 // AddingTaskController
 
 protocol AddingTaskView: class {
-    
+    func setDate(with date: String)
+    func setUser(with name: String)
 }
 
 
 protocol AddingTaskViewPresenter {
     init(addingTaskView: AddingTaskView)
+    func doneDateTapped(date: Date)
+    func doneUserTapped(user: User)
     func addButtonTapped()
 }
 
@@ -45,5 +48,6 @@ protocol GroupSettingsView: class {
 
 
 protocol GroupSettingsViewPresenter {
-    
+    func groupTitleDidChange(with title: String)
+    func addUserButtonTapped()
 }

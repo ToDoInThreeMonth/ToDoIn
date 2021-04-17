@@ -8,7 +8,7 @@ class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
     lazy var presenter = GroupsPresenter(groupsView: self)
     weak var coordinator: MainChildCoordinator?
     
-    private var groups = Groups()
+    private var groups = [Group]()
     
     private let tableView = UITableView()
     
@@ -16,7 +16,7 @@ class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        groups = presenter.getGroups()
+        presenter.getGroups()
     }
     
     required init?(coder: NSCoder) {
@@ -50,6 +50,10 @@ class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
         tableView.dataSource = self
     }
     
+    func setGroups(groups: [Group]) {
+        self.groups = groups
+        tableView.reloadData()
+    }
 }
 
 
@@ -59,14 +63,14 @@ extension GroupsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.groups.count
+        return groups.count
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as! GroupTableViewCell
         cell.layer.cornerRadius = cell.frame.height / 2.6
-        cell.setUp(group: groups.groups[indexPath.row])
+        cell.setUp(group: groups[indexPath.row])
         return cell
     }
 }
@@ -75,7 +79,7 @@ extension GroupsController: UITableViewDelegate {
 
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.showGroupController(group: groups.groups[indexPath.row])
+        coordinator?.showGroupController(group: groups[indexPath.row])
     }
     
     // размер ячейки

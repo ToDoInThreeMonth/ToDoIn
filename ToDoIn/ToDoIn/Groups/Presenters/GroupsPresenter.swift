@@ -10,8 +10,8 @@ class GroupsPresenter: GroupsViewPresenter {
         self.groupsView = groupsView
     }
     
-    func getGroups() -> Groups {
-        return groupsService.getGroups()
+    func getGroups() {
+        let groups = groupsService.getGroups()
+        groupsView?.setGroups(groups: groups)
     }
-    
 }

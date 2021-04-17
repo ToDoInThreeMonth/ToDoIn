@@ -23,14 +23,12 @@ class CustomTextField: UITextField {
         return bounds.inset(by: insets)
     }
     
-    func setInputViewTimePicker(target: Any, selector: Selector, mode: UIDatePicker.Mode) {
+    func setInputViewTimePicker(target: Any, selector: Selector) {
         // Create a UIDatePicker object and assign to inputView
         let screenWidth = UIScreen.main.bounds.width
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
-        datePicker.datePickerMode = mode
-        if (mode == UIDatePicker.Mode.date) {
-            datePicker.minimumDate = Date()
-        }
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.minimumDate = Date()
         
         if #available(iOS 14, *) {
             datePicker.preferredDatePickerStyle = .wheels

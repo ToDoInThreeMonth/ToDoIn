@@ -26,7 +26,6 @@ class AddingTaskController: UIViewController, AddingTaskView {
     private let descriptionTextView = UITextView()
     private let shadowDescriptionSubview = UIView()
     private let dateTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
-    private let timeTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
     private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
     private let addButton = UIButton()
     
@@ -47,7 +46,7 @@ class AddingTaskController: UIViewController, AddingTaskView {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .accentColor
-        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, timeTextField, userTextField, addButton, shadowDescriptionSubview)
+        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, userTextField, addButton, shadowDescriptionSubview)
     }
     
     override func viewDidLoad() {
@@ -104,17 +103,11 @@ class AddingTaskController: UIViewController, AddingTaskView {
         dateTextField.pin
             .below(of: descriptionTextView)
             .marginTop(30)
-            .horizontally(LayersConstants.horizontalPadding * 3)
-            .height(35)
-        
-        timeTextField.pin
-            .below(of: dateTextField)
-            .marginTop(15)
-            .horizontally(LayersConstants.horizontalPadding * 3)
+            .horizontally(LayersConstants.horizontalPadding * 2)
             .height(35)
         
         userTextField.pin
-            .below(of: timeTextField)
+            .below(of: dateTextField)
             .marginTop(30)
             .horizontally(LayersConstants.horizontalPadding * 2)
             .height(35)
@@ -153,17 +146,15 @@ class AddingTaskController: UIViewController, AddingTaskView {
     }
     
     func configurePickers() {
-        [dateTextField, timeTextField, userTextField].forEach {
+        [dateTextField, userTextField].forEach {
             $0.textColor = .darkTextColor
             $0.backgroundColor = .white
             $0.textAlignment = .center
         }
-        dateTextField.placeholder = "Выбрать дату"
-        timeTextField.placeholder = "Выбрать время"
+        dateTextField.placeholder = "Выбрать время"
         userTextField.placeholder = "Адресовать пользователю"
 
-        self.dateTextField.setInputViewTimePicker(target: self, selector: #selector(doneDateTapped), mode: UIDatePicker.Mode.date)
-        self.timeTextField.setInputViewTimePicker(target: self, selector: #selector(doneTimeTapped), mode: UIDatePicker.Mode.time)
+        self.dateTextField.setInputViewTimePicker(target: self, selector: #selector(doneDateTapped))
         
         let screenWidth = UIScreen.main.bounds.width
         let userPicker = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
@@ -187,34 +178,22 @@ class AddingTaskController: UIViewController, AddingTaskView {
     }
     
     func configureShadows() {
-        [nameTextField, shadowDescriptionSubview, dateTextField, timeTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-        [nameTextField, shadowDescriptionSubview, dateTextField, timeTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+        [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+        [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
     }
     
     @objc
     func doneDateTapped() {
         if let datePicker = self.dateTextField.inputView as? UIDatePicker {
-            let dateformatter = DateFormatter()
-            dateformatter.dateStyle = .short
-            self.dateTextField.text = dateformatter.string(from: datePicker.date)
+            presenter.doneDateTapped(date: datePicker.date)
         }
         self.dateTextField.resignFirstResponder()
     }
     
     @objc
-    func doneTimeTapped() {
-        if let datePicker = self.timeTextField.inputView as? UIDatePicker {
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "hh:mm"
-            self.timeTextField.text = dateformatter.string(from: datePicker.date)
-        }
-        self.timeTextField.resignFirstResponder()
-    }
-    
-    @objc
     func doneUserTapped() {
         if let userPicker = self.userTextField.inputView as? UIPickerView {
-            self.userTextField.text = group.owners[userPicker.selectedRow(inComponent: 0)].owner
+            presenter.doneUserTapped(user: group.users[userPicker.selectedRow(inComponent: 0)])
         }
         self.userTextField.resignFirstResponder()
     }
@@ -222,6 +201,16 @@ class AddingTaskController: UIViewController, AddingTaskView {
     @objc
     func addButtonTapped() {
         // добавление задачи в комнату
+        presenter.addButtonTapped()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func setDate(with date: String) {
+        dateTextField.text = date
+    }
+    
+    func setUser(with name: String) {
+        userTextField.text = name
     }
 }
 
@@ -260,7 +249,7 @@ extension AddingTaskController: UIPickerViewDataSource {
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return group.owners.count
+        return group.users.count
     }
 
 }
@@ -268,7 +257,7 @@ extension AddingTaskController: UIPickerViewDataSource {
 extension AddingTaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return group.owners[row].owner
+        return group.users[row].name
     }
 
 }

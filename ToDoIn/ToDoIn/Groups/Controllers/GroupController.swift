@@ -8,10 +8,9 @@ class GroupController: UIViewController, GroupView {
     lazy var presenter = GroupPresenter(groupView: self)
     weak var coordinator: MainChildCoordinator?
     
+    private var group: Group
+    
     private let tableView = UITableView()
-    
-    private var group = Group()
-    
     private let settingsButton = UIBarButtonItem()
     private let addingTaskButton = UIBarButtonItem()
     
@@ -19,8 +18,8 @@ class GroupController: UIViewController, GroupView {
     // MARK: - Init
     
     init(group: Group) {
-        super.init(nibName: nil, bundle: nil)
         self.group = group
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -99,27 +98,27 @@ extension GroupController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return group.owners[section].tasks.count
+        return group.users[section].tasks.count
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as! TaskTableViewCell
-        cell.setUp(task: group.owners[indexPath.section].tasks[indexPath.row])
+        cell.setUp(task: group.users[indexPath.section].tasks[indexPath.row])
         return cell
     }
     
     
     // количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        return group.owners.count
+        return group.users.count
     }
 
 
     // заголовок секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionHeaderView = SectionHeaderView()
-        sectionHeaderView.setUp(owner: group.owners[section].owner)
+        sectionHeaderView.setUp(owner: group.users[section].name)
         return sectionHeaderView
     }
     
@@ -134,7 +133,7 @@ extension GroupController: UITableViewDelegate {
 
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        // открытие View с описание задачи
     }
     
     // размер ячейки

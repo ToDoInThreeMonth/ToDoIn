@@ -1,34 +1,29 @@
 import Foundation
 
 class Groups {
-    var owners: [Owners]
-    
-    var groups: [Group]
-    
-    init() {
-        owners = [Owners(owner: "Я", image: "user", tasks: [Task(owner: "Я", name: "Купить кальян", description: "", date: Date())]),
-                  Owners(owner: "Вова", image: "user", tasks: [Task(owner: "Вова", name: "Взять колонку", description: "", date: Date()), Task(owner: "Вова", name: "Купить еще кальян", description: "", date: Date())]),
-                  Owners(owner: "Вася", image: "user", tasks: [Task(owner: "Вася", name: "Купить еще кальян", description: "", date: Date())]),
-                  Owners(owner: "Филипп", image: "user", tasks: [Task(owner: "Филипп", name: "Купить еще кальян", description: "", date: Date())])]
-        groups = [Group(name: "Дача", image: "group", owners: owners),
-                  Group(name: "Шашлыки", image: "group", owners: owners),
-                  Group(name: "Кальяночка", image: "group", owners: owners),
-                  Group(name: "Баня", image: "group", owners: owners),
-                  Group(name: "День рождения", image: "group", owners: owners),
-                  Group(name: "Новый год", image: "group", owners: owners)]
-    }
+    static var owners = [User(user: "Я", image: "user", tasks: [Task(user: "Я", name: "Купить кальян", description: "",                       date: Date())]),
+                         User(user: "Вова", image: "user", tasks: [Task(user: "Вова", name: "Взять колонку", description: "", date: Date()), Task(user: "Вова", name: "Купить еще кальян", description: "", date: Date())]),
+                         User(user: "Вася", image: "user", tasks: [Task(user: "Вася", name: "Купить еще кальян", description: "", date: Date())]),
+                         User(user: "Филипп", image: "user", tasks: [Task(user: "Филипп", name: "Купить еще кальян", description: "", date: Date())])]
 }
+
+//class Users {
+//    static let users = [User(name: "Я", image: "user", tasks: ), User(name: , image: , tasks: )]
+//}
 
 
 class GroupsService {
+    private var data = [Group(name: "Дача", image: "group", users: Groups.owners),
+                        Group(name: "Шашлыки", image: "group", users: Groups.owners),
+                        Group(name: "Кальяночка", image: "group", users: Groups.owners),
+                        Group(name: "Баня", image: "group", users: Groups.owners),
+                        Group(name: "День рождения", image: "group", users: Groups.owners)]
     
-    private var data = Groups()
-    
-    func getGroups() -> Groups {
+    func getGroups() -> [Group] {
         return data
     }
     
     func getGroup(by index: Int) -> Group {
-        return data.groups[index]
+        return data[index]
     }
 }
