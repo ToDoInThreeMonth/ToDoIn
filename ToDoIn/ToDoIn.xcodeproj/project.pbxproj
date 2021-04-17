@@ -24,7 +24,7 @@
 		4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8B32621740400069AB6 /* UserTableViewCell.swift */; };
 		4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */; };
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
-		4351797F26184DF5009F898B /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* Groups.swift */; };
+		4351797F26184DF5009F898B /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* GroupsService.swift */; };
 		4351798226185190009F898B /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskTableViewCell.swift */; };
 		4354B312261CC2ED0080F577 /* AddingTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4354B311261CC2ED0080F577 /* AddingTaskController.swift */; };
 		439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439AE9A4262051D50051BB01 /* CustomTextField.swift */; };
@@ -58,7 +58,7 @@
 		4349D8B32621740400069AB6 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
-		4351797E26184DF5009F898B /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
+		4351797E26184DF5009F898B /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
 		4351798126185190009F898B /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		4354B311261CC2ED0080F577 /* AddingTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTaskController.swift; sourceTree = "<group>"; };
 		439AE9A4262051D50051BB01 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				43C4FAA5261733AA0019816F /* Group.swift */,
-				4351797E26184DF5009F898B /* Groups.swift */,
+				4351797E26184DF5009F898B /* GroupsService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,7 +341,7 @@
 			files = (
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */,
-				4351797F26184DF5009F898B /* Groups.swift in Sources */,
+				4351797F26184DF5009F898B /* GroupsService.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
 				4354B312261CC2ED0080F577 /* AddingTaskController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */,

@@ -15,7 +15,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Handlers
 
-    func groupTitleDidChange(with title: String) {
+    func groupTitleDidChange(with title: String?) {
         // изменение названия комнаты 
     }
     

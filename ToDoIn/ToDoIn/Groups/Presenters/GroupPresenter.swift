@@ -15,6 +15,8 @@ class GroupPresenter: GroupViewPresenter {
     
     // MARK: - Handlers
     
-    
+    func getTasks(for user: User, from group: Group) -> [Task] {
+        return groupsService.getTasks(for: user, from: group)
+    }
     
 }

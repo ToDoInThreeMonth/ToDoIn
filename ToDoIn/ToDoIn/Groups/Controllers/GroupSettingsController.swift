@@ -5,6 +5,8 @@ class GroupSettingsController: UIViewController, GroupSettingsView {
     
     // MARK: - Properties
     
+    lazy var presenter = GroupSettingsPresenter(groupSettingsView: self)
+    
     private let group: Group
     
     private let groupTitle = UITextField()
@@ -120,11 +122,13 @@ class GroupSettingsController: UIViewController, GroupSettingsView {
     @objc
     func groupTitleDidChange(sender: AnyObject) {
         // сохранение нового названия комнаты
+        presenter.groupTitleDidChange(with: groupTitle.text ?? nil)
     }
     
     @objc
     func addUserButtonTapped(sender: AnyObject) {
         // добавление нового участника
+        presenter.addUserButtonTapped()
     }
 
 }

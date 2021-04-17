@@ -22,6 +22,7 @@ protocol GroupView: class {
 
 protocol GroupViewPresenter {
     init(groupView: GroupView)
+    func getTasks(for user: User, from group: Group) -> [Task] 
 }
 
 
@@ -48,6 +49,6 @@ protocol GroupSettingsView: class {
 
 
 protocol GroupSettingsViewPresenter {
-    func groupTitleDidChange(with title: String)
+    func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
 }

@@ -119,7 +119,7 @@ class AddingTaskController: UIViewController, AddingTaskView {
     }
     
     func configureLabels() {
-        titleLabel.text = "Создание новой задачи"
+        titleLabel.text = "Создать новую задачу"
         nameLabel.text = "Название"
         descriptionLabel.text = "Описание"
         [titleLabel, nameLabel, descriptionLabel].forEach { $0.textColor = .darkTextColor }

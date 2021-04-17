@@ -98,13 +98,13 @@ extension GroupController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return group.users[section].tasks.count
+        return presenter.getTasks(for: group.users[section], from: group).count
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as! TaskTableViewCell
-        cell.setUp(task: group.users[indexPath.section].tasks[indexPath.row])
+        cell.setUp(task: presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
         return cell
     }
     
