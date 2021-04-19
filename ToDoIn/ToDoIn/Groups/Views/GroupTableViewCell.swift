@@ -3,6 +3,7 @@ import UIKit
 class GroupTableViewCell: UITableViewCell {
     
     // MARK: - Properties
+    
     static let identifier = "GroupCell"
     
     var groupView = UIView()
@@ -66,11 +67,13 @@ class GroupTableViewCell: UITableViewCell {
     
     func configureGroupView() {
         groupView.layer.cornerRadius = self.frame.height / 2.6
-        
-        groupView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
-        
-        groupView.backgroundColor = UIColor(red: 243/255, green: 247/255, blue: 250/255, alpha: 1)
-        groupView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
+        guard let sublayersCount = groupView.layer.sublayers?.count else {
+            return
+        }
+        if sublayersCount <= 3 {
+            groupView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
+            groupView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
+        }
     }
     
     func configureGroupLabel() {

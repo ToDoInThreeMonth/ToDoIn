@@ -1,14 +1,6 @@
-//
-//  ViewController.swift
-//  ToDoIn
-//
-//  Created by Дарья on 24.03.2021.
-//
-
 import UIKit
-import PinLayout
 
-class ViewController: UIViewController, CoordinatorOutput {
+class MainController: UIViewController {
     weak var coordinator: MainChildCoordinator?
     
 

@@ -1,6 +1,8 @@
 import Foundation
 
-class Group {
+class Group: Equatable {
+    
+    var id = UUID()
     var name: String
     var image: String
     var users: [User]
@@ -19,9 +21,13 @@ class Group {
         self.users = [User]()
         self.tasks = [Task]()
     }
+
+    static func == (lhs: Group, rhs: Group) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
-class User {
+class User: Equatable {
     var id = UUID()
     var name: String
     var image: String
@@ -31,8 +37,8 @@ class User {
         self.image = image
     }
     
-    func isEqual(_ user: User) -> Bool {
-        return user.id == self.id
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
@@ -48,5 +54,12 @@ class Task {
         self.name = name
         self.description = description
         self.date = date
+    }
+    
+    init() {
+        self.user = User(name: "", image: "")
+        self.name = ""
+        self.description = ""
+        self.date = Date()
     }
 }

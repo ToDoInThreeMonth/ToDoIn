@@ -1,12 +1,11 @@
 import UIKit
 import PinLayout
 
-class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
-    
+class GroupsController: UIViewController, GroupsView {
+        
     // MARK: - Properties
     
-    lazy var presenter = GroupsPresenter(groupsView: self)
-    weak var coordinator: MainChildCoordinator?
+    private var presenter: GroupsViewPresenter?
     
     private var groups = [Group]()
     
@@ -16,7 +15,6 @@ class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        presenter.getGroups()
     }
     
     required init?(coder: NSCoder) {
@@ -24,6 +22,19 @@ class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
     }
     
     // MARK: - Handlers
+    
+    func setGroups(groups: [Group]) {
+        self.groups = groups
+        tableView.reloadData()
+    }
+    
+    func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
+        presenter.getGroups()
+    }
+    
+    // MARK: Configures
     
     override func loadView() {
         super.loadView()
@@ -48,11 +59,6 @@ class GroupsController: UIViewController, CoordinatorOutput, GroupsView {
         
         tableView.delegate = self
         tableView.dataSource = self
-    }
-    
-    func setGroups(groups: [Group]) {
-        self.groups = groups
-        tableView.reloadData()
     }
 }
 
@@ -79,7 +85,7 @@ extension GroupsController: UITableViewDelegate {
 
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.showGroupController(group: groups[indexPath.row])
+        presenter?.showGroupController(group: groups[indexPath.row])
     }
     
     // размер ячейки

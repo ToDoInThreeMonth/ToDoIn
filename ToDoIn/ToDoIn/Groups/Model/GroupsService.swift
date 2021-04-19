@@ -1,12 +1,12 @@
 import Foundation
 
 class Tasks {
-    static var tasks = [Task(user: Users.users[0], name: "Купить кальян", description: "", date: Date()),
-                        Task(user: Users.users[0], name: "Взять колонку", description: "", date: Date()),
-                        Task(user: Users.users[1], name: "Купить поесть", description: "", date: Date()),
-                        Task(user: Users.users[1], name: "Заказать такси", description: "", date: Date()),
-                        Task(user: Users.users[2], name: "Купить еще поесть", description: "", date: Date()),
-                        Task(user: Users.users[3], name: "Купить еще кальян", description: "", date: Date())]
+    static var tasks = [Task(user: Users.users[0], name: "Купить кальян", description: "Описание...", date: Date()),
+                        Task(user: Users.users[0], name: "Взять колонку", description: "Описание...", date: Date()),
+                        Task(user: Users.users[1], name: "Купить поесть", description: "Описание...", date: Date()),
+                        Task(user: Users.users[1], name: "Заказать такси", description: "Описание...", date: Date()),
+                        Task(user: Users.users[2], name: "Купить еще поесть", description: "Описание...", date: Date()),
+                        Task(user: Users.users[3], name: "Купить еще кальян", description: "Описание...", date: Date())]
 }
 
 class Users {
@@ -35,10 +35,22 @@ class GroupsService {
     func getTasks(for user: User, from group: Group) -> [Task] {
         var tasks = [Task]()
         for task in group.tasks {
-            if user.isEqual(task.user) {
+            if (user == task.user) {
                 tasks.append(task)
             }
         }
         return tasks
     }
+    
+    func addTask(_ task: Task, in group: Group) {
+        guard let index = data.firstIndex(of: group) else {
+            return
+        }
+        data[index].tasks.append(task)
+    }
+    
+    func changeTask(_ task: Task, in group: Group) {
+        // изменение задачи
+    }
+    
 }

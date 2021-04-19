@@ -4,14 +4,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Properties
     
-    private let groupsService = GroupsService()
-    weak var groupSettingsView: GroupSettingsView?
-        
-    // MARK: - Init
-    
-    required init(groupSettingsView: GroupSettingsView) {
-        self.groupSettingsView = groupSettingsView
-    }
+    private let groupsService = GroupsService()        
     
     // MARK: - Handlers
 

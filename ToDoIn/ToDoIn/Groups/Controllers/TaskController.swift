@@ -1,13 +1,15 @@
 import UIKit
 import PinLayout
 
-class AddingTaskController: UIViewController, AddingTaskView {
+class TaskController: UIViewController, TaskView {
     
     // MARK: - Properties
     
-    lazy var presenter = AddingTaskPresenter(addingTaskView: self)
+    private var presenter: TaskViewPresenter?
     
-    private var group = Group()
+    private var group: Group
+    private var task: Task
+    private let isChanging: Bool
     
     struct LayersConstants {
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
@@ -31,9 +33,12 @@ class AddingTaskController: UIViewController, AddingTaskView {
     
     // MARK: - Init
     
-    init(group: Group) {
-        super.init(nibName: nil, bundle: nil)
+    init(group: Group, task: Task, isChanging: Bool) {
         self.group = group
+        self.task = task
+        self.isChanging = isChanging
+        super.init(nibName: nil, bundle: nil)
+        self.presenter = TaskPresenter(addingTaskView: self)
     }
     
     required init?(coder: NSCoder) {
@@ -42,6 +47,16 @@ class AddingTaskController: UIViewController, AddingTaskView {
 
     
     // MARK: - Handlers
+    
+    func setDate(with date: String) {
+        dateTextField.text = date
+    }
+    
+    func setUser(with name: String) {
+        userTextField.text = name
+    }
+    
+    // MARK: - Configures
     
     override func loadView() {
         super.loadView()
@@ -69,12 +84,12 @@ class AddingTaskController: UIViewController, AddingTaskView {
     
     override func viewDidLayoutSubviews() {
         titleLabel.pin
-            .top(10).hCenter()
+            .top(15).hCenter()
             .sizeToFit()
         
         nameLabel.pin
             .below(of: titleLabel, aligned: .center)
-            .marginTop(40)
+            .marginTop(35)
             .sizeToFit()
         
         nameTextField.pin
@@ -119,7 +134,8 @@ class AddingTaskController: UIViewController, AddingTaskView {
     }
     
     func configureLabels() {
-        titleLabel.text = "Создать новую задачу"
+        titleLabel.text = isChanging ? task.name : "Создать новую задачу"
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         nameLabel.text = "Название"
         descriptionLabel.text = "Описание"
         [titleLabel, nameLabel, descriptionLabel].forEach { $0.textColor = .darkTextColor }
@@ -129,6 +145,7 @@ class AddingTaskController: UIViewController, AddingTaskView {
         nameTextField.placeholder = "Поботать"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
+        nameTextField.text = task.name
     }
     
     func configureDescriptionTextView() {
@@ -143,6 +160,14 @@ class AddingTaskController: UIViewController, AddingTaskView {
         descriptionTextView.delegate = self
         
         shadowDescriptionSubview.insertSubview(descriptionTextView, at: 0)
+        
+        if task.description == "" {
+            descriptionTextView.text = placeholderText
+            descriptionTextView.textColor = .lightTextColor
+        } else {
+            descriptionTextView.text = task.description
+            descriptionTextView.textColor = .darkTextColor
+        }
     }
     
     func configurePickers() {
@@ -162,10 +187,14 @@ class AddingTaskController: UIViewController, AddingTaskView {
         userPicker.delegate = self
         self.userTextField.setInputViewUserPicker(with: userPicker, target: self, selector: #selector(doneUserTapped))
 
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "dd.MM.yyyy HH:mm"
+        dateTextField.text = dateformatter.string(from: task.date)
+        userTextField.text = task.user.name
     }
 
     func configureAddButton() {
-        addButton.setTitle("Добавить", for: .normal)
+        addButton.setTitle(isChanging ? "Добавить" : "Изменить", for: .normal)
         addButton.setTitleColor(.darkTextColor, for: .normal)
         addButton.layer.cornerRadius = LayersConstants.cornerRadius
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
@@ -185,7 +214,7 @@ class AddingTaskController: UIViewController, AddingTaskView {
     @objc
     func doneDateTapped() {
         if let datePicker = self.dateTextField.inputView as? UIDatePicker {
-            presenter.doneDateTapped(date: datePicker.date)
+            presenter?.doneDateTapped(date: datePicker.date)
         }
         self.dateTextField.resignFirstResponder()
     }
@@ -193,31 +222,23 @@ class AddingTaskController: UIViewController, AddingTaskView {
     @objc
     func doneUserTapped() {
         if let userPicker = self.userTextField.inputView as? UIPickerView {
-            presenter.doneUserTapped(user: group.users[userPicker.selectedRow(inComponent: 0)])
+            presenter?.doneUserTapped(user: group.users[userPicker.selectedRow(inComponent: 0)])
         }
         self.userTextField.resignFirstResponder()
     }
     
     @objc
     func addButtonTapped() {
-        // добавление задачи в комнату
-        presenter.addButtonTapped()
+        presenter?.buttonTapped(isChanging, task: task, group: group)
         dismiss(animated: true, completion: nil)
     }
-    
-    func setDate(with date: String) {
-        dateTextField.text = date
-    }
-    
-    func setUser(with name: String) {
-        userTextField.text = name
-    }
+
 }
 
 
 // MARK: - Extensions
 
-extension AddingTaskController: UITextViewDelegate {
+extension TaskController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == placeholderText {
             textView.text = ""
@@ -242,7 +263,7 @@ extension AddingTaskController: UITextViewDelegate {
 }
 
 
-extension AddingTaskController: UIPickerViewDataSource {
+extension TaskController: UIPickerViewDataSource {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -254,7 +275,7 @@ extension AddingTaskController: UIPickerViewDataSource {
 
 }
 
-extension AddingTaskController: UIPickerViewDelegate {
+extension TaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return group.users[row].name

@@ -62,10 +62,13 @@ class TaskTableViewCell: UITableViewCell {
     
     func configureTaskView() {
         taskView.layer.cornerRadius = self.frame.height / 2.6
-
-        taskView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
-        
-        taskView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
+        guard let sublayersCount = taskView.layer.sublayers?.count else {
+            return
+        }
+        if sublayersCount <= 3 {
+            taskView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
+            taskView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
+        }
     }
     
     func configureTaskLabel() {
@@ -81,8 +84,8 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     
-    func setUp(task: Task) {
-        taskLabel.text = task.name
+    func setUp(task: Task?) {
+        taskLabel.text = task?.name
     }
     
 }

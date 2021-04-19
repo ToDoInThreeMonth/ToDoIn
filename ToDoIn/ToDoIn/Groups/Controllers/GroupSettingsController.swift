@@ -1,11 +1,11 @@
 import UIKit
 import PinLayout
 
-class GroupSettingsController: UIViewController, GroupSettingsView {
+class GroupSettingsController: UIViewController {
     
     // MARK: - Properties
     
-    lazy var presenter = GroupSettingsPresenter(groupSettingsView: self)
+    private var presenter: GroupSettingsViewPresenter?
     
     private let group: Group
     
@@ -22,6 +22,7 @@ class GroupSettingsController: UIViewController, GroupSettingsView {
     init(group: Group) {
         self.group = group
         super.init(nibName: nil, bundle: nil)
+        presenter = GroupSettingsPresenter()
     }
     
     required init?(coder: NSCoder) {
@@ -82,6 +83,7 @@ class GroupSettingsController: UIViewController, GroupSettingsView {
     
     func configureTitle() {
         groupTitle.text = group.name
+        groupTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         groupTitle.textAlignment = .center
         groupTitle.textColor = .darkTextColor
         groupTitle.addTarget(self, action: #selector(groupTitleDidChange), for: .editingDidEnd)
@@ -122,13 +124,13 @@ class GroupSettingsController: UIViewController, GroupSettingsView {
     @objc
     func groupTitleDidChange(sender: AnyObject) {
         // сохранение нового названия комнаты
-        presenter.groupTitleDidChange(with: groupTitle.text ?? nil)
+        presenter?.groupTitleDidChange(with: groupTitle.text ?? nil)
     }
     
     @objc
     func addUserButtonTapped(sender: AnyObject) {
         // добавление нового участника
-        presenter.addUserButtonTapped()
+        presenter?.addUserButtonTapped()
     }
 
 }

@@ -1,12 +1,11 @@
 import UIKit
 import PinLayout
 
-class GroupController: UIViewController, GroupView {
+class GroupController: UIViewController {
     
     // MARK: - Properties
     
-    lazy var presenter = GroupPresenter(groupView: self)
-    weak var coordinator: MainChildCoordinator?
+    private var presenter: GroupViewPresenter?
     
     private var group: Group
     
@@ -25,10 +24,16 @@ class GroupController: UIViewController, GroupView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    
+        
     // MARK: - Handlers
-    
+
+    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        presenter.setCoordinator(with: coordinator)
+    }
+        
+    // MARK: Configures
+
     override func loadView() {
         super.loadView()
         setBackground()
@@ -81,12 +86,13 @@ class GroupController: UIViewController, GroupView {
     
     @objc
     func settingsButtonTapped(sender: UIBarButtonItem) {
-        coordinator?.showSettingsGroupController(group: group)
+        presenter?.showSettingsGroupController(group: group)
     }
     
     @objc
     func addingTaskButtonTapped(sender: UIBarButtonItem) {
-        coordinator?.showAddTask(group: group)
+        presenter?.showTaskCotroller(group: group, task: Task(), isChanging: false)
+//        presenter?.showAddTask(group: group)
     }
 
 }
@@ -98,13 +104,13 @@ extension GroupController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.getTasks(for: group.users[section], from: group).count
+        return presenter?.getTasks(for: group.users[section], from: group).count ?? 0
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as! TaskTableViewCell
-        cell.setUp(task: presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
+        cell.setUp(task: presenter?.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
         return cell
     }
     
@@ -133,7 +139,10 @@ extension GroupController: UITableViewDelegate {
 
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // открытие View с описание задачи
+        // открытие View с описанием задачи
+        let currentTask = presenter?.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row] ?? Task()
+        presenter?.showTaskCotroller(group: group, task: currentTask, isChanging: true)
+//        presenter?.showTaskInfo(group: group, task: currentTask)
     }
     
     // размер ячейки
