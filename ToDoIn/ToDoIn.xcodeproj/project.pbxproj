@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */; };
 		158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A53F32619F0E5003F4F3A /* UIView + extension.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		15D099552619ED4F006E17F7 /* MainOfflineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */; };
+		15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */; };
+		15F3B78F261F0624004C2FB6 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78E261F0624004C2FB6 /* PostModel.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
 		4313B440260BBFA500E6381A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* ViewController.swift */; };
 		4313B445260BBFA800E6381A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4313B444260BBFA800E6381A /* Assets.xcassets */; };
@@ -19,10 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
 		158A53F32619F0E5003F4F3A /* UIView + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineTableViewCell.swift; sourceTree = "<group>"; };
+		15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extensions.swift"; sourceTree = "<group>"; };
+		15F3B78E261F0624004C2FB6 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4313B43B260BBFA500E6381A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */,
+				15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -74,8 +81,18 @@
 		15D099532619ECE4006E17F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				15F3B78E261F0624004C2FB6 /* PostModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		15F3B789261F05BA004C2FB6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				158A53F32619F0E5003F4F3A /* UIView + extension.swift */,
+				15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		3F81D43B9AFA4F14842C4978 /* Frameworks */ = {
@@ -107,6 +124,7 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				15F3B789261F05BA004C2FB6 /* Extensions */,
 				15D099532619ECE4006E17F7 /* Models */,
 				15D099522619ECDF006E17F7 /* Views */,
 				15D099512619ECD1006E17F7 /* Controllers */,
@@ -115,7 +133,6 @@
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
-				158A53F32619F0E5003F4F3A /* UIView + extension.swift */,
 			);
 			path = ToDoIn;
 			sourceTree = "<group>";
@@ -242,7 +259,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */,
 				158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */,
+				15F3B78F261F0624004C2FB6 /* PostModel.swift in Sources */,
+				15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */,
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				15D099552619ED4F006E17F7 /* MainOfflineTableViewCell.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,

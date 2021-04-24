@@ -18,7 +18,7 @@ class MainFlowCoordinator: MainChildCoordinator {
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "checkmark"), selectedImage: UIImage(systemName: "checkmark"))
         // Пример настройки viewController
-        viewController.title = "MainViewController"
+        viewController.title = "ToDoIn"
         
         navigationController.pushViewController(viewController, animated: false)
     }
