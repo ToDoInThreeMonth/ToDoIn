@@ -38,12 +38,12 @@ class GroupsController: UIViewController, GroupsView {
     
     override func loadView() {
         super.loadView()
+        setBackground()
         self.view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBackground()
         configureTableView()
     }
     
