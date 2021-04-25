@@ -6,4 +6,10 @@ extension UIColor {
     static let darkTextColor = UIColor(red: 0.008, green: 0.173, blue: 0.447, alpha: 1)
     
     static let lightTextColor = UIColor(red: 0.008, green: 0.173, blue: 0.447, alpha: 0.4)
+    
+    static let turquoise = UIColor(red: 0, green: 255/255, blue: 0/255, alpha: 1)
+    
+    static let darkGrayTextColor = UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 1)
+    
+    static let lightGrayTextColor = UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 0.5)
 }

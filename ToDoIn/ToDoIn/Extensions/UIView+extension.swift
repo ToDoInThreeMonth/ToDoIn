@@ -189,4 +189,16 @@ extension UIView {
         gradientLayer.colors = colors
         layer.insertSublayer(gradientLayer, at: 0)
     }
+
+    func addLinearGradiend() {
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0).cgColor]
+        gradient.startPoint = CGPoint(x: 0.5, y: 0)
+        gradient.endPoint = CGPoint(x: 0.5, y: 0.5)
+        gradient.frame = bounds
+        gradient.cornerRadius = layer.cornerRadius
+        gradient.locations = [0, 1]
+        layer.addSublayer(gradient)
+    }
+    
 }

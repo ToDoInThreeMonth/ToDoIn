@@ -17,7 +17,7 @@ class AccountFlowCoordinator: AccountChildCoordinator {
     }
     
     func start() {
-        let viewController = AccountController()
+        let viewController = AccountViewController()
         
         let tabBarImage = UIImage(named: imageName)
         

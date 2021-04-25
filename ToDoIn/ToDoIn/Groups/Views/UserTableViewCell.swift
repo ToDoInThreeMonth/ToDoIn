@@ -5,6 +5,7 @@ class UserTableViewCell: UITableViewCell {
     // MARK: - Properties
     static let identifier = "SettingsGroupCell"
     
+    private var backView = UIView()
     private var userName = UILabel()
     private var userImage = UIImageView()
     
@@ -16,7 +17,8 @@ class UserTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         selectionStyle = .none
-        [userName, userImage].forEach {addSubview($0)}
+        [userName, backView].forEach {addSubview($0)}
+        backView.addSubview(userImage)
     }
     
     required init?(coder: NSCoder) {
@@ -34,19 +36,33 @@ class UserTableViewCell: UITableViewCell {
     
     func setupLayouts() {
         
-        userImage.pin
+        backView.pin
             .left(10).vCenter()
             .size(self.frame.height - imagePadding * 2)
         
+        userImage.pin
+            .all()
+            .margin(imagePadding)
+        
         userName.pin
-            .after(of: userImage, aligned: .center)
+            .after(of: backView, aligned: .center)
             .marginLeft(10)
             .sizeToFit()
     }
     
     func setupSublayers() {
+        configureBackView()
         configureUserName()
         configureUserImageView()
+    }
+    
+    func configureBackView() {
+        backView.makeRound()
+        backView.backgroundColor = .accentColor
+        backView.addShadow(side: .bottomRight, type: .outside, alpha: 0.15)
+        backView.addShadow(side: .bottomRight, type: .outside, color: .white, alpha: 1, offset: -5)
+        backView.addShadow(side: .topLeft, type: .innearRadial, color: .white, power: 0.15, alpha: 1, offset: 1)
+        backView.addShadow(side: .bottomRight, type: .innearRadial, power: 0.15, offset: 10)
     }
     
     func configureUserName() {
@@ -58,6 +74,8 @@ class UserTableViewCell: UITableViewCell {
         userImage.makeRound()
         userImage.layer.masksToBounds = false
         userImage.clipsToBounds = true
+        userImage.addShadow(side: .topLeft, type: .innearRadial, power: 0.1, alpha: 0.3, offset: 10)
+        userImage.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.1, alpha: 0.5, offset: 10)
     }
     
     

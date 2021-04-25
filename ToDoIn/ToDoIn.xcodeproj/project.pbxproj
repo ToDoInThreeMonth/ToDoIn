@@ -10,7 +10,7 @@
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
-		4313B440260BBFA500E6381A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* ViewController.swift */; };
+		4313B440260BBFA500E6381A /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* MainController.swift */; };
 		4313B445260BBFA800E6381A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4313B444260BBFA800E6381A /* Assets.xcassets */; };
 		4313B448260BBFA800E6381A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4313B446260BBFA800E6381A /* LaunchScreen.storyboard */; };
 		4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322866D260E04A20096C905 /* CustomTabBarController.swift */; };
@@ -26,12 +26,21 @@
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
 		4351797F26184DF5009F898B /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* GroupsService.swift */; };
 		4351798226185190009F898B /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskTableViewCell.swift */; };
+		4351D24826355F3A005E50E8 /*  AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D24726355F3A005E50E8 /*  AccountViewController.swift */; };
+		4351D24B26355F82005E50E8 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D24A26355F82005E50E8 /* FriendModel.swift */; };
+		4351D24E26355FC2005E50E8 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D24D26355FC2005E50E8 /* AccountModel.swift */; };
+		4351D2512635601D005E50E8 /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D2502635601D005E50E8 /* AccountTableViewCell.swift */; };
+		4351D25526356064005E50E8 /* LogOutAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D25426356064005E50E8 /* LogOutAlertController.swift */; };
+		4351D258263560B1005E50E8 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D257263560B1005E50E8 /* SearchTextField.swift */; };
+		4351D25C26357473005E50E8 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D25B26357473005E50E8 /* SettingsModel.swift */; };
+		4351D260263589BF005E50E8 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D25F263589BF005E50E8 /* PostModel.swift */; };
+		4351D266263589F6005E50E8 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D265263589F6005E50E8 /* MainOfflineHeaderView.swift */; };
+		4351D26926358A13005E50E8 /* MainOfflineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351D26826358A13005E50E8 /* MainOfflineTableViewCell.swift */; };
 		4354B312261CC2ED0080F577 /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4354B311261CC2ED0080F577 /* TaskController.swift */; };
 		439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439AE9A4262051D50051BB01 /* CustomTextField.swift */; };
 		439CEDEE262088510005091A /* GroupSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439CEDED262088510005091A /* GroupSettingsController.swift */; };
 		43AEF86D262B29EC0063D925 /* GroupsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AEF86C262B29EC0063D925 /* GroupsFlowCoordinator.swift */; };
 		43AEF870262B29F90063D925 /* AccountFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AEF86F262B29F90063D925 /* AccountFlowCoordinator.swift */; };
-		43AEF875262B2BD80063D925 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AEF874262B2BD80063D925 /* AccountController.swift */; };
 		43C4FAA6261733AA0019816F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA5261733AA0019816F /* Group.swift */; };
 		43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupTableViewCell.swift */; };
 		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
@@ -46,7 +55,7 @@
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4313B43B260BBFA500E6381A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4313B43F260BBFA500E6381A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4313B43F260BBFA500E6381A /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		4313B444260BBFA800E6381A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4313B447260BBFA800E6381A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4313B449260BBFA800E6381A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,12 +72,21 @@
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		4351797E26184DF5009F898B /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
 		4351798126185190009F898B /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		4351D24726355F3A005E50E8 /*  AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AccountViewController.swift"; sourceTree = "<group>"; };
+		4351D24A26355F82005E50E8 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
+		4351D24D26355FC2005E50E8 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		4351D2502635601D005E50E8 /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
+		4351D25426356064005E50E8 /* LogOutAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutAlertController.swift; sourceTree = "<group>"; };
+		4351D257263560B1005E50E8 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		4351D25B26357473005E50E8 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		4351D25F263589BF005E50E8 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		4351D265263589F6005E50E8 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
+		4351D26826358A13005E50E8 /* MainOfflineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineTableViewCell.swift; sourceTree = "<group>"; };
 		4354B311261CC2ED0080F577 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		439AE9A4262051D50051BB01 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		439CEDED262088510005091A /* GroupSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsController.swift; sourceTree = "<group>"; };
 		43AEF86C262B29EC0063D925 /* GroupsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFlowCoordinator.swift; sourceTree = "<group>"; };
 		43AEF86F262B29F90063D925 /* AccountFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFlowCoordinator.swift; sourceTree = "<group>"; };
-		43AEF874262B2BD80063D925 /* AccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
 		43C4FAA5261733AA0019816F /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		43C4FAA8261737C20019816F /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
@@ -174,10 +192,64 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4351D24426355EFA005E50E8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4351D24726355F3A005E50E8 /*  AccountViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4351D24526355F04005E50E8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4351D24A26355F82005E50E8 /* FriendModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4351D24626355F0B005E50E8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4351D24D26355FC2005E50E8 /* AccountModel.swift */,
+				4351D2502635601D005E50E8 /* AccountTableViewCell.swift */,
+				4351D25426356064005E50E8 /* LogOutAlertController.swift */,
+				4351D257263560B1005E50E8 /* SearchTextField.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4351D25E263589B5005E50E8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4351D25F263589BF005E50E8 /* PostModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4351D263263589C7005E50E8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4313B43F260BBFA500E6381A /* MainController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4351D264263589E4005E50E8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4351D265263589F6005E50E8 /* MainOfflineHeaderView.swift */,
+				4351D26826358A13005E50E8 /* MainOfflineTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		43AEF872262B2BA90063D925 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				43AEF874262B2BD80063D925 /* AccountController.swift */,
+				4351D24526355F04005E50E8 /* Model */,
+				4351D24426355EFA005E50E8 /* Controller */,
+				4351D24626355F0B005E50E8 /* View */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -185,7 +257,9 @@
 		43AEF873262B2BB00063D925 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				4313B43F260BBFA500E6381A /* ViewController.swift */,
+				4351D264263589E4005E50E8 /* Views */,
+				4351D263263589C7005E50E8 /* Controllers */,
+				4351D25E263589B5005E50E8 /* Model */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -230,6 +304,7 @@
 				43DA628B261881D00057F063 /* SectionHeaderView.swift */,
 				4349D8B32621740400069AB6 /* UserTableViewCell.swift */,
 				439AE9A4262051D50051BB01 /* CustomTextField.swift */,
+				4351D25B26357473005E50E8 /* SettingsModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -358,31 +433,40 @@
 			files = (
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */,
+				4351D25C26357473005E50E8 /* SettingsModel.swift in Sources */,
 				4351797F26184DF5009F898B /* GroupsService.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
 				43AEF86D262B29EC0063D925 /* GroupsFlowCoordinator.swift in Sources */,
+				4351D24826355F3A005E50E8 /*  AccountViewController.swift in Sources */,
 				4354B312261CC2ED0080F577 /* TaskController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */,
-				43AEF875262B2BD80063D925 /* AccountController.swift in Sources */,
 				4335D6432629E7CE00DA47DA /* TaskPresenter.swift in Sources */,
 				439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */,
+				4351D258263560B1005E50E8 /* SearchTextField.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
 				4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
+				4351D24E26355FC2005E50E8 /* AccountModel.swift in Sources */,
+				4351D266263589F6005E50E8 /* MainOfflineHeaderView.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */,
 				43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */,
-				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
+				4351D2512635601D005E50E8 /* AccountTableViewCell.swift in Sources */,
+				4351D26926358A13005E50E8 /* MainOfflineTableViewCell.swift in Sources */,
+				4313B440260BBFA500E6381A /* MainController.swift in Sources */,
 				43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */,
 				439CEDEE262088510005091A /* GroupSettingsController.swift in Sources */,
 				4351798226185190009F898B /* TaskTableViewCell.swift in Sources */,
 				4335D6392629DF1100DA47DA /* Protocols.swift in Sources */,
 				43AEF870262B29F90063D925 /* AccountFlowCoordinator.swift in Sources */,
+				4351D24B26355F82005E50E8 /* FriendModel.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 				43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */,
+				4351D260263589BF005E50E8 /* PostModel.swift in Sources */,
 				43429917262AC22300BD85F5 /* GroupSettingsPresenter.swift in Sources */,
+				4351D25526356064005E50E8 /* LogOutAlertController.swift in Sources */,
 				4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
