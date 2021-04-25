@@ -21,24 +21,10 @@ class GroupsController: UIViewController, GroupsView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Handlers
-    
-    func setGroups(groups: [Group]) {
-        self.groups = groups
-        tableView.reloadData()
-    }
-    
-    func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator) {
-        self.presenter = presenter
-        self.presenter?.setCoordinator(with: coordinator)
-        presenter.getGroups()
-    }
-    
-    // MARK: Configures
-    
     override func loadView() {
         super.loadView()
         setBackground()
+        presenter?.getGroups()
         self.view.addSubview(tableView)
     }
     
@@ -51,6 +37,8 @@ class GroupsController: UIViewController, GroupsView {
         tableView.pin.all().marginTop(view.pin.safeArea.top + 15)
     }
     
+    // MARK: Configures
+    
     func configureTableView() {
         tableView.register(GroupTableViewCell.self, forCellReuseIdentifier: GroupTableViewCell.identifier)
         
@@ -59,6 +47,18 @@ class GroupsController: UIViewController, GroupsView {
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    // MARK: - Handlers
+    
+    func setGroups(groups: [Group]) {
+        self.groups = groups
+        tableView.reloadData()
+    }
+    
+    func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
     }
 }
 
@@ -74,8 +74,9 @@ extension GroupsController: UITableViewDataSource {
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as! GroupTableViewCell
-        cell.layer.cornerRadius = cell.frame.height / 2.6
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as? GroupTableViewCell else {
+            return UITableViewCell()
+        }
         cell.setUp(group: groups[indexPath.row])
         return cell
     }

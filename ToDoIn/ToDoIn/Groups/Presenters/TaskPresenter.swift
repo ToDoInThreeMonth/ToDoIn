@@ -26,7 +26,7 @@ class TaskPresenter: TaskViewPresenter {
     }
     
     func buttonTapped(_ isChanging: Bool, task: Task, group: Group) {
-        if (isChanging) {
+        if isChanging {
             groupsService.changeTask(task, in: group)
         }
         else {

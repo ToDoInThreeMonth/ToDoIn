@@ -24,16 +24,7 @@ class GroupController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
-    // MARK: - Handlers
-
-    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator) {
-        self.presenter = presenter
-        presenter.setCoordinator(with: coordinator)
-    }
-        
-    // MARK: Configures
-
+    
     override func loadView() {
         super.loadView()
         setBackground()
@@ -50,7 +41,8 @@ class GroupController: UIViewController {
     override func viewDidLayoutSubviews() {
         tableView.pin.all()
     }
-    
+        
+    // MARK: Configures
     
     func configureTableView() {
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.identifier)
@@ -84,13 +76,20 @@ class GroupController: UIViewController {
         addingTaskButton.action = #selector(addingTaskButtonTapped)
     }
     
+    // MARK: - Handlers
+
+    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        presenter.setCoordinator(with: coordinator)
+    }
+    
     @objc
-    func settingsButtonTapped(sender: UIBarButtonItem) {
+    func settingsButtonTapped() {
         presenter?.showSettingsGroupController(group: group)
     }
     
     @objc
-    func addingTaskButtonTapped(sender: UIBarButtonItem) {
+    func addingTaskButtonTapped() {
         presenter?.showTaskCotroller(group: group, task: Task(), isChanging: false)
 //        presenter?.showAddTask(group: group)
     }
@@ -109,7 +108,9 @@ extension GroupController: UITableViewDataSource {
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as! TaskTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as? TaskTableViewCell else {
+            return UITableViewCell()
+        }
         cell.setUp(task: presenter?.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
         return cell
     }

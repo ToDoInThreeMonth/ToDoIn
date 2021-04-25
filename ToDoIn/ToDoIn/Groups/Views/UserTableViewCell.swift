@@ -5,8 +5,8 @@ class UserTableViewCell: UITableViewCell {
     // MARK: - Properties
     static let identifier = "SettingsGroupCell"
     
-    var userName = UILabel()
-    var userImage = UIImageView()
+    private var userName = UILabel()
+    private var userImage = UIImageView()
     
     private let imagePadding: CGFloat = 6
 

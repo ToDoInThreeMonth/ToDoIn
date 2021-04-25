@@ -14,8 +14,10 @@ class GroupSettingsController: UIViewController {
     private let tableView = UITableView()
     private let addUserButton = UIButton(type: .system)
     
-    private let cornerRadius: CGFloat = 15
-    private let horizontalPadding: CGFloat = 40
+    struct LayersConstants {
+        static let cornerRadius: CGFloat = 15
+        static let horizontalPadding: CGFloat = 40
+    }
     
     // MARK: - Init
     
@@ -28,8 +30,6 @@ class GroupSettingsController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Handlers
     
     override func loadView() {
         super.loadView()
@@ -54,15 +54,21 @@ class GroupSettingsController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        configureLayouts()
+    }
+    
+    // MARK: - Configures
+    
+    func configureLayouts() {
         groupTitle.pin
             .top(view.pin.safeArea.top + 10)
-            .horizontally(horizontalPadding)
+            .horizontally(LayersConstants.horizontalPadding)
             .height(30)
         
         imageView.pin
             .below(of: groupTitle)
             .marginTop(20)
-            .horizontally(horizontalPadding)
+            .horizontally(LayersConstants.horizontalPadding)
             .height(180)
         
         addUserButton.pin
@@ -112,7 +118,7 @@ class GroupSettingsController: UIViewController {
         addUserButton.setTitleColor(.darkTextColor, for: UIControl.State.normal)
         addUserButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         addUserButton.backgroundColor = .accentColor
-        addUserButton.layer.cornerRadius = cornerRadius
+        addUserButton.layer.cornerRadius = LayersConstants.cornerRadius
         addUserButton.addTarget(self, action: #selector(addUserButtonTapped), for: .touchUpInside)
     }
     
@@ -121,14 +127,16 @@ class GroupSettingsController: UIViewController {
         addUserButton.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
     }
     
+    // MARK: - Handlers
+
     @objc
-    func groupTitleDidChange(sender: AnyObject) {
+    func groupTitleDidChange() {
         // сохранение нового названия комнаты
         presenter?.groupTitleDidChange(with: groupTitle.text ?? nil)
     }
     
     @objc
-    func addUserButtonTapped(sender: AnyObject) {
+    func addUserButtonTapped() {
         // добавление нового участника
         presenter?.addUserButtonTapped()
     }

@@ -39,7 +39,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
 
-    @objc func accountButtonAction(sender: UIButton) {
+    @objc func accountButtonAction() {
         self.selectedIndex = 1
     }
     

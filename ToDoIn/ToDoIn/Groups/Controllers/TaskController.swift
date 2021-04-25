@@ -19,7 +19,7 @@ class TaskController: UIViewController, TaskView {
         static let horizontalPadding: CGFloat = 40
     }
     
-    private let placeholderText = "Подготовиться к рк на следующую неделю"
+    private let placeholderText = "Подготовиться к рк на следующей неделе"
     
     private let titleLabel = UILabel()
     private let nameLabel = UILabel()
@@ -44,19 +44,6 @@ class TaskController: UIViewController, TaskView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    
-    // MARK: - Handlers
-    
-    func setDate(with date: String) {
-        dateTextField.text = date
-    }
-    
-    func setUser(with name: String) {
-        userTextField.text = name
-    }
-    
-    // MARK: - Configures
     
     override func loadView() {
         super.loadView()
@@ -78,11 +65,14 @@ class TaskController: UIViewController, TaskView {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidLayoutSubviews() {
+        configureLayouts()
         configureShadows()
     }
     
-    override func viewDidLayoutSubviews() {
+    // MARK: - Configures
+    
+    func configureLayouts() {
         titleLabel.pin
             .top(15).hCenter()
             .sizeToFit()
@@ -209,6 +199,16 @@ class TaskController: UIViewController, TaskView {
     func configureShadows() {
         [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
         [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+    }
+    
+    // MARK: - Handlers
+    
+    func setDate(with date: String) {
+        dateTextField.text = date
+    }
+    
+    func setUser(with name: String) {
+        userTextField.text = name
     }
     
     @objc

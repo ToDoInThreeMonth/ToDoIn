@@ -1,25 +1,19 @@
 import Foundation
 
-class Group: Equatable {
+struct Group: Equatable {
     
-    var id = UUID()
+    var id: UUID
     var name: String
     var image: String
     var users: [User]
     var tasks: [Task]
     
-    init(name: String, image: String, tasks: [Task], users: [User]) {
+    init(id: UUID = UUID(), name: String = "", image: String = "", tasks: [Task] = [Task](), users: [User] = [User]()) {
+        self.id = id
         self.name = name
         self.image = image
         self.users = users
         self.tasks = tasks
-    }
-    
-    init() {
-        self.name = ""
-        self.image = ""
-        self.users = [User]()
-        self.tasks = [Task]()
     }
 
     static func == (lhs: Group, rhs: Group) -> Bool {
@@ -27,12 +21,13 @@ class Group: Equatable {
     }
 }
 
-class User: Equatable {
-    var id = UUID()
+struct User: Equatable {
+    var id: UUID
     var name: String
     var image: String
     
-    init(name: String, image: String) {
+    init(id: UUID = UUID(), name: String = "", image: String = "") {
+        self.id = id
         self.name = name
         self.image = image
     }
@@ -49,17 +44,10 @@ class Task {
     var date: Date
     var isDone: Bool = false
     
-    init(user: User, name: String, description: String, date: Date) {
+    init(user: User = User(), name: String = "", description: String = "", date: Date = Date()) {
         self.user = user
         self.name = name
         self.description = description
         self.date = date
-    }
-    
-    init() {
-        self.user = User(name: "", image: "")
-        self.name = ""
-        self.description = ""
-        self.date = Date()
     }
 }
