@@ -13,6 +13,8 @@
 		4313B440260BBFA500E6381A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* ViewController.swift */; };
 		4313B445260BBFA800E6381A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4313B444260BBFA800E6381A /* Assets.xcassets */; };
 		4313B448260BBFA800E6381A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4313B446260BBFA800E6381A /* LaunchScreen.storyboard */; };
+		D448A4252636DE9800171964 /* UINavigationController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D448A4242636DE9800171964 /* UINavigationController + extension.swift */; };
+		D448A4292636E63600171964 /* UIColor + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D448A4282636E63600171964 /* UIColor + extension.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,8 @@
 		4313B447260BBFA800E6381A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4313B449260BBFA800E6381A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D448A4242636DE9800171964 /* UINavigationController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + extension.swift"; sourceTree = "<group>"; };
+		D448A4282636E63600171964 /* UIColor + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extension.swift"; sourceTree = "<group>"; };
 		F0B3DC4BF660E53D2E6FE999 /* Pods-ToDoIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.debug.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,6 +87,8 @@
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
+				D448A4242636DE9800171964 /* UINavigationController + extension.swift */,
+				D448A4282636E63600171964 /* UIColor + extension.swift */,
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
@@ -213,7 +219,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
+				D448A4252636DE9800171964 /* UINavigationController + extension.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
+				D448A4292636E63600171964 /* UIColor + extension.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 			);

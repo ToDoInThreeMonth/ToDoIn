@@ -21,6 +21,10 @@ class MainFlowCoordinator: MainChildCoordinator {
         viewController.view.backgroundColor = .white
         viewController.title = "MainViewController"
         
+       navigationController.navigationBar.barTintColor = UIColor.accentColor
+      navigationController.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.darkTextColor, .font : UIFont(name: "Georgia", size: 24)!]
+        navigationController.configureBarButtonItems(screen: .rooms, for: viewController)
+        
         navigationController.pushViewController(viewController, animated: false)
     }
     
