@@ -129,24 +129,26 @@ class AccountViewController: UIViewController {
     }
     
     private func configureViews() {
-        userBackView.makeRound()
-        AccountModel.getUserBackShadow(userBackView)
-        
-        userImageView.makeRound()
-        AccountModel.getUserImageViewShadow(userImageView)
-        
-        searchTextField.layer.cornerRadius = 20
-        AccountModel.getSearchTFShadow(searchTextField)
-        
-        [exitButton, notificationButton].forEach{
-            $0.layer.cornerRadius = 15
-            AccountModel.getSettingButtonShadow($0)
+        if userBackView.layer.cornerRadius == 0 {
+            userBackView.makeRound()
+            AccountModel.getUserBackShadow(userBackView)
+            
+            userImageView.makeRound()
+            AccountModel.getUserImageViewShadow(userImageView)
+            
+            searchTextField.layer.cornerRadius = 20
+            AccountModel.getSearchTFShadow(searchTextField)
+            
+            [exitButton, notificationButton].forEach{
+                $0.layer.cornerRadius = 15
+                AccountModel.getSettingButtonShadow($0)
+            }
         }
     }
     
     private func setupInsets() {
         friendsTableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: friendsTableView.bounds.width - 8)
-        [exitButton, notificationButton].forEach{
+        [exitButton, notificationButton].forEach {
             $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
             $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: $0.frame.width - 45 - $0.imageView!.frame.width)
         }

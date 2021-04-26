@@ -21,6 +21,8 @@
 		4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D63F2629E3E200DA47DA /* GroupPresenter.swift */; };
 		4335D6432629E7CE00DA47DA /* TaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D6422629E7CE00DA47DA /* TaskPresenter.swift */; };
 		43429917262AC22300BD85F5 /* GroupSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43429916262AC22300BD85F5 /* GroupSettingsPresenter.swift */; };
+		434576302636916E00D9355F /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345762F2636916E00D9355F /* CustomNavigationController.swift */; };
+		434576332636967C00D9355F /* AddSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434576322636967C00D9355F /* AddSectionController.swift */; };
 		4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8B32621740400069AB6 /* UserTableViewCell.swift */; };
 		4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */; };
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
@@ -67,6 +69,8 @@
 		4335D63F2629E3E200DA47DA /* GroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPresenter.swift; sourceTree = "<group>"; };
 		4335D6422629E7CE00DA47DA /* TaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresenter.swift; sourceTree = "<group>"; };
 		43429916262AC22300BD85F5 /* GroupSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsPresenter.swift; sourceTree = "<group>"; };
+		4345762F2636916E00D9355F /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		434576322636967C00D9355F /* AddSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSectionController.swift; sourceTree = "<group>"; };
 		4349D8B32621740400069AB6 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 			children = (
 				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
 				43228670260E08FA0096C905 /* CustomTabBar.swift */,
+				4345762F2636916E00D9355F /* CustomNavigationController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				4313B43F260BBFA500E6381A /* MainController.swift */,
+				434576322636967C00D9355F /* AddSectionController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -445,6 +451,7 @@
 				4351D258263560B1005E50E8 /* SearchTextField.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
 				4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */,
+				434576332636967C00D9355F /* AddSectionController.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
@@ -467,6 +474,7 @@
 				4351D260263589BF005E50E8 /* PostModel.swift in Sources */,
 				43429917262AC22300BD85F5 /* GroupSettingsPresenter.swift in Sources */,
 				4351D25526356064005E50E8 /* LogOutAlertController.swift in Sources */,
+				434576302636916E00D9355F /* CustomNavigationController.swift in Sources */,
 				4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

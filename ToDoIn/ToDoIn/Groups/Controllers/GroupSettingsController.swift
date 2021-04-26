@@ -110,17 +110,21 @@ class GroupSettingsController: UIViewController {
     }
     
     private func configureImageView() {
-        groupBackView.makeRound()
-        SettingsModel.getGroupBackViewShadow(groupBackView)
-        
-        imageView.makeRound()
-        SettingsModel.getImageViewShadow(imageView)
+        if groupBackView.layer.cornerRadius == 0 {
+            groupBackView.makeRound()
+            SettingsModel.getGroupBackViewShadow(groupBackView)
+            
+            imageView.makeRound()
+            SettingsModel.getImageViewShadow(imageView)
+        }
     }
     
     private func configureAddButton() {
-        addUserButton.layer.cornerRadius = 15
-        SettingsModel.getAddButtonShadow(addUserButton)
+        if addUserButton.layer.cornerRadius == 0 {
+            addUserButton.layer.cornerRadius = 15
+            SettingsModel.getAddButtonShadow(addUserButton)
         }
+    }
     
     private func setupInsets() {
         tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)

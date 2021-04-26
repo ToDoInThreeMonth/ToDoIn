@@ -30,7 +30,6 @@ class MainController: UIViewController {
         button.setTitle("Авторизоваться", for: .normal)
         button.tintColor = .darkTextColor
         button.backgroundColor = .accentColor
-        button.layer.cornerRadius = 20
         return button
     }()
     
@@ -42,13 +41,21 @@ class MainController: UIViewController {
         return view
     }()
     
-    private let backgroundImageView = UIImageView(image: UIImage(named: "backgroundImage"))
+    private lazy var addBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem()
+        button.image = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
+        button.target = self
+        button.action = #selector(addingSectionButtonTapped)
+        return button
+    }()
+    
     private let dolphinImageView = UIImageView(image: UIImage(named: "dolphinBlur"))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackground()
         setupViews()
+        navigationItem.rightBarButtonItem = addBarButton
     }
     
     override func viewWillLayoutSubviews() {
@@ -61,45 +68,53 @@ class MainController: UIViewController {
     }
     
     private func setupViews() {
-        view.addSubviews(backgroundImageView, dolphinImageView, offlineTableView, authLabel, authButton, translucentView)
+        view.addSubviews(dolphinImageView, offlineTableView, authLabel, authButton, translucentView)
     }
     
     private func setupLayouts() {
-        backgroundImageView.pin
-            .all()
         dolphinImageView.pin
             .size(CGSize(width: 150, height: 100))
             .hCenter()
             .bottom(view.pin.safeArea.bottom)
             .marginBottom(20)
+        
         translucentView.pin
             .height(200)
             .horizontally(15)
             .bottom(-15)
+        
         authButton.pin
             .bottom(to: translucentView.edge.top)
             .marginBottom(15)
             .hCenter()
             .size(CGSize(width: 230, height: 40))
+        
         authLabel.pin
             .bottom(to: authButton.edge.top)
             .marginBottom(15)
             .horizontally(50)
             .sizeToFit(.width)
+        
         offlineTableView.pin
             .top(view.pin.safeArea.top)
             .bottom(to: authLabel.edge.top)
             .horizontally(32)
             .marginBottom(20)
             .marginTop(15)
-        
     }
     
     private func setupShadows() {
-        authButton.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
-        authButton.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 2)
-        authButton.addLinearGradiend()
-        
+        if authButton.layer.cornerRadius == 0 {
+            authButton.layer.cornerRadius = 20
+            authButton.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
+            authButton.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 2)
+            authButton.addLinearGradiend()
+        }
+    }
+    
+    @objc
+    func addingSectionButtonTapped() {
+        coordinator?.showAddSection()
     }
 }
 
@@ -136,8 +151,7 @@ extension MainController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? MainOfflineTableViewCell else { return }
         cell.cellDidTapped()
+        coordinator?.showTaskInfo()
     }
-    
-    
 }
 

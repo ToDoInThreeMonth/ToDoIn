@@ -184,7 +184,7 @@ class TaskController: UIViewController, TaskView {
     }
 
     func configureAddButton() {
-        addButton.setTitle(isChanging ? "Добавить" : "Изменить", for: .normal)
+        addButton.setTitle(isChanging ? "Изменить" : "Добавить", for: .normal)
         addButton.setTitleColor(.darkTextColor, for: .normal)
         addButton.layer.cornerRadius = LayersConstants.cornerRadius
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)

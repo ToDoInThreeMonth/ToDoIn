@@ -1,10 +1,3 @@
-//
-//  UIViewController + extension.swift
-//  ToDoIn
-//
-//  Created by Дарья on 10.04.2021.
-//
-
 import UIKit
 
 extension UIViewController {

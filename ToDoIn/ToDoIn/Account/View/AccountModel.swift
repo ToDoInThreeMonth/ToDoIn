@@ -51,7 +51,7 @@ struct AccountModel {
     
     static var exitButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(UIImage(named: "openDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("Выйти", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         button.backgroundColor = .accentColor
