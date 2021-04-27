@@ -10,7 +10,7 @@ class Tasks {
 }
 
 class Users {
-    static let users = [User(name: "Я", image: "user"),
+    static var users = [User(name: "Я", image: "user"),
                         User(name: "Вова", image: "user"),
                         User(name: "Вася", image: "user"),
                         User(name: "Филипп", image: "user")]
@@ -53,4 +53,17 @@ class GroupsService {
         // изменение задачи
     }
     
+}
+
+extension Array where Element == Group {
+    func findIndex(of group: Group) -> Int?{
+        for i in 0..<self.count {
+            print(self[i].id)
+            print(group.id)
+            if self[i].id == group.id {
+                return i
+            }
+        }
+        return nil
+    }
 }

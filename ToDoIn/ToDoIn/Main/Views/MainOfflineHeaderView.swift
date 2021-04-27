@@ -2,17 +2,16 @@ import UIKit
 import PinLayout
 
 class MainOfflineHeaderView: UITableViewHeaderFooterView {
-    var sectionName: String? {
-        didSet {
-            guard let safeName = sectionName else { return }
-            sectionNameLabel.text = safeName
-        }
-    }
     
-    private lazy var taskButton: UIButton = {
+    weak var mainViewController: MainView?
+    
+    private var section: Section?
+    
+    lazy var taskButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "addTask")?.withRenderingMode(.alwaysOriginal)
         button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -24,7 +23,7 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
         label.textColor = .darkTextColor
         return label
     }()
-
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -58,6 +57,16 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
             .horizontally(20)
             .sizeToFit(.width)
         
+    }
+    
+    func setSectionLabel(with section: Section) {
+        self.section = section
+        sectionNameLabel.text = section.name
+    }
+    
+    @objc
+    func addButtonTapped() {
+        mainViewController?.addTaskButtonTapped(section: section ?? Section())
     }
     
 }

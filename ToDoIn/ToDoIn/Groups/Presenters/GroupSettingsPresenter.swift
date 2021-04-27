@@ -4,12 +4,11 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Properties
     
-    private let groupsService = GroupsService()        
+    private let groupsService = GroupsService()
     
     // MARK: - Handlers
-
     func groupTitleDidChange(with title: String?) {
-        // изменение названия комнаты 
+        // изменение названия комнаты
     }
     
     func addUserButtonTapped() {

@@ -14,7 +14,6 @@ class TaskPresenter: TaskViewPresenter {
     }
     
     // MARK: - Handlers
-
     func doneDateTapped(date: Date) {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "dd.MM.yyyy HH:mm"
@@ -34,4 +33,3 @@ class TaskPresenter: TaskViewPresenter {
         }
     }
 }
-    

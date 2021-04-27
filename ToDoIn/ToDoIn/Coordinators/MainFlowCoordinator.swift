@@ -2,7 +2,7 @@ import UIKit
 
 protocol MainChildCoordinator: ChildCoordinator {
     func showAddSection()
-    func showTaskInfo()
+    func showPostInfo(post: Post, in section: Section, isChanging: Bool)
 }
 
 class MainFlowCoordinator: MainChildCoordinator {
@@ -17,8 +17,8 @@ class MainFlowCoordinator: MainChildCoordinator {
     
     func start() {
         let viewController = MainController()
-        viewController.coordinator = self
-        
+        viewController.setPresenter(presenter: MainPresenter(mainView: viewController.self), coordinator: self)
+
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: nil, selectedImage: nil)
         
@@ -34,5 +34,7 @@ class MainFlowCoordinator: MainChildCoordinator {
         navigationController.viewControllers.last?.present(AddSectionController(), animated: true, completion: nil)
     }
     
-    func showTaskInfo() {}
+    func showPostInfo(post: Post, in section: Section, isChanging: Bool) {
+        navigationController.viewControllers.last?.present(TaskSectionController(section: section, post: post, isChanging: isChanging), animated: true, completion: nil)
+    }
 }

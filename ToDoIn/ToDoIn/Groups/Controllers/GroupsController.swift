@@ -64,7 +64,6 @@ class GroupsController: UIViewController, GroupsView {
 
 
 // MARK: - Extensions
-
 extension GroupsController: UITableViewDataSource {
     
     // количество ячеек

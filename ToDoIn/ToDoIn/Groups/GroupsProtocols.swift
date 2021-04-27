@@ -1,7 +1,6 @@
 import Foundation
 
 // GroupsController
-
 protocol GroupsView: class {
     func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator)
     func setGroups(groups: [Group])
@@ -17,7 +16,6 @@ protocol GroupsViewPresenter {
 
 
 // GroupController
-
 protocol GroupViewPresenter {
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     func getTasks(for user: User, from group: Group) -> [Task]
@@ -27,7 +25,6 @@ protocol GroupViewPresenter {
 
 
 // TaskController
-
 protocol TaskView: class {
     func setDate(with date: String)
     func setUser(with name: String)
@@ -42,7 +39,6 @@ protocol TaskViewPresenter {
 }
 
 // GroupSettingsController
-
 protocol GroupSettingsViewPresenter {
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()

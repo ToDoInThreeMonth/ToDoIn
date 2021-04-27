@@ -77,7 +77,6 @@ class GroupController: UIViewController {
     }
     
     // MARK: - Handlers
-
     func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
         presenter.setCoordinator(with: coordinator)
@@ -98,7 +97,6 @@ class GroupController: UIViewController {
 
 
 // MARK: - Extensions
-
 extension GroupController: UITableViewDataSource {
     
     // количество ячеек

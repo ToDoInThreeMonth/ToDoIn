@@ -22,7 +22,6 @@ class GroupsPresenter: GroupsViewPresenter {
     }
     
     // MARK: - Handlers
-
     func getGroups() {
         let groups = groupsService.getGroups()
         groupsView?.setGroups(groups: groups)

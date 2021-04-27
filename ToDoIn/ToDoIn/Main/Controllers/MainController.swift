@@ -1,8 +1,11 @@
 import UIKit
 import PinLayout
 
-class MainController: UIViewController {
-    weak var coordinator: MainChildCoordinator?
+class MainController: UIViewController, MainView {
+    
+    private var presenter: MainViewPresenter?
+    
+    private var data = [Section]()
     
     private lazy var offlineTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -62,6 +65,7 @@ class MainController: UIViewController {
         super.viewWillLayoutSubviews()
         setupLayouts()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupShadows()
@@ -114,44 +118,56 @@ class MainController: UIViewController {
     
     @objc
     func addingSectionButtonTapped() {
-        coordinator?.showAddSection()
+        presenter?.showAddSection()
+    }
+    
+    func setPresenter(presenter: MainViewPresenter, coordinator: MainChildCoordinator) {
+        self.presenter = presenter
+        presenter.setCoordinator(with: coordinator)
+        data = presenter.getSections()
+    }
+    
+    func setSections(sections: [Section]) {
+        
+    }
+    
+    func addTaskButtonTapped(section: Section) {
+        presenter?.showTaskCotroller(section: section, post: Post(), isChanging: false)
     }
 }
 
 extension MainController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return PostModel.posts.count
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PostModel.posts[section].count
+        return data[section].posts.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
         guard let saveHeaderView = headerView else { return nil }
-        guard let sectionName = PostModel.posts[section].first?.group else { return nil }
-        saveHeaderView.sectionName = sectionName
+        saveHeaderView.setSectionLabel(with: data[section])
+        saveHeaderView.mainViewController = self
         return saveHeaderView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MainOfflineTableViewCell.self), for: indexPath) as? MainOfflineTableViewCell
         guard let safeCell = cell else { return UITableViewCell() }
-        safeCell.textLabel?.text = "123"
+        safeCell.textLabel?.text = data[indexPath.section].posts[indexPath.row].title
         safeCell.textLabel?.textColor = .darkTextColor
         return safeCell
     }
-    
-    
 }
 
 extension MainController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? MainOfflineTableViewCell else { return }
-        cell.cellDidTapped()
-        coordinator?.showTaskInfo()
+//        guard let cell = tableView.cellForRow(at: indexPath) as? MainOfflineTableViewCell else { return }
+//        cell.cellDidTapped()
+        presenter?.showTaskCotroller(section: data[indexPath.section], post: data[indexPath.section].posts[indexPath.row], isChanging: true)
     }
 }
 
