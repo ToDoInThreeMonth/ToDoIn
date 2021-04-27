@@ -61,13 +61,12 @@ class TaskTableViewCell: UITableViewCell {
     
     
     func configureTaskView() {
-        taskView.layer.cornerRadius = self.frame.height / 2.6
-        guard let sublayersCount = taskView.layer.sublayers?.count else {
-            return
-        }
-        if sublayersCount <= 3 {
-            taskView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
-            taskView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
+        taskView.backgroundColor = .accentColor
+        if taskView.layer.cornerRadius == 0 {
+            taskView.layer.cornerRadius = self.frame.height / 2.6
+            taskView.addShadow(type: .outside, color: .white, power: 1, alpha: 0.8, offset: -0.5)
+            taskView.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
+            taskView.addLinearGradiend()
         }
     }
     
@@ -78,9 +77,14 @@ class TaskTableViewCell: UITableViewCell {
     
     
     func configureIsDoneView() {
-        isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2
         isDoneView.backgroundColor = .accentColor
-        isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .black, power: 0.2, alpha: 0.05, offset: 0)
+        if isDoneView.layer.cornerRadius == 0 {
+            isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2
+            isDoneView.addShadow(side: .topLeft, type: .innearRadial, power: 0.3, alpha: 0.3, offset: 3)
+            isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.5, alpha: 1, offset: 4)
+            isDoneView.addShadow(type: .outside, power: 4, alpha: 0.15, offset: 1)
+            isDoneView.addShadow(type: .outside, color: .white, power: 4, alpha: 1, offset: -1)
+        }
     }
     
     

@@ -66,13 +66,12 @@ class GroupTableViewCell: UITableViewCell {
     
     
     func configureGroupView() {
-        groupView.layer.cornerRadius = self.frame.height / 2.6
-        guard let sublayersCount = groupView.layer.sublayers?.count else {
-            return
-        }
-        if sublayersCount <= 3 {
-            groupView.addBackgroundGradient(UIColor.white.cgColor, UIColor.accentColor.cgColor)
-            groupView.addShadow(side: .topCenter, type: .outside, color: .black, power: 3, alpha: 0.1, offset: 0)
+        groupView.backgroundColor = .accentColor
+        if groupView.layer.cornerRadius == 0 {
+            groupView.layer.cornerRadius = self.frame.height / 2.6
+            groupView.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -0.5)
+            groupView.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
+            groupView.addLinearGradiend()
         }
     }
     

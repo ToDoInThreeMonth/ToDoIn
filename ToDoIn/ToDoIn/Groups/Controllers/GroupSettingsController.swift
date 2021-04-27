@@ -9,15 +9,36 @@ class GroupSettingsController: UIViewController {
     
     private let group: Group
     
-    private let groupTitle = UITextField()
-    private let imageView = UIImageView()
-    private let tableView = UITableView()
-    private let addUserButton = UIButton(type: .system)
+    private lazy var imageView: UIImageView = {
+       let imageView = SettingsModel.imageView
+        imageView.image = UIImage(named: group.image)
+        return imageView
+    }()
     
-    struct LayersConstants {
-        static let cornerRadius: CGFloat = 15
-        static let horizontalPadding: CGFloat = 40
-    }
+    private lazy var groupBackView = SettingsModel.groupBackView
+    
+    private lazy var groupTitle: UITextField = {
+        let textField = SettingsModel.groupTitle
+        textField.text = group.name
+        return textField
+    }()
+    
+    private lazy var addUserButton: UIButton = {
+        let button = SettingsModel.addUserButton
+        button.addTarget(self, action: #selector(addUserButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = UIColor.clear
+        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        return tableView
+    }()
     
     // MARK: - Init
     
@@ -30,56 +51,56 @@ class GroupSettingsController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func loadView() {
-        super.loadView()
-        view.backgroundColor = .accentColor
-        view.addSubviews(groupTitle, imageView, tableView, addUserButton)
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        hideKeyboardWhenTappedAround()
         setBackground()
-        
-        configureTitle()
-        configureImageView()
-        configureTableView()
-        configureAddUserButton()
+        view.addSubviews(groupBackView, groupTitle, tableView, addUserButton)
+        groupBackView.addSubviews(imageView)
+        hideKeyboardWhenTappedAround()
+
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        configureShadows()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        configureLayouts()
+       
     }
     
     override func viewDidLayoutSubviews() {
-        configureLayouts()
+        configureImageView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupInsets()
+        configureAddButton()
     }
     
     // MARK: - Configures
-    
-    func configureLayouts() {
-        groupTitle.pin
-            .top(view.pin.safeArea.top + 10)
-            .horizontally(LayersConstants.horizontalPadding)
-            .height(30)
+    private func configureLayouts() {
+        groupBackView.pin
+            .topCenter(view.pin.safeArea.top)
+            .margin(30)
+            .size(CGSize(width: 150, height: 150))
         
         imageView.pin
-            .below(of: groupTitle)
+            .all().margin(20)
+        
+        groupTitle.pin
+            .below(of: groupBackView, aligned: .center)
             .marginTop(20)
-            .horizontally(LayersConstants.horizontalPadding)
-            .height(180)
+            .size(CGSize(width: 200, height: 40))
         
         addUserButton.pin
-            .below(of: imageView)
-            .right(0)
-            .marginTop(20)
-            .width(180)
+            .below(of: groupTitle)
+            .end(-10)
+            .width(160)
             .height(40)
+            .marginTop(20)
         
         tableView.pin
-            .top(to: imageView.edge.bottom)
+            .top(to: groupTitle.edge.bottom)
             .start(20)
             .end(to: addUserButton.edge.start)
             .bottom(view.pin.safeArea.bottom)
@@ -87,48 +108,30 @@ class GroupSettingsController: UIViewController {
             .marginTop(20)
     }
     
-    func configureTitle() {
-        groupTitle.text = group.name
-        groupTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        groupTitle.textAlignment = .center
-        groupTitle.textColor = .darkTextColor
-        groupTitle.addTarget(self, action: #selector(groupTitleDidChange), for: .editingDidEnd)
+    private func configureImageView() {
+        if groupBackView.layer.cornerRadius == 0 {
+            groupBackView.makeRound()
+            SettingsModel.getGroupBackViewShadow(groupBackView)
+            
+            imageView.makeRound()
+            SettingsModel.getImageViewShadow(imageView)
+        }
     }
     
-    func configureImageView() {
-        imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 20
-        imageView.image = UIImage(named: group.image)
+    private func configureAddButton() {
+        if addUserButton.layer.cornerRadius == 0 {
+            addUserButton.layer.cornerRadius = 15
+            SettingsModel.getAddButtonShadow(addUserButton)
+        }
     }
     
-    func configureTableView() {
-        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
-        
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    
-    func configureAddUserButton() {
-        addUserButton.setImage(UIImage(named: "addUser")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        addUserButton.setTitle("Добавить участника", for: .normal)
-        addUserButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        addUserButton.setTitleColor(.darkTextColor, for: UIControl.State.normal)
-        addUserButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        addUserButton.backgroundColor = .accentColor
-        addUserButton.layer.cornerRadius = LayersConstants.cornerRadius
-        addUserButton.addTarget(self, action: #selector(addUserButtonTapped), for: .touchUpInside)
-    }
-    
-    func configureShadows() {
-        addUserButton.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
-        addUserButton.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
-    }
+    private func setupInsets() {
+        tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)
+        addUserButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
+        addUserButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: addUserButton.frame.width - 45 - addUserButton.imageView!.frame.width)
+        }
     
     // MARK: - Handlers
-
     @objc
     func groupTitleDidChange() {
         // сохранение нового названия комнаты
@@ -140,12 +143,10 @@ class GroupSettingsController: UIViewController {
         // добавление нового участника
         presenter?.addUserButtonTapped()
     }
-
 }
 
 
 // MARK: - Extensions
-
 extension GroupSettingsController: UITableViewDataSource {
     
     // количество ячеек
