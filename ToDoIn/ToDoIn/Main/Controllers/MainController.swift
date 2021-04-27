@@ -127,12 +127,12 @@ class MainController: UIViewController, MainView {
         data = presenter.getSections()
     }
     
-    func setSections(sections: [Section]) {
-        
-    }
-    
     func addTaskButtonTapped(section: Section) {
         presenter?.showTaskCotroller(section: section, post: Post(), isChanging: false)
+    }
+    
+    func showAlert(_ alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
     }
 }
 

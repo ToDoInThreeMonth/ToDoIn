@@ -49,4 +49,8 @@ struct PostService {
         
     }
     
+    func addSection(with title: String) {
+        print(title)
+    }
+    
 }

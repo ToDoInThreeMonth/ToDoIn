@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class MainPresenter: MainViewPresenter {
 
@@ -37,7 +37,19 @@ class MainPresenter: MainViewPresenter {
     }
     
     func showAddSection() {
-        coordinator?.showAddSection()
+        let alert = UIAlertController(title: "Новая секция", message: "Введите название для этой секции", preferredStyle: .alert)
+        
+        alert.addTextField(configurationHandler: nil)
+        alert.textFields?.first?.placeholder = "Название"
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: "Сохранить", style: .default) { _ in
+            self.postsService.addSection(with: alert.textFields?.first?.text ?? "")
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(addAction)
+        
+        mainView.showAlert(alert)
     }
     
 }

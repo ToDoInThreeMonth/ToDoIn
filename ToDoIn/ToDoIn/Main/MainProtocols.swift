@@ -1,11 +1,11 @@
-import Foundation
+import UIKit
 
 // MainController
 
 protocol MainView: class {
     func setPresenter(presenter: MainViewPresenter, coordinator: MainChildCoordinator)
-    func setSections(sections: [Section])
     func addTaskButtonTapped(section: Section)
+    func showAlert(_ alert: UIAlertController)
 }
 
 

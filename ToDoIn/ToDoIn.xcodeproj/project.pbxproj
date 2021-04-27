@@ -20,7 +20,6 @@
 		4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D63C2629E05000DA47DA /* GroupsPresenter.swift */; };
 		4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D63F2629E3E200DA47DA /* GroupPresenter.swift */; };
 		434576302636916E00D9355F /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345762F2636916E00D9355F /* CustomNavigationController.swift */; };
-		434576332636967C00D9355F /* AddSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434576322636967C00D9355F /* AddSectionController.swift */; };
 		434576372636A81D00D9355F /* TaskSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434576362636A81D00D9355F /* TaskSectionController.swift */; };
 		4345763F2636C73D00D9355F /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345763E2636C73D00D9355F /* MainPresenter.swift */; };
 		434576422636C7AB00D9355F /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434576412636C7AB00D9355F /* MainProtocols.swift */; };
@@ -72,7 +71,6 @@
 		4335D63C2629E05000DA47DA /* GroupsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsPresenter.swift; sourceTree = "<group>"; };
 		4335D63F2629E3E200DA47DA /* GroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPresenter.swift; sourceTree = "<group>"; };
 		4345762F2636916E00D9355F /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
-		434576322636967C00D9355F /* AddSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSectionController.swift; sourceTree = "<group>"; };
 		434576362636A81D00D9355F /* TaskSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSectionController.swift; sourceTree = "<group>"; };
 		4345763E2636C73D00D9355F /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		434576412636C7AB00D9355F /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
@@ -254,7 +252,6 @@
 			isa = PBXGroup;
 			children = (
 				4313B43F260BBFA500E6381A /* MainController.swift */,
-				434576322636967C00D9355F /* AddSectionController.swift */,
 				434576362636A81D00D9355F /* TaskSectionController.swift */,
 			);
 			path = Controllers;
@@ -474,7 +471,6 @@
 				4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */,
 				4345763F2636C73D00D9355F /* MainPresenter.swift in Sources */,
 				434576422636C7AB00D9355F /* MainProtocols.swift in Sources */,
-				434576332636967C00D9355F /* AddSectionController.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,

@@ -1,7 +1,6 @@
 import UIKit
 
 protocol MainChildCoordinator: ChildCoordinator {
-    func showAddSection()
     func showPostInfo(post: Post, in section: Section, isChanging: Bool)
 }
 
@@ -27,11 +26,6 @@ class MainFlowCoordinator: MainChildCoordinator {
         viewController.title = title
         
         navigationController.pushViewController(viewController, animated: false)
-    }
-    
-    
-    func showAddSection() {
-        navigationController.viewControllers.last?.present(AddSectionController(), animated: true, completion: nil)
     }
     
     func showPostInfo(post: Post, in section: Section, isChanging: Bool) {
