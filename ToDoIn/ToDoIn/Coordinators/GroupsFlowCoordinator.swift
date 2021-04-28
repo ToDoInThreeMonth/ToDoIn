@@ -1,7 +1,7 @@
 import UIKit
 
 protocol GroupsChildCoordinator: ChildCoordinator {
-    func showAddSection()
+    func showAddGroup()
     func showTaskController(group: Group, task: Task, isChanging: Bool)
     func showGroupController(group: Group)
     func showSettingsGroupController(group: Group)
@@ -35,7 +35,7 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     }
     
     
-    func showAddSection() {}
+    func showAddGroup() {}
     
     func showTaskController(group: Group, task: Task, isChanging: Bool) {
         navigationController.viewControllers.last?.present(TaskController(group: group, task: task, isChanging: isChanging), animated: true, completion: nil)
