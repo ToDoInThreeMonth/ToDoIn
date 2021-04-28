@@ -4,7 +4,7 @@ class CustomTextField: UITextField {
 
     let insets: UIEdgeInsets
 
-    init(insets: UIEdgeInsets, cornerRadius: CGFloat) {
+    init(insets: UIEdgeInsets, cornerRadius: CGFloat = 0) {
         self.insets = insets
         super.init(frame: .zero)
         layer.cornerRadius = cornerRadius

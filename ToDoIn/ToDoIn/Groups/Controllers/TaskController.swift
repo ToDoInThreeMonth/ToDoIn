@@ -23,12 +23,12 @@ class TaskController: UIViewController, TaskView {
     
     private let titleLabel = UILabel()
     private let nameLabel = UILabel()
-    private let nameTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
+    private let nameTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let descriptionLabel = UILabel()
     private let descriptionTextView = UITextView()
     private let shadowDescriptionSubview = UIView()
-    private let dateTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
-    private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets, cornerRadius: LayersConstants.textFieldCornerRadius)
+    private let dateTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let addButton = UIButton()
     
     // MARK: - Init
@@ -67,7 +67,7 @@ class TaskController: UIViewController, TaskView {
     
     override func viewDidLayoutSubviews() {
         configureLayouts()
-        configureShadows()
+        configureShadowsAndCornerRadius()
     }
     
     // MARK: - Configures
@@ -140,9 +140,7 @@ class TaskController: UIViewController, TaskView {
     
     func configureDescriptionTextView() {
         shadowDescriptionSubview.backgroundColor = .white
-        shadowDescriptionSubview.layer.cornerRadius = LayersConstants.cornerRadius
         
-        descriptionTextView.layer.cornerRadius = LayersConstants.cornerRadius
         descriptionTextView.text = placeholderText
         descriptionTextView.textColor = .lightTextColor
         descriptionTextView.backgroundColor = .white
@@ -186,19 +184,21 @@ class TaskController: UIViewController, TaskView {
     func configureAddButton() {
         addButton.setTitle(isChanging ? "Добавить" : "Изменить", for: .normal)
         addButton.setTitleColor(.darkTextColor, for: .normal)
-        addButton.layer.cornerRadius = LayersConstants.cornerRadius
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
-        gradientLayer.cornerRadius = addButton.layer.cornerRadius
+        gradientLayer.cornerRadius = LayersConstants.cornerRadius
         gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
         addButton.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func configureShadows() {
-        [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-        [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+    func configureShadowsAndCornerRadius() {
+        if nameTextField.layer.cornerRadius == 0 {
+            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
+            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+        }
     }
     
     // MARK: - Handlers
