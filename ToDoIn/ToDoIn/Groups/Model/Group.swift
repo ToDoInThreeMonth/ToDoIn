@@ -37,7 +37,7 @@ struct User: Equatable {
     }
 }
 
-class Task {
+struct Task {
     var user: User
     var name: String
     var description: String

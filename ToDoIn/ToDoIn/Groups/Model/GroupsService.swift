@@ -1,6 +1,6 @@
 import Foundation
 
-class Tasks {
+struct Tasks {
     static var tasks = [Task(user: Users.users[0], name: "Купить кальян", description: "Описание...", date: Date()),
                         Task(user: Users.users[0], name: "Взять колонку", description: "Описание...", date: Date()),
                         Task(user: Users.users[1], name: "Купить поесть", description: "Описание...", date: Date()),
@@ -9,7 +9,7 @@ class Tasks {
                         Task(user: Users.users[3], name: "Купить еще кальян", description: "Описание...", date: Date())]
 }
 
-class Users {
+struct Users {
     static let users = [User(name: "Я", image: "user"),
                         User(name: "Вова", image: "user"),
                         User(name: "Вася", image: "user"),
