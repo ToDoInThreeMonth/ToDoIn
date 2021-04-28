@@ -103,7 +103,11 @@ extension GroupController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.getTasks(for: group.users[section], from: group).count ?? 0
+        guard let presenter = presenter else {
+            self.showErrorAlert()
+            return 0
+        }
+        return presenter.getTasks(for: group.users[section], from: group).count
     }
     
     // дизайн ячейки
@@ -111,7 +115,11 @@ extension GroupController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as? TaskTableViewCell else {
             return UITableViewCell()
         }
-        cell.setUp(task: presenter?.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
+        guard let presenter = presenter else {
+            self.showErrorAlert()
+            return UITableViewCell()
+        }
+        cell.setUp(task: presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
         return cell
     }
     
@@ -141,9 +149,12 @@ extension GroupController: UITableViewDelegate {
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // открытие View с описанием задачи
-        let currentTask = presenter?.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row] ?? Task()
-        presenter?.showTaskCotroller(group: group, task: currentTask, isChanging: true)
-//        presenter?.showTaskInfo(group: group, task: currentTask)
+        guard let presenter = presenter else {
+            self.showErrorAlert()
+            return
+        }
+        let currentTask = presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row]
+        presenter.showTaskCotroller(group: group, task: currentTask, isChanging: true)
     }
     
     // размер ячейки

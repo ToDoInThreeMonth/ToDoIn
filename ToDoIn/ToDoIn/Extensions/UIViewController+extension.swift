@@ -1,10 +1,3 @@
-//
-//  UIViewController + extension.swift
-//  ToDoIn
-//
-//  Created by Дарья on 10.04.2021.
-//
-
 import UIKit
 
 extension UIViewController {
@@ -30,5 +23,12 @@ extension UIViewController {
         
         view.addSubview(imageView)
         self.view.sendSubviewToBack(imageView)
+    }
+    
+    func showErrorAlert() {
+        let alert = UIAlertController(title: "Упс...", message: "Произошла ошибка", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
 }

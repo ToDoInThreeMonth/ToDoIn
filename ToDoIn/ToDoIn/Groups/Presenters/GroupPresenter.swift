@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class GroupPresenter: GroupViewPresenter {
 
@@ -27,5 +27,4 @@ class GroupPresenter: GroupViewPresenter {
     func showSettingsGroupController(group: Group) {
         coordinator?.showSettingsGroupController(group: group)
     }
-    
 }

@@ -86,7 +86,11 @@ extension GroupsController: UITableViewDelegate {
 
     // нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.showGroupController(group: groups[indexPath.row])
+        guard let presenter = presenter else {
+            self.showErrorAlert()
+            return
+        }
+        presenter.showGroupController(group: groups[indexPath.row])
     }
     
     // размер ячейки
