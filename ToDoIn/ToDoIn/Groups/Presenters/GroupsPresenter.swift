@@ -6,8 +6,15 @@ class GroupsPresenter: GroupsViewPresenter {
     
     weak var coordinator: GroupsChildCoordinator?
     
-    private let groupsService = GroupsService()
     private let groupsView: GroupsView?
+    
+    private let groupsManager: GroupsManagerDescription = GroupsManager.shared
+    
+    private var groups: [Group] = []
+    
+    var groupsCount: Int {
+        groups.count
+    }
     
     // MARK: - Init
     
@@ -23,12 +30,23 @@ class GroupsPresenter: GroupsViewPresenter {
     
     // MARK: - Handlers
 
-    func getGroups() {
-        let groups = groupsService.getGroups()
-        groupsView?.setGroups(groups: groups)
+    func getGroup(at index: Int) -> Group {
+        return groups[index]
     }
     
     func showGroupController(group: Group) {
         coordinator?.showGroupController(group: group)
+    }
+    
+    func didLoadView() {
+        groupsManager.observeGroups { [weak self] (result) in
+            switch result {
+            case .success(let groups):
+                self?.groups = groups.map { $0 }
+                self?.groupsView?.reloadView()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

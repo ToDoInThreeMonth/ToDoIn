@@ -1,13 +1,11 @@
 import UIKit
 import PinLayout
 
-class GroupsController: UIViewController, GroupsView {
+class GroupsController: UIViewController {
         
     // MARK: - Properties
     
     private var presenter: GroupsViewPresenter?
-    
-    private var groups = [Group]()
     
     private let tableView = UITableView()
     
@@ -24,12 +22,12 @@ class GroupsController: UIViewController, GroupsView {
     override func loadView() {
         super.loadView()
         setBackground()
-        presenter?.getGroups()
         self.view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.didLoadView()
         configureTableView()
     }
     
@@ -49,10 +47,14 @@ class GroupsController: UIViewController, GroupsView {
         tableView.dataSource = self
     }
     
-    // MARK: - Handlers
+}
+
+
+// MARK: - Extensions
+
+extension GroupsController: GroupsView {
     
-    func setGroups(groups: [Group]) {
-        self.groups = groups
+    func reloadView() {
         tableView.reloadData()
     }
     
@@ -62,14 +64,11 @@ class GroupsController: UIViewController, GroupsView {
     }
 }
 
-
-// MARK: - Extensions
-
 extension GroupsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return presenter?.groupsCount ?? 0
     }
     
     // дизайн ячейки
@@ -77,7 +76,7 @@ extension GroupsController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as? GroupTableViewCell else {
             return UITableViewCell()
         }
-        cell.setUp(group: groups[indexPath.row])
+        cell.setUp(group: presenter?.getGroup(at: indexPath.row) ?? Group())
         return cell
     }
 }
@@ -90,7 +89,7 @@ extension GroupsController: UITableViewDelegate {
             self.showErrorAlert()
             return
         }
-        presenter.showGroupController(group: groups[indexPath.row])
+        presenter.showGroupController(group: presenter.getGroup(at: indexPath.row))
     }
     
     // размер ячейки

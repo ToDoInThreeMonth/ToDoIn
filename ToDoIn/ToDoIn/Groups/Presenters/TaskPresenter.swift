@@ -4,8 +4,10 @@ class TaskPresenter: TaskViewPresenter {
     
     // MARK: - Properties
     
-    private let groupsService = GroupsService()
+//    private let groupsService = GroupsService()
     private let taskView: TaskView?
+    
+    private let groupsManager: GroupsManagerDescription = GroupsManager.shared
         
     // MARK: - Init
     
@@ -27,11 +29,15 @@ class TaskPresenter: TaskViewPresenter {
     
     func buttonTapped(_ isChanging: Bool, task: Task, group: Group) {
         if isChanging {
-            groupsService.changeTask(task, in: group)
+//            groupsService.changeTask(task, in: group)
         }
         else {
-            groupsService.addTask(task, in: group)
+//            groupsService.addTask(task, in: group)
         }
+    }
+    
+    func getUser(by index: Int, in group: Group) -> User {
+        return groupsManager.getUser(by: group.users[index])
     }
 }
     

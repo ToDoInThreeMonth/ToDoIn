@@ -89,7 +89,11 @@ class TaskTableViewCell: UITableViewCell {
     
     
     func setUp(task: Task?) {
-        taskLabel.text = task?.name
+        guard let task = task else {
+            return
+        }
+        taskLabel.text = task.title
+//        isDoneView.backgroundColor = task.isDone ? UIColor.accentColor : UIColor.green.withAlphaComponent(0.5)
     }
     
 }

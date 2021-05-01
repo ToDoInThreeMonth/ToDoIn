@@ -28,7 +28,7 @@ class GroupController: UIViewController {
     override func loadView() {
         super.loadView()
         setBackground()
-        title = group.name
+        title = group.title
         self.view.addSubview(tableView)
     }
     
@@ -91,7 +91,6 @@ class GroupController: UIViewController {
     @objc
     func addingTaskButtonTapped() {
         presenter?.showTaskCotroller(group: group, task: Task(), isChanging: false)
-//        presenter?.showAddTask(group: group)
     }
 
 }
@@ -133,7 +132,7 @@ extension GroupController: UITableViewDataSource {
     // заголовок секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionHeaderView = SectionHeaderView()
-        sectionHeaderView.setUp(owner: group.users[section].name)
+        sectionHeaderView.setUp(owner: presenter?.getUser(by: section, in: group).name ?? "")
         return sectionHeaderView
     }
     

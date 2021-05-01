@@ -124,7 +124,7 @@ class TaskController: UIViewController, TaskView {
     }
     
     func configureLabels() {
-        titleLabel.text = isChanging ? task.name : "Создать новую задачу"
+        titleLabel.text = isChanging ? task.title : "Создать новую задачу"
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         nameLabel.text = "Название"
         descriptionLabel.text = "Описание"
@@ -135,7 +135,7 @@ class TaskController: UIViewController, TaskView {
         nameTextField.placeholder = "Поботать"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
-        nameTextField.text = task.name
+        nameTextField.text = task.title
     }
     
     func configureDescriptionTextView() {
@@ -178,7 +178,7 @@ class TaskController: UIViewController, TaskView {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "dd.MM.yyyy HH:mm"
         dateTextField.text = dateformatter.string(from: task.date)
-        userTextField.text = task.user.name
+        userTextField.text = task.userId.description
     }
 
     func configureAddButton() {
@@ -222,7 +222,7 @@ class TaskController: UIViewController, TaskView {
     @objc
     func doneUserTapped() {
         if let userPicker = self.userTextField.inputView as? UIPickerView {
-            presenter?.doneUserTapped(user: group.users[userPicker.selectedRow(inComponent: 0)])
+            presenter?.doneUserTapped(user: presenter?.getUser(by: userPicker.selectedRow(inComponent: 0), in: group) ?? User())
         }
         self.userTextField.resignFirstResponder()
     }
@@ -278,7 +278,7 @@ extension TaskController: UIPickerViewDataSource {
 extension TaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return group.users[row].name
+        return presenter?.getUser(by: row, in: group).name
     }
 
 }

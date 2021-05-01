@@ -4,7 +4,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Properties
     
-    private let groupsService = GroupsService()        
+//    private let groupsService = GroupsService()        
     
     // MARK: - Handlers
 

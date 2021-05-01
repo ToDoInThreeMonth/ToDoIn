@@ -6,7 +6,9 @@ class GroupPresenter: GroupViewPresenter {
     
     weak var coordinator: GroupsChildCoordinator?
     
-    private let groupsService = GroupsService()
+    private let groupsManager: GroupsManagerDescription = GroupsManager.shared
+    
+//    private let groupsService = GroupsService()
     
     // MARK: - Configures
     
@@ -16,8 +18,12 @@ class GroupPresenter: GroupViewPresenter {
     
     // MARK: - Handlers
     
-    func getTasks(for user: User, from group: Group) -> [Task] {
-        return groupsService.getTasks(for: user, from: group)
+    func getTasks(for userId: String, from group: Group) -> [Task] {
+        return groupsManager.getTasks(for: userId, from: group)
+    }
+    
+    func getUser(by index: Int, in group: Group) -> User {
+        return groupsManager.getUser(by: group.users[index])
     }
     
     func showTaskCotroller(group: Group, task: Task, isChanging: Bool) {

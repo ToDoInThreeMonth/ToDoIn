@@ -4,15 +4,17 @@ import Foundation
 
 protocol GroupsView: class {
     func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator)
-    func setGroups(groups: [Group])
+    func reloadView()
 }
 
 
 protocol GroupsViewPresenter {
+    var groupsCount: Int { get }
     init(groupsView: GroupsView)
-    func getGroups()
+    func getGroup(at index: Int) -> Group
     func showGroupController(group: Group)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
+    func didLoadView()
 }
 
 
@@ -20,7 +22,10 @@ protocol GroupsViewPresenter {
 
 protocol GroupViewPresenter {
     func setCoordinator(with coordinator: GroupsChildCoordinator)
-    func getTasks(for user: User, from group: Group) -> [Task]
+    
+    func getTasks(for userId: String, from group: Group) -> [Task]
+    func getUser(by index: Int, in group: Group) -> User
+
     func showSettingsGroupController(group: Group)
     func showTaskCotroller(group: Group, task: Task, isChanging: Bool)
 }
@@ -39,6 +44,7 @@ protocol TaskViewPresenter {
     func doneDateTapped(date: Date)
     func doneUserTapped(user: User)
     func buttonTapped(_ isChanging: Bool, task: Task, group: Group)
+    func getUser(by index: Int, in group: Group) -> User
 }
 
 // GroupSettingsController

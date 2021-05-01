@@ -94,7 +94,7 @@ class GroupTableViewCell: UITableViewCell {
     
     
     func setUp(group: Group) {
-        groupLabel.text = group.name
+        groupLabel.text = group.title
         groupImageView.image = UIImage(named: group.image)
     }
     

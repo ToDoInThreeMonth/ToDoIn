@@ -2,15 +2,15 @@ import Foundation
 
 struct Group: Equatable {
     
-    var id: UUID
-    var name: String
+    var id: String
+    var title: String
     var image: String
-    var users: [User]
+    var users: [String]
     var tasks: [Task]
     
-    init(id: UUID = UUID(), name: String = "", image: String = "", tasks: [Task] = [Task](), users: [User] = [User]()) {
+    init(id: String = "", title: String = "", image: String = "", tasks: [Task] = [Task](), users: [String] = [String]()) {
         self.id = id
-        self.name = name
+        self.title = title
         self.image = image
         self.users = users
         self.tasks = tasks
@@ -22,11 +22,11 @@ struct Group: Equatable {
 }
 
 struct User: Equatable {
-    var id: UUID
+    var id: String
     var name: String
     var image: String
     
-    init(id: UUID = UUID(), name: String = "", image: String = "") {
+    init(id: String = "", name: String = "", image: String = "") {
         self.id = id
         self.name = name
         self.image = image
@@ -38,16 +38,19 @@ struct User: Equatable {
 }
 
 struct Task {
-    var user: User
-    var name: String
+    var id: String
+    var userId: String
+    var title: String
     var description: String
     var date: Date
-    var isDone: Bool = false
+    var isDone: Bool
     
-    init(user: User = User(), name: String = "", description: String = "", date: Date = Date()) {
-        self.user = user
-        self.name = name
+    init(id: String = "", userId: String = "", title: String = "", description: String = "", date: Date = Date(), isDone: Bool = false) {
+        self.id = id
+        self.userId = userId
+        self.title = title
         self.description = description
         self.date = date
+        self.isDone = isDone
     }
 }
