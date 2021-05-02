@@ -10,17 +10,21 @@ protocol GroupsView: class {
 
 protocol GroupsViewPresenter {
     var groupsCount: Int { get }
+    
     init(groupsView: GroupsView)
+    func didLoadView()
+    
     func getGroup(at index: Int) -> Group
+    
     func showGroupController(group: Group)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
-    func didLoadView()
 }
 
 
 // GroupController
 
 protocol GroupView: class {
+    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator)
     func reloadView()
 }
 
@@ -62,7 +66,14 @@ protocol TaskViewPresenter {
 
 // GroupSettingsController
 
+protocol GroupSettingsView: class {
+    func setPresenter(presenter: GroupSettingsViewPresenter)
+    func reloadView()
+}
+
 protocol GroupSettingsViewPresenter {
+    func getUsers(from userIdArray: [String])
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
+    func getUser(by section: Int) -> User
 }

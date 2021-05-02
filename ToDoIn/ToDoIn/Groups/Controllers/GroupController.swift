@@ -78,12 +78,6 @@ class GroupController: UIViewController {
     }
     
     // MARK: - Handlers
-
-    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator) {
-        self.presenter = presenter
-        presenter.setCoordinator(with: coordinator)
-    }
-    
     @objc
     func settingsButtonTapped() {
         presenter?.showSettingsGroupController(group: group)
@@ -100,6 +94,12 @@ class GroupController: UIViewController {
 // MARK: - Extensions
 
 extension GroupController: GroupView {
+    
+    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        presenter.setCoordinator(with: coordinator)
+    }
+
     func reloadView() {
         tableView.reloadData()
     }

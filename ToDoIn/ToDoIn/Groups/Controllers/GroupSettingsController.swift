@@ -45,7 +45,6 @@ class GroupSettingsController: UIViewController {
     init(group: Group) {
         self.group = group
         super.init(nibName: nil, bundle: nil)
-        presenter = GroupSettingsPresenter()
     }
     
     required init?(coder: NSCoder) {
@@ -54,6 +53,7 @@ class GroupSettingsController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.getUsers(from: group.users)
         setBackground()
         view.addSubviews(groupBackView, groupTitle, tableView, addUserButton)
         groupBackView.addSubviews(imageView)
@@ -132,6 +132,7 @@ class GroupSettingsController: UIViewController {
         }
     
     // MARK: - Handlers
+    
     @objc
     func groupTitleDidChange() {
         // сохранение нового названия комнаты
@@ -147,6 +148,18 @@ class GroupSettingsController: UIViewController {
 
 
 // MARK: - Extensions
+
+extension GroupSettingsController: GroupSettingsView {
+    
+    func setPresenter(presenter: GroupSettingsViewPresenter) {
+        self.presenter = presenter
+    }
+    
+    func reloadView() {
+        tableView.reloadData()
+    }
+}
+
 extension GroupSettingsController: UITableViewDataSource {
     
     // количество ячеек
@@ -156,8 +169,10 @@ extension GroupSettingsController: UITableViewDataSource {
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as! UserTableViewCell
-//        cell.setUp(userName: group.users[indexPath.row].name, userImage: group.users[indexPath.row].image)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as? UserTableViewCell, let user = presenter?.getUser(by: indexPath.row) else {
+            return UITableViewCell()
+        }
+        cell.setUp(user: user)
         return cell
     }
 }

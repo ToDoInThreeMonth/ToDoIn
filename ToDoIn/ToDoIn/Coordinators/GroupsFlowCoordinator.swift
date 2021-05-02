@@ -49,6 +49,7 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     
     func showSettingsGroupController(group: Group) {
         let settingsGroupController = GroupSettingsController(group: group)
+        settingsGroupController.setPresenter(presenter: GroupSettingsPresenter(groupSettingsView: settingsGroupController.self))
         navigationController.pushViewController(settingsGroupController, animated: true)
     }
 }

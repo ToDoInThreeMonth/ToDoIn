@@ -61,9 +61,9 @@ class UserTableViewCell: UITableViewCell {
     }
     
     
-    func setUp(userName: String, userImage: String) {
-        self.userName.text = userName
-        self.userImage.image = UIImage(named: userImage)
+    func setUp(user: User) {
+        self.userName.text = user.name
+        self.userImage.image = UIImage(named: user.image)
     }
 
 }

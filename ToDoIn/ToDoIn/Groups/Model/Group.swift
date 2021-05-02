@@ -26,7 +26,7 @@ struct User: Equatable {
     var name: String
     var image: String
     
-    init(id: String = "", name: String = "", image: String = "") {
+    init(id: String = "", name: String = "", image: String = "user") {
         self.id = id
         self.name = name
         self.image = image
