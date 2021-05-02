@@ -38,7 +38,7 @@ final class GroupsManager: GroupsManagerDescription {
     func getTasks(for userId: String, from group: Group) -> [Task] {
         var tasks = [Task]()
         for task in group.tasks {
-            if (userId == task.userId) {
+            if userId == task.userId {
                 tasks.append(task)
             }
         }

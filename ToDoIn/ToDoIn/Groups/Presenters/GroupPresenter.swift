@@ -14,6 +14,10 @@ class GroupPresenter: GroupViewPresenter {
     
     private var users: [User] = []
     
+    var usersCount: Int {
+        users.count
+    }
+    
     // MARK: - Init
     
     required init(groupView: GroupView) {
@@ -60,11 +64,19 @@ class GroupPresenter: GroupViewPresenter {
     
     func getUser(by section: Int) -> User {
         return section < users.count ? users[section] : User()
-
+    }
+    
+    func getUser(by userId: String, in users: [User]) -> User {
+        for user in users {
+            if userId.elementsEqual(user.id) {
+                return user
+            }
+        }
+        return User()
     }
     
     func showTaskCotroller(group: Group, task: Task, isChanging: Bool) {
-        coordinator?.showTaskController(group: group, task: task, isChanging: isChanging)
+        coordinator?.showTaskController(group: group, task: task, users: users, isChanging: isChanging)
     }
     
     func showSettingsGroupController(group: Group) {

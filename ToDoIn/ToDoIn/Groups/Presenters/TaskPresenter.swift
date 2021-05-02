@@ -40,5 +40,14 @@ class TaskPresenter: TaskViewPresenter {
         return User()
 //        return groupsManager.getUser(by: group.users[index])
     }
+    
+    func getUser(by userId: String, in users: [User]) -> User {
+        for user in users {
+            if userId == user.id {
+                return user
+            }
+        }
+        return User()
+    }
 }
     

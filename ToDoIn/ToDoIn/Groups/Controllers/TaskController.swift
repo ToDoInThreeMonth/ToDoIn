@@ -9,6 +9,7 @@ class TaskController: UIViewController, TaskView {
     
     private var group: Group
     private var task: Task
+    private var users: [User]
     private let isChanging: Bool
     
     struct LayersConstants {
@@ -33,10 +34,11 @@ class TaskController: UIViewController, TaskView {
     
     // MARK: - Init
     
-    init(group: Group, task: Task, isChanging: Bool) {
+    init(group: Group, task: Task, users: [User], isChanging: Bool) {
         self.group = group
         self.task = task
         self.isChanging = isChanging
+        self.users = users
         super.init(nibName: nil, bundle: nil)
         self.presenter = TaskPresenter(addingTaskView: self)
     }
@@ -178,7 +180,7 @@ class TaskController: UIViewController, TaskView {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "dd.MM.yyyy HH:mm"
         dateTextField.text = dateformatter.string(from: task.date)
-        userTextField.text = task.userId.description
+        userTextField.text = presenter?.getUser(by: task.userId, in: users).name
     }
 
     func configureAddButton() {
@@ -278,7 +280,8 @@ extension TaskController: UIPickerViewDataSource {
 extension TaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return presenter?.getUser(by: row, in: group).name
+        return users[row].name
+        //presenter?.getUser(by: row, in: group).name
     }
 
 }

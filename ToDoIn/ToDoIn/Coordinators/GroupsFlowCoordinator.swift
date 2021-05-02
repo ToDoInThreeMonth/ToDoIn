@@ -2,7 +2,7 @@ import UIKit
 
 protocol GroupsChildCoordinator: ChildCoordinator {
     func showAddGroup()
-    func showTaskController(group: Group, task: Task, isChanging: Bool)
+    func showTaskController(group: Group, task: Task, users: [User], isChanging: Bool)
     func showGroupController(group: Group)
     func showSettingsGroupController(group: Group)
 }
@@ -37,8 +37,8 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     
     func showAddGroup() {}
     
-    func showTaskController(group: Group, task: Task, isChanging: Bool) {
-        navigationController.viewControllers.last?.present(TaskController(group: group, task: task, isChanging: isChanging), animated: true, completion: nil)
+    func showTaskController(group: Group, task: Task, users: [User], isChanging: Bool) {
+        navigationController.viewControllers.last?.present(TaskController(group: group, task: task, users: users, isChanging: isChanging), animated: true, completion: nil)
     }
     
     func showGroupController(group: Group) {

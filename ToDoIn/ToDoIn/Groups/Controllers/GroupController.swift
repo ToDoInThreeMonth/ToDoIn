@@ -113,7 +113,11 @@ extension GroupController: UITableViewDataSource {
             self.showErrorAlert()
             return 0
         }
-        return presenter.getTasks(for: group.users[section], from: group).count
+        let userId = presenter.getUser(by: section).id
+        if userId != "" {
+            return presenter.getTasks(for: userId, from: group).count
+        }
+        return 0
     }
     
     // дизайн ячейки
@@ -125,23 +129,28 @@ extension GroupController: UITableViewDataSource {
             self.showErrorAlert()
             return UITableViewCell()
         }
-        cell.setUp(task: presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
+        let userId = presenter.getUser(by: indexPath.section).id
+        if userId != "" {
+            cell.setUp(task: presenter.getTasks(for: userId, from: group)[indexPath.row])
+        }
         return cell
     }
     
     
     // количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        return group.users.count
+        return presenter?.usersCount ?? 0
     }
 
 
     // заголовок секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionHeaderView = SectionHeaderView()
-        sectionHeaderView.setUp(owner: presenter?.getUser(by: section).name ?? "")
+        let owner = presenter?.getUser(by: section).name ?? ""
+        sectionHeaderView.setUp(owner: owner)
         return sectionHeaderView
     }
+    
     
     // высота заголовка секции
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -159,8 +168,11 @@ extension GroupController: UITableViewDelegate {
             self.showErrorAlert()
             return
         }
-        let currentTask = presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row]
-        presenter.showTaskCotroller(group: group, task: currentTask, isChanging: true)
+        let userId = presenter.getUser(by: indexPath.section).id
+        if userId != "" {
+            let currentTask = presenter.getTasks(for: userId, from: group)[indexPath.row]
+            presenter.showTaskCotroller(group: group, task: currentTask, isChanging: true)
+        }
     }
     
     // размер ячейки
