@@ -56,7 +56,7 @@ protocol TaskViewPresenter {
     func doneDateTapped(date: Date)
     func doneUserTapped(user: User)
     func buttonTapped(_ isChanging: Bool, task: Task, group: Group)
-    func getUser(by index: Int, in group: Group) -> User
+//    func getUser(by index: Int, in group: Group) -> User
     func getUser(by userId: String, in users: [User]) -> User
 }
 

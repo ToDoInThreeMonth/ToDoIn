@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-class TaskController: UIViewController, TaskView {
+class TaskController: UIViewController {
     
     // MARK: - Properties
     
@@ -205,14 +205,6 @@ class TaskController: UIViewController, TaskView {
     
     // MARK: - Handlers
     
-    func setDate(with date: String) {
-        dateTextField.text = date
-    }
-    
-    func setUser(with name: String) {
-        userTextField.text = name
-    }
-    
     @objc
     func doneDateTapped() {
         if let datePicker = self.dateTextField.inputView as? UIDatePicker {
@@ -224,7 +216,7 @@ class TaskController: UIViewController, TaskView {
     @objc
     func doneUserTapped() {
         if let userPicker = self.userTextField.inputView as? UIPickerView {
-            presenter?.doneUserTapped(user: presenter?.getUser(by: userPicker.selectedRow(inComponent: 0), in: group) ?? User())
+            presenter?.doneUserTapped(user: users[userPicker.selectedRow(inComponent: 0)])
         }
         self.userTextField.resignFirstResponder()
     }
@@ -239,6 +231,16 @@ class TaskController: UIViewController, TaskView {
 
 
 // MARK: - Extensions
+
+extension TaskController: TaskView {
+    func setDate(with date: String) {
+        dateTextField.text = date
+    }
+    
+    func setUser(with name: String) {
+        userTextField.text = name
+    }
+}
 
 extension TaskController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
