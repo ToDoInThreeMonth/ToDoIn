@@ -43,7 +43,7 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     
     func showGroupController(group: Group) {
         let groupController = GroupController(group: group)
-        groupController.setPresenter(presenter: GroupPresenter(), coordinator: self)
+        groupController.setPresenter(presenter: GroupPresenter(groupView: groupController.self), coordinator: self)
         navigationController.pushViewController(groupController, animated: true)
     }
     

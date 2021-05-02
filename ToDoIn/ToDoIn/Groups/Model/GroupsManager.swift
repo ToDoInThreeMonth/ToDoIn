@@ -8,7 +8,7 @@ enum NetworkError: Error {
 protocol GroupsManagerDescription {
     func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void)
     func getTasks(for userId: String, from group: Group) -> [Task]
-    func getUser(by userId: String) -> User
+    func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -45,19 +45,24 @@ final class GroupsManager: GroupsManagerDescription {
         return tasks
     }
     
-    func getUser(by userId: String) -> User {
+    func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void) {
         let docRef = database.collection("users").document(userId)
-        var user = User()
         docRef.getDocument { (document, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
             guard let document = document,
                   document.exists,
                   let data = document.data() else {
-                print("Document does not exist")
+                completion(.failure(NetworkError.unexpected))
                 return
             }
-            user = GroupsConverter.user(from: data)
+            
+            let user = GroupsConverter.user(from: data)
+            completion(.success(user))
         }
-        return user
     }
 }
 

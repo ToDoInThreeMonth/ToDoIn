@@ -34,6 +34,7 @@ class GroupController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.getUsers(from: group.users)
         configureTableView()
         configureBarButtonItems()
     }
@@ -98,6 +99,12 @@ class GroupController: UIViewController {
 
 // MARK: - Extensions
 
+extension GroupController: GroupView {
+    func reloadView() {
+        tableView.reloadData()
+    }
+}
+
 extension GroupController: UITableViewDataSource {
     
     // количество ячеек
@@ -132,7 +139,7 @@ extension GroupController: UITableViewDataSource {
     // заголовок секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionHeaderView = SectionHeaderView()
-        sectionHeaderView.setUp(owner: presenter?.getUser(by: section, in: group).name ?? "")
+        sectionHeaderView.setUp(owner: presenter?.getUser(by: section).name ?? "")
         return sectionHeaderView
     }
     

@@ -37,7 +37,8 @@ class TaskPresenter: TaskViewPresenter {
     }
     
     func getUser(by index: Int, in group: Group) -> User {
-        return groupsManager.getUser(by: group.users[index])
+        return User()
+//        return groupsManager.getUser(by: group.users[index])
     }
 }
     

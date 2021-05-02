@@ -20,11 +20,19 @@ protocol GroupsViewPresenter {
 
 // GroupController
 
+protocol GroupView: class {
+    func reloadView()
+}
+
 protocol GroupViewPresenter {
+    init(groupView: GroupView)
+    
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     
     func getTasks(for userId: String, from group: Group) -> [Task]
-    func getUser(by index: Int, in group: Group) -> User
+    func getUser(by section: Int) -> User
+//    func getUser(by userId: String)
+    func getUsers(from userIdArray: [String]) 
 
     func showSettingsGroupController(group: Group)
     func showTaskCotroller(group: Group, task: Task, isChanging: Bool)
