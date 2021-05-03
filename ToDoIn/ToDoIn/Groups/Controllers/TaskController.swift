@@ -184,9 +184,9 @@ class TaskController: UIViewController {
     }
 
     func configureAddButton() {
-        addButton.setTitle(isChanging ? "Добавить" : "Изменить", for: .normal)
+        addButton.setTitle(isChanging ? "Изменить" : "Добавить", for: .normal)
         addButton.setTitleColor(.darkTextColor, for: .normal)
-        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
@@ -222,8 +222,17 @@ class TaskController: UIViewController {
     }
     
     @objc
-    func addButtonTapped() {
-        presenter?.buttonTapped(isChanging, task: task, group: group)
+    func buttonTapped() {
+        var date = Date()
+        if let datePicker = self.dateTextField.inputView as? UIDatePicker {
+            date = datePicker.date
+        }
+        var user = User()
+        if let userPicker = self.userTextField.inputView as? UIPickerView {
+            user = users[userPicker.selectedRow(inComponent: 0)]
+        }
+        let newTask = Task(userId: user.id, title: nameTextField.text ?? "", description: descriptionTextView.text, date: date)
+        presenter?.buttonTapped(isChanging, task: newTask, group: group)
         dismiss(animated: true, completion: nil)
     }
 
@@ -258,7 +267,7 @@ extension TaskController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
+        if textView.text.isEmpty {
             textView.text = placeholderText
             textView.textColor = .lightTextColor
         }
@@ -270,11 +279,11 @@ extension TaskController: UITextViewDelegate {
 extension TaskController: UIPickerViewDataSource {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        1
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return group.users.count
+        group.users.count
     }
 
 }
@@ -282,7 +291,7 @@ extension TaskController: UIPickerViewDataSource {
 extension TaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return users[row].name
+        users[row].name
         //presenter?.getUser(by: row, in: group).name
     }
 

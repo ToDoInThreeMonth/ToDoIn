@@ -32,7 +32,7 @@ class TaskPresenter: TaskViewPresenter {
 //            groupsService.changeTask(task, in: group)
         }
         else {
-//            groupsService.addTask(task, in: group)
+            groupsManager.addTask(task, in: group)
         }
     }
     

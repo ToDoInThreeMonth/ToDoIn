@@ -7,8 +7,12 @@ enum NetworkError: Error {
 
 protocol GroupsManagerDescription {
     func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void)
+    func observeGroup(by userId: String, completion: @escaping (Result<Group, Error>) -> Void)
+    
     func getTasks(for userId: String, from group: Group) -> [Task]
     func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void)
+    
+    func addTask(_ task: Task, in group: Group)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -32,6 +36,23 @@ final class GroupsManager: GroupsManagerDescription {
             
             let groups = documents.compactMap { GroupsConverter.group(from: $0) }
             completion(.success(groups))
+        }
+    }
+    
+    func observeGroup(by userId: String, completion: @escaping (Result<Group, Error>) -> Void) {
+        database.collection("groups").document(userId).addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = querySnapshot else {
+                completion(.failure(NetworkError.unexpected))
+                return
+            }
+            
+            let group = GroupsConverter.group(from: data) ?? Group()
+            completion(.success(group))
         }
     }
     
@@ -63,6 +84,14 @@ final class GroupsManager: GroupsManagerDescription {
             let user = GroupsConverter.user(from: data)
             completion(.success(user))
         }
+    }
+    
+    func addTask(_ task: Task, in group: Group) {
+        var tasks = [GroupsConverter.task(from: task)]
+        for task in group.tasks {
+            tasks.append(GroupsConverter.task(from: task))
+        }
+        database.collection("groups").document(group.id).setData(["tasks": tasks], merge: true)
     }
 }
 
@@ -141,5 +170,16 @@ private final class GroupsConverter {
             return User()
         }
         return User(id: id, name: name, image: image)
+    }
+    
+    static func task(from task: Task) -> Dictionary<String, Any> {
+        var res = [String : Any]()
+        res[TaskKey.id.rawValue] = task.id
+        res[TaskKey.title.rawValue] = task.title
+        res[TaskKey.description.rawValue] = task.description
+        res[TaskKey.date.rawValue] = Timestamp(date: task.date)
+        res[TaskKey.userId.rawValue] = task.userId
+        res[TaskKey.isDone.rawValue] = task.isDone
+        return res
     }
 }

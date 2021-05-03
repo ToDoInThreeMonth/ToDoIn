@@ -34,6 +34,7 @@ class GroupController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.didLoadView(by: group.id)
         presenter?.getUsers(from: group.users)
         configureTableView()
         configureBarButtonItems()
@@ -80,12 +81,12 @@ class GroupController: UIViewController {
     // MARK: - Handlers
     @objc
     func settingsButtonTapped() {
-        presenter?.showSettingsGroupController(group: group)
+        presenter?.showSettingsGroupController()
     }
     
     @objc
     func addingTaskButtonTapped() {
-        presenter?.showTaskCotroller(group: group, task: Task(), isChanging: false)
+        presenter?.showTaskCotroller(task: Task(), isChanging: false)
     }
 
 }
@@ -114,8 +115,8 @@ extension GroupController: UITableViewDataSource {
             return 0
         }
         let userId = presenter.getUser(by: section).id
-        if userId != "" {
-            return presenter.getTasks(for: userId, from: group).count
+        if !userId.isEmpty {
+            return presenter.getTasks(for: userId).count
         }
         return 0
     }
@@ -130,8 +131,8 @@ extension GroupController: UITableViewDataSource {
             return UITableViewCell()
         }
         let userId = presenter.getUser(by: indexPath.section).id
-        if userId != "" {
-            cell.setUp(task: presenter.getTasks(for: userId, from: group)[indexPath.row])
+        if !userId.isEmpty {
+            cell.setUp(task: presenter.getTasks(for: userId)[indexPath.row])
         }
         return cell
     }
@@ -139,7 +140,7 @@ extension GroupController: UITableViewDataSource {
     
     // количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter?.usersCount ?? 0
+        presenter?.usersCount ?? 0
     }
 
 
@@ -154,7 +155,7 @@ extension GroupController: UITableViewDataSource {
     
     // высота заголовка секции
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return tableView.bounds.height / 12
+        tableView.bounds.height / 12
     }
 }
 
@@ -170,14 +171,14 @@ extension GroupController: UITableViewDelegate {
         }
         let userId = presenter.getUser(by: indexPath.section).id
         if userId != "" {
-            let currentTask = presenter.getTasks(for: userId, from: group)[indexPath.row]
-            presenter.showTaskCotroller(group: group, task: currentTask, isChanging: true)
+            let currentTask = presenter.getTasks(for: userId)[indexPath.row]
+            presenter.showTaskCotroller(task: currentTask, isChanging: true)
         }
     }
     
     // размер ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 15
+        tableView.bounds.height / 15
     }
 }
 

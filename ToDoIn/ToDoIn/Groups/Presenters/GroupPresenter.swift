@@ -12,6 +12,8 @@ class GroupPresenter: GroupViewPresenter {
     
 //    private let groupsService = GroupsService()
     
+    private var group = Group()
+    
     private var users: [User] = []
     
     var usersCount: Int {
@@ -32,7 +34,19 @@ class GroupPresenter: GroupViewPresenter {
     
     // MARK: - Handlers
     
-    func getTasks(for userId: String, from group: Group) -> [Task] {
+    func didLoadView(by userId: String) {
+        groupsManager.observeGroup(by: userId) { [weak self] (result) in
+            switch result {
+            case .success(let group):
+                self?.group = group
+                self?.groupView?.reloadView()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getTasks(for userId: String) -> [Task] {
         return groupsManager.getTasks(for: userId, from: group)
     }
     
@@ -75,11 +89,11 @@ class GroupPresenter: GroupViewPresenter {
         return User()
     }
     
-    func showTaskCotroller(group: Group, task: Task, isChanging: Bool) {
+    func showTaskCotroller(task: Task, isChanging: Bool) {
         coordinator?.showTaskController(group: group, task: task, users: users, isChanging: isChanging)
     }
     
-    func showSettingsGroupController(group: Group) {
+    func showSettingsGroupController() {
         coordinator?.showSettingsGroupController(group: group)
     }
 }

@@ -32,18 +32,19 @@ protocol GroupViewPresenter {
     var usersCount: Int { get }
 
     init(groupView: GroupView)
+    func didLoadView(by userId: String)
     
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     
-    func getTasks(for userId: String, from group: Group) -> [Task]
+    func getTasks(for userId: String) -> [Task]
     func getUser(by section: Int) -> User
 //    func getUser(by userId: String)
     func getUsers(from userIdArray: [String])
     func getUser(by userId: String, in users: [User]) -> User
 
 
-    func showSettingsGroupController(group: Group)
-    func showTaskCotroller(group: Group, task: Task, isChanging: Bool)
+    func showSettingsGroupController()
+    func showTaskCotroller(task: Task, isChanging: Bool)
 }
 
 

@@ -68,7 +68,7 @@ extension GroupsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.groupsCount ?? 0
+        presenter?.groupsCount ?? 0
     }
     
     // дизайн ячейки
@@ -94,6 +94,6 @@ extension GroupsController: UITableViewDelegate {
     
     // размер ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 10
+        tableView.bounds.height / 10
     }
 }
