@@ -15,6 +15,8 @@
 		4313B448260BBFA800E6381A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4313B446260BBFA800E6381A /* LaunchScreen.storyboard */; };
 		D448A4252636DE9800171964 /* UINavigationController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D448A4242636DE9800171964 /* UINavigationController + extension.swift */; };
 		D448A4292636E63600171964 /* UIColor + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D448A4282636E63600171964 /* UIColor + extension.swift */; };
+		D4806C7326403A900046B3EB /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4806C7226403A900046B3EB /* Protocols.swift */; };
+		D4806CA3264088DE0046B3EB /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4806CA2264088DE0046B3EB /* GroupsViewController.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +33,8 @@
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D448A4242636DE9800171964 /* UINavigationController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + extension.swift"; sourceTree = "<group>"; };
 		D448A4282636E63600171964 /* UIColor + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extension.swift"; sourceTree = "<group>"; };
+		D4806C7226403A900046B3EB /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		D4806CA2264088DE0046B3EB /* GroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
 		F0B3DC4BF660E53D2E6FE999 /* Pods-ToDoIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.debug.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,11 +88,11 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				D4806C7126403A7D0046B3EB /* Groups */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
+				D4806C7526403B2C0046B3EB /* Extensions */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
 				4313B43F260BBFA500E6381A /* ViewController.swift */,
-				D448A4242636DE9800171964 /* UINavigationController + extension.swift */,
-				D448A4282636E63600171964 /* UIColor + extension.swift */,
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
@@ -103,6 +107,56 @@
 				16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D4806C7126403A7D0046B3EB /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				D4806C7926403B7A0046B3EB /* Views */,
+				D4806C7826403B730046B3EB /* Presenters */,
+				D4806C7726403B6F0046B3EB /* Model */,
+				D4806C7626403B680046B3EB /* Controllers */,
+				D4806C7226403A900046B3EB /* Protocols.swift */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
+		D4806C7526403B2C0046B3EB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D448A4242636DE9800171964 /* UINavigationController + extension.swift */,
+				D448A4282636E63600171964 /* UIColor + extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D4806C7626403B680046B3EB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D4806CA2264088DE0046B3EB /* GroupsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		D4806C7726403B6F0046B3EB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D4806C7826403B730046B3EB /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		D4806C7926403B7A0046B3EB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +274,9 @@
 			files = (
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				D448A4252636DE9800171964 /* UINavigationController + extension.swift in Sources */,
+				D4806C7326403A900046B3EB /* Protocols.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
+				D4806CA3264088DE0046B3EB /* GroupsViewController.swift in Sources */,
 				D448A4292636E63600171964 /* UIColor + extension.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,

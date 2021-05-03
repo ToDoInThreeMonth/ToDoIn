@@ -19,10 +19,8 @@ class MainFlowCoordinator: MainChildCoordinator {
         viewController.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "checkmark"), selectedImage: UIImage(systemName: "checkmark"))
         // Пример настройки viewController
         viewController.view.backgroundColor = .white
-        viewController.title = "SampleTitle"
     
-        navigationController.configureBarButtonItems(screen: .roomsDetail, for: viewController)
-        
+        navigationController.configureBarButtonItems(screen: .rooms, for: viewController)
         navigationController.pushViewController(viewController, animated: false)
     }
     
