@@ -66,6 +66,7 @@ class TaskController: UIViewController, TaskView {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         configureLayouts()
         configureShadowsAndCornerRadius()
     }
@@ -149,7 +150,7 @@ class TaskController: UIViewController, TaskView {
         
         shadowDescriptionSubview.insertSubview(descriptionTextView, at: 0)
         
-        if task.description == "" {
+        if task.description.isEmpty {
             descriptionTextView.text = placeholderText
             descriptionTextView.textColor = .lightTextColor
         } else {
@@ -254,7 +255,7 @@ extension TaskController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
+        if textView.text.isEmpty {
             textView.text = placeholderText
             textView.textColor = .lightTextColor
         }
@@ -266,11 +267,11 @@ extension TaskController: UITextViewDelegate {
 extension TaskController: UIPickerViewDataSource {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        1
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return group.users.count
+        group.users.count
     }
 
 }
@@ -278,7 +279,7 @@ extension TaskController: UIPickerViewDataSource {
 extension TaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return group.users[row].name
+        group.users[row].name
     }
 
 }

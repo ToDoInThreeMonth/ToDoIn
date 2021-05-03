@@ -23,7 +23,7 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
         let viewController = GroupsController()
         viewController.setPresenter(presenter: GroupsPresenter(groupsView: viewController.self), coordinator: self)
         
-        let tabBarImage = (imageName == "") ? nil : UIImage(named: imageName)
+        let tabBarImage = imageName.isEmpty ? nil : UIImage(named: imageName)
         
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))

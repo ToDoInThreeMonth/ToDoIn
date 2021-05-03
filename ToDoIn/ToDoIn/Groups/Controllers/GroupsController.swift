@@ -34,6 +34,7 @@ class GroupsController: UIViewController, GroupsView {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         tableView.pin.all().marginTop(view.pin.safeArea.top + 15)
     }
     
@@ -69,7 +70,7 @@ extension GroupsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        groups.count
     }
     
     // дизайн ячейки
@@ -95,6 +96,6 @@ extension GroupsController: UITableViewDelegate {
     
     // размер ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 10
+        tableView.bounds.height / 10
     }
 }

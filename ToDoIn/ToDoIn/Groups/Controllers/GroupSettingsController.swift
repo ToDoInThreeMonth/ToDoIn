@@ -5,7 +5,7 @@ class GroupSettingsController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: GroupSettingsViewPresenter?
+    private var presenter: GroupSettingsViewPresenter = GroupSettingsPresenter()
     
     private let group: Group
     
@@ -45,7 +45,6 @@ class GroupSettingsController: UIViewController {
     init(group: Group) {
         self.group = group
         super.init(nibName: nil, bundle: nil)
-        presenter = GroupSettingsPresenter()
     }
     
     required init?(coder: NSCoder) {
@@ -68,6 +67,7 @@ class GroupSettingsController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         configureImageView()
     }
     
@@ -128,20 +128,20 @@ class GroupSettingsController: UIViewController {
     private func setupInsets() {
         tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)
         addUserButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
-        addUserButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: addUserButton.frame.width - 45 - addUserButton.imageView!.frame.width)
+        addUserButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: addUserButton.frame.width - 45 - (addUserButton.imageView?.frame.width ?? 0))
         }
     
     // MARK: - Handlers
     @objc
     func groupTitleDidChange() {
         // сохранение нового названия комнаты
-        presenter?.groupTitleDidChange(with: groupTitle.text ?? nil)
+        presenter.groupTitleDidChange(with: groupTitle.text ?? nil)
     }
     
     @objc
     func addUserButtonTapped() {
         // добавление нового участника
-        presenter?.addUserButtonTapped()
+        presenter.addUserButtonTapped()
     }
 }
 
@@ -151,12 +151,14 @@ extension GroupSettingsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return group.users.count
+        group.users.count
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as! UserTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as? UserTableViewCell else {
+            return UITableViewCell()
+        }
         cell.setUp(userName: group.users[indexPath.row].name, userImage: group.users[indexPath.row].image)
         return cell
     }
@@ -172,7 +174,7 @@ extension GroupSettingsController: UITableViewDelegate {
     
     // размер ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 6
+        tableView.bounds.height / 6
     }
 }
 

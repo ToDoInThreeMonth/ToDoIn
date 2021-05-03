@@ -39,6 +39,7 @@ class GroupController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         tableView.pin.all()
     }
         
@@ -126,7 +127,7 @@ extension GroupController: UITableViewDataSource {
     
     // количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        return group.users.count
+        group.users.count
     }
 
 
@@ -139,7 +140,7 @@ extension GroupController: UITableViewDataSource {
     
     // высота заголовка секции
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return tableView.bounds.height / 12
+        tableView.bounds.height / 12
     }
 }
 
@@ -159,7 +160,7 @@ extension GroupController: UITableViewDelegate {
     
     // размер ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 15
+        tableView.bounds.height / 15
     }
 }
 
