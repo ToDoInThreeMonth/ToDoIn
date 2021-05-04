@@ -41,6 +41,7 @@ class GroupController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         tableView.pin.all()
     }
         

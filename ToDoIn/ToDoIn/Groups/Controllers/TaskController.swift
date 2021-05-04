@@ -68,6 +68,7 @@ class TaskController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         configureLayouts()
         configureShadowsAndCornerRadius()
     }

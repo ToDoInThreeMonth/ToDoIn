@@ -68,6 +68,7 @@ class GroupSettingsController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         configureImageView()
     }
     

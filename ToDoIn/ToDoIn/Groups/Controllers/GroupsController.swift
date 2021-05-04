@@ -32,6 +32,7 @@ class GroupsController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         tableView.pin.all().marginTop(view.pin.safeArea.top + 15)
     }
     
