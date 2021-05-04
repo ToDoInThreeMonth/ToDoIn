@@ -4,7 +4,6 @@ class TaskPresenter: TaskViewPresenter {
     
     // MARK: - Properties
     
-//    private let groupsService = GroupsService()
     private let taskView: TaskView?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared

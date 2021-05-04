@@ -2,6 +2,7 @@ import UIKit
 
 protocol MainChildCoordinator: ChildCoordinator {
     func showAddSection()
+    func showSignController(isSignIn: Bool)
 }
 
 class MainFlowCoordinator: MainChildCoordinator {
@@ -16,6 +17,7 @@ class MainFlowCoordinator: MainChildCoordinator {
     
     func start() {
         let viewController = MainController()
+        viewController.setPresenter(presenter: MainPresenter(mainView: viewController.self), coordinator: self)
         
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: nil, selectedImage: nil)
@@ -29,4 +31,8 @@ class MainFlowCoordinator: MainChildCoordinator {
     
     
     func showAddSection() {}
+    
+    func showSignController(isSignIn: Bool) {
+        navigationController.viewControllers.last?.present(AuthController(isSignIn: isSignIn), animated: true, completion: nil)
+    }
 }

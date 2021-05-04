@@ -3,7 +3,9 @@ import PinLayout
 
 class MainController: UIViewController {
     
-    weak var coordinator: MainChildCoordinator?
+    // MARK: - Properties
+    
+    private var presenter: MainViewPresenter?
     
     let buttonSignIn = UIButton()
     let buttonSignUp = UIButton()
@@ -31,13 +33,20 @@ class MainController: UIViewController {
     
     @objc
     func buttonSignInPressed() {
-        self.present(AuthController(isSignIn: true), animated: true, completion: nil)
+        presenter?.buttonSignPressed(isSignIn: true)
     }
     
     @objc
     func buttonSignUpPressed() {
-        self.present(AuthController(isSignIn: false), animated: true, completion: nil)
+        presenter?.buttonSignPressed(isSignIn: false)
     }
     
+}
+
+extension MainController: MainView {
+    func setPresenter(presenter: MainViewPresenter, coordinator: MainChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
+    }
 }
 
