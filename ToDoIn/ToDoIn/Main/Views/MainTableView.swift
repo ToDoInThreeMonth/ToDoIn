@@ -46,7 +46,7 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let task = TaskModel.posts[indexPath.section][indexPath.row]
+        let task = PostService.getPosts(from: indexPath.section)[indexPath.row]
         safeCell.setUp(with: task)
         return safeCell
     }

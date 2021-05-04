@@ -6,7 +6,7 @@ protocol MainViewPresenter {
 }
 
 protocol MainTableViewOutput: class {
-    var tasks: [OfflineTaskProtocol] { get }
+    var tasks: [Post] { get }
     func showErrorAlertController(with message: String)
 }
 

@@ -82,7 +82,7 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
-    var tasks: [OfflineTaskProtocol] {
+    var tasks: [Post] {
         return []
     }
     
