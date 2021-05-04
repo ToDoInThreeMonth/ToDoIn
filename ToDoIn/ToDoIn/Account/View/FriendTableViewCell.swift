@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-class AccountTableViewCell: UITableViewCell {
+class FriendTableViewCell: UITableViewCell {
     // Computable properties
     var friend: FriendModelProtocol? {
         didSet {

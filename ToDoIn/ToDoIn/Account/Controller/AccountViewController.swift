@@ -1,10 +1,10 @@
 import UIKit
 import PinLayout
 
-class AccountViewController: UIViewController {
+class AccountViewController: UIViewController, FriendsTableViewOutput {
     // Stored properties
     private var presenter: AccountViewPresenter
-    private lazy var users: [FriendModelProtocol] = presenter.getAllFriends()
+    private(set) lazy var users: [FriendModelProtocol] = presenter.getAllFriends()
     
     // Lazy stored properties
     private lazy var userImageView = AccountViewConfigure.userImageView
@@ -32,14 +32,12 @@ class AccountViewController: UIViewController {
         return button
     }()
     
+    private lazy var friendsTVDelegate = FriendsTVDelegate()
+    private lazy var friendsTVDataSource = FriendsTVDataSource(controller: self)
     private lazy var friendsTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = UIColor.clear
-        tableView.register(AccountTableViewCell.self, forCellReuseIdentifier: String(describing: AccountTableViewCell.self))
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
+        let tableView = FriendsTableView(frame: .zero, style: .plain)
+        tableView.dataSource = friendsTVDataSource
+        tableView.delegate = friendsTVDelegate
         return tableView
     }()
     
@@ -211,27 +209,9 @@ class AccountViewController: UIViewController {
         
         friendsTableView.reloadData()
     }
-}
-
-//MARK: - UITableViewDataSource
-extension AccountViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+    
+    // Another methods
+    func showErrorAlertController(with message: String) {
+        presenter.showErrorAlertController(with: message)
     }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AccountTableViewCell.self), for: indexPath) as? AccountTableViewCell
-        guard let safeCell = cell else {
-            presenter.showErrorAlertController(with: "Ячейки пользователей не могут быть созданы")
-            return UITableViewCell()}
-        
-        safeCell.friend = users[indexPath.row]
-        return safeCell
-    }
-        
-}
-
-//MARK: - UITableViewDelegate
-extension AccountViewController: UITableViewDelegate {
-
 }
