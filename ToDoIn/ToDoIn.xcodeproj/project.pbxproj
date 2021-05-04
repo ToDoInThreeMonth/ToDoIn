@@ -29,6 +29,7 @@
 		4351797F26184DF5009F898B /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* GroupsService.swift */; };
 		4351798226185190009F898B /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskTableViewCell.swift */; };
 		4354B312261CC2ED0080F577 /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4354B311261CC2ED0080F577 /* TaskController.swift */; };
+		4366F35E264121B100C95BFA /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4366F35D264121B100C95BFA /* Date+extension.swift */; };
 		437C92FE263D50FC008F1B85 /* GroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437C92FD263D50FC008F1B85 /* GroupsManager.swift */; };
 		439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439AE9A4262051D50051BB01 /* CustomTextField.swift */; };
 		439CEDEE262088510005091A /* GroupSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439CEDED262088510005091A /* GroupSettingsController.swift */; };
@@ -69,6 +70,7 @@
 		4351797E26184DF5009F898B /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
 		4351798126185190009F898B /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		4354B311261CC2ED0080F577 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
+		4366F35D264121B100C95BFA /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		437C92FD263D50FC008F1B85 /* GroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsManager.swift; sourceTree = "<group>"; };
 		439AE9A4262051D50051BB01 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		439CEDED262088510005091A /* GroupSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsController.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				43228673260E33980096C905 /* UIColor+extenstion.swift */,
 				435179782618390D009F898B /* UIView+extension.swift */,
 				4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */,
+				4366F35D264121B100C95BFA /* Date+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				43AEF875262B2BD80063D925 /* AccountController.swift in Sources */,
 				4335D6432629E7CE00DA47DA /* TaskPresenter.swift in Sources */,
 				439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */,
+				4366F35E264121B100C95BFA /* Date+extension.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
 				4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,

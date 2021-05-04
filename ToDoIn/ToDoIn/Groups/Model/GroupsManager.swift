@@ -13,6 +13,7 @@ protocol GroupsManagerDescription {
     func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void)
     
     func addTask(_ task: Task, in group: Group)
+    func changeTask(_ task: Task, in group: Group)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -92,6 +93,24 @@ final class GroupsManager: GroupsManagerDescription {
             tasks.append(GroupsConverter.task(from: task))
         }
         database.collection("groups").document(group.id).setData(["tasks": tasks], merge: true)
+    }
+    
+    func changeTask(_ task: Task, in group: Group) {
+        var tasks = [GroupsConverter.task(from: task)]
+        for el in group.tasks {
+            if el.id != task.id {
+                tasks.append(GroupsConverter.task(from: el))
+            }
+        }
+        database.collection("groups").document(group.id).updateData([
+            "tasks": tasks
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
     }
 }
 

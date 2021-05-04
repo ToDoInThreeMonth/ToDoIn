@@ -45,7 +45,7 @@ struct Task {
     var date: Date
     var isDone: Bool
     
-    init(id: String = "", userId: String = "", title: String = "", description: String = "", date: Date = Date(), isDone: Bool = false) {
+    init(id: String = UUID().description, userId: String = "", title: String = "", description: String = "", date: Date = Date(), isDone: Bool = false) {
         self.id = id
         self.userId = userId
         self.title = title

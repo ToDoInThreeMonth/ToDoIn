@@ -20,7 +20,7 @@ class TaskController: UIViewController {
         static let horizontalPadding: CGFloat = 40
     }
     
-    private let placeholderText = "Подготовиться к рк на следующей неделе"
+    private let placeholderText = "Описание задачи..."
     
     private let titleLabel = UILabel()
     private let nameLabel = UILabel()
@@ -134,7 +134,7 @@ class TaskController: UIViewController {
     }
     
     func configureNameTextField() {
-        nameTextField.placeholder = "Поботать"
+        nameTextField.placeholder = "Название задачи"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
         nameTextField.text = task.title
@@ -223,15 +223,24 @@ class TaskController: UIViewController {
     
     @objc
     func buttonTapped() {
-        var date = Date()
-        if let datePicker = self.dateTextField.inputView as? UIDatePicker {
-            date = datePicker.date
+        guard let title = nameTextField.text, !title.isEmpty else {
+            return
         }
-        var user = User()
-        if let userPicker = self.userTextField.inputView as? UIPickerView {
-            user = users[userPicker.selectedRow(inComponent: 0)]
+        var date = task.date
+        var userId = task.userId
+        if let userPicker = self.userTextField.inputView as? UIPickerView,
+           let datePicker = self.dateTextField.inputView as? UIDatePicker {
+            if userTextField.text == users[userPicker.selectedRow(inComponent: 0)].name {
+                userId = users[userPicker.selectedRow(inComponent: 0)].id
+            }
+            if dateTextField.text == datePicker.date.toString() {
+                date = datePicker.date
+            }
         }
-        let newTask = Task(userId: user.id, title: nameTextField.text ?? "", description: descriptionTextView.text, date: date)
+        var newTask = Task(userId: userId, title: title, description: descriptionTextView.text, date: date)
+        if isChanging {
+            newTask.id = task.id
+        }
         presenter?.buttonTapped(isChanging, task: newTask, group: group)
         dismiss(animated: true, completion: nil)
     }

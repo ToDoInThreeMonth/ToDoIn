@@ -18,9 +18,7 @@ class TaskPresenter: TaskViewPresenter {
     // MARK: - Handlers
 
     func doneDateTapped(date: Date) {
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "dd.MM.yyyy HH:mm"
-        taskView?.setDate(with: dateformatter.string(from: date))
+        taskView?.setDate(with: date.toString())
     }
     
     func doneUserTapped(user: User) {
@@ -29,7 +27,7 @@ class TaskPresenter: TaskViewPresenter {
     
     func buttonTapped(_ isChanging: Bool, task: Task, group: Group) {
         if isChanging {
-//            groupsService.changeTask(task, in: group)
+            groupsManager.changeTask(task, in: group)
         }
         else {
             groupsManager.addTask(task, in: group)
