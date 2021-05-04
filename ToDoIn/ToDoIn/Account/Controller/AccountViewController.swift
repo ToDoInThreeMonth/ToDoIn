@@ -4,27 +4,27 @@ import PinLayout
 class AccountViewController: UIViewController {
     weak var coordinator: MainChildCoordinator?
     
-    private lazy var userImageView = AccountModel.userImageView
-    private lazy var userBackView = AccountModel.userBackView
-    private lazy var userNameLabel = AccountModel.userNameLabel
-    private lazy var toDoInLabel = AccountModel.toDoInLabel
-    private lazy var friendsLabel = AccountModel.friendsLabel
-    private lazy var friendUnderlineView = AccountModel.friendUnderlineView
+    private lazy var userImageView = AccountViewConfigure.userImageView
+    private lazy var userBackView = AccountViewConfigure.userBackView
+    private lazy var userNameLabel = AccountViewConfigure.userNameLabel
+    private lazy var toDoInLabel = AccountViewConfigure.toDoInLabel
+    private lazy var friendsLabel = AccountViewConfigure.friendsLabel
+    private lazy var friendUnderlineView = AccountViewConfigure.friendUnderlineView
     
     private lazy var searchTextField: UITextField = {
-        let textField = AccountModel.searchTextField
+        let textField = AccountViewConfigure.searchTextField
         textField.addTarget(self, action: #selector(searchTFDidChanged), for: .editingChanged)
         return textField
     }()
     
     private lazy var exitButton: UIButton = {
-        let button = AccountModel.exitButton
+        let button = AccountViewConfigure.exitButton
         button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var notificationButton: UIButton = {
-        let button = AccountModel.notificationButton
+        let button = AccountViewConfigure.notificationButton
         button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -39,12 +39,19 @@ class AccountViewController: UIViewController {
         tableView.allowsSelection = false
         return tableView
     }()
+    
+    struct LayersConstants {
+        static let settingsContentLeft: CGFloat = 20
+        static let settingsContentRight: CGFloat = 25
+        static let settingImageRight: CGFloat = 45
+        static let scrollInsetBottom: CGFloat = 15
+        static let scrollInsetRight: CGFloat = 8
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         hideKeyboardWhenTappedAround()
-
     }
     
     override func viewWillLayoutSubviews() {
@@ -60,7 +67,7 @@ class AccountViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
+        view.backgroundColor = .darkAccentColor
         view.addSubviews(userBackView,
                          userNameLabel,
                          toDoInLabel,
@@ -130,31 +137,44 @@ class AccountViewController: UIViewController {
     
     private func configureViews() {
         userBackView.makeRound()
-        AccountModel.getUserBackShadow(userBackView)
+        AccountViewConfigure.getUserBackShadow(userBackView)
         
         userImageView.makeRound()
-        AccountModel.getUserImageViewShadow(userImageView)
+        AccountViewConfigure.getUserImageViewShadow(userImageView)
         
         searchTextField.layer.cornerRadius = 20
-        AccountModel.getSearchTFShadow(searchTextField)
+        AccountViewConfigure.getSearchTFShadow(searchTextField)
         
         [exitButton, notificationButton].forEach{
             $0.layer.cornerRadius = 15
-            AccountModel.getSettingButtonShadow($0)
+            AccountViewConfigure.getSettingButtonShadow($0)
         }
     }
     
     private func setupInsets() {
-        friendsTableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: friendsTableView.bounds.width - 8)
+        friendsTableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0,
+                                                                      left: 0,
+                                                                      bottom: LayersConstants.scrollInsetBottom,
+                                                                      right: friendsTableView.bounds.width - LayersConstants.scrollInsetRight)
         [exitButton, notificationButton].forEach{
-            $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
-            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: $0.frame.width - 45 - $0.imageView!.frame.width)
+            guard let imageView = $0.imageView else { return }
+            
+            $0.contentEdgeInsets = UIEdgeInsets(top: 0,
+                                                left: LayersConstants.settingsContentLeft,
+                                                bottom: 0,
+                                                right: LayersConstants.settingsContentRight)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0,
+                                              left: 0,
+                                              bottom: 0,
+                                              right: $0.frame.width - LayersConstants.settingImageRight - imageView.frame.width)
         }
     }
     
     @objc
     private func exitButtonTapped() {
-        let alertVC = LogOutAlertController(title: "Выход из аккаунта", message: "Вы действительно хотите выйти ?", preferredStyle: .alert)
+        let alertTitle = "Выход из аккаунта"
+        let alertMessage = "Вы действительно хотите выйти ?"
+        let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .logOut)
      
         present(alertVC, animated: true, completion: nil)
     }
@@ -176,7 +196,13 @@ extension AccountViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AccountTableViewCell.self), for: indexPath) as? AccountTableViewCell
-        guard let safeCell = cell else { return UITableViewCell() }
+        guard let safeCell = cell else {
+            let alertTitle = "Неожиданный сбой"
+            let alertMessage = "Ячейки с пользователями не могут быть созданы"
+            let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .error)
+            present(alertVC, animated: true)
+            return UITableViewCell()}
+        
         safeCell.friend = FriendBase.friends[indexPath.row]
         return safeCell
     }

@@ -1,6 +1,6 @@
 import UIKit
 
-struct AccountModel {
+struct AccountViewConfigure {
     static var userImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true

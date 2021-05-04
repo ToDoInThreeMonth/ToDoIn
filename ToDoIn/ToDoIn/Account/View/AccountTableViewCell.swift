@@ -2,7 +2,7 @@ import UIKit
 import PinLayout
 
 class AccountTableViewCell: UITableViewCell {
-    var friend: FriendModel? {
+    var friend: FriendModelProtocol? {
         didSet {
             guard let friend = friend else { return }
             friendAvatar.image = friend.image

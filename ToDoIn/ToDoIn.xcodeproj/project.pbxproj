@@ -13,12 +13,13 @@
 		1561C570261271800098F8DB /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1561C56F261271800098F8DB /* AccountTableViewCell.swift */; };
 		1567A36826169CF70024AB2F /* UIViewController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1567A36726169CF70024AB2F /* UIViewController + extension.swift */; };
 		15A4C757261D2FBD008F0D40 /* LogOutAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4C756261D2FBD008F0D40 /* LogOutAlertController.swift */; };
-		15A4C75A261D3153008F0D40 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4C759261D3153008F0D40 /* AccountModel.swift */; };
+		15A4C75A261D3153008F0D40 /* AccountViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4C759261D3153008F0D40 /* AccountViewConfigure.swift */; };
 		15A4C75F261D3277008F0D40 /* UIColor + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4C75E261D3277008F0D40 /* UIColor + extensions.swift */; };
 		15A4C762261D3481008F0D40 /* UIStackView + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4C761261D3481008F0D40 /* UIStackView + extensions.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		15C4171B26124C4E00773165 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C4171A26124C4E00773165 /* AccountViewController.swift */; };
+		15FCA72D264141DC009F235F /* AlertControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA72C264141DC009F235F /* AlertControllers.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
 		4313B440260BBFA500E6381A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* ViewController.swift */; };
 		4313B445260BBFA800E6381A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4313B444260BBFA800E6381A /* Assets.xcassets */; };
@@ -33,12 +34,13 @@
 		1561C56F261271800098F8DB /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
 		1567A36726169CF70024AB2F /* UIViewController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + extension.swift"; sourceTree = "<group>"; };
 		15A4C756261D2FBD008F0D40 /* LogOutAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutAlertController.swift; sourceTree = "<group>"; };
-		15A4C759261D3153008F0D40 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		15A4C759261D3153008F0D40 /* AccountViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewConfigure.swift; sourceTree = "<group>"; };
 		15A4C75E261D3277008F0D40 /* UIColor + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extensions.swift"; sourceTree = "<group>"; };
 		15A4C761261D3481008F0D40 /* UIStackView + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + extensions.swift"; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		15C4171A26124C4E00773165 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		15FCA72C264141DC009F235F /* AlertControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllers.swift; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4313B43B260BBFA500E6381A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,7 +89,7 @@
 				1561C56F261271800098F8DB /* AccountTableViewCell.swift */,
 				154ED858261536A80044531E /* SearchTextField.swift */,
 				15A4C756261D2FBD008F0D40 /* LogOutAlertController.swift */,
-				15A4C759261D3153008F0D40 /* AccountModel.swift */,
+				15A4C759261D3153008F0D40 /* AccountViewConfigure.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -119,6 +121,14 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		15FCA72B264141B8009F235F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				15FCA72C264141DC009F235F /* AlertControllers.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		3F81D43B9AFA4F14842C4978 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +158,7 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				15FCA72B264141B8009F235F /* Services */,
 				1561C56A261257060098F8DB /* Extensions */,
 				15C4172026124FA600773165 /* Account */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
@@ -288,8 +299,9 @@
 				15A4C762261D3481008F0D40 /* UIStackView + extensions.swift in Sources */,
 				1561C56C2612571B0098F8DB /* UIView + extension.swift in Sources */,
 				1567A36826169CF70024AB2F /* UIViewController + extension.swift in Sources */,
+				15FCA72D264141DC009F235F /* AlertControllers.swift in Sources */,
 				154ED859261536A80044531E /* SearchTextField.swift in Sources */,
-				15A4C75A261D3153008F0D40 /* AccountModel.swift in Sources */,
+				15A4C75A261D3153008F0D40 /* AccountViewConfigure.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				15A4C75F261D3277008F0D40 /* UIColor + extensions.swift in Sources */,
 				1561C570261271800098F8DB /* AccountTableViewCell.swift in Sources */,
