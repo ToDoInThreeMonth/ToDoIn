@@ -1,8 +1,8 @@
 import UIKit
 
 protocol MainChildCoordinator: ChildCoordinator {
-    func showAddSection()
-    func showAddTask()
+    func presentAddSectionController()
+    func presentAddTaskController()
 }
 
 class MainFlowCoordinator: MainChildCoordinator {
@@ -13,17 +13,17 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func start() {
-        let viewController = ViewController()
-        viewController.coordinator = self
+        let presenter = MainPresenter(coordinator: self)
+        let viewController = MainViewController(presenter: presenter)
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "checkmark"), selectedImage: UIImage(systemName: "checkmark"))
-        // Пример настройки viewController
-        viewController.title = "ToDoIn"
         
         navigationController.pushViewController(viewController, animated: false)
     }
     
-//  Пока заглушки. Эти методы для вызова экранов добавления секции и задачи
-    func showAddSection() {}
-    func showAddTask() {}
+    func presentAddSectionController() {}
+    func presentAddTaskController() {
+        let controller = UIViewController()
+        navigationController.present(controller, animated: true)
+    }
 }

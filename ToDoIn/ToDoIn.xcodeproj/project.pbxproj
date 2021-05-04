@@ -7,32 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15498E542641C81600EE5A2E /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E532641C81600EE5A2E /* MainProtocols.swift */; };
+		15498E572641C84500EE5A2E /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E562641C84500EE5A2E /* MainPresenter.swift */; };
+		15498E5A2641C9C100EE5A2E /* MainTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E592641C9C100EE5A2E /* MainTableView.swift */; };
+		15498E5E2641CA7400EE5A2E /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E5D2641CA7400EE5A2E /* TaskTableViewCell.swift */; };
+		15498E622641CC6E00EE5A2E /* OfflineTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E612641CC6E00EE5A2E /* OfflineTaskTableViewCell.swift */; };
+		15498E652641CCFC00EE5A2E /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E642641CCFC00EE5A2E /* Group.swift */; };
+		15498E6A2641D61100EE5A2E /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E692641D61100EE5A2E /* AuthView.swift */; };
+		15498E6D2641F1AA00EE5A2E /* UIViewController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E6C2641F1AA00EE5A2E /* UIViewController + extension.swift */; };
+		15498E712641F49300EE5A2E /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E702641F49300EE5A2E /* TaskController.swift */; };
+		15498E742641F4D900EE5A2E /* TaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E732641F4D900EE5A2E /* TaskPresenter.swift */; };
+		15498E772641F51000EE5A2E /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E762641F51000EE5A2E /* GroupsService.swift */; };
+		15498E7A2641F55300EE5A2E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E792641F55300EE5A2E /* CustomTextField.swift */; };
 		15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */; };
 		158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A53F32619F0E5003F4F3A /* UIView + extension.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
-		15D099552619ED4F006E17F7 /* MainOfflineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */; };
 		15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */; };
-		15F3B78F261F0624004C2FB6 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78E261F0624004C2FB6 /* PostModel.swift */; };
+		15F3B78F261F0624004C2FB6 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78E261F0624004C2FB6 /* TaskModel.swift */; };
+		15FCA74A2641C60A009F235F /* UINavigationController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA7492641C60A009F235F /* UINavigationController + extension.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
-		4313B440260BBFA500E6381A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* ViewController.swift */; };
+		4313B440260BBFA500E6381A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* MainViewController.swift */; };
 		4313B445260BBFA800E6381A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4313B444260BBFA800E6381A /* Assets.xcassets */; };
 		4313B448260BBFA800E6381A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4313B446260BBFA800E6381A /* LaunchScreen.storyboard */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15498E532641C81600EE5A2E /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
+		15498E562641C84500EE5A2E /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		15498E592641C9C100EE5A2E /* MainTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableView.swift; sourceTree = "<group>"; };
+		15498E5D2641CA7400EE5A2E /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		15498E612641CC6E00EE5A2E /* OfflineTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskTableViewCell.swift; sourceTree = "<group>"; };
+		15498E642641CCFC00EE5A2E /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		15498E692641D61100EE5A2E /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		15498E6C2641F1AA00EE5A2E /* UIViewController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + extension.swift"; sourceTree = "<group>"; };
+		15498E702641F49300EE5A2E /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
+		15498E732641F4D900EE5A2E /* TaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresenter.swift; sourceTree = "<group>"; };
+		15498E762641F51000EE5A2E /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
+		15498E792641F55300EE5A2E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
 		158A53F32619F0E5003F4F3A /* UIView + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
-		15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineTableViewCell.swift; sourceTree = "<group>"; };
 		15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extensions.swift"; sourceTree = "<group>"; };
-		15F3B78E261F0624004C2FB6 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		15F3B78E261F0624004C2FB6 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		15FCA7492641C60A009F235F /* UINavigationController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + extension.swift"; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4313B43B260BBFA500E6381A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4313B43F260BBFA500E6381A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4313B43F260BBFA500E6381A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4313B444260BBFA800E6381A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4313B447260BBFA800E6381A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4313B449260BBFA800E6381A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,6 +76,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15498E522641C80700EE5A2E /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				15498E562641C84500EE5A2E /* MainPresenter.swift */,
+				15498E732641F4D900EE5A2E /* TaskPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
 		15B4E1E2260C8CEB00599AF4 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,7 +97,8 @@
 		15D099512619ECD1006E17F7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4313B43F260BBFA500E6381A /* ViewController.swift */,
+				15498E702641F49300EE5A2E /* TaskController.swift */,
+				4313B43F260BBFA500E6381A /* MainViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -72,8 +106,11 @@
 		15D099522619ECDF006E17F7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				15D099542619ED4F006E17F7 /* MainOfflineTableViewCell.swift */,
+				15498E592641C9C100EE5A2E /* MainTableView.swift */,
+				15498E612641CC6E00EE5A2E /* OfflineTaskTableViewCell.swift */,
 				15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */,
+				15498E692641D61100EE5A2E /* AuthView.swift */,
+				15498E792641F55300EE5A2E /* CustomTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -81,7 +118,8 @@
 		15D099532619ECE4006E17F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				15F3B78E261F0624004C2FB6 /* PostModel.swift */,
+				15F3B78E261F0624004C2FB6 /* TaskModel.swift */,
+				15498E762641F51000EE5A2E /* GroupsService.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -91,8 +129,22 @@
 			children = (
 				158A53F32619F0E5003F4F3A /* UIView + extension.swift */,
 				15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */,
+				15FCA7492641C60A009F235F /* UINavigationController + extension.swift */,
+				15498E6C2641F1AA00EE5A2E /* UIViewController + extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		15FCA7482641C5D0009F235F /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				15498E522641C80700EE5A2E /* Presenters */,
+				15D099532619ECE4006E17F7 /* Models */,
+				15D099522619ECDF006E17F7 /* Views */,
+				15D099512619ECD1006E17F7 /* Controllers */,
+				15498E532641C81600EE5A2E /* MainProtocols.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		3F81D43B9AFA4F14842C4978 /* Frameworks */ = {
@@ -124,15 +176,15 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				15FCA7482641C5D0009F235F /* Main */,
 				15F3B789261F05BA004C2FB6 /* Extensions */,
-				15D099532619ECE4006E17F7 /* Models */,
-				15D099522619ECDF006E17F7 /* Views */,
-				15D099512619ECD1006E17F7 /* Controllers */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
 				4313B43B260BBFA500E6381A /* AppDelegate.swift */,
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
+				15498E5D2641CA7400EE5A2E /* TaskTableViewCell.swift */,
+				15498E642641CCFC00EE5A2E /* Group.swift */,
 			);
 			path = ToDoIn;
 			sourceTree = "<group>";
@@ -259,14 +311,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15498E5A2641C9C100EE5A2E /* MainTableView.swift in Sources */,
+				15498E5E2641CA7400EE5A2E /* TaskTableViewCell.swift in Sources */,
 				15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */,
+				15498E652641CCFC00EE5A2E /* Group.swift in Sources */,
+				15498E712641F49300EE5A2E /* TaskController.swift in Sources */,
 				158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */,
-				15F3B78F261F0624004C2FB6 /* PostModel.swift in Sources */,
+				15498E742641F4D900EE5A2E /* TaskPresenter.swift in Sources */,
+				15498E542641C81600EE5A2E /* MainProtocols.swift in Sources */,
+				15498E6A2641D61100EE5A2E /* AuthView.swift in Sources */,
+				15F3B78F261F0624004C2FB6 /* TaskModel.swift in Sources */,
 				15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */,
+				15498E772641F51000EE5A2E /* GroupsService.swift in Sources */,
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
-				15D099552619ED4F006E17F7 /* MainOfflineTableViewCell.swift in Sources */,
+				15498E572641C84500EE5A2E /* MainPresenter.swift in Sources */,
+				15498E7A2641F55300EE5A2E /* CustomTextField.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
-				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
+				15FCA74A2641C60A009F235F /* UINavigationController + extension.swift in Sources */,
+				4313B440260BBFA500E6381A /* MainViewController.swift in Sources */,
+				15498E6D2641F1AA00EE5A2E /* UIViewController + extension.swift in Sources */,
+				15498E622641CC6E00EE5A2E /* OfflineTaskTableViewCell.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,12 +472,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C9Z7P63FZX;
 				INFOPLIST_FILE = ToDoIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -427,12 +492,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C9Z7P63FZX;
 				INFOPLIST_FILE = ToDoIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
