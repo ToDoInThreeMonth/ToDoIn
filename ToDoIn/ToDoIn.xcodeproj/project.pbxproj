@@ -28,6 +28,7 @@
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
 		4351797F26184DF5009F898B /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* GroupsService.swift */; };
 		4351798226185190009F898B /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskTableViewCell.swift */; };
+		4352BF0F26419EF300AACE8C /* AccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4352BF0E26419EF300AACE8C /* AccountPresenter.swift */; };
 		4354B312261CC2ED0080F577 /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4354B311261CC2ED0080F577 /* TaskController.swift */; };
 		4366F35E264121B100C95BFA /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4366F35D264121B100C95BFA /* Date+extension.swift */; };
 		4366F3612641572D00C95BFA /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4366F3602641572D00C95BFA /* AuthController.swift */; };
@@ -74,6 +75,7 @@
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		4351797E26184DF5009F898B /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
 		4351798126185190009F898B /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		4352BF0E26419EF300AACE8C /* AccountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPresenter.swift; sourceTree = "<group>"; };
 		4354B311261CC2ED0080F577 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		4366F35D264121B100C95BFA /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		4366F3602641572D00C95BFA /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
@@ -194,10 +196,35 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		43AEF872262B2BA90063D925 /* Account */ = {
+		4352BF0626419E4A00AACE8C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4352BF0726419E5100AACE8C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				43AEF874262B2BD80063D925 /* AccountController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4352BF0826419E6000AACE8C /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				4352BF0E26419EF300AACE8C /* AccountPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		43AEF872262B2BA90063D925 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				4352BF0826419E6000AACE8C /* Presenters */,
+				4352BF0726419E5100AACE8C /* Controllers */,
+				4352BF0626419E4A00AACE8C /* Model */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -427,6 +454,7 @@
 				4354B312261CC2ED0080F577 /* TaskController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */,
 				43AEF875262B2BD80063D925 /* AccountController.swift in Sources */,
+				4352BF0F26419EF300AACE8C /* AccountPresenter.swift in Sources */,
 				4335D6432629E7CE00DA47DA /* TaskPresenter.swift in Sources */,
 				439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */,
 				4366F35E264121B100C95BFA /* Date+extension.swift in Sources */,
