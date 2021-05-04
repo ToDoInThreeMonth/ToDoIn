@@ -32,11 +32,8 @@ extension UINavigationController {
             view.navigationItem.setRightBarButton(addRoomButton, animated: true)
             view.title = "Комнаты"
         case .account:
-            let leftButtonImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
-            let leftButton = UIBarButtonItem(image: leftButtonImage, style: .plain, target: nil, action: nil)
-            let rightButtonImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
+            let rightButtonImage = UIImage(named: "accountSettings")?.withRenderingMode(.alwaysOriginal)
             let rightButton = UIBarButtonItem(image: rightButtonImage, style: .plain, target: nil, action: nil)
-            view.navigationItem.setLeftBarButton(leftButton, animated: true)
             view.navigationItem.setRightBarButton(rightButton, animated: true)
             view.title = "Аккаунт"
         case .roomsDetail:
