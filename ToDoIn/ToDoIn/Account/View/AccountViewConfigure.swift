@@ -1,6 +1,7 @@
 import UIKit
 
 struct AccountViewConfigure {
+    // Static stored properties
     static var userImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -61,7 +62,7 @@ struct AccountViewConfigure {
     
     static var notificationButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "turnedNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(UIImage(named: "offNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("Уведомления", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 8)
         button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
@@ -69,6 +70,7 @@ struct AccountViewConfigure {
         return button
     }()
     
+    // Static functions
     static func getUserBackShadow(_ view: UIView) {
         view.addShadow(side: .bottomRight, type: .outside, alpha: 0.15)
         view.addShadow(side: .bottomRight, type: .outside, color: .white, alpha: 1, offset: -10)

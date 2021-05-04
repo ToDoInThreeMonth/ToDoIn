@@ -1,15 +1,18 @@
 import UIKit
 
+// Alert Controllers factory
 struct AlertControllerCreator {
+    // Nested data types
     enum TypeAlert {
         case logOut
         case error
     }
     
+    // Static functions
     static func getController (title: String?, message: String?, style: UIAlertController.Style, type: TypeAlert) -> UIAlertController {
         switch type {
         case .logOut:
-            let alertController = LogOutAlertController(title: title, message: message, preferredStyle: style)
+            let alertController = ExitAlertController(title: title, message: message, preferredStyle: style)
             return alertController
         case .error:
             let alertController = ErrorAlertController(title: title, message: message, preferredStyle: .alert)
@@ -18,13 +21,14 @@ struct AlertControllerCreator {
     }
 }
 
-class LogOutAlertController: UIAlertController {
-    
+class ExitAlertController: UIAlertController {
+    // ViewController lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButton()
     }
     
+    // UI configure methods
     private func setupButton() {
         let agreeButton = UIAlertAction(title: "Нет", style: .default, handler: nil)
         let disagreeButton = UIAlertAction(title: "Да", style: .destructive) {[unowned self] _ in
@@ -36,15 +40,16 @@ class LogOutAlertController: UIAlertController {
 }
 
 class ErrorAlertController: UIAlertController {
-    
+    // ViewController lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButton()
     }
     
+    // UI configure methods
     private func setupButton() {
-        let reportButton = UIAlertAction(title: "Сообщить об ошибке", style: .default) { [weak self] _ in
-            print(self?.message)
+        let reportButton = UIAlertAction(title: "Сообщить об ошибке", style: .default) { [unowned self] _ in
+            print(self.message)
         }
         addAction(reportButton)
     }

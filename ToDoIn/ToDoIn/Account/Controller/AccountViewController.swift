@@ -2,8 +2,11 @@ import UIKit
 import PinLayout
 
 class AccountViewController: UIViewController {
-    weak var coordinator: MainChildCoordinator?
+    // Stored properties
+    private var presenter: AccountViewPresenter
+    private lazy var users: [FriendModelProtocol] = presenter.getAllFriends()
     
+    // Lazy stored properties
     private lazy var userImageView = AccountViewConfigure.userImageView
     private lazy var userBackView = AccountViewConfigure.userBackView
     private lazy var userNameLabel = AccountViewConfigure.userNameLabel
@@ -40,6 +43,7 @@ class AccountViewController: UIViewController {
         return tableView
     }()
     
+    // Nested data types
     struct LayersConstants {
         static let settingsContentLeft: CGFloat = 20
         static let settingsContentRight: CGFloat = 25
@@ -47,11 +51,23 @@ class AccountViewController: UIViewController {
         static let scrollInsetBottom: CGFloat = 15
         static let scrollInsetRight: CGFloat = 8
     }
-
+    
+    // Initializers
+    init(presenter: AccountViewPresenter) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // ViewController lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         hideKeyboardWhenTappedAround()
+        navigationController?.configureBarButtonItems(screen: .account, for: self)
     }
     
     override func viewWillLayoutSubviews() {
@@ -66,6 +82,7 @@ class AccountViewController: UIViewController {
         setupInsets()
     }
     
+    // UI configure methods
     private func setupViews() {
         view.backgroundColor = .darkAccentColor
         view.addSubviews(userBackView,
@@ -170,45 +187,51 @@ class AccountViewController: UIViewController {
         }
     }
     
+    // Actions methods
     @objc
     private func exitButtonTapped() {
-        let alertTitle = "Выход из аккаунта"
-        let alertMessage = "Вы действительно хотите выйти ?"
-        let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .logOut)
-     
-        present(alertVC, animated: true, completion: nil)
+        presenter.showExitAlertController()
     }
     
     @objc
     private func notificationButtonTapped() {
+        let image = presenter.toggleNotifications()
+        notificationButton.setImage(image, for: .normal)
     }
     
     @objc
     private func searchTFDidChanged() {
+        guard let text = searchTextField.text else { return }
+
+        if text == "" {
+            users = presenter.getAllFriends()
+        } else {
+            users = presenter.getFriends(from: text)
+        }
+        
+        friendsTableView.reloadData()
     }
 }
 
 //MARK: - UITableViewDataSource
 extension AccountViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return FriendBase.friends.count
+        return users.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AccountTableViewCell.self), for: indexPath) as? AccountTableViewCell
         guard let safeCell = cell else {
-            let alertTitle = "Неожиданный сбой"
-            let alertMessage = "Ячейки с пользователями не могут быть созданы"
-            let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .error)
-            present(alertVC, animated: true)
+            presenter.showErrorAlertController(with: "Ячейки пользователей не могут быть созданы")
             return UITableViewCell()}
         
-        safeCell.friend = FriendBase.friends[indexPath.row]
+        safeCell.friend = users[indexPath.row]
         return safeCell
     }
         
 }
 
+//MARK: - UITableViewDelegate
 extension AccountViewController: UITableViewDelegate {
 
 }

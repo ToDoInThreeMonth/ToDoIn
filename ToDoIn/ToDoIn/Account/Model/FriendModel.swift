@@ -10,6 +10,7 @@ private struct Friend: FriendModelProtocol {
     let name: String
 }
 
+// Singleton database
 struct FriendBase {
     static let friends: [FriendModelProtocol] = [
         Friend(image: UIImage(named: "nlo"), name: "Kamnev Vladimir"),

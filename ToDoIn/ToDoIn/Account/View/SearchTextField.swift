@@ -1,11 +1,12 @@
 import UIKit
 
 class CustomSearchTextField: UITextField {
+    // Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         placeholder = "Введите имя"
         returnKeyType = .done
-        textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1)
+        textColor = .darkGrayTextColor
         backgroundColor = .systemGray6
         font = UIFont.systemFont(ofSize: 18)
         setupLeftView()
@@ -16,6 +17,7 @@ class CustomSearchTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // UI configure methods
     private func setupRightView() {
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
         let rightView = UIImageView(image: UIImage(systemName: "magnifyingglass"))

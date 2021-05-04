@@ -17,11 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController())
         
-        appCoordinator = AppCoordinator(tabBarController: UITabBarController(), childCoordinators: [mainFlowCoordinator])
+        let acountFlowCoordinator = AccountFlowCoordinator(navigationController: UINavigationController(), imageName: "account", title: "Аккаунт")
+        
+        appCoordinator = AppCoordinator(tabBarController: UITabBarController(), childCoordinators: [mainFlowCoordinator,
+        acountFlowCoordinator])
         appCoordinator?.start()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = AccountViewController()
+        window?.rootViewController = appCoordinator?.tabBarController
         window?.makeKeyAndVisible()
         
         return true
