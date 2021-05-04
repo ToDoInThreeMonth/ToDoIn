@@ -22,6 +22,8 @@ struct AlertControllerCreator {
 }
 
 class ExitAlertController: UIAlertController {
+    var onButtonTapped: (() -> ())?
+    
     // ViewController lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +34,14 @@ class ExitAlertController: UIAlertController {
     private func setupButton() {
         let agreeButton = UIAlertAction(title: "Нет", style: .default, handler: nil)
         let disagreeButton = UIAlertAction(title: "Да", style: .destructive) {[unowned self] _ in
-            print("Выход сработал")
+            disagreeButtonTapped()
         }
         addAction(disagreeButton)
         addAction(agreeButton)
+    }
+    
+    private func disagreeButtonTapped() {
+        onButtonTapped?()
     }
 }
 

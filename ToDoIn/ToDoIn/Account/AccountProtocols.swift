@@ -2,7 +2,7 @@ import UIKit
 
 //MARK: - AccountController
 protocol AccountViewPresenter {
-    func showExitAlertController()
+    func showExitAlertController(completion: @escaping () -> ())
     func showErrorAlertController(with message: String)
     func toggleNotifications() -> UIImage?
     func getFriends(from text: String) -> [FriendModelProtocol]

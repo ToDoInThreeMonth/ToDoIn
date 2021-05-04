@@ -7,6 +7,8 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     private(set) lazy var users: [FriendModelProtocol] = presenter.getAllFriends()
     
     // Lazy stored properties
+    private lazy var isSettingsMenuHidden = true
+    private lazy var settingsBackgroundView = AccountViewConfigure.settingsBackgroundView
     private lazy var userImageView = AccountViewConfigure.userImageView
     private lazy var userBackView = AccountViewConfigure.userBackView
     private lazy var userNameLabel = AccountViewConfigure.userNameLabel
@@ -44,10 +46,15 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     // Nested data types
     struct LayersConstants {
         static let settingsContentLeft: CGFloat = 20
-        static let settingsContentRight: CGFloat = 25
+        static let settingsContentRight: CGFloat = 5
         static let settingImageRight: CGFloat = 45
         static let scrollInsetBottom: CGFloat = 15
-        static let scrollInsetRight: CGFloat = 8
+    }
+    
+    struct AnimationConstants {
+        static var exitButtonAlpha: CGFloat = 1
+        static var notificationButtonAlpha: CGFloat = 1
+        static var backgroundAlpha: CGFloat = 0.2
     }
     
     // Initializers
@@ -65,13 +72,13 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
         super.viewDidLoad()
         setupViews()
         hideKeyboardWhenTappedAround()
-        navigationController?.configureBarButtonItems(screen: .account, for: self)
+        setupNavigationItem()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setupLayouts()
-       
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,18 +90,19 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     // UI configure methods
     private func setupViews() {
         view.backgroundColor = .darkAccentColor
-        view.addSubviews(userBackView,
+        view.addSubviews(friendsTableView,
+                         userBackView,
                          userNameLabel,
                          toDoInLabel,
                          friendsLabel,
                          searchTextField,
                          friendUnderlineView,
-                         friendsTableView,
+                         settingsBackgroundView,
                          exitButton,
                          notificationButton)
         userBackView.addSubviews(userImageView)
     }
-
+    
     private func setupLayouts() {
         userBackView.pin
             .topCenter(view.pin.safeArea.top)
@@ -130,24 +138,32 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
             .top(to: friendsLabel.edge.top)
             .marginTop(-5)
         notificationButton.pin
-            .top(to: friendUnderlineView.edge.bottom)
-            .end(-20)
-            .width(130)
+            .top(view.pin.safeArea.top)
+            .end(12)
+            .width(view.bounds.width / 2)
             .height(40)
-            .marginTop(20)
+            .marginTop(12)
         exitButton.pin
             .top(to: notificationButton.edge.bottom)
-            .end(-20)
-            .width(130)
+            .end(12)
+            .width(view.bounds.width / 2)
             .height(40)
-            .marginTop(20)
+            .marginTop(12)
         friendsTableView.pin
             .top(to: friendUnderlineView.edge.bottom)
             .start(20)
-            .end(to: exitButton.edge.start)
+            .end(20)
             .bottom(view.pin.safeArea.bottom)
             .marginEnd(10)
             .marginTop(20)
+        settingsBackgroundView.pin
+            .all()
+    }
+    
+    private func setupNavigationItem() {
+        navigationController?.configureBarButtonItems(screen: .account, for: self)
+        navigationItem.rightBarButtonItem?.target = self
+        navigationItem.rightBarButtonItem?.action = #selector(settingsButtonTapped)
     }
     
     private func configureViews() {
@@ -161,16 +177,19 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
         AccountViewConfigure.getSearchTFShadow(searchTextField)
         
         [exitButton, notificationButton].forEach{
-            $0.layer.cornerRadius = 15
+            $0.layer.cornerRadius = 20
             AccountViewConfigure.getSettingButtonShadow($0)
+            AccountViewConfigure.getSettingButtonGradiend($0)
         }
+        
+        AccountViewConfigure.getSettingsViewBlur(settingsBackgroundView)
     }
     
     private func setupInsets() {
         friendsTableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0,
                                                                       left: 0,
                                                                       bottom: LayersConstants.scrollInsetBottom,
-                                                                      right: friendsTableView.bounds.width - LayersConstants.scrollInsetRight)
+                                                                      right: 0)
         [exitButton, notificationButton].forEach{
             guard let imageView = $0.imageView else { return }
             
@@ -188,7 +207,9 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     // Actions methods
     @objc
     private func exitButtonTapped() {
-        presenter.showExitAlertController()
+        presenter.showExitAlertController { [weak self] in
+            self?.dropDownAnimation()
+        }
     }
     
     @objc
@@ -200,7 +221,7 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     @objc
     private func searchTFDidChanged() {
         guard let text = searchTextField.text else { return }
-
+        
         if text == "" {
             users = presenter.getAllFriends()
         } else {
@@ -210,8 +231,46 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
         friendsTableView.reloadData()
     }
     
+    @objc
+    private func settingsButtonTapped() {
+        dropDownAnimation()
+    }
+    
     // Another methods
     func showErrorAlertController(with message: String) {
         presenter.showErrorAlertController(with: message)
+    }
+    
+    // Drop-down menu animation
+    func dropDownAnimation() {
+        var exitButtonAlpha: CGFloat = 1
+        var notificationButtonAlpha: CGFloat = 1
+        var backgroundAlpha: CGFloat = 1
+        var duration = 0.3
+        var delay = duration / 3
+        
+        if !isSettingsMenuHidden {
+            exitButtonAlpha = 0
+            notificationButtonAlpha = 0
+            backgroundAlpha = 0
+            duration = 0.1
+            delay = 0
+        }
+        
+        UIView.animate(withDuration: delay, delay: 0, options: [.curveEaseOut]) { [weak self] in
+            self?.settingsBackgroundView.alpha = backgroundAlpha
+        }
+        
+        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) { [weak self] in
+            self?.notificationButton.alpha = notificationButtonAlpha
+        }
+        
+        delay *= 2
+        
+        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) { [weak self] in
+            self?.exitButton.alpha = exitButtonAlpha
+        }
+        
+        isSettingsMenuHidden.toggle()
     }
 }

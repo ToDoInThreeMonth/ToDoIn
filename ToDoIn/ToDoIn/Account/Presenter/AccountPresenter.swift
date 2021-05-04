@@ -9,8 +9,8 @@ class AccountPresenter: AccountViewPresenter {
         self.coordinator = coordinator
     }
     
-    func showExitAlertController() {
-        coordinator?.presentExitController()
+    func showExitAlertController(completion: @escaping () -> ()) {
+        coordinator?.presentExitController(completion: completion)
     }
     
     func toggleNotifications() -> UIImage? {

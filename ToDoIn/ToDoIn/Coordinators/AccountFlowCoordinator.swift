@@ -2,7 +2,7 @@ import UIKit
 
 protocol AccountChildCoordinator: ChildCoordinator {
     func presentErrorController(with message: String)
-    func presentExitController()
+    func presentExitController(completion: @escaping () -> ())
 }
 
 class AccountFlowCoordinator: AccountChildCoordinator {
@@ -29,11 +29,11 @@ class AccountFlowCoordinator: AccountChildCoordinator {
         navigationController.pushViewController(viewController, animated: false)
     }
     
-    func presentExitController() {
+    func presentExitController(completion: @escaping () -> ()) {
         let alertTitle = "Выход из аккаунта"
         let alertMessage = "Вы действительно хотите выйти ?"
-        let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .logOut)
-     
+        guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .logOut) as? ExitAlertController else { return }
+        alertVC.onButtonTapped = completion
         navigationController.present(alertVC, animated: true)
     }
     

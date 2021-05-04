@@ -36,7 +36,7 @@ struct AccountViewConfigure {
         let label = UILabel()
         label.text = "Друзья"
         label.font = UIFont.systemFont(ofSize: 20)
-        label.textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1)
+        label.textColor = .darkTextColor
         return label
     }()
     
@@ -53,10 +53,11 @@ struct AccountViewConfigure {
     static var exitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
         button.setTitle("Выйти", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
-        button.tintColor = UIColor(red: 2 / 255, green: 44 / 255, blue: 114 / 255, alpha: 1)
+        button.backgroundColor = .darkAccentColor
+        button.tintColor = .darkTextColor
+        button.alpha = 0
         return button
     }()
     
@@ -64,10 +65,17 @@ struct AccountViewConfigure {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "offNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("Уведомления", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 8)
-        button.backgroundColor = UIColor(red: 243 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
-        button.tintColor = UIColor(red: 2 / 255, green: 44 / 255, blue: 114 / 255, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
+        button.backgroundColor = .darkAccentColor
+        button.tintColor = .darkTextColor
+        button.alpha = 0
         return button
+    }()
+    
+    static var settingsBackgroundView: UIView = {
+        let view = UIView()
+        view.alpha = 0
+        return view
     }()
     
     // Static functions
@@ -89,7 +97,19 @@ struct AccountViewConfigure {
     }
     
     static func getSettingButtonShadow(_ button: UIButton) {
-        button.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
-        button.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 2)
+        button.addShadow(type: .outside, power: 3, alpha: 0.3, offset: 0)
+    }
+    
+    static func getSettingButtonGradiend(_ button: UIButton) {
+        button.addLinearGradiend()
+    }
+    
+    static func getSettingsViewBlur(_ view: UIView) {
+        let blurEffect = UIBlurEffect(style: .extraLight)
+        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+        blurredEffectView.frame = view.bounds
+        blurredEffectView.alpha = 0.8
+        
+        view.addSubview(blurredEffectView)
     }
 }

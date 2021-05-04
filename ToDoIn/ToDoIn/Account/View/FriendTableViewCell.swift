@@ -17,16 +17,18 @@ class FriendTableViewCell: UITableViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
+    
     private lazy var friendView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
+    
     private lazy var friendName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1)
+        label.textColor = .darkGrayTextColor
         label.text = "Kamnev Vladimir Sergeevich Djan"
         return label
     }()
@@ -67,7 +69,7 @@ class FriendTableViewCell: UITableViewCell {
             .margin(3)
         friendName.pin
             .start(to: friendView.edge.end)
-            .width(100)
+            .end(20)
             .marginStart(10)
             .vCenter(to: friendView.edge.vCenter)
             .sizeToFit()
