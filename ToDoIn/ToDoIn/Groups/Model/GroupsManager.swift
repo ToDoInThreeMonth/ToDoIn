@@ -1,5 +1,6 @@
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 enum NetworkError: Error {
     case unexpected
@@ -8,15 +9,20 @@ enum NetworkError: Error {
 protocol GroupsManagerDescription {
     func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void)
     func observeGroup(by userId: String, completion: @escaping (Result<Group, Error>) -> Void)
-    
+    func observeUser(completion: @escaping (Result<User, Error>) -> Void)
+    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void)
+
     func getTasks(for userId: String, from group: Group) -> [Task]
     func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void)
     
     func addTask(_ task: Task, in group: Group)
     func changeTask(_ task: Task, in group: Group)
+
+    func addFriend(friend: User)
 }
 
 final class GroupsManager: GroupsManagerDescription {
+    
     static let shared: GroupsManagerDescription = GroupsManager()
     
     private let database = Firestore.firestore()
@@ -56,6 +62,92 @@ final class GroupsManager: GroupsManagerDescription {
             completion(.success(group))
         }
     }
+    
+    func observeUser(completion: @escaping (Result<User, Error>) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        database.collection("users").document(currentUserId).addSnapshotListener { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let data = snapshot?.data() else {
+                completion(.failure(NetworkError.unexpected))
+                return
+            }
+            let user = GroupsConverter.user(from: data)
+            completion(.success(user))
+        }
+    }
+    
+//    func observeFriends(completion: @escaping (Result<[User], Error>) -> Void) {
+//        guard let userId = Auth.auth().currentUser?.uid else {
+//            return
+//        }
+//        database.collection("users").document(userId).addSnapshotListener { (snapshot, error) in
+//            if let error = error {
+//                completion(.failure(error))
+//                return
+//            }
+//            guard let data = snapshot?.data() else {
+//                completion(.failure(NetworkError.unexpected))
+//                return
+//            }
+//            let user = GroupsConverter.user(from: data)
+//            var friends = [User]()
+//            for friendId in user.friends {
+//                self.database.collection("users").document(friendId).addSnapshotListener { (snapshot, error) in
+//                    if let error = error {
+//                        completion(.failure(error))
+//                        return
+//                    }
+//                    guard let data = snapshot?.data() else {
+//                        completion(.failure(NetworkError.unexpected))
+//                        return
+//                    }
+//                    friends.append(GroupsConverter.user(from: data))
+//                }
+//            }
+//            print(friends)
+//            completion(.success(friends))
+//        }
+//    }
+    
+    
+    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void) {
+        var res = [User]()
+        for friendId in friends {
+            self.database.collection("users").document(friendId).addSnapshotListener { (snapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                guard let data = snapshot?.data() else {
+                    completion(.failure(NetworkError.unexpected))
+                    return
+                }
+                res.append(GroupsConverter.user(from: data))
+            }
+        }
+        completion(.success(res))
+    }
+    
+    
+    
+    func addFriend(friend: User) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        database.collection("users").document(userId).updateData(["friends" : FieldValue.arrayUnion([friend.id])]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
     
     func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void) {
         let docRef = database.collection("users").document(userId)
@@ -135,6 +227,7 @@ final class GroupsConverter {
     enum UserKey: String {
         case id
         case name
+        case email
         case image
         case friends
     }
@@ -185,12 +278,13 @@ final class GroupsConverter {
         guard
             let id = user[UserKey.id.rawValue] as? String,
             let name = user[UserKey.name.rawValue] as? String,
+            let email = user[UserKey.email.rawValue] as? String,
             let image = user[UserKey.image.rawValue] as? String,
             let friends = user[UserKey.friends.rawValue] as? [String]
         else {
             return User()
         }
-        return User(id: id, name: name, image: image, friends: friends)
+        return User(id: id, name: name, email: email, image: image, friends: friends)
     }
     
     static func user(from user: User) -> Dictionary<String, Any> {

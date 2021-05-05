@@ -5,6 +5,7 @@ import FirebaseAuth
 protocol AuthManagerDescription {
     func signUp(email: String, name: String, password1: String, password2: String) -> String?
     func signIn(email: String, password: String) -> String?
+    func getCurrentUser() -> User
 }
 
 final class AuthManager: AuthManagerDescription {
@@ -14,6 +15,23 @@ final class AuthManager: AuthManagerDescription {
     private let database = Firestore.firestore()
     
     private init() {}
+    
+    func getCurrentUser() -> User {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            return User()
+        }
+        var user = User()
+        database.collection("users").document(currentUserId).addSnapshotListener { (snapshot, error) in
+            if error != nil {
+                return
+            }
+            guard let data = snapshot?.data() else {
+                return
+            }
+            user = GroupsConverter.user(from: data)
+        }
+        return user
+    }
     
     func signUp(email: String, name: String, password1: String, password2: String) -> String? {
         // Validate the fields

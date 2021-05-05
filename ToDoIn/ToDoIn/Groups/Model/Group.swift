@@ -24,12 +24,14 @@ struct Group: Equatable {
 struct User: Equatable {
     var id: String
     var name: String
+    var email: String
     var image: String
     var friends: [String]
     
-    init(id: String = "", name: String = "", image: String = "user", friends: [String] = []) {
+    init(id: String = "", name: String = "", email: String = "", image: String = "user", friends: [String] = []) {
         self.id = id
         self.name = name
+        self.email = email
         self.image = image
         self.friends = friends
     }

@@ -4,6 +4,9 @@ protocol AccountChildCoordinator: ChildCoordinator {
     func showAuthController(isSignIn: Bool)
     func showAccount()
     func showFriendSearch()
+    
+    func presentExitController(completion: @escaping () -> ())
+    func presentErrorController(with message: String)
 }
 
 class AccountFlowCoordinator: AccountChildCoordinator {
@@ -52,5 +55,20 @@ class AccountFlowCoordinator: AccountChildCoordinator {
         let friendSearchController = FriendSearchController()
         friendSearchController.setPresenter(presenter: FriendSearchPresenter(friendSearchView: friendSearchController), coordinator: self)
         navigationController.viewControllers.last?.present(friendSearchController, animated: true, completion: nil)
+    }
+    
+    func presentExitController(completion: @escaping () -> ()) {
+        let alertTitle = "Выход из аккаунта"
+        let alertMessage = "Вы действительно хотите выйти ?"
+        guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .logOut) as? ExitAlertController else { return }
+        alertVC.onButtonTapped = completion
+        navigationController.present(alertVC, animated: true)
+    }
+    
+    func presentErrorController(with message: String) {
+        let alertTitle = "Неожиданный сбой"
+        let alertVC = AlertControllerCreator.getController(title: alertTitle, message: message, style: .alert, type: .error)
+        
+        navigationController.present(alertVC, animated: true)
     }
 }
