@@ -7,14 +7,15 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     private(set) lazy var users: [FriendModelProtocol] = presenter.getAllFriends()
     
     // Lazy stored properties
-    private lazy var isSettingsMenuHidden = true
-    private lazy var settingsBackgroundView = AccountViewConfigure.settingsBackgroundView
     private lazy var userImageView = AccountViewConfigure.userImageView
     private lazy var userBackView = AccountViewConfigure.userBackView
     private lazy var userNameLabel = AccountViewConfigure.userNameLabel
     private lazy var toDoInLabel = AccountViewConfigure.toDoInLabel
     private lazy var friendsLabel = AccountViewConfigure.friendsLabel
     private lazy var friendUnderlineView = AccountViewConfigure.friendUnderlineView
+    private lazy var isSettingsMenuHidden = true
+    private lazy var settingsBackgroundView = AccountViewConfigure.settingsBackgroundView
+    private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backViewTapped))
     
     private lazy var searchTextField: UITextField = {
         let textField = AccountViewConfigure.searchTextField
@@ -101,6 +102,8 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
                          exitButton,
                          notificationButton)
         userBackView.addSubviews(userImageView)
+        
+        settingsBackgroundView.addGestureRecognizer(tapRecognizer)
     }
     
     private func setupLayouts() {
@@ -167,22 +170,24 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     }
     
     private func configureViews() {
-        userBackView.makeRound()
-        AccountViewConfigure.getUserBackShadow(userBackView)
-        
-        userImageView.makeRound()
-        AccountViewConfigure.getUserImageViewShadow(userImageView)
-        
-        searchTextField.layer.cornerRadius = 20
-        AccountViewConfigure.getSearchTFShadow(searchTextField)
-        
-        [exitButton, notificationButton].forEach{
-            $0.layer.cornerRadius = 20
-            AccountViewConfigure.getSettingButtonShadow($0)
-            AccountViewConfigure.getSettingButtonGradiend($0)
+        if userBackView.layer.cornerRadius == 0 {
+            userBackView.makeRound()
+            AccountViewConfigure.getUserBackShadow(userBackView)
+            
+            userImageView.makeRound()
+            AccountViewConfigure.getUserImageViewShadow(userImageView)
+            
+            searchTextField.layer.cornerRadius = 20
+            AccountViewConfigure.getSearchTFShadow(searchTextField)
+            
+            [exitButton, notificationButton].forEach{
+                $0.layer.cornerRadius = 20
+                AccountViewConfigure.getSettingButtonShadow($0)
+                AccountViewConfigure.getSettingButtonGradiend($0)
+            }
+            
+            AccountViewConfigure.getSettingsViewBlur(settingsBackgroundView)
         }
-        
-        AccountViewConfigure.getSettingsViewBlur(settingsBackgroundView)
     }
     
     private func setupInsets() {
@@ -233,6 +238,11 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     
     @objc
     private func settingsButtonTapped() {
+        dropDownAnimation()
+    }
+    
+    @objc
+    private func backViewTapped() {
         dropDownAnimation()
     }
     
