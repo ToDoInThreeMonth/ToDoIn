@@ -31,11 +31,15 @@ class GroupsController: UIViewController, GroupsView {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        navigationController?.configureBarButtonItems(screen: .groups, for: self)
+        navigationItem.rightBarButtonItem?.action = #selector(addGroupTapped)
+        navigationItem.rightBarButtonItem?.target = self
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.pin.all().marginTop(view.pin.safeArea.top + 15)
+        
     }
     
     // MARK: Configures
@@ -60,6 +64,10 @@ class GroupsController: UIViewController, GroupsView {
     func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
+    }
+    
+    @objc func addGroupTapped() {
+        presenter?.showAddGroupController()
     }
 }
 

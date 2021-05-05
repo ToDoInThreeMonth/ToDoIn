@@ -32,12 +32,19 @@
 		439CEDEE262088510005091A /* GroupSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439CEDED262088510005091A /* GroupSettingsController.swift */; };
 		43AEF86D262B29EC0063D925 /* GroupsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AEF86C262B29EC0063D925 /* GroupsFlowCoordinator.swift */; };
 		43AEF870262B29F90063D925 /* AccountFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AEF86F262B29F90063D925 /* AccountFlowCoordinator.swift */; };
-		43AEF875262B2BD80063D925 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AEF874262B2BD80063D925 /* AccountController.swift */; };
 		43C4FAA6261733AA0019816F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA5261733AA0019816F /* Group.swift */; };
 		43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupTableViewCell.swift */; };
 		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
 		43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DA628B261881D00057F063 /* SectionHeaderView.swift */; };
 		43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDECE12614DE4B000FFC78 /* GroupsController.swift */; };
+		D43D4912264177D200AB1947 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4911264177D200AB1947 /* FriendModel.swift */; };
+		D43D49152641788400AB1947 /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D49142641788400AB1947 /* FriendsTableViewCell.swift */; };
+		D43D4937264188AB00AB1947 /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4936264188AB00AB1947 /* FriendsTableView.swift */; };
+		D43D493B26418A5A00AB1947 /* AccProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D493A26418A5A00AB1947 /* AccProtocols.swift */; };
+		D43D493E26427F1400AB1947 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D493D26427F1400AB1947 /* ImagePicker.swift */; };
+		D4806CA926408ABD0046B3EB /* UINavigationController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4806CA826408ABD0046B3EB /* UINavigationController + extension.swift */; };
+		D4806CAC26408E0E0046B3EB /* AddGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4806CAB26408E0E0046B3EB /* AddGroupController.swift */; };
+		D4806CAF264090AC0046B3EB /* AddGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4806CAE264090AC0046B3EB /* AddGroupPresenter.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,13 +77,20 @@
 		439CEDED262088510005091A /* GroupSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsController.swift; sourceTree = "<group>"; };
 		43AEF86C262B29EC0063D925 /* GroupsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFlowCoordinator.swift; sourceTree = "<group>"; };
 		43AEF86F262B29F90063D925 /* AccountFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFlowCoordinator.swift; sourceTree = "<group>"; };
-		43AEF874262B2BD80063D925 /* AccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
 		43C4FAA5261733AA0019816F /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		43C4FAA8261737C20019816F /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		43DA628B261881D00057F063 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		43DDECE12614DE4B000FFC78 /* GroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsController.swift; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43D4911264177D200AB1947 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
+		D43D49142641788400AB1947 /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
+		D43D4936264188AB00AB1947 /* FriendsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
+		D43D493A26418A5A00AB1947 /* AccProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccProtocols.swift; sourceTree = "<group>"; };
+		D43D493D26427F1400AB1947 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		D4806CA826408ABD0046B3EB /* UINavigationController + extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UINavigationController + extension.swift"; path = "../../../../../NewClown/ToDoIn/ToDoIn/ToDoIn/Extensions/UINavigationController + extension.swift"; sourceTree = "<group>"; };
+		D4806CAB26408E0E0046B3EB /* AddGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupController.swift; sourceTree = "<group>"; };
+		D4806CAE264090AC0046B3EB /* AddGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupPresenter.swift; sourceTree = "<group>"; };
 		F0B3DC4BF660E53D2E6FE999 /* Pods-ToDoIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.debug.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +167,7 @@
 				4335D63F2629E3E200DA47DA /* GroupPresenter.swift */,
 				4335D6422629E7CE00DA47DA /* TaskPresenter.swift */,
 				43429916262AC22300BD85F5 /* GroupSettingsPresenter.swift */,
+				D4806CAE264090AC0046B3EB /* AddGroupPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -160,6 +175,7 @@
 		43517975261837C7009F898B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D4806CA826408ABD0046B3EB /* UINavigationController + extension.swift */,
 				43228673260E33980096C905 /* UIColor+extenstion.swift */,
 				435179782618390D009F898B /* UIView+extension.swift */,
 				4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */,
@@ -179,7 +195,11 @@
 		43AEF872262B2BA90063D925 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				43AEF874262B2BD80063D925 /* AccountController.swift */,
+				D43D492526417BF900AB1947 /* View */,
+				D43D492026417BD100AB1947 /* Controller */,
+				D43D491E26417BB200AB1947 /* Model */,
+				D43D491A26417B8700AB1947 /* Presenter */,
+				D43D493A26418A5A00AB1947 /* AccProtocols.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -220,6 +240,8 @@
 				43C4FAAB2617555C0019816F /* GroupController.swift */,
 				4354B311261CC2ED0080F577 /* TaskController.swift */,
 				439CEDED262088510005091A /* GroupSettingsController.swift */,
+				D4806CAB26408E0E0046B3EB /* AddGroupController.swift */,
+				D43D493D26427F1400AB1947 /* ImagePicker.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -244,6 +266,37 @@
 				16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D43D491A26417B8700AB1947 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		D43D491E26417BB200AB1947 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D43D4911264177D200AB1947 /* FriendModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D43D492026417BD100AB1947 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D43D492526417BF900AB1947 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D43D49142641788400AB1947 /* FriendsTableViewCell.swift */,
+				D43D4936264188AB00AB1947 /* FriendsTableView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,14 +412,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4806CAF264090AC0046B3EB /* AddGroupPresenter.swift in Sources */,
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */,
+				D43D49152641788400AB1947 /* FriendsTableViewCell.swift in Sources */,
 				4351797F26184DF5009F898B /* GroupsService.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
 				43AEF86D262B29EC0063D925 /* GroupsFlowCoordinator.swift in Sources */,
 				4354B312261CC2ED0080F577 /* TaskController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */,
-				43AEF875262B2BD80063D925 /* AccountController.swift in Sources */,
+				D4806CA926408ABD0046B3EB /* UINavigationController + extension.swift in Sources */,
 				4335D6432629E7CE00DA47DA /* TaskPresenter.swift in Sources */,
 				439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
@@ -378,6 +433,7 @@
 				4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */,
 				43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */,
 				4313B440260BBFA500E6381A /* ViewController.swift in Sources */,
+				D43D493E26427F1400AB1947 /* ImagePicker.swift in Sources */,
 				43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */,
 				439CEDEE262088510005091A /* GroupSettingsController.swift in Sources */,
 				4351798226185190009F898B /* TaskTableViewCell.swift in Sources */,
@@ -385,7 +441,11 @@
 				43AEF870262B29F90063D925 /* AccountFlowCoordinator.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 				434D41FD2637EBB70072494B /* SettingsModel.swift in Sources */,
+				D43D493B26418A5A00AB1947 /* AccProtocols.swift in Sources */,
 				43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */,
+				D43D4937264188AB00AB1947 /* FriendsTableView.swift in Sources */,
+				D4806CAC26408E0E0046B3EB /* AddGroupController.swift in Sources */,
+				D43D4912264177D200AB1947 /* FriendModel.swift in Sources */,
 				43429917262AC22300BD85F5 /* GroupSettingsPresenter.swift in Sources */,
 				4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */,
 			);
@@ -528,14 +588,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H8F967A553;
+				DEVELOPMENT_TEAM = SN4W946MBP;
 				INFOPLIST_FILE = ToDoIn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.philyagubki.technopark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -549,14 +609,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H8F967A553;
+				DEVELOPMENT_TEAM = SN4W946MBP;
 				INFOPLIST_FILE = ToDoIn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.technopark.todoin.ToDoIn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.philyagubki.technopark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
