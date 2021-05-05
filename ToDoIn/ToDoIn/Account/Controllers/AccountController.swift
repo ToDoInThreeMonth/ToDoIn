@@ -27,11 +27,7 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     private lazy var settingsBackgroundView = AccountViewConfigure.settingsBackgroundView
     private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backViewTapped))
     
-    private lazy var searchTextField: UITextField = {
-        let textField = AccountViewConfigure.searchTextField
-        textField.addTarget(self, action: #selector(searchTFDidChanged), for: .editingChanged)
-        return textField
-    }()
+    private lazy var addFriendButton = UIButton()
     
     private lazy var exitButton: UIButton = {
         let button = AccountViewConfigure.exitButton
@@ -79,13 +75,14 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.didLoadView()
-//        presenter?.getFriends()
         
         setBackground()
         hideKeyboardWhenTappedAround()
 
         setupViews()
         setupNavigationItem()
+        
+        addFriendButton.addTarget(self, action: #selector(addFriendButtonTapped), for: .touchUpInside)
     }
     
     override func viewWillLayoutSubviews() {
@@ -108,7 +105,7 @@ class AccountController: UIViewController, FriendsTableViewOutput {
                          userNameLabel,
                          toDoInLabel,
                          friendsLabel,
-                         searchTextField,
+                         addFriendButton,
                          friendUnderlineView,
                          settingsBackgroundView,
                          exitButton,
@@ -145,7 +142,7 @@ class AccountController: UIViewController, FriendsTableViewOutput {
             .hCenter(to: friendsLabel.edge.hCenter)
             .width(friendsLabel.bounds.width + 20)
             .height(3)
-        searchTextField.pin
+        addFriendButton.pin
             .end(40)
             .start(to: friendsLabel.edge.end)
             .marginStart(30)
@@ -189,10 +186,8 @@ class AccountController: UIViewController, FriendsTableViewOutput {
             userImageView.makeRound()
             AccountViewConfigure.getUserImageViewShadow(userImageView)
             
-            searchTextField.layer.cornerRadius = 20
-            AccountViewConfigure.getSearchTFShadow(searchTextField)
             
-            [exitButton, notificationButton].forEach{
+            [exitButton, notificationButton, addFriendButton].forEach{
                 $0.layer.cornerRadius = 20
                 AccountViewConfigure.getSettingButtonShadow($0)
                 AccountViewConfigure.getSettingButtonGradiend($0)
@@ -222,6 +217,12 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     }
     
     // Actions methods
+    
+    @objc
+    private func addFriendButtonTapped() {
+        presenter?.addFriendButtonTapped()
+    }
+    
     @objc
     private func exitButtonTapped() {
         presenter?.showExitAlertController { [weak self] in
@@ -233,19 +234,6 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     private func notificationButtonTapped() {
         let image = presenter?.toggleNotifications()
         notificationButton.setImage(image, for: .normal)
-    }
-    
-    @objc
-    private func searchTFDidChanged() {
-//        guard let text = searchTextField.text else { return }
-        
-//        if text == "" {
-//            users = presenter?.getAllFriends() ?? [User()]
-//        } else {
-//            users = presenter?.getFriends(from: text) ?? [User()]
-//        }
-        
-        friendsTableView.reloadData()
     }
     
     @objc

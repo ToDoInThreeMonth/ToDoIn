@@ -6,6 +6,8 @@ protocol AccountViewPresenter {
     
     func showExitAlertController(completion: @escaping () -> ())
     func showErrorAlertController(with message: String)
+    func addFriendButtonTapped()
+    
     func toggleNotifications() -> UIImage?
     func getFriends(from text: String) -> [User]
     func getAllFriends() -> [User]
@@ -55,6 +57,7 @@ class AccountPresenter: AccountViewPresenter {
     }
     
     func getFriends(for user: User) {
+        friends = []
         for friendId in user.friends {
             groupsManager.getUser(by: friendId) { [weak self] (result) in
                 switch result {
@@ -100,6 +103,10 @@ class AccountPresenter: AccountViewPresenter {
             return friends[index]
         }
         return nil
+    }
+    
+    func addFriendButtonTapped() {
+        coordinator?.showFriendSearch()
     }
     
 }

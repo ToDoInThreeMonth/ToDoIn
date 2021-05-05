@@ -79,6 +79,7 @@ class FriendSearchController: UIViewController {
     @objc
     func addButtonTapped() {
         presenter?.addButtonTapped()
+        dismiss(animated: true, completion: nil)
     }
 }
 
