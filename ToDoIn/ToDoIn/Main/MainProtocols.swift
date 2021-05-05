@@ -12,21 +12,3 @@ protocol MainViewPresenter {
     
     func buttonSignPressed(isSignIn: Bool)
 }
-
-
-// AuthController
-
-protocol AuthView: class {
-    func getEmail() -> String
-    func getName() -> String
-    func getPassword1() -> String
-    func getPassword2() -> String
-    
-    func showError(_ message:String)
-}
-
-protocol AuthViewPresenter {
-    init(authView: AuthView)
-    
-    func buttonSignTapped(isSignIn: Bool) -> Bool
-}

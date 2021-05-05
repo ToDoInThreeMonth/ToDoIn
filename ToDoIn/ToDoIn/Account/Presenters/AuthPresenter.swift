@@ -1,8 +1,18 @@
 import Foundation
 
+protocol AuthViewPresenter {
+    init(authView: AuthView)
+    func setCoordinator(with coordinator: AccountChildCoordinator)
+
+    func buttonSignTapped(isSignIn: Bool) -> Bool
+    func authSucceed()
+}
+
 class AuthPresenter: AuthViewPresenter {
     
     // MARK: - Properties
+    
+    weak var coordinator: AccountChildCoordinator?
     
     private let authManager: AuthManagerDescription = AuthManager.shared
 
@@ -12,6 +22,10 @@ class AuthPresenter: AuthViewPresenter {
     
     required init(authView: AuthView) {
         self.authView = authView
+    }
+    
+    func setCoordinator(with coordinator: AccountChildCoordinator) {
+        self.coordinator = coordinator
     }
     
     // MARK: - Handlers
@@ -35,5 +49,9 @@ class AuthPresenter: AuthViewPresenter {
             }
         }
         return true
+    }
+    
+    func authSucceed() {
+        coordinator?.showAccount()
     }
 }

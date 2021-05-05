@@ -8,7 +8,7 @@ struct Group: Equatable {
     var users: [String]
     var tasks: [Task]
     
-    init(id: String = "", title: String = "", image: String = "", tasks: [Task] = [Task](), users: [String] = [String]()) {
+    init(id: String = "", title: String = "", image: String = "", tasks: [Task] = [], users: [String] = []) {
         self.id = id
         self.title = title
         self.image = image
@@ -25,11 +25,13 @@ struct User: Equatable {
     var id: String
     var name: String
     var image: String
+    var friends: [String]
     
-    init(id: String = "", name: String = "", image: String = "user") {
+    init(id: String = "", name: String = "", image: String = "user", friends: [String] = []) {
         self.id = id
         self.name = name
         self.image = image
+        self.friends = friends
     }
     
     static func == (lhs: User, rhs: User) -> Bool {

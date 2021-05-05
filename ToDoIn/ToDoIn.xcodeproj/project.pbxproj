@@ -42,11 +42,16 @@
 		43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAA8261737C20019816F /* GroupTableViewCell.swift */; };
 		43C4FAAC2617555C0019816F /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4FAAB2617555C0019816F /* GroupController.swift */; };
 		43D6893C264186DA00850CE2 /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D6893B264186DA00850CE2 /* MainProtocols.swift */; };
-		43D689402641877600850CE2 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D6893F2641877600850CE2 /* MainViewPresenter.swift */; };
-		43D689432641878200850CE2 /* AuthViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D689422641878200850CE2 /* AuthViewPresenter.swift */; };
+		43D689402641877600850CE2 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D6893F2641877600850CE2 /* MainPresenter.swift */; };
+		43D689432641878200850CE2 /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D689422641878200850CE2 /* AuthPresenter.swift */; };
 		43D6894626418F0700850CE2 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D6894526418F0700850CE2 /* AuthManager.swift */; };
 		43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DA628B261881D00057F063 /* SectionHeaderView.swift */; };
 		43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDECE12614DE4B000FFC78 /* GroupsController.swift */; };
+		43FD168B2642757E008BA21A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD168A2642757E008BA21A /* LoginController.swift */; };
+		43FD168F264275B8008BA21A /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD168E264275B8008BA21A /* LoginPresenter.swift */; };
+		43FD169526428635008BA21A /* FriendSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD169426428635008BA21A /* FriendSearchController.swift */; };
+		43FD16982642866A008BA21A /* FriendSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16972642866A008BA21A /* FriendSearchPresenter.swift */; };
+		43FD169B26428F64008BA21A /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD169A26428F64008BA21A /* AccountManager.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,11 +94,16 @@
 		43C4FAA8261737C20019816F /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		43C4FAAB2617555C0019816F /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		43D6893B264186DA00850CE2 /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
-		43D6893F2641877600850CE2 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
-		43D689422641878200850CE2 /* AuthViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewPresenter.swift; sourceTree = "<group>"; };
+		43D6893F2641877600850CE2 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		43D689422641878200850CE2 /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		43D6894526418F0700850CE2 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		43DA628B261881D00057F063 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		43DDECE12614DE4B000FFC78 /* GroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsController.swift; sourceTree = "<group>"; };
+		43FD168A2642757E008BA21A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		43FD168E264275B8008BA21A /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		43FD169426428635008BA21A /* FriendSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSearchController.swift; sourceTree = "<group>"; };
+		43FD16972642866A008BA21A /* FriendSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSearchPresenter.swift; sourceTree = "<group>"; };
+		43FD169A26428F64008BA21A /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0B3DC4BF660E53D2E6FE999 /* Pods-ToDoIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.debug.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +209,8 @@
 		4352BF0626419E4A00AACE8C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				43D6894526418F0700850CE2 /* AuthManager.swift */,
+				43FD169A26428F64008BA21A /* AccountManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,6 +219,9 @@
 			isa = PBXGroup;
 			children = (
 				43AEF874262B2BD80063D925 /* AccountController.swift */,
+				43FD168A2642757E008BA21A /* LoginController.swift */,
+				4366F3602641572D00C95BFA /* AuthController.swift */,
+				43FD169426428635008BA21A /* FriendSearchController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -215,6 +230,9 @@
 			isa = PBXGroup;
 			children = (
 				4352BF0E26419EF300AACE8C /* AccountPresenter.swift */,
+				43FD168E264275B8008BA21A /* LoginPresenter.swift */,
+				43D689422641878200850CE2 /* AuthPresenter.swift */,
+				43FD16972642866A008BA21A /* FriendSearchPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -297,7 +315,6 @@
 		43D689382641869A00850CE2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				43D6894526418F0700850CE2 /* AuthManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				4313B43F260BBFA500E6381A /* MainController.swift */,
-				4366F3602641572D00C95BFA /* AuthController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -314,8 +330,7 @@
 		43D6893A264186B500850CE2 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				43D6893F2641877600850CE2 /* MainViewPresenter.swift */,
-				43D689422641878200850CE2 /* AuthViewPresenter.swift */,
+				43D6893F2641877600850CE2 /* MainPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -459,21 +474,26 @@
 				439AE9A5262051D50051BB01 /* CustomTextField.swift in Sources */,
 				4366F35E264121B100C95BFA /* Date+extension.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
-				43D689402641877600850CE2 /* MainViewPresenter.swift in Sources */,
+				43D689402641877600850CE2 /* MainPresenter.swift in Sources */,
 				4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,
+				43FD168B2642757E008BA21A /* LoginController.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
+				43FD168F264275B8008BA21A /* LoginPresenter.swift in Sources */,
 				43C4FAAC2617555C0019816F /* GroupController.swift in Sources */,
 				437C92FE263D50FC008F1B85 /* GroupsManager.swift in Sources */,
 				15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */,
 				4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */,
 				43DA628C261881D00057F063 /* SectionHeaderView.swift in Sources */,
-				43D689432641878200850CE2 /* AuthViewPresenter.swift in Sources */,
+				43FD16982642866A008BA21A /* FriendSearchPresenter.swift in Sources */,
+				43D689432641878200850CE2 /* AuthPresenter.swift in Sources */,
+				43FD169B26428F64008BA21A /* AccountManager.swift in Sources */,
 				4313B440260BBFA500E6381A /* MainController.swift in Sources */,
 				43228671260E08FA0096C905 /* CustomTabBar.swift in Sources */,
 				439CEDEE262088510005091A /* GroupSettingsController.swift in Sources */,
 				4351798226185190009F898B /* TaskTableViewCell.swift in Sources */,
 				4335D6392629DF1100DA47DA /* Protocols.swift in Sources */,
+				43FD169526428635008BA21A /* FriendSearchController.swift in Sources */,
 				43AEF870262B29F90063D925 /* AccountFlowCoordinator.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
 				434D41FD2637EBB70072494B /* SettingsUIComponents.swift in Sources */,

@@ -57,16 +57,6 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func getTasks(for userId: String, from group: Group) -> [Task] {
-        var tasks = [Task]()
-        for task in group.tasks {
-            if userId == task.userId {
-                tasks.append(task)
-            }
-        }
-        return tasks
-    }
-    
     func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void) {
         let docRef = database.collection("users").document(userId)
         docRef.getDocument { (document, error) in
@@ -112,9 +102,19 @@ final class GroupsManager: GroupsManagerDescription {
             }
         }
     }
+    
+    func getTasks(for userId: String, from group: Group) -> [Task] {
+        var tasks = [Task]()
+        for task in group.tasks {
+            if userId == task.userId {
+                tasks.append(task)
+            }
+        }
+        return tasks
+    }
 }
 
-private final class GroupsConverter {
+final class GroupsConverter {
     enum GroupKey: String {
         case id
         case title
@@ -136,6 +136,7 @@ private final class GroupsConverter {
         case id
         case name
         case image
+        case friends
     }
     
     static func group(from document: DocumentSnapshot) -> Group? {
@@ -184,11 +185,21 @@ private final class GroupsConverter {
         guard
             let id = user[UserKey.id.rawValue] as? String,
             let name = user[UserKey.name.rawValue] as? String,
-            let image = user[UserKey.image.rawValue] as? String
+            let image = user[UserKey.image.rawValue] as? String,
+            let friends = user[UserKey.friends.rawValue] as? [String]
         else {
             return User()
         }
-        return User(id: id, name: name, image: image)
+        return User(id: id, name: name, image: image, friends: friends)
+    }
+    
+    static func user(from user: User) -> Dictionary<String, Any> {
+        var res = [String : Any]()
+        res[UserKey.id.rawValue] = user.id
+        res[UserKey.name.rawValue] = user.name
+        res[UserKey.image.rawValue] = user.image
+        res[UserKey.friends.rawValue] = user.friends
+        return res
     }
     
     static func task(from task: Task) -> Dictionary<String, Any> {

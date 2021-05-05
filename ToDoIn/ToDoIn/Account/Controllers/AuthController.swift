@@ -2,6 +2,18 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
+protocol AuthView: class {
+    
+    func setPresenter(presenter: AuthViewPresenter, coordinator: AccountChildCoordinator)
+    
+    func getEmail() -> String
+    func getName() -> String
+    func getPassword1() -> String
+    func getPassword2() -> String
+    
+    func showError(_ message:String)
+}
+
 class AuthController: UIViewController {
     
     // MARK: - Properties
@@ -22,7 +34,6 @@ class AuthController: UIViewController {
     init(isSignIn: Bool) {
         self.isSignIn = isSignIn
         super.init(nibName: nil, bundle: nil)
-        self.presenter = AuthPresenter(authView: self)
     }
     
     required init?(coder: NSCoder) {
@@ -95,6 +106,7 @@ class AuthController: UIViewController {
             res = presenter?.buttonSignTapped(isSignIn: false) ?? false
         }
         if res {
+            presenter?.authSucceed()
             dismiss(animated: true, completion: nil)
         }
     }
@@ -105,6 +117,11 @@ class AuthController: UIViewController {
 }
 
 extension AuthController: AuthView {
+    
+    func setPresenter(presenter: AuthViewPresenter, coordinator: AccountChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
+    }
     func getEmail() -> String {
         emailTextField.text ?? ""
     }
