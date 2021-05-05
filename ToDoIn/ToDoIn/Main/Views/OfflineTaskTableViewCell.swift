@@ -1,8 +1,7 @@
 import UIKit
 
 final class OfflineTaskTableViewCell: TaskTableViewCell {
-    func setUp(with task: OfflineTaskProtocol) {
-        taskLabel.text = task.title
-        
+    func setUp(with task: Task) {
+        taskLabel.text = task.name
     }
 }

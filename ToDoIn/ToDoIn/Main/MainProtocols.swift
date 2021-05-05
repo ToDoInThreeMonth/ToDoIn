@@ -2,12 +2,13 @@ import Foundation
 
 // MainController
 protocol MainViewPresenter {
-    func showAddTaskController()
+    func showAddTaskController(with indexPath: IndexPath?) 
 }
 
 protocol MainTableViewOutput: class {
-    var tasks: [Post] { get }
+    var tasks: [Task] { get }
     func showErrorAlertController(with message: String)
+    func cellDidSelect(with indexPath: IndexPath)
 }
 
 // TaskController

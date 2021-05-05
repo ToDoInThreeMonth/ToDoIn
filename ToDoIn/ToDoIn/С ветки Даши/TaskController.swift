@@ -234,6 +234,9 @@ class TaskController: UIViewController, TaskView {
         dismiss(animated: true, completion: nil)
     }
 
+    func hiddenUserTF() {
+        userTextField.isHidden = true
+    }
 }
 
 

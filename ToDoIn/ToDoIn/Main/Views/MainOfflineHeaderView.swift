@@ -58,11 +58,11 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
     private func setupLayouts() {
         taskButton.pin
             .top(5)
-            .end(20)
+            .end(35)
             .size(CGSize(width: 25, height: 26))
         sectionNameLabel.pin
             .vCenter()
-            .horizontally(20)
+            .horizontally(40)
             .sizeToFit(.width)
         
     }

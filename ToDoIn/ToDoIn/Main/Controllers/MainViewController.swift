@@ -12,10 +12,10 @@ class MainViewController: UIViewController {
     // Private stored properties
     private var presenter: MainViewPresenter?
     
-    private lazy var mainTVDelegate = MainTVDelegate()
+    private lazy var mainTVDelegate = MainTVDelegate(controller: self)
     private lazy var mainTVDataSource = MainTVDataSource(controller: self)
     private lazy var tableView: UITableView = {
-        let tableView = MainTableView(frame: .zero, style: .plain)
+        let tableView = MainTableView(frame: .zero, style: .grouped)
         tableView.delegate = mainTVDelegate
         tableView.dataSource = mainTVDataSource
         tableView.register(OfflineTaskTableViewCell.self, forCellReuseIdentifier: String(describing: OfflineTaskTableViewCell.self))
@@ -59,7 +59,7 @@ class MainViewController: UIViewController {
         authView.pin
             .bottom(view.pin.safeArea.bottom)
             .horizontally(10)
-            .height(300)
+            .height(250)
             .marginBottom(-20)
         tableView.pin
             .top(10)
@@ -77,16 +77,20 @@ class MainViewController: UIViewController {
     
     @objc
     private func addTaskButtonTapped() {
-        presenter?.showAddTaskController()
+        presenter?.showAddTaskController(with: nil)
     }
 }
 
 extension MainViewController: MainTableViewOutput {
-    var tasks: [Post] {
+    var tasks: [Task] {
         return []
     }
     
     func showErrorAlertController(with message: String) {
         
+    }
+    
+    func cellDidSelect(with indexPath: IndexPath) {
+        presenter?.showAddTaskController(with: indexPath)
     }
 }

@@ -2,7 +2,7 @@ import UIKit
 
 protocol MainChildCoordinator: ChildCoordinator {
     func presentAddSectionController()
-    func presentAddTaskController()
+    func presentAddTaskController(with task: Task?)
 }
 
 class MainFlowCoordinator: MainChildCoordinator {
@@ -22,8 +22,15 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func presentAddSectionController() {}
-    func presentAddTaskController() {
-        let controller = UIViewController()
-        navigationController.present(controller, animated: true)
+    
+    func presentAddTaskController(with task: Task?) {
+        if let task = task {
+            let controller = OfflineTaskController(task: task, isChanging: true)
+            navigationController.present(controller, animated: true)
+        } else {
+            let controller = OfflineTaskController(isChanging: false)
+            navigationController.present(controller, animated: true)
+        }
+        
     }
 }

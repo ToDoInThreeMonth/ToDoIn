@@ -46,29 +46,39 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let task = PostService.getPosts(from: indexPath.section)[indexPath.row]
+        let task = OfflineTasks.sections[indexPath.section].tasks[indexPath.row]
         safeCell.setUp(with: task)
         return safeCell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return TaskModel.posts.count
+        return OfflineTasks.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TaskModel.posts[section].count
+        return OfflineTasks.sections[section].tasks.count
     }
-    
-    private func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
-        guard let saveHeaderView = headerView else { return nil }
-        guard let sectionName = TaskModel.posts[section].first?.section else { return nil }
-        saveHeaderView.sectionName = sectionName
-        return saveHeaderView
-    }
+   
 }
 
 //MARK: - Friends TableViewDelegate
 class MainTVDelegate: NSObject, UITableViewDelegate {
+    private weak var controller: MainTableViewOutput?
     
+    init(controller: MainTableViewOutput) {
+        self.controller = controller
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
+        guard let saveHeaderView = headerView else { return nil }
+        let sectionName = OfflineTasks.sections[section].name
+        saveHeaderView.sectionName = sectionName
+        return saveHeaderView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Нажал")
+        controller?.cellDidSelect(with: indexPath)
+    }
 }

@@ -7,7 +7,12 @@ class MainPresenter: MainViewPresenter {
         self.coordinator = coordinator
     }
     
-    func showAddTaskController() {
-        coordinator?.presentAddTaskController()
+    func showAddTaskController(with indexPath: IndexPath?) {
+        if let indexPath = indexPath {
+            let task = OfflineTasks.sections[indexPath.section].tasks[indexPath.row]
+            coordinator?.presentAddTaskController(with: task)
+        } else {
+            coordinator?.presentAddTaskController(with: nil)
+        }
     }
 }

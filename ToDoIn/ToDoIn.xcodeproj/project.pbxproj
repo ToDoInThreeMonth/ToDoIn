@@ -19,12 +19,13 @@
 		15498E742641F4D900EE5A2E /* TaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E732641F4D900EE5A2E /* TaskPresenter.swift */; };
 		15498E772641F51000EE5A2E /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E762641F51000EE5A2E /* GroupsService.swift */; };
 		15498E7A2641F55300EE5A2E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E792641F55300EE5A2E /* CustomTextField.swift */; };
+		15498E832642B08300EE5A2E /* OfflineTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E822642B08300EE5A2E /* OfflineTaskController.swift */; };
+		15498E862642B47C00EE5A2E /* OfflineTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E852642B47C00EE5A2E /* OfflineTasks.swift */; };
 		15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */; };
 		158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A53F32619F0E5003F4F3A /* UIView + extension.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */; };
-		15F3B78F261F0624004C2FB6 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78E261F0624004C2FB6 /* TaskModel.swift */; };
 		15FCA74A2641C60A009F235F /* UINavigationController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA7492641C60A009F235F /* UINavigationController + extension.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
 		4313B440260BBFA500E6381A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* MainViewController.swift */; };
@@ -46,12 +47,13 @@
 		15498E732641F4D900EE5A2E /* TaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresenter.swift; sourceTree = "<group>"; };
 		15498E762641F51000EE5A2E /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
 		15498E792641F55300EE5A2E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		15498E822642B08300EE5A2E /* OfflineTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskController.swift; sourceTree = "<group>"; };
+		15498E852642B47C00EE5A2E /* OfflineTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTasks.swift; sourceTree = "<group>"; };
 		15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
 		158A53F32619F0E5003F4F3A /* UIView + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extensions.swift"; sourceTree = "<group>"; };
-		15F3B78E261F0624004C2FB6 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		15FCA7492641C60A009F235F /* UINavigationController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + extension.swift"; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,9 +82,18 @@
 			isa = PBXGroup;
 			children = (
 				15498E562641C84500EE5A2E /* MainPresenter.swift */,
-				15498E732641F4D900EE5A2E /* TaskPresenter.swift */,
 			);
 			path = Presenters;
+			sourceTree = "<group>";
+		};
+		15498E802642AE7700EE5A2E /* С ветки Даши */ = {
+			isa = PBXGroup;
+			children = (
+				15498E702641F49300EE5A2E /* TaskController.swift */,
+				15498E732641F4D900EE5A2E /* TaskPresenter.swift */,
+				15498E5D2641CA7400EE5A2E /* TaskTableViewCell.swift */,
+			);
+			path = "С ветки Даши";
 			sourceTree = "<group>";
 		};
 		15B4E1E2260C8CEB00599AF4 /* Coordinators */ = {
@@ -97,8 +108,8 @@
 		15D099512619ECD1006E17F7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				15498E702641F49300EE5A2E /* TaskController.swift */,
 				4313B43F260BBFA500E6381A /* MainViewController.swift */,
+				15498E822642B08300EE5A2E /* OfflineTaskController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -118,8 +129,9 @@
 		15D099532619ECE4006E17F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				15F3B78E261F0624004C2FB6 /* TaskModel.swift */,
 				15498E762641F51000EE5A2E /* GroupsService.swift */,
+				15498E642641CCFC00EE5A2E /* Group.swift */,
+				15498E852642B47C00EE5A2E /* OfflineTasks.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -176,6 +188,7 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				15498E802642AE7700EE5A2E /* С ветки Даши */,
 				15FCA7482641C5D0009F235F /* Main */,
 				15F3B789261F05BA004C2FB6 /* Extensions */,
 				15B4E1E2260C8CEB00599AF4 /* Coordinators */,
@@ -183,8 +196,6 @@
 				4313B444260BBFA800E6381A /* Assets.xcassets */,
 				4313B446260BBFA800E6381A /* LaunchScreen.storyboard */,
 				4313B449260BBFA800E6381A /* Info.plist */,
-				15498E5D2641CA7400EE5A2E /* TaskTableViewCell.swift */,
-				15498E642641CCFC00EE5A2E /* Group.swift */,
 			);
 			path = ToDoIn;
 			sourceTree = "<group>";
@@ -313,6 +324,7 @@
 			files = (
 				15498E5A2641C9C100EE5A2E /* MainTableView.swift in Sources */,
 				15498E5E2641CA7400EE5A2E /* TaskTableViewCell.swift in Sources */,
+				15498E862642B47C00EE5A2E /* OfflineTasks.swift in Sources */,
 				15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */,
 				15498E652641CCFC00EE5A2E /* Group.swift in Sources */,
 				15498E712641F49300EE5A2E /* TaskController.swift in Sources */,
@@ -320,8 +332,8 @@
 				15498E742641F4D900EE5A2E /* TaskPresenter.swift in Sources */,
 				15498E542641C81600EE5A2E /* MainProtocols.swift in Sources */,
 				15498E6A2641D61100EE5A2E /* AuthView.swift in Sources */,
-				15F3B78F261F0624004C2FB6 /* TaskModel.swift in Sources */,
 				15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */,
+				15498E832642B08300EE5A2E /* OfflineTaskController.swift in Sources */,
 				15498E772641F51000EE5A2E /* GroupsService.swift in Sources */,
 				15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */,
 				15498E572641C84500EE5A2E /* MainPresenter.swift in Sources */,
