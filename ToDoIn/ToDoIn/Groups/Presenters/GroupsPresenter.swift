@@ -52,6 +52,8 @@ class GroupsPresenter: GroupsViewPresenter {
                 self?.groups = groups.map { $0 }
                 self?.groupsView?.reloadView()
             case .failure(let error):
+                self?.groups.removeAll()
+                self?.groupsView?.reloadView()
                 print(error.localizedDescription)
             }
         }

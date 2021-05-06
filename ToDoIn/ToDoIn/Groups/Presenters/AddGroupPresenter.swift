@@ -6,7 +6,7 @@ protocol AddGroupViewPresenter {
     func getAllFriends() -> [User]
     func getFriend(by index: Int) -> User?
     
-    func addButtonTapped()
+    func addButtonTapped(title: String, selectedUsers: [IndexPath])
 }
 
 class AddGroupPresenter: AddGroupViewPresenter {
@@ -16,6 +16,7 @@ class AddGroupPresenter: AddGroupViewPresenter {
     private let addGroupView: FriendsTableViewOutput?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
+    private let authManager: AuthManagerDescription = AuthManager.shared
     
     private var user = User()
     private var friends = [User]()
@@ -67,7 +68,18 @@ class AddGroupPresenter: AddGroupViewPresenter {
         return nil
     }
     
-    func addButtonTapped() {
-        print(#function)
+    func addButtonTapped(title: String, selectedUsers: [IndexPath]) {
+        guard let currentUserId = authManager.getCurrentUserId() else {
+            return
+        }
+        var usersId = [currentUserId]
+        for ind in selectedUsers {
+            guard let userId = self.getFriend(by: ind.row)?.id else {
+                continue
+            }
+            usersId.append(userId)
+        }
+        print(usersId)
+        groupsManager.addGroup(title: title, users: usersId)
     }
 }

@@ -123,47 +123,48 @@ class AccountController: UIViewController, FriendsTableViewOutput {
             .topCenter(view.pin.safeArea.top)
             .margin(30)
             .size(CGSize(width: 150, height: 150))
+        
         userImageView.pin
             .all().margin(20)
+        
         userNameLabel.pin
             .top(to: userBackView.edge.bottom)
             .hCenter()
             .marginTop(20)
-            .size(CGSize(width: 300, height: 25))
+            .size(CGSize(width: 300, height: 24))
+        
         toDoInLabel.pin
             .top(to: userNameLabel.edge.bottom)
             .hCenter()
-            .size(CGSize(width: 300, height: 25))
+            .size(CGSize(width: 300, height: 24))
+        
         friendsLabel.pin
             .top(to: toDoInLabel.edge.bottom)
             .start(40)
             .sizeToFit()
             .marginTop(35)
+        
         friendUnderlineView.pin
             .top(to:  friendsLabel.edge.bottom)
             .marginTop(3)
             .hCenter(to: friendsLabel.edge.hCenter)
             .width(friendsLabel.bounds.width + 20)
             .height(3)
-        addFriendButton.pin
-            .end(40)
-            .start(to: friendsLabel.edge.end)
-            .marginStart(30)
-            .bottom(to: friendUnderlineView.edge.bottom)
-            .top(to: friendsLabel.edge.top)
-            .marginTop(-5)
+        
         notificationButton.pin
             .top(view.pin.safeArea.top)
             .end(12)
             .width(view.bounds.width / 2)
             .height(40)
             .marginTop(12)
+        
         exitButton.pin
             .top(to: notificationButton.edge.bottom)
             .end(12)
             .width(view.bounds.width / 2)
             .height(40)
             .marginTop(12)
+        
         friendsTableView.pin
             .top(to: friendUnderlineView.edge.bottom)
             .start(20)
@@ -171,6 +172,15 @@ class AccountController: UIViewController, FriendsTableViewOutput {
             .bottom(view.pin.safeArea.bottom)
             .marginEnd(10)
             .marginTop(20)
+        
+        addFriendButton.pin
+            .end(40)
+            .start(to: friendsLabel.edge.end)
+            .marginStart(30)
+            .bottom(to: friendUnderlineView.edge.bottom)
+            .top(to: friendsLabel.edge.top)
+            .marginTop(-5)
+        
         settingsBackgroundView.pin
             .all()
     }

@@ -56,9 +56,9 @@ struct AccountViewConfigure {
         let button = UIButton(type: .system)
         button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
         button.setTitle("Добавить друга", for: .normal)
+        button.setTitleColor(.darkTextColor, for: .normal)
         button.backgroundColor = .accentColor
         button.tintColor = .darkTextColor
-        button.alpha = 0
         return button
     }()
     

@@ -2,6 +2,8 @@ import UIKit
 
 protocol AddGroupView {
     func setPresenter(presenter: AddGroupViewPresenter)
+    
+    func transitionToMain()
 }
 
 class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -163,7 +165,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     
     @objc
     func imageViewTapped() {
-        ImagePickerManager().pickImage(self){ image in
+        ImagePickerManager().pickImage(self) { image in
             self.imageView.image = image
             SettingsUIComponents.getImageViewShadow(self.imageView)
             self.imageView.contentMode = .scaleAspectFill
@@ -172,8 +174,14 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     
     @objc
     func addButtonTapped() {
-        print(#function)
-        presenter?.addButtonTapped()
+        let selectedIndexes = friendsTableView.indexPathsForSelectedRows
+        if let groupName = nameTextField.text, !groupName.isEmpty {
+            presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [])
+            transitionToMain()
+        }
+    }
+    
+    func transitionToMain() {
         dismiss(animated: true, completion: nil)
     }
 }

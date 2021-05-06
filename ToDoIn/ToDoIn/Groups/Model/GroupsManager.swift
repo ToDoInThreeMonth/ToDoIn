@@ -4,6 +4,7 @@ import FirebaseAuth
 
 enum NetworkError: Error {
     case unexpected
+    case noSignedUser
 }
 
 protocol GroupsManagerDescription {
@@ -11,6 +12,8 @@ protocol GroupsManagerDescription {
     func observeGroup(by userId: String, completion: @escaping (Result<Group, Error>) -> Void)
     func observeUser(completion: @escaping (Result<User, Error>) -> Void)
     func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void)
+    
+    func addGroup(title: String, users: [String])
 
     func getTasks(for userId: String, from group: Group) -> [Task]
     func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void)
@@ -30,6 +33,10 @@ final class GroupsManager: GroupsManagerDescription {
     private init() {}
     
     func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            completion(.failure(NetworkError.noSignedUser))
+            return
+        }
         database.collection("groups").addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
@@ -40,8 +47,13 @@ final class GroupsManager: GroupsManagerDescription {
                 completion(.failure(NetworkError.unexpected))
                 return
             }
-            
-            let groups = documents.compactMap { GroupsConverter.group(from: $0) }
+            var groups = [Group]()
+            for document in documents {
+                guard let group = GroupsConverter.group(from: document) else { continue }
+                if group.users.contains(currentUserId) {
+                    groups.append(group)
+                }
+            }
             completion(.success(groups))
         }
     }
@@ -133,6 +145,21 @@ final class GroupsManager: GroupsManagerDescription {
         completion(.success(res))
     }
     
+    
+    func addGroup(title: String, users: [String]) {
+        let ref = database.collection("groups").document()
+        let docId = ref.documentID
+        ref.setData(["id" : docId,
+                    "title" : title,
+                    "image" : "group",
+                    "tasks" : [],
+                    "users" : users]) { (error) in
+            if error != nil {
+                // Show error message
+                print("Error saving user data")
+            }
+        }
+    }
     
     
     func addFriend(friend: User) {

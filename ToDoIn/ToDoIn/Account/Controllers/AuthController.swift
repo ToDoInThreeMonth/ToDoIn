@@ -160,15 +160,10 @@ class AuthController: UIViewController {
 
     @objc
     func buttonSignTapped() {
-        var res = false
         if isSignIn {
-            res = presenter?.buttonSignTapped(isSignIn: true) ?? false
+            presenter?.buttonSignTapped(isSignIn: true)
         } else {
-            res = presenter?.buttonSignTapped(isSignIn: false) ?? false
-        }
-        if res {
-//            presenter?.authSucceed()
-//            dismiss(animated: true, completion: nil)
+            presenter?.buttonSignTapped(isSignIn: false)
         }
     }
     

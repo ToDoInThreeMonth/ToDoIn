@@ -7,7 +7,9 @@ protocol AuthManagerDescription {
     func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String?
     func signOut()
     func isSignedIn() -> Bool
+    
     func getCurrentUser() -> User
+    func getCurrentUserId() -> String?
 }
 
 final class AuthManager: AuthManagerDescription {
@@ -111,6 +113,9 @@ final class AuthManager: AuthManagerDescription {
         return true
     }
     
+    func getCurrentUserId() -> String? {
+        Auth.auth().currentUser?.uid
+    }
     
     // Check the fields and validate that the data is correct. If everything is correct, this method returns nil. Otherwise, it returns the error message
     func validateInput(email: String, name: String = "", password1: String, password2: String = "", isSignIn: Bool) -> String? {

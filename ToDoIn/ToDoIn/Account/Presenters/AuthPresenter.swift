@@ -4,7 +4,7 @@ protocol AuthViewPresenter {
     init(authView: AuthView)
     func setCoordinator(with coordinator: AccountChildCoordinator)
 
-    func buttonSignTapped(isSignIn: Bool) -> Bool
+    func buttonSignTapped(isSignIn: Bool)
     func authSucceed()
 }
 
@@ -30,7 +30,7 @@ class AuthPresenter: AuthViewPresenter {
     
     // MARK: - Handlers
     
-    func buttonSignTapped(isSignIn: Bool) -> Bool {
+    func buttonSignTapped(isSignIn: Bool) {
         let email = authView?.getEmail() ?? ""
         let name = authView?.getName() ?? ""
         let password1 = authView?.getPassword1() ?? ""
@@ -47,16 +47,15 @@ class AuthPresenter: AuthViewPresenter {
             }
             if res != nil {
                 authView?.showError(res!)
-                return false
+                return
             }
         } else {
             let res = authManager.signUp(email: email, name: name, password1: password1, password2: password2) 
             if res != nil {
                 authView?.showError(res!)
-                return false
+                return
             }
         }
-        return true
     }
     
     func authSucceed() {
