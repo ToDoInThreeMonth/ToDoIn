@@ -23,19 +23,26 @@ class AccountFlowCoordinator: AccountChildCoordinator {
     }
     
     func start() {
-        let viewController = LoginController()
-        viewController.setPresenter(presenter: LoginPresenter(loginView: viewController.self), coordinator: self)
-        
-        let tabBarImage = UIImage(named: imageName)
-        
-        // Пример настройки tabBar'a
-        viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
-        
-        // Пример настройки viewController
-        viewController.view.backgroundColor = .white
-        viewController.title = title
-        
-        navigationController.pushViewController(viewController, animated: false)
+        let isSignedIn = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
+        print(isSignedIn)
+        if isSignedIn {
+            showAccount()
+        } else {
+            showLogin()
+        }
+//        let viewController = LoginController()
+//        viewController.setPresenter(presenter: LoginPresenter(loginView: viewController.self), coordinator: self)
+//
+//        let tabBarImage = UIImage(named: imageName)
+//
+//        // Пример настройки tabBar'a
+//        viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
+//
+//        // Пример настройки viewController
+//        viewController.view.backgroundColor = .white
+//        viewController.title = title
+//
+//        navigationController.pushViewController(viewController, animated: false)
     }
     
     func showAuthController(isSignIn: Bool) {

@@ -3,7 +3,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol AuthManagerDescription {
-    func signUp(email: String, name: String, password1: String, password2: String) -> String?
+    func signUp(email: String, name: String, password1: String, password2: String, completion: @escaping (Result<String, Error>) -> Void) -> String?
     func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String?
     func signOut()
     func isSignedIn() -> Bool
@@ -37,12 +37,10 @@ final class AuthManager: AuthManagerDescription {
         return user
     }
     
-    func signUp(email: String, name: String, password1: String, password2: String) -> String? {
-        // Validate the fields
+    func signUp(email: String, name: String, password1: String, password2: String, completion: @escaping (Result<String, Error>) -> Void) -> String? {
         let error = validateInput(email: email, name: name, password1: password1, password2: password2, isSignIn: false)
         
         if error != nil {
-            // There's something wrong with the fields, show error message
             return error
         } else {
             // Create cleaned versions of the data
@@ -60,10 +58,20 @@ final class AuthManager: AuthManagerDescription {
                     res = "Error creating user"
                 } else {
                     // User was created successfully, now store the first name and last name
-                    self.database.collection("users").document(result!.user.uid).setData(["email" : email, "name" : name, "image" : "user", "id" : result!.user.uid ]) { (error) in
+                    self.database
+                        .collection("users")
+                        .document(result!.user.uid)
+                        .setData(["email" : email,
+                                  "name" : name,
+                                  "image" : "user",
+                                  "id" : result!.user.uid,
+                                  "friends" : []]) { (error) in
                         if error != nil {
                             // Show error message
                             res = "Error saving user data"
+                        } else {
+                            UserDefaults.standard.set(true, forKey: "status")
+                            completion(.success(Auth.auth().currentUser?.uid ?? "nil"))
                         }
                     }
                 }
@@ -73,11 +81,9 @@ final class AuthManager: AuthManagerDescription {
     }
     
     func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String? {
-        // Validate Text Fields
         let error = validateInput(email: email, password1: password, isSignIn: true)
         
         if error != nil {
-            // There's something wrong with the fields, show error message
             return error
         } else {
             // Create cleaned versions of the text field
@@ -90,6 +96,7 @@ final class AuthManager: AuthManagerDescription {
                 if error != nil {
                     res = error?.localizedDescription
                 } else {
+                    UserDefaults.standard.set(true, forKey: "status")
                     completion(.success(Auth.auth().currentUser?.uid ?? "nil"))
                 }
             }
@@ -101,6 +108,7 @@ final class AuthManager: AuthManagerDescription {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            UserDefaults.standard.set(false, forKey: "status")
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
@@ -117,7 +125,7 @@ final class AuthManager: AuthManagerDescription {
         Auth.auth().currentUser?.uid
     }
     
-    // Check the fields and validate that the data is correct. If everything is correct, this method returns nil. Otherwise, it returns the error message
+    /// Check the fields and validate that the data is correct. If everything is correct, this method returns nil. Otherwise, it returns the error message
     func validateInput(email: String, name: String = "", password1: String, password2: String = "", isSignIn: Bool) -> String? {
         
         // Check that all fields are filled in
@@ -143,4 +151,5 @@ final class AuthManager: AuthManagerDescription {
         }
         return nil
     }
+    
 }

@@ -50,7 +50,15 @@ class AuthPresenter: AuthViewPresenter {
                 return
             }
         } else {
-            let res = authManager.signUp(email: email, name: name, password1: password1, password2: password2) 
+            let res = authManager.signUp(email: email, name: name, password1: password1, password2: password2) { [weak self] (result) in
+                switch result {
+                case .success(let userId):
+                    print(userId)
+                    self?.authSucceed()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
             if res != nil {
                 authView?.showError(res!)
                 return
