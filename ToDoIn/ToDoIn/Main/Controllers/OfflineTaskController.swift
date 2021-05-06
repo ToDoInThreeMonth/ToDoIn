@@ -1,8 +1,9 @@
 import UIKit
 
 class OfflineTaskController: TaskController {
-    init(task: Task = Task(),isChanging: Bool = false) {
-        super.init(group: Group(), task: task, isChanging: isChanging)
+    init(task: OfflineTask = OfflineTask(),isChanging: Bool = false) {
+        let onlineTask = Task(user: User(), name: task.title, description: task.descriptionText, date: task.date)
+        super.init(group: Group(), task: onlineTask, isChanging: isChanging)
         hiddenUserTF()
     }
     

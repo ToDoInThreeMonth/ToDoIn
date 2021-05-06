@@ -9,7 +9,7 @@ class MainPresenter: MainViewPresenter {
     
     func showAddTaskController(with indexPath: IndexPath?) {
         if let indexPath = indexPath {
-            let task = OfflineTasks.sections[indexPath.section].tasks[indexPath.row]
+            let task = getTask(from: indexPath)
             coordinator?.presentAddTaskController(with: task)
         } else {
             coordinator?.presentAddTaskController(with: nil)
