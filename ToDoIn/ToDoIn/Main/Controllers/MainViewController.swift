@@ -157,6 +157,11 @@ extension MainViewController: AuthViewOutput {
         hiddenAuthView()
         changeSizeTableView()
     }
-    
-    
+}
+
+extension MainViewController: SectionAlertDelegate {
+    func addNewSection(with text: String) {
+        presenter?.addNewSection(with: text)
+        updateUI()
+    }
 }

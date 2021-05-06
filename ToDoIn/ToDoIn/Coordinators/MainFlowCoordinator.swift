@@ -35,7 +35,8 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func showAddSectionController() {
-        let alertController = AlertControllerCreator.getController(title: "Добавление новой секции", message: "Введите название", style: .alert, type: .section)
+        guard let controller = navigationController.viewControllers.last as? MainViewController else { return }
+        let alertController = AlertControllerCreator.getController(title: "Добавление новой секции", message: "Введите название", style: .alert, type: .section, delegate: controller)
         navigationController.present(alertController, animated: true)
     }
 }

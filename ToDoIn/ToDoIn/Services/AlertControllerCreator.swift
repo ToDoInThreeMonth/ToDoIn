@@ -10,7 +10,7 @@ struct AlertControllerCreator {
     }
     
     // Static functions
-    static func getController (title: String?, message: String?, style: UIAlertController.Style, type: TypeAlert) -> UIAlertController {
+    static func getController (title: String?, message: String?, style: UIAlertController.Style, type: TypeAlert, delegate: SectionAlertDelegate? = nil) -> UIAlertController {
         switch type {
         case .logOut:
             let alertController = ExitAlertController(title: title, message: message, preferredStyle: style)
@@ -20,6 +20,7 @@ struct AlertControllerCreator {
             return alertController
         case .section:
             let alertController = SectionAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.delegate = delegate
             return alertController
         }
     }
@@ -66,6 +67,8 @@ class ErrorAlertController: UIAlertController {
 }
 
 class SectionAlertController: UIAlertController {
+    weak var delegate: SectionAlertDelegate?
+    
     // ViewController lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +79,8 @@ class SectionAlertController: UIAlertController {
     // UI configure methods
     private func setupButton() {
         let addButton = UIAlertAction(title: "Добавить", style: .cancel) { [unowned self] _ in
-
+            guard let text = self.textFields?[0].text else { return }
+            self.delegate?.addNewSection(with: text)
         }
         let closeButton = UIAlertAction(title: "Отменить", style: .default) { [unowned self] _ in
 

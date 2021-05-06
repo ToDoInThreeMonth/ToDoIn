@@ -43,4 +43,10 @@ class MainPresenter: MainViewPresenter {
     func updateBase() {
         RealmBase.downloadSections()
     }
+    
+    func addNewSection(with text: String) {
+        let section = OfflineSection()
+        section.name = text
+        RealmBase.addSection(section)
+    }
 }

@@ -4,6 +4,7 @@ import Foundation
 protocol MainViewPresenter {
     func showAddTaskController(with indexPath: IndexPath?)
     func showAddSectionController()
+    func addNewSection(with text: String)
     func taskComplete(with indexPath: IndexPath)
     func getAllSections() -> [OfflineSection]
     func getNumberOfSections() -> Int
@@ -25,6 +26,10 @@ protocol MainTableViewOutput: class {
 
 protocol AuthViewOutput: class {
     func authButtonTapped()
+}
+
+protocol SectionAlertDelegate: class {
+    func addNewSection(with text: String)
 }
 
 // TaskController
