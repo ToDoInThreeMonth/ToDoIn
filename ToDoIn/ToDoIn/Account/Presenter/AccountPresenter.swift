@@ -1,6 +1,7 @@
 import UIKit
 
 class AccountPresenter: AccountViewPresenter {
+    
     // Stored properties
     private weak var coordinator: AccountChildCoordinator?
     private var isNotificationTurnedOn = false
@@ -36,4 +37,7 @@ class AccountPresenter: AccountViewPresenter {
         return FriendBase.friends
     }
     
+    func addNewFriend(_ mail: String) {
+        FriendBase.addNewFriend(mail)
+    }
 }

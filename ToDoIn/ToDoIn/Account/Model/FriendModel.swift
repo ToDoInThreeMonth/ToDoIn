@@ -12,7 +12,7 @@ private struct Friend: FriendModelProtocol {
 
 // Singleton database
 struct FriendBase {
-    static let friends: [FriendModelProtocol] = [
+    static var friends: [FriendModelProtocol] = [
         Friend(image: UIImage(named: "nlo"), name: "Kamnev Vladimir"),
         Friend(image: UIImage(named: "nlo"), name: "Gurin Philipp"),
         Friend(image: UIImage(named: "nlo"), name: "Tatarinova Darya"),
@@ -32,4 +32,9 @@ struct FriendBase {
     ]
     
     private init() {}
+    
+    static func addNewFriend(_ mail: String) {
+        let friend = Friend(image: UIImage(named: "nlo"), name: mail)
+        friends.append(friend)
+    }
 }
