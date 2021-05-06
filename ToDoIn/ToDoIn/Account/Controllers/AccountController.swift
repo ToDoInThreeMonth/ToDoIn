@@ -27,7 +27,7 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     private lazy var settingsBackgroundView = AccountViewConfigure.settingsBackgroundView
     private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backViewTapped))
     
-    private lazy var addFriendButton = UIButton()
+    private lazy var addFriendButton = AccountViewConfigure.addFriendButton
     
     private lazy var exitButton: UIButton = {
         let button = AccountViewConfigure.exitButton
@@ -126,11 +126,11 @@ class AccountController: UIViewController, FriendsTableViewOutput {
             .top(to: userBackView.edge.bottom)
             .hCenter()
             .marginTop(20)
-            .sizeToFit()
+            .size(CGSize(width: 300, height: 25))
         toDoInLabel.pin
             .top(to: userNameLabel.edge.bottom)
             .hCenter()
-            .sizeToFit()
+            .size(CGSize(width: 300, height: 25))
         friendsLabel.pin
             .top(to: toDoInLabel.edge.bottom)
             .start(40)
@@ -227,6 +227,7 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     private func exitButtonTapped() {
         presenter?.showExitAlertController { [weak self] in
             self?.dropDownAnimation()
+            self?.presenter?.exitButtonTapped()
         }
     }
     

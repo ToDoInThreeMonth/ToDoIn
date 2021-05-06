@@ -36,13 +36,21 @@ class AuthPresenter: AuthViewPresenter {
         let password1 = authView?.getPassword1() ?? ""
         let password2 = authView?.getPassword2() ?? ""
         if isSignIn {
-            let res = authManager.signIn(email: email, password: password1)
+            let res = authManager.signIn(email: email, password: password1) { [weak self] (result) in
+                switch result {
+                case .success(let userId):
+                    print(userId)
+                    self?.authSucceed()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
             if res != nil {
                 authView?.showError(res!)
                 return false
             }
         } else {
-            let res = authManager.signUp(email: email, name: name, password1: password1, password2: password2)
+            let res = authManager.signUp(email: email, name: name, password1: password1, password2: password2) 
             if res != nil {
                 authView?.showError(res!)
                 return false
@@ -52,6 +60,7 @@ class AuthPresenter: AuthViewPresenter {
     }
     
     func authSucceed() {
+        authView?.transitionToMain()
         coordinator?.showAccount()
     }
 }

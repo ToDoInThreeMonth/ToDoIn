@@ -12,6 +12,7 @@ protocol AuthView: class {
     func getPassword2() -> String
     
     func showError(_ message:String)
+    func transitionToMain()
 }
 
 class AuthController: UIViewController {
@@ -22,10 +23,20 @@ class AuthController: UIViewController {
     
     private var isSignIn: Bool
     
-    private var emailTextField = UITextField()
-    private var nameTextField = UITextField()
-    private var passwordTextField1 = UITextField()
-    private var passwordTextField2 = UITextField()
+    struct LayersConstants {
+        static let margin: CGFloat = 25
+        static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        static let cornerRadius: CGFloat = 15
+        static let buttonHeight: CGFloat = 40
+        static let buttonCornerRadius: CGFloat = 15
+        static let horizontalPadding: CGFloat = 40
+        static let textFieldHeight: CGFloat = 35
+    }
+    
+    private var emailTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private var nameTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private var passwordTextField1 = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private var passwordTextField2 = CustomTextField(insets: LayersConstants.textFieldInsets)
     private var errorLabel = UILabel()
     private var button = UIButton()
     
@@ -48,21 +59,9 @@ class AuthController: UIViewController {
         setBackground()
         hideKeyboardWhenTappedAround()
         
-        [emailTextField, nameTextField, passwordTextField1, passwordTextField2, button].forEach {
-            $0.backgroundColor = .gray
-        }
-        
-        emailTextField.placeholder = "Почта"
-        nameTextField.placeholder = "Имя"
-        passwordTextField1.placeholder = "Пароль"
-        passwordTextField1.isSecureTextEntry = true
-        passwordTextField2.placeholder = "Повторите пароль"
-        passwordTextField2.isSecureTextEntry = true
-        
-        errorLabel.alpha = 0
-
-        button.setTitle(isSignIn ? "Войти" : "Зарегистрироваться", for: .normal)
-        button.addTarget(self, action: #selector(buttonSignTapped), for: .touchUpInside)
+        configureTextFields()
+        configureAddButton()
+        configureErrorLabel()
         
         self.view.addSubviews(emailTextField, nameTextField, passwordTextField1, passwordTextField2, button, errorLabel)
 
@@ -70,28 +69,90 @@ class AuthController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        configureLayouts()
+        configureShadowsAndCornerRadius()
+    }
+    
+    func configureLayouts() {
+        
         emailTextField.pin
             .top(20)
-            .size(CGSize(width: 200, height: 30))
+            .horizontally(LayersConstants.horizontalPadding)
+            .height(LayersConstants.textFieldHeight)
+
         if !isSignIn {
             nameTextField.pin
-                .below(of: emailTextField, aligned: .center)
-                .size(CGSize(width: 200, height: 30))
+                .below(of: emailTextField)
+                .marginTop(LayersConstants.margin)
+                .horizontally(LayersConstants.horizontalPadding)
+                .height(LayersConstants.textFieldHeight)
         }
+        
         passwordTextField1.pin
-            .below(of: isSignIn ? emailTextField : nameTextField, aligned: .center)
-            .size(CGSize(width: 200, height: 30))
+            .below(of: isSignIn ? emailTextField : nameTextField)
+            .marginTop(LayersConstants.margin)
+            .horizontally(LayersConstants.horizontalPadding)
+            .height(LayersConstants.textFieldHeight)
+        
         if !isSignIn {
             passwordTextField2.pin
-                .below(of: passwordTextField1, aligned: .center)
-                .size(CGSize(width: 200, height: 30))
+                .below(of: passwordTextField1)
+                .marginTop(LayersConstants.margin)
+                .horizontally(LayersConstants.horizontalPadding)
+                .height(LayersConstants.textFieldHeight)
         }
+        
         button.pin
-            .bottom(20).hCenter()
-            .size(CGSize(width: 200, height: 30))
+            .bottom(20)
+            .horizontally(LayersConstants.horizontalPadding)
+            .height(LayersConstants.textFieldHeight)
+        
         errorLabel.pin
-            .above(of: button, aligned: .center)
-            .size(CGSize(width: 200, height: 30))
+            .above(of: button)
+            .marginBottom(LayersConstants.margin)
+            .horizontally(LayersConstants.horizontalPadding)
+            .height(LayersConstants.textFieldHeight)
+    }
+    
+    
+    func configureErrorLabel() {
+        errorLabel.alpha = 0
+        errorLabel.textAlignment = .center
+    }
+    
+    func configureTextFields() {
+        emailTextField.placeholder = "Почта"
+        nameTextField.placeholder = "Имя"
+        passwordTextField1.placeholder = "Пароль"
+        passwordTextField1.isSecureTextEntry = true
+        passwordTextField2.placeholder = "Повторите пароль"
+        passwordTextField2.isSecureTextEntry = true
+        [emailTextField, nameTextField, passwordTextField1, passwordTextField2].forEach {
+            $0.textColor = .darkTextColor
+            $0.backgroundColor = .white
+        }
+    }
+    
+    func configureAddButton() {
+        button.setTitle(isSignIn ? "Войти" : "Зарегистрироваться", for: .normal)
+        button.addTarget(self, action: #selector(buttonSignTapped), for: .touchUpInside)
+        
+        button.setTitleColor(.darkTextColor, for: .normal)
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
+        gradientLayer.cornerRadius = LayersConstants.buttonCornerRadius
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
+        button.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func configureShadowsAndCornerRadius() {
+        if nameTextField.layer.cornerRadius == 0 {
+            [emailTextField, nameTextField, passwordTextField1, passwordTextField2, button].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
+            [emailTextField, nameTextField, passwordTextField1, passwordTextField2, button].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+            [emailTextField, nameTextField, passwordTextField1, passwordTextField2, button].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+        }
     }
     
     
@@ -106,8 +167,8 @@ class AuthController: UIViewController {
             res = presenter?.buttonSignTapped(isSignIn: false) ?? false
         }
         if res {
-            presenter?.authSucceed()
-            dismiss(animated: true, completion: nil)
+//            presenter?.authSucceed()
+//            dismiss(animated: true, completion: nil)
         }
     }
     

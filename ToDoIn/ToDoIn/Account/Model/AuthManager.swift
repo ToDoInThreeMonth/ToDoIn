@@ -4,7 +4,8 @@ import FirebaseAuth
 
 protocol AuthManagerDescription {
     func signUp(email: String, name: String, password1: String, password2: String) -> String?
-    func signIn(email: String, password: String) -> String?
+    func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String?
+    func signOut()
     func getCurrentUser() -> User
 }
 
@@ -68,7 +69,7 @@ final class AuthManager: AuthManagerDescription {
         }
     }
     
-    func signIn(email: String, password: String) -> String? {
+    func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String? {
         // Validate Text Fields
         let error = validateInput(email: email, password1: password, isSignIn: true)
         
@@ -85,9 +86,20 @@ final class AuthManager: AuthManagerDescription {
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
                     res = error?.localizedDescription
+                } else {
+                    completion(.success(Auth.auth().currentUser?.uid ?? "nil"))
                 }
             }
             return res
+        }
+    }
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
     

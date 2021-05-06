@@ -16,6 +16,10 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setBackground()
+        
+        navigationController?.configureBarButtonItems(screen: .account, for: self)
+        
         buttonSignIn.backgroundColor = .gray
         buttonSignUp.backgroundColor = .gray
         

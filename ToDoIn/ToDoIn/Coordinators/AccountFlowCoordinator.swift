@@ -3,6 +3,7 @@ import UIKit
 protocol AccountChildCoordinator: ChildCoordinator {
     func showAuthController(isSignIn: Bool)
     func showAccount()
+    func showLogin()
     func showFriendSearch()
     
     func presentExitController(completion: @escaping () -> ())
@@ -49,6 +50,14 @@ class AccountFlowCoordinator: AccountChildCoordinator {
         let tabBarImage = UIImage(named: imageName)
         accountController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
         navigationController.setViewControllers([accountController], animated: false)
+    }
+    
+    func showLogin() {
+        let loginController = LoginController()
+        loginController.setPresenter(presenter: LoginPresenter(loginView: loginController.self), coordinator: self)
+        let tabBarImage = UIImage(named: imageName)
+        loginController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
+        navigationController.setViewControllers([loginController], animated: false)
     }
     
     func showFriendSearch() {

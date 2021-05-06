@@ -8,6 +8,8 @@ protocol AccountViewPresenter {
     func showErrorAlertController(with message: String)
     func addFriendButtonTapped()
     
+    func exitButtonTapped()
+    
     func toggleNotifications() -> UIImage?
     func getFriends(from text: String) -> [User]
     func getAllFriends() -> [User]
@@ -22,6 +24,7 @@ class AccountPresenter: AccountViewPresenter {
     private weak var coordinator: AccountChildCoordinator?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
+    private let authManager: AuthManagerDescription = AuthManager.shared
     
     private let accountView: FriendsTableViewOutput?
     
@@ -83,6 +86,11 @@ class AccountPresenter: AccountViewPresenter {
         } else {
             return UIImage(named: "offNotification")?.withRenderingMode(.alwaysOriginal)
         }
+    }
+    
+    func exitButtonTapped() {
+        authManager.signOut()
+        coordinator?.showLogin()
     }
     
     func getFriends(from text: String) -> [User] {

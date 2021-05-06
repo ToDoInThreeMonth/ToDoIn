@@ -19,16 +19,23 @@ class GroupsController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        super.loadView()
-        setBackground()
-        self.view.addSubview(tableView)
-    }
+//    override func loadView() {
+//        super.loadView()
+//        setBackground()
+//        self.view.addSubview(tableView)
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupNavigationItem()
+        setBackground()
+        
         presenter?.didLoadView()
         configureTableView()
+        
+        self.view.addSubview(tableView)
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,6 +53,19 @@ class GroupsController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    private func setupNavigationItem() {
+        navigationController?.configureBarButtonItems(screen: .rooms, for: self)
+        navigationItem.rightBarButtonItem?.target = self
+        navigationItem.rightBarButtonItem?.action = #selector(addGroupButtonTapped)
+    }
+    
+    // MARK: - Handlers
+    
+    @objc
+    func addGroupButtonTapped() {
+        print(#function)
     }
     
 }

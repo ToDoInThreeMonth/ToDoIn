@@ -52,6 +52,16 @@ struct AccountViewConfigure {
         return CustomSearchTextField()
     }()
     
+    static var addFriendButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
+        button.setTitle("Добавить друга", for: .normal)
+        button.backgroundColor = .accentColor
+        button.tintColor = .darkTextColor
+        button.alpha = 0
+        return button
+    }()
+    
     static var exitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
