@@ -16,9 +16,12 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
         }
     }
     
+    weak var delegate: MainTableViewOutput?
+    
     private lazy var taskButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "addTask")?.withRenderingMode(.alwaysOriginal)
+        button.addTarget(self, action: #selector(taskButtonTapped), for: .touchUpInside)
         button.setImage(image, for: .normal)
         return button
     }()
@@ -65,6 +68,11 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
             .horizontally(40)
             .sizeToFit(.width)
         
+    }
+    
+    @objc
+    private func taskButtonTapped() {
+        delegate?.addTaskButtonTapped()
     }
     
 }

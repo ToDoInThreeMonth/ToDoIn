@@ -3,6 +3,7 @@ import UIKit
 protocol MainChildCoordinator: ChildCoordinator {
     func presentAddSectionController()
     func presentAddTaskController(with task: Task?)
+    func showAddSectionController()
 }
 
 class MainFlowCoordinator: MainChildCoordinator {
@@ -31,6 +32,10 @@ class MainFlowCoordinator: MainChildCoordinator {
             let controller = OfflineTaskController(isChanging: false)
             navigationController.present(controller, animated: true)
         }
-        
+    }
+    
+    func showAddSectionController() {
+        let alertController = AlertControllerCreator.getController(title: "Добавление новой секции", message: "Введите название", style: .alert, type: .section)
+        navigationController.present(alertController, animated: true)
     }
 }

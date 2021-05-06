@@ -23,7 +23,11 @@ class MainViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var authView = AuthView(frame: .zero)
+    private lazy var authView: AuthView = {
+        let view = AuthView(frame: .zero)
+        view.delegate = self
+        return view
+    }()
     
     // Initializers
     init(presenter: MainViewPresenter) {
@@ -71,13 +75,24 @@ class MainViewController: UIViewController {
     private func setupNavigationItem() {
         navigationController?.configureBarButtonItems(screen: .main, for: self)
         
-        navigationItem.rightBarButtonItem?.action = #selector(addTaskButtonTapped)
+        navigationItem.rightBarButtonItem?.action = #selector(addSectionButtonTapped)
         navigationItem.rightBarButtonItem?.target = self
     }
     
+    private func changeSizeTableView() {
+        tableView.pin
+            .top(view.pin.safeArea.top)
+            .horizontally()
+            .bottom(view.pin.safeArea.bottom)
+    }
+    
+    private func hiddenAuthView() {
+        authView.isHidden = true
+    }
+    
     @objc
-    private func addTaskButtonTapped() {
-        presenter?.showAddTaskController(with: nil)
+    private func addSectionButtonTapped() {
+        presenter?.showAddSectionController()
     }
 }
 
@@ -93,4 +108,18 @@ extension MainViewController: MainTableViewOutput {
     func cellDidSelect(with indexPath: IndexPath) {
         presenter?.showAddTaskController(with: indexPath)
     }
+    
+    func addTaskButtonTapped() {
+        presenter?.showAddTaskController(with: nil)
+    }
+}
+
+extension MainViewController: AuthViewOutput {
+    func authButtonTapped() {
+       
+        hiddenAuthView()
+        changeSizeTableView()
+    }
+    
+    
 }

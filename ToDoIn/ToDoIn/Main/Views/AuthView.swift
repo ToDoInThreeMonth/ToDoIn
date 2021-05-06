@@ -1,6 +1,8 @@
 import UIKit
 
 class AuthView: UIView {
+    weak var delegate: AuthViewOutput?
+    
     private lazy var authLabel: UILabel = {
        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
@@ -16,7 +18,7 @@ class AuthView: UIView {
         button.setTitle("Авторизоваться", for: .normal)
         button.tintColor = .darkTextColor
         button.backgroundColor = .accentColor
-        button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(authButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -82,10 +84,16 @@ class AuthView: UIView {
     }
     
     private func setupShadows() {
-        if authButton.layer.shadowOpacity == 0 {
+        if authButton.layer.cornerRadius == 0 {
+            authButton.layer.cornerRadius = 20
             authButton.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
             authButton.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 2)
             authButton.addLinearGradiend()
         }
+    }
+    
+    @objc
+    private func authButtonTapped() {
+        delegate?.authButtonTapped()
     }
 }

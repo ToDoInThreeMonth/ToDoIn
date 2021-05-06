@@ -18,7 +18,6 @@ class MainTableView: UITableView {
     private func setupViews() {
         backgroundColor = UIColor.clear
         separatorStyle = .none
-        allowsSelection = false
     }
     
     private func setupCells() {
@@ -38,6 +37,7 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell
+        cell?.contentView.isUserInteractionEnabled = true
         guard let controller = controller else {
             return UITableViewCell()
         }
@@ -72,13 +72,16 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
         guard let saveHeaderView = headerView else { return nil }
+        saveHeaderView.delegate = controller
+        
         let sectionName = OfflineTasks.sections[section].name
         saveHeaderView.sectionName = sectionName
         return saveHeaderView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Нажал")
         controller?.cellDidSelect(with: indexPath)
     }
+    
+    
 }

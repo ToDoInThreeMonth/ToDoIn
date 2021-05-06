@@ -15,4 +15,8 @@ class MainPresenter: MainViewPresenter {
             coordinator?.presentAddTaskController(with: nil)
         }
     }
+    
+    func showAddSectionController() {
+        coordinator?.showAddSectionController()
+    }
 }

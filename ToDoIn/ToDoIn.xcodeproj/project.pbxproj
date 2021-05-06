@@ -23,6 +23,7 @@
 		15498E862642B47C00EE5A2E /* OfflineTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E852642B47C00EE5A2E /* OfflineTasks.swift */; };
 		15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */; };
 		158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A53F32619F0E5003F4F3A /* UIView + extension.swift */; };
+		159B48D02644237300C652EC /* AlertControllerCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159B48CF2644237300C652EC /* AlertControllerCreator.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */; };
@@ -51,6 +52,7 @@
 		15498E852642B47C00EE5A2E /* OfflineTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTasks.swift; sourceTree = "<group>"; };
 		15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
 		158A53F32619F0E5003F4F3A /* UIView + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
+		159B48CF2644237300C652EC /* AlertControllerCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerCreator.swift; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extensions.swift"; sourceTree = "<group>"; };
@@ -94,6 +96,14 @@
 				15498E5D2641CA7400EE5A2E /* TaskTableViewCell.swift */,
 			);
 			path = "С ветки Даши";
+			sourceTree = "<group>";
+		};
+		159B48CE2644236200C652EC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				159B48CF2644237300C652EC /* AlertControllerCreator.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		15B4E1E2260C8CEB00599AF4 /* Coordinators */ = {
@@ -151,9 +161,9 @@
 			isa = PBXGroup;
 			children = (
 				15498E522641C80700EE5A2E /* Presenters */,
-				15D099532619ECE4006E17F7 /* Models */,
-				15D099522619ECDF006E17F7 /* Views */,
 				15D099512619ECD1006E17F7 /* Controllers */,
+				15D099522619ECDF006E17F7 /* Views */,
+				15D099532619ECE4006E17F7 /* Models */,
 				15498E532641C81600EE5A2E /* MainProtocols.swift */,
 			);
 			path = Main;
@@ -188,6 +198,7 @@
 		4313B43A260BBFA500E6381A /* ToDoIn */ = {
 			isa = PBXGroup;
 			children = (
+				159B48CE2644236200C652EC /* Services */,
 				15498E802642AE7700EE5A2E /* С ветки Даши */,
 				15FCA7482641C5D0009F235F /* Main */,
 				15F3B789261F05BA004C2FB6 /* Extensions */,
@@ -344,6 +355,7 @@
 				15498E6D2641F1AA00EE5A2E /* UIViewController + extension.swift in Sources */,
 				15498E622641CC6E00EE5A2E /* OfflineTaskTableViewCell.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
+				159B48D02644237300C652EC /* AlertControllerCreator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
