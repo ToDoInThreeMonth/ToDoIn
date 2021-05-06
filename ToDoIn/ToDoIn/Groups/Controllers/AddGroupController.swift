@@ -54,6 +54,9 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter?.didLoadView()
+        
         setBackground()
         hideKeyboardWhenTappedAround()
         
@@ -76,7 +79,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         
         nameLabel.pin
             .below(of: titleLabel, aligned: .center)
-            .marginTop(35)
+            .marginTop(25)
             .sizeToFit()
         
         nameTextField.pin
@@ -101,17 +104,16 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
             .marginTop(35)
             .sizeToFit()
         
-        friendsTableView.pin
-            .below(of: usersLabel)
-            .marginTop(30)
-            .horizontally(LayersConstants.horizontalPadding )
-            .height(250)
-        
-        
         addButton.pin
             .bottom(15)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.buttonHeight)
+        
+        friendsTableView.pin
+            .below(of: usersLabel)
+            .above(of: addButton)
+            .marginTop(10)
+            .horizontally(LayersConstants.horizontalPadding)
     }
     
     func configureNameTextField() {
@@ -137,8 +139,8 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     
     func configureAddButton() {
         addButton.setTitle("Добавить", for: .normal)
-        
         addButton.setTitleColor(.darkTextColor, for: .normal)
+        
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         
         let gradientLayer = CAGradientLayer()
@@ -159,7 +161,8 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     
     // MARK: - Handlers
     
-    @objc func imageViewTapped() {
+    @objc
+    func imageViewTapped() {
         ImagePickerManager().pickImage(self){ image in
             self.imageView.image = image
             SettingsUIComponents.getImageViewShadow(self.imageView)
@@ -167,7 +170,9 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         }
     }
     
-    @objc func addButtonTapped() {
+    @objc
+    func addButtonTapped() {
+        print(#function)
         presenter?.addButtonTapped()
         dismiss(animated: true, completion: nil)
     }
@@ -177,11 +182,11 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
 
 extension AddGroupController: FriendsTableViewOutput {
     func getFriend(by index: Int) -> User? {
-        User()
+        presenter?.getFriend(by: index)
     }
     
     func getAllFriends() -> [User]? {
-        []
+        presenter?.getAllFriends()
     }
     
     
@@ -190,11 +195,7 @@ extension AddGroupController: FriendsTableViewOutput {
     }
     
     func setUp(with user: User) {
-        
-    }
-    
-    var users: [User] {
-        []
+        // TODO: - Remove this method
     }
     
     func showErrorAlertController(with message: String) {
