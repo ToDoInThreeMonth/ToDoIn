@@ -29,12 +29,13 @@ class FriendsTableView: UITableView {
 class FriendsTVDataSource: NSObject, UITableViewDataSource {
     private weak var controller: FriendsTableViewOutput?
     
+    
     init(controller: FriendsTableViewOutput) {
         self.controller = controller
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let users = controller?.presenter?.getAllFriends() else { return 0 }
+        guard let users = controller?.getAllFriends() else { return 0 }
         return users.count
     }
 
@@ -48,7 +49,7 @@ class FriendsTVDataSource: NSObject, UITableViewDataSource {
             controller.showErrorAlertController(with: "Ячейки пользователей не могут быть созданы")
             return UITableViewCell()}
       
-        safeCell.friend = controller.presenter?.getFriend(by: indexPath.row)
+        safeCell.friend = controller.getFriend(by: indexPath.row) //presenter?.getFriend(by: indexPath.row)
         return safeCell
     }
 }

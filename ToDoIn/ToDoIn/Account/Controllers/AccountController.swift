@@ -3,12 +3,15 @@ import PinLayout
 
 
 protocol FriendsTableViewOutput: class {
-    var presenter: AccountViewPresenter? { get }
-    
+//    var presenter: AccountViewPresenter? { get }
+
     func showErrorAlertController(with message: String)
     
     func reloadView()
     func setUp(with user: User)
+    
+    func getFriend(by index: Int) -> User?
+    func getAllFriends() -> [User]?
 }
 
 class AccountController: UIViewController, FriendsTableViewOutput {
@@ -260,6 +263,14 @@ class AccountController: UIViewController, FriendsTableViewOutput {
         userImageView.image = UIImage(named: user.image)
         userNameLabel.text = user.name
         toDoInLabel.text = user.email
+    }
+    
+    func getFriend(by index: Int) -> User? {
+        presenter?.getFriend(by: index)
+    }
+    
+    func getAllFriends() -> [User]? {
+        presenter?.getAllFriends()
     }
 
     

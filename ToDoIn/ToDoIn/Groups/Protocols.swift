@@ -18,6 +18,8 @@ protocol GroupsViewPresenter {
     
     func showGroupController(group: Group)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
+    
+    func addGroupButtonTapped()
 }
 
 

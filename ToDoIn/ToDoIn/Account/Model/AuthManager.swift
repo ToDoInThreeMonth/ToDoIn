@@ -6,6 +6,7 @@ protocol AuthManagerDescription {
     func signUp(email: String, name: String, password1: String, password2: String) -> String?
     func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String?
     func signOut()
+    func isSignedIn() -> Bool
     func getCurrentUser() -> User
 }
 
@@ -101,6 +102,13 @@ final class AuthManager: AuthManagerDescription {
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
+    }
+    
+    func isSignedIn() -> Bool {
+        guard (Auth.auth().currentUser?.uid) != nil else {
+            return false
+        }
+        return true
     }
     
     

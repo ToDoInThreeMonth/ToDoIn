@@ -9,6 +9,7 @@ class GroupsPresenter: GroupsViewPresenter {
     private let groupsView: GroupsView?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
+    private let authManager: AuthManagerDescription = AuthManager.shared
     
     private var groups: [Group] = []
     
@@ -36,6 +37,12 @@ class GroupsPresenter: GroupsViewPresenter {
     
     func showGroupController(group: Group) {
         coordinator?.showGroupController(group: group)
+    }
+    
+    func addGroupButtonTapped() {
+        if authManager.isSignedIn() {
+            coordinator?.showAddGroup()
+        }
     }
     
     func didLoadView() {

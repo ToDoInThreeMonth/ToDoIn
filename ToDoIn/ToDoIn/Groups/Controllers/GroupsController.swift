@@ -65,7 +65,7 @@ class GroupsController: UIViewController {
     
     @objc
     func addGroupButtonTapped() {
-        print(#function)
+        presenter?.addGroupButtonTapped()
     }
     
 }
