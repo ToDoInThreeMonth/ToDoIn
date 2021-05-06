@@ -4,13 +4,23 @@ import Foundation
 protocol MainViewPresenter {
     func showAddTaskController(with indexPath: IndexPath?)
     func showAddSectionController()
+    func taskComplete(with indexPath: IndexPath)
+    func getAllSections() -> [OfflineSection]
+    func getNumberOfSections() -> Int
+    func getNumberOfRows(in section: Int) -> Int
+    func getTask(from indexPath: IndexPath) -> OfflineTask?
+    func updateBase() 
 }
 
 protocol MainTableViewOutput: class {
-    var tasks: [Task] { get }
-    func showErrorAlertController(with message: String)
     func addTaskButtonTapped()
     func cellDidSelect(with indexPath: IndexPath)
+    func doneViewTapped(with indexPath: IndexPath)
+    func updateUI()
+    func getAllSections() -> [OfflineSection]
+    func getNumberOfSections() -> Int
+    func getNumberOfRows(in section: Int) -> Int
+    func getTask(from indexPath: IndexPath) -> OfflineTask?
 }
 
 protocol AuthViewOutput: class {

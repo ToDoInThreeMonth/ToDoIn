@@ -20,10 +20,10 @@
 		15498E772641F51000EE5A2E /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E762641F51000EE5A2E /* GroupsService.swift */; };
 		15498E7A2641F55300EE5A2E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E792641F55300EE5A2E /* CustomTextField.swift */; };
 		15498E832642B08300EE5A2E /* OfflineTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E822642B08300EE5A2E /* OfflineTaskController.swift */; };
-		15498E862642B47C00EE5A2E /* OfflineTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498E852642B47C00EE5A2E /* OfflineTasks.swift */; };
 		15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */; };
 		158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A53F32619F0E5003F4F3A /* UIView + extension.swift */; };
 		159B48D02644237300C652EC /* AlertControllerCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159B48CF2644237300C652EC /* AlertControllerCreator.swift */; };
+		159B48D326442B0000C652EC /* RealmBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159B48D226442B0000C652EC /* RealmBase.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
 		15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */; };
@@ -49,10 +49,10 @@
 		15498E762641F51000EE5A2E /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
 		15498E792641F55300EE5A2E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		15498E822642B08300EE5A2E /* OfflineTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskController.swift; sourceTree = "<group>"; };
-		15498E852642B47C00EE5A2E /* OfflineTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTasks.swift; sourceTree = "<group>"; };
 		15686BC02623A1EF001FA228 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
 		158A53F32619F0E5003F4F3A /* UIView + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
 		159B48CF2644237300C652EC /* AlertControllerCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerCreator.swift; sourceTree = "<group>"; };
+		159B48D226442B0000C652EC /* RealmBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBase.swift; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extensions.swift"; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 			children = (
 				15498E762641F51000EE5A2E /* GroupsService.swift */,
 				15498E642641CCFC00EE5A2E /* Group.swift */,
-				15498E852642B47C00EE5A2E /* OfflineTasks.swift */,
+				159B48D226442B0000C652EC /* RealmBase.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -335,10 +335,10 @@
 			files = (
 				15498E5A2641C9C100EE5A2E /* MainTableView.swift in Sources */,
 				15498E5E2641CA7400EE5A2E /* TaskTableViewCell.swift in Sources */,
-				15498E862642B47C00EE5A2E /* OfflineTasks.swift in Sources */,
 				15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */,
 				15498E652641CCFC00EE5A2E /* Group.swift in Sources */,
 				15498E712641F49300EE5A2E /* TaskController.swift in Sources */,
+				159B48D326442B0000C652EC /* RealmBase.swift in Sources */,
 				158A53F42619F0E5003F4F3A /* UIView + extension.swift in Sources */,
 				15498E742641F4D900EE5A2E /* TaskPresenter.swift in Sources */,
 				15498E542641C81600EE5A2E /* MainProtocols.swift in Sources */,

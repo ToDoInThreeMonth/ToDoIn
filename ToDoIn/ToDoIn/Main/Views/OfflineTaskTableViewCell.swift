@@ -1,7 +1,11 @@
 import UIKit
 
 final class OfflineTaskTableViewCell: TaskTableViewCell {
+    weak var delegate: MainTableViewOutput?
+    var index: IndexPath?
+    
     private lazy var dimmingView = UIView()
+    private lazy var tapDoneViewRecognizer = UITapGestureRecognizer(target: self, action: #selector(doneViewTapped))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,8 +26,8 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
         taskView.insertSubview(dimmingView, at: 0)
     }
     
-    func setUp(with task: Task) {
-        taskLabel.text = task.name
+    func setUp(with task: OfflineTask) {
+        taskLabel.text = task.title
     }
     
     private func configureDimmingView() {
@@ -31,6 +35,12 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
             dimmingView.backgroundColor = .clear
             dimmingView.layer.cornerRadius = taskView.layer.cornerRadius
         }
+    }
+    
+    @objc
+    private func doneViewTapped() {
+        guard let index = index else { return }
+        delegate?.doneViewTapped(with: index)
     }
     
     override func setupLayouts() {
@@ -46,6 +56,11 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
         } else {
             dimmingView.backgroundColor = .clear
         }
+    }
+    
+    override func configureIsDoneView() {
+        super.configureIsDoneView()
+        isDoneView.addGestureRecognizer(tapDoneViewRecognizer)
     }
 }
 

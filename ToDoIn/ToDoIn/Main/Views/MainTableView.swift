@@ -34,7 +34,7 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
         self.controller = controller
     }
     
-
+    // Создание ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell
         cell?.contentView.isUserInteractionEnabled = true
@@ -42,23 +42,26 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
             return UITableViewCell()
         }
         guard let safeCell = cell else {
-            controller.showErrorAlertController(with: "Ячейки c задачами не могут быть созданы")
+//            controller.showErrorAlertController(with: "Ячейки c задачами не могут быть созданы")
             return UITableViewCell()
         }
         
-        let task = OfflineTasks.sections[indexPath.section].tasks[indexPath.row]
+        guard let task = controller.getTask(from: indexPath) else { return UITableViewCell() }
         safeCell.setUp(with: task)
         return safeCell
     }
     
+    // Количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        return OfflineTasks.sections.count
+        guard let controller = controller else { return 0 }
+        return controller.getNumberOfSections()
     }
     
+    // Количестве ячеек в секции
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return OfflineTasks.sections[section].tasks.count
+        guard let controller = controller else { return 0 }
+        return controller.getNumberOfRows(in: section)
     }
-   
 }
 
 //MARK: - Friends TableViewDelegate
@@ -69,14 +72,24 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
         self.controller = controller
     }
     
+    // Хедеры секций
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
         guard let saveHeaderView = headerView else { return nil }
+        guard let controller = controller else { return nil }
         saveHeaderView.delegate = controller
         
-        let sectionName = OfflineTasks.sections[section].name
+        let sectionName = controller.getAllSections()[section].name
         saveHeaderView.sectionName = sectionName
         return saveHeaderView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return nil
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

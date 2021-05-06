@@ -19,4 +19,28 @@ class MainPresenter: MainViewPresenter {
     func showAddSectionController() {
         coordinator?.showAddSectionController()
     }
+    
+    func taskComplete(with indexPath: IndexPath) {
+        print("Прошло")
+    }
+    
+    func getAllSections() -> [OfflineSection] {
+        return RealmBase.getAllSections()
+    }
+    
+    func getNumberOfSections() -> Int {
+        return RealmBase.getNumberOfSections()
+    }
+    
+    func getNumberOfRows(in section: Int) -> Int {
+        return RealmBase.getNumberOfRows(in: section)
+    }
+    
+    func getTask(from indexPath: IndexPath) -> OfflineTask? {
+        return RealmBase.getTask(section: indexPath.section, row: indexPath.row)
+    }
+    
+    func updateBase() {
+        RealmBase.downloadSections()
+    }
 }

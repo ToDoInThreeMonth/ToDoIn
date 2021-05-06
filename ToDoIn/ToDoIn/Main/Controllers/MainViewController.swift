@@ -29,6 +29,8 @@ class MainViewController: UIViewController {
         return view
     }()
     
+    private var isAuth = false
+    
     // Initializers
     init(presenter: MainViewPresenter) {
         self.presenter = presenter
@@ -45,6 +47,7 @@ class MainViewController: UIViewController {
         setupViews()
         setBackground()
         setupNavigationItem()
+        updateUI()
     }
     
     override func viewWillLayoutSubviews() {
@@ -65,11 +68,23 @@ class MainViewController: UIViewController {
             .horizontally(10)
             .height(250)
             .marginBottom(-20)
-        tableView.pin
-            .top(10)
-            .horizontally()
-            .bottom(to: authView.edge.top)
-            .marginBottom(10)
+        
+        if isAuth {
+            tableView.pin
+                .top()
+                .horizontally()
+                .bottom()
+                .marginTop(20)
+                .marginBottom(10)
+            
+        } else {
+            tableView.pin
+                .top(view.pin.safeArea.top)
+                .horizontally()
+                .bottom(to: authView.edge.top)
+                .marginTop(20)
+                .marginBottom(10)
+        }
     }
     
     private func setupNavigationItem() {
@@ -80,10 +95,11 @@ class MainViewController: UIViewController {
     }
     
     private func changeSizeTableView() {
-        tableView.pin
-            .top(view.pin.safeArea.top)
-            .horizontally()
-            .bottom(view.pin.safeArea.bottom)
+        isAuth.toggle()
+        
+        UIView.animate(withDuration: 0.3) {
+            self.setupLayouts()
+        }
     }
     
     private func hiddenAuthView() {
@@ -97,13 +113,26 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
-    var tasks: [Task] {
-        return []
+    func getAllSections() -> [OfflineSection] {
+        guard let presenter = presenter else { return [] }
+        return presenter.getAllSections()
     }
     
-    func showErrorAlertController(with message: String) {
-        
+    func getNumberOfSections() -> Int {
+        guard let presenter = presenter else { return 0 }
+        return presenter.getNumberOfSections()
     }
+    
+    func getNumberOfRows(in section: Int) -> Int {
+        guard let presenter = presenter else { return 0 }
+        return presenter.getNumberOfRows(in: section)
+    }
+    
+    func getTask(from indexPath: IndexPath) -> OfflineTask? {
+        guard let presenter = presenter else { return nil }
+        return presenter.getTask(from: indexPath)
+    }
+    
     
     func cellDidSelect(with indexPath: IndexPath) {
         presenter?.showAddTaskController(with: indexPath)
@@ -112,11 +141,19 @@ extension MainViewController: MainTableViewOutput {
     func addTaskButtonTapped() {
         presenter?.showAddTaskController(with: nil)
     }
+    
+    func doneViewTapped(with indexPath: IndexPath) {
+        presenter?.taskComplete(with: indexPath)
+    }
+    
+    func updateUI() {
+        presenter?.updateBase()
+        tableView.reloadData()
+    }
 }
 
 extension MainViewController: AuthViewOutput {
     func authButtonTapped() {
-       
         hiddenAuthView()
         changeSizeTableView()
     }
