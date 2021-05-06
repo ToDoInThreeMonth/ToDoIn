@@ -325,6 +325,7 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     
     private func addViewAnimation() {
         var alpha: CGFloat = 0
+        dismissKeyboard()
         
         if isAddViewHidden == true {
             alpha = 1
