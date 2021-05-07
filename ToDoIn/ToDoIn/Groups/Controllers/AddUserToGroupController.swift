@@ -54,7 +54,8 @@ class AddUserToGroupController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        presenter?.didLoadView()
+
         setBackground()
         
         view.addSubviews(friendsTableView, chooseUserTitle, addButton)
@@ -79,15 +80,15 @@ class AddUserToGroupController: UIViewController {
             .width(view.bounds.width - 30)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        presenter?.didLoadView()
-    }
-    
     // MARK: - Handlers
     
     @objc
     func buttonTapped() {
-        print(#function)
+        let selectedIndexes = friendsTableView.indexPathsForSelectedRows ?? []
+        if selectedIndexes.count != 0 {
+            presenter?.addButtonTapped(selectedUsers: selectedIndexes)
+            dismiss(animated: true, completion: nil)
+        }
     }
 
 }

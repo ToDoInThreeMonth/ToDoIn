@@ -1,7 +1,12 @@
 import Foundation
 
 protocol GroupSettingsViewPresenter {
+    func didLoadView()
+
     func setCoordinator(with coordinator: GroupsChildCoordinator)
+    
+    var usersCount: Int { get }
+    
     func getUsers(from userIdArray: [String])
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
@@ -18,6 +23,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     private let groupSettingsView: GroupSettingsView?
 
+    private var group: Group
     private var users: [User] = []
     
     var usersCount: Int {
@@ -26,8 +32,9 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Init
     
-    required init(groupSettingsView: GroupSettingsView) {
+    required init(groupSettingsView: GroupSettingsView, group: Group) {
         self.groupSettingsView = groupSettingsView
+        self.group = group
     }
     
     func setCoordinator(with coordinator: GroupsChildCoordinator) {
@@ -36,10 +43,22 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
 
     // MARK: - Handlers
     
+    func didLoadView() {
+        groupsManager.observeGroup(by: group.id) { [weak self] (result) in
+            switch result {
+            case .success(let group):
+                self?.group = group
+                self?.getUsers(from: group.users)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func getUsers(from userIdArray: [String]) {
-//        users.removeAll()
+        users.removeAll()
         for userId in userIdArray {
-            groupsManager.getUser(userId: userId) { [weak self] (result) in
+            groupsManager.observeUser(by: userId) { [weak self] (result) in
                 switch result {
                 case .success(let user):
                     self?.users.append(user)
@@ -61,7 +80,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     func addUserButtonTapped() {
         // добавление нового участника в комнату
-        coordinator?.showAddUserToGroup(with: users)
+        coordinator?.showAddUser(to: group, with: users)
     }
     
 }

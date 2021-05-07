@@ -76,7 +76,7 @@ class GroupSettingsController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        presenter?.getUsers(from: group.users)
+        presenter?.didLoadView()
 
         setupInsets()
     }
@@ -160,7 +160,7 @@ extension GroupSettingsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        group.users.count
+        presenter?.usersCount ?? 0
     }
     
     // дизайн ячейки

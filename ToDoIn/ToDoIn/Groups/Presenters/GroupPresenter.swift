@@ -39,7 +39,7 @@ class GroupPresenter: GroupViewPresenter {
             switch result {
             case .success(let group):
                 self?.group = group
-                self?.groupView?.reloadView()
+                self?.getUsers(from: group.users)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -63,6 +63,7 @@ class GroupPresenter: GroupViewPresenter {
 //    }
     
     func getUsers(from userIdArray: [String]) {
+        users.removeAll()
         for userId in userIdArray {
             groupsManager.getUser(userId: userId) { [weak self] (result) in
                 switch result {

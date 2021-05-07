@@ -48,7 +48,7 @@ class AccountPresenter: AccountViewPresenter {
     // MARK: - Handlers
     
     func didLoadView() {
-        groupsManager.observeUser { [weak self] (result) in
+        groupsManager.observeUser(by: nil) { [weak self] (result) in
             switch result {
             case .success(let user):
                 self?.user = user

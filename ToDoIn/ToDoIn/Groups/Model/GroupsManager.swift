@@ -11,19 +11,19 @@ enum NetworkError: Error {
 protocol GroupsManagerDescription {
     func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void)
     func observeGroup(by userId: String, completion: @escaping (Result<Group, Error>) -> Void)
-    func observeUser(completion: @escaping (Result<User, Error>) -> Void)
+    func observeUser(by userId: String?, completion: @escaping (Result<User, Error>) -> Void)
     func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void)
     
     func addGroup(title: String, users: [String])
+    func addFriend(friend: User)
+    func addUser(_ user: User, to group: Group)
+    func addTask(_ task: Task, in group: Group)
 
     func getTasks(for userId: String, from group: Group) -> [Task]
     func getUser(userId: String, completion: @escaping (Result<User, Error>) -> Void)
     func getUser(email: String, completion: @escaping (Result<User, Error>) -> Void)
     
-    func addTask(_ task: Task, in group: Group)
     func changeTask(_ task: Task, in group: Group)
-
-    func addFriend(friend: User)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -36,7 +36,7 @@ final class GroupsManager: GroupsManagerDescription {
     
     func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
-            completion(.failure(NetworkError.noSignedUser))
+//            completion(.failure(NetworkError.noSignedUser))
             return
         }
         database.collection("groups").addSnapshotListener { (querySnapshot, error) in
@@ -77,11 +77,14 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func observeUser(completion: @escaping (Result<User, Error>) -> Void) {
-        guard let currentUserId = Auth.auth().currentUser?.uid else {
-            return
+    func observeUser(by userId: String?, completion: @escaping (Result<User, Error>) -> Void) {
+        let saveUserId: String
+        if userId == nil {
+            saveUserId = Auth.auth().currentUser?.uid ?? ""
+        } else {
+            saveUserId = userId!
         }
-        database.collection("users").document(currentUserId).addSnapshotListener { (snapshot, error) in
+        database.collection("users").document(saveUserId).addSnapshotListener { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -94,39 +97,6 @@ final class GroupsManager: GroupsManagerDescription {
             completion(.success(user))
         }
     }
-    
-//    func observeFriends(completion: @escaping (Result<[User], Error>) -> Void) {
-//        guard let userId = Auth.auth().currentUser?.uid else {
-//            return
-//        }
-//        database.collection("users").document(userId).addSnapshotListener { (snapshot, error) in
-//            if let error = error {
-//                completion(.failure(error))
-//                return
-//            }
-//            guard let data = snapshot?.data() else {
-//                completion(.failure(NetworkError.unexpected))
-//                return
-//            }
-//            let user = GroupsConverter.user(from: data)
-//            var friends = [User]()
-//            for friendId in user.friends {
-//                self.database.collection("users").document(friendId).addSnapshotListener { (snapshot, error) in
-//                    if let error = error {
-//                        completion(.failure(error))
-//                        return
-//                    }
-//                    guard let data = snapshot?.data() else {
-//                        completion(.failure(NetworkError.unexpected))
-//                        return
-//                    }
-//                    friends.append(GroupsConverter.user(from: data))
-//                }
-//            }
-//            print(friends)
-//            completion(.success(friends))
-//        }
-//    }
     
     
     func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void) {
@@ -178,6 +148,11 @@ final class GroupsManager: GroupsManagerDescription {
     }
     
     
+    func addUser(_ user: User, to group: Group) {
+        database.collection("groups").document(group.id).setData(["users": FieldValue.arrayUnion([user.id])], merge: true)
+    }
+    
+    
     func getUser(userId: String, completion: @escaping (Result<User, Error>) -> Void) {
         let docRef = database.collection("users").document(userId)
         docRef.getDocument { (document, error) in
@@ -226,6 +201,9 @@ final class GroupsManager: GroupsManagerDescription {
             tasks.append(GroupsConverter.task(from: task))
         }
         database.collection("groups").document(group.id).setData(["tasks": tasks], merge: true)
+        
+//        let dictTask = [GroupsConverter.task(from: task)]
+//        database.collection("groups").document(group.id).setData(["tasks": FieldValue.arrayUnion([dictTask])], merge: true)
     }
     
     func changeTask(_ task: Task, in group: Group) {

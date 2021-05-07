@@ -35,7 +35,7 @@ class GroupController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.didLoadView(by: group.id)
-        presenter?.getUsers(from: group.users)
+//        presenter?.getUsers(from: group.users)
         configureTableView()
         configureBarButtonItems()
     }

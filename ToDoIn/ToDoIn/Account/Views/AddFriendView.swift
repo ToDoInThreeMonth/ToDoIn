@@ -36,13 +36,7 @@ class AddFriendView: UIView {
         return button
     }()
     
-    private lazy var errorLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = .red
-        label.alpha = 0
-        return label
-    }()
+    private var errorLabel = UILabel()
         
     
     init(controller: AddFriendViewOutput) {
@@ -64,6 +58,7 @@ class AddFriendView: UIView {
     private func setupViews() {
         isHidden = true
         backgroundColor = .accentColor
+        configureErrorLabel()
         addSubviews(titleLabel,
                     emailLabel,
                     emailTextField,
@@ -109,10 +104,19 @@ class AddFriendView: UIView {
         }
     }
     
+    func configureErrorLabel() {
+        errorLabel.textAlignment = .center
+        errorLabel.textColor = .red
+        errorLabel.alpha = 0
+    }
+    
     @objc
     private func addButtonTapped() {
         guard let mail = emailTextField.text, !mail.isEmpty else { return }
         controller?.addNewFriend(mail)
+        emailTextField.text = ""
+        errorLabel.alpha = 0
+        errorLabel.text = ""
     }
     
     func showError(with error: String) {
