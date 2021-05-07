@@ -125,6 +125,7 @@ class AccountPresenter: AccountViewPresenter {
             case .success(let user):
                 self?.groupsManager.addFriend(friend: user)
                 self?.accountView?.dismissAddNewFriendView()
+                self?.accountView?.cleanErrorLabel()
             case .failure(_):
                 self?.accountView?.showError(with: "Пользователь не найден")
             }

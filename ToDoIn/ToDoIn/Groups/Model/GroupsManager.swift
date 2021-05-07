@@ -189,6 +189,7 @@ final class GroupsManager: GroupsManagerDescription {
                 if docEmail == email {
                    let user = GroupsConverter.user(from: document.data())
                     completion(.success(user))
+                    return
                 }
             }
             completion(.failure(NetworkError.noUser))

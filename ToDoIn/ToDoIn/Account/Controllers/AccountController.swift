@@ -19,6 +19,7 @@ protocol AddFriendViewOutput: class {
 
 protocol AccountView: FriendsTableViewOutput, AddFriendViewOutput {
     func showError(with error: String)
+    func cleanErrorLabel()
 }
 
 class AccountController: UIViewController {
@@ -352,6 +353,10 @@ extension AccountController: AccountView {
     
     func showError(with error: String) {
         addFriendView.showError(with: error)
+    }
+    
+    func cleanErrorLabel() {
+        addFriendView.cleanErrorLabel()
     }
     
     func reloadView() {
