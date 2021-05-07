@@ -15,6 +15,8 @@ protocol AccountViewPresenter {
     func getAllFriends() -> [User]
     func getFriend(by index: Int) -> User?
     func getFriends(for user: User)
+    
+    func addNewFriend(_ email: String)
 }
 
 class AccountPresenter: AccountViewPresenter {
@@ -26,7 +28,7 @@ class AccountPresenter: AccountViewPresenter {
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     private let authManager: AuthManagerDescription = AuthManager.shared
     
-    private let accountView: FriendsTableViewOutput?
+    private let accountView: AccountView?
     
     private var isNotificationTurnedOn = false
     
@@ -35,7 +37,7 @@ class AccountPresenter: AccountViewPresenter {
     
     // MARK: - Init
     
-    init(accountView: FriendsTableViewOutput) {
+    init(accountView: AccountView) {
         self.accountView = accountView
     }
     
@@ -62,7 +64,7 @@ class AccountPresenter: AccountViewPresenter {
     func getFriends(for user: User) {
         friends = []
         for friendId in user.friends {
-            groupsManager.getUser(by: friendId) { [weak self] (result) in
+            groupsManager.getUser(userId: friendId) { [weak self] (result) in
                 switch result {
                 case .success(let user):
                     self?.friends.append(user)
@@ -117,38 +119,16 @@ class AccountPresenter: AccountViewPresenter {
         coordinator?.showFriendSearch()
     }
     
+    func addNewFriend(_ email: String) {
+        groupsManager.getUser(email: email) { [weak self] (result) in
+            switch result {
+            case .success(let user):
+                self?.groupsManager.addFriend(friend: user)
+                self?.accountView?.dismissAddNewFriendView()
+            case .failure(_):
+                self?.accountView?.showError(with: "Пользователь не найден")
+            }
+        }
+    }
+    
 }
-
-//import Foundation
-//
-//protocol AccountViewPresenter {
-//    init(accountView: AccountView)
-//    func setCoordinator(with coordinator: AccountChildCoordinator)
-//
-//    func addFriendsButtonTapped()
-//}
-//
-//class AccountPresenter: AccountViewPresenter {
-//
-//    // MARK: - Properties
-//
-//    weak var coordinator: AccountChildCoordinator?
-//
-//    private let accountView: AccountView?
-//
-//    // MARK: - Init
-//
-//    required init(accountView: AccountView) {
-//        self.accountView = accountView
-//    }
-//
-//    func setCoordinator(with coordinator: AccountChildCoordinator) {
-//        self.coordinator = coordinator
-//    }
-//
-//    // MARK: - Configures
-//
-//    func addFriendsButtonTapped() {
-//        coordinator?.showFriendSearch()
-//    }
-//}

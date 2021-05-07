@@ -8,7 +8,7 @@ extension UIViewController {
     }
     
     @objc
-    private func dismissKeyboard() {
+    func dismissKeyboard() {
         view.endEditing(true)
     }
     

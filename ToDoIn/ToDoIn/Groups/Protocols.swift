@@ -67,16 +67,3 @@ protocol TaskViewPresenter {
     func getUser(by userId: String, in users: [User]) -> User
 }
 
-// GroupSettingsController
-
-protocol GroupSettingsView: class {
-    func setPresenter(presenter: GroupSettingsViewPresenter)
-    func reloadView()
-}
-
-protocol GroupSettingsViewPresenter {
-    func getUsers(from userIdArray: [String])
-    func groupTitleDidChange(with title: String?)
-    func addUserButtonTapped()
-    func getUser(by section: Int) -> User
-}

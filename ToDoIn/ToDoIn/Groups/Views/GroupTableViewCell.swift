@@ -22,7 +22,8 @@ class GroupTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         selectionStyle = .none
-        [groupLabel, groupImageView, dimmingView].forEach {groupView.addSubview($0)}
+        [groupLabel, groupImageView].forEach {groupView.addSubview($0)}
+        groupView.insertSubview(dimmingView, at: 0)
         addSubview(groupView)
     }
     
@@ -52,9 +53,7 @@ class GroupTableViewCell: UITableViewCell {
             .left(20).vCenter()
             .sizeToFit()
         
-        dimmingView.pin
-            .horizontally(50)
-            .vertically(groupViewPadding)
+        dimmingView.pin.all()
     }
     
     func setupSublayers() {
@@ -87,7 +86,6 @@ class GroupTableViewCell: UITableViewCell {
     }
     
     func configureDimmingView() {
-        dimmingView.frame = groupView.bounds
         dimmingView.backgroundColor = .clear
         dimmingView.layer.cornerRadius = self.frame.height / 2.6
     }
@@ -101,7 +99,7 @@ class GroupTableViewCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         if highlighted {
-            dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+            dimmingView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.2)
         } else {
             dimmingView.backgroundColor = .clear
         }

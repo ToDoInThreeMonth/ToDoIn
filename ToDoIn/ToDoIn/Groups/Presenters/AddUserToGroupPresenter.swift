@@ -1,30 +1,27 @@
 import Foundation
 
-protocol AddGroupViewPresenter {
+protocol AddUserToGroupViewPresenter {
     func didLoadView()
     
-    func getAllFriends() -> [User]
     func getFriend(by index: Int) -> User?
-    
-    func addButtonTapped(title: String, selectedUsers: [IndexPath])
+    func getAllFriends() -> [User]
 }
 
-class AddGroupPresenter: AddGroupViewPresenter {
+class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
     
-    // MARK: - Properties
+    // MARK: - Preperties
     
-    private let addGroupView: FriendsTableViewOutput?
+    private let addUserToGroupView: FriendsTableViewOutput?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
-    private let authManager: AuthManagerDescription = AuthManager.shared
-    
+
     private var user = User()
     private var friends = [User]()
-        
+    
     // MARK: - Init
     
-    required init(addGroupView: FriendsTableViewOutput) {
-        self.addGroupView = addGroupView
+    init(addUserToGroupView: FriendsTableViewOutput) {
+        self.addUserToGroupView = addUserToGroupView
     }
     
     // MARK: - Handlers
@@ -33,9 +30,10 @@ class AddGroupPresenter: AddGroupViewPresenter {
         groupsManager.observeUser { [weak self] (result) in
             switch result {
             case .success(let user):
+                print(user)
                 self?.user = user
                 self?.getFriends(for: user)
-                self?.addGroupView?.reloadView()
+                self?.addUserToGroupView?.reloadView()
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -48,8 +46,9 @@ class AddGroupPresenter: AddGroupViewPresenter {
             groupsManager.getUser(userId: friendId) { [weak self] (result) in
                 switch result {
                 case .success(let user):
+                    print(user)
                     self?.friends.append(user)
-                    self?.addGroupView?.reloadView()
+                    self?.addUserToGroupView?.reloadView()
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -68,18 +67,4 @@ class AddGroupPresenter: AddGroupViewPresenter {
         return nil
     }
     
-    func addButtonTapped(title: String, selectedUsers: [IndexPath]) {
-        guard let currentUserId = authManager.getCurrentUserId() else {
-            return
-        }
-        var usersId = [currentUserId]
-        for ind in selectedUsers {
-            guard let userId = self.getFriend(by: ind.row)?.id else {
-                continue
-            }
-            usersId.append(userId)
-        }
-        print(usersId)
-        groupsManager.addGroup(title: title, users: usersId)
-    }
 }

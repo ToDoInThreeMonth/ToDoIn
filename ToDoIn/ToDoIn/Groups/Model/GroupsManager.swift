@@ -5,6 +5,7 @@ import FirebaseAuth
 enum NetworkError: Error {
     case unexpected
     case noSignedUser
+    case noUser
 }
 
 protocol GroupsManagerDescription {
@@ -16,7 +17,8 @@ protocol GroupsManagerDescription {
     func addGroup(title: String, users: [String])
 
     func getTasks(for userId: String, from group: Group) -> [Task]
-    func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void)
+    func getUser(userId: String, completion: @escaping (Result<User, Error>) -> Void)
+    func getUser(email: String, completion: @escaping (Result<User, Error>) -> Void)
     
     func addTask(_ task: Task, in group: Group)
     func changeTask(_ task: Task, in group: Group)
@@ -176,14 +178,13 @@ final class GroupsManager: GroupsManagerDescription {
     }
     
     
-    func getUser(by userId: String, completion: @escaping (Result<User, Error>) -> Void) {
+    func getUser(userId: String, completion: @escaping (Result<User, Error>) -> Void) {
         let docRef = database.collection("users").document(userId)
         docRef.getDocument { (document, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
             guard let document = document,
                   document.exists,
                   let data = document.data() else {
@@ -193,6 +194,29 @@ final class GroupsManager: GroupsManagerDescription {
             
             let user = GroupsConverter.user(from: data)
             completion(.success(user))
+        }
+    }
+    
+    func getUser(email: String, completion: @escaping (Result<User, Error>) -> Void) {
+        database.collection("users").getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let documents = snapshot?.documents else {
+                completion(.failure(NetworkError.unexpected))
+                return
+            }
+            for document in documents {
+                guard let docEmail = document["email"] as? String else {
+                    continue
+                }
+                if docEmail == email {
+                   let user = GroupsConverter.user(from: document.data())
+                    completion(.success(user))
+                }
+            }
+            completion(.failure(NetworkError.noUser))
         }
     }
     

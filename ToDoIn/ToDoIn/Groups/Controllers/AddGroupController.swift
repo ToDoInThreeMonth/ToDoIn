@@ -127,9 +127,9 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     func configureLabels() {
         titleLabel.text = "Создать новую комнату"
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        nameLabel.text = "Название комнаты"
-        imageViewLabel.text = "Выберете аватарку для комнаты"
-        usersLabel.text = "Выберете участников комнаты:"
+        nameLabel.text = "Название"
+        imageViewLabel.text = "Аватарка"
+        usersLabel.text = "Выберите участников комнаты:"
         [titleLabel, nameLabel, imageViewLabel, usersLabel].forEach { $0.textColor = .darkTextColor }
         
     }

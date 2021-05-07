@@ -1,9 +1,7 @@
 import UIKit
 import PinLayout
 
-
 protocol FriendsTableViewOutput: class {
-//    var presenter: AccountViewPresenter? { get }
 
     func showErrorAlertController(with message: String)
     
@@ -14,10 +12,19 @@ protocol FriendsTableViewOutput: class {
     func getAllFriends() -> [User]?
 }
 
-class AccountController: UIViewController, FriendsTableViewOutput {
+protocol AddFriendViewOutput: class {
+    func addNewFriend(_ mail: String)
+    func dismissAddNewFriendView()
+}
+
+protocol AccountView: FriendsTableViewOutput, AddFriendViewOutput {
+    func showError(with error: String)
+}
+
+class AccountController: UIViewController {
     
     // Stored properties
-    internal var presenter: AccountViewPresenter?
+    private var presenter: AccountViewPresenter?
     
     // Lazy stored properties
     private lazy var userImageView = AccountViewConfigure.userImageView
@@ -29,9 +36,8 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     private lazy var isSettingsMenuHidden = true
     private lazy var settingsBackgroundView = AccountViewConfigure.settingsBackgroundView
     private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backViewTapped))
-    
-    private lazy var addFriendButton = AccountViewConfigure.addFriendButton
-    
+    private lazy var tapAddFriendRecognizer = UITapGestureRecognizer(target: self, action: #selector(addFriendButtonTapped))
+        
     private lazy var exitButton: UIButton = {
         let button = AccountViewConfigure.exitButton
         button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
@@ -44,6 +50,12 @@ class AccountController: UIViewController, FriendsTableViewOutput {
         return button
     }()
     
+    private lazy var addFriendButton: UIButton = {
+        let button = AccountViewConfigure.addFriendButton
+        button.addTarget(self, action: #selector(addFriendButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var friendsTVDelegate = FriendsTVDelegate()
     private lazy var friendsTVDataSource = FriendsTVDataSource(controller: self)
     private lazy var friendsTableView: UITableView = {
@@ -52,6 +64,10 @@ class AccountController: UIViewController, FriendsTableViewOutput {
         tableView.delegate = friendsTVDelegate
         return tableView
     }()
+    
+    private lazy var addFriendView = AddFriendView(controller: self)
+    private var isAddViewHidden = true
+    private var isSettingMenuHidden = true
     
     // Nested data types
     struct LayersConstants {
@@ -85,7 +101,6 @@ class AccountController: UIViewController, FriendsTableViewOutput {
         setupViews()
         setupNavigationItem()
         
-        addFriendButton.addTarget(self, action: #selector(addFriendButtonTapped), for: .touchUpInside)
     }
     
     override func viewWillLayoutSubviews() {
@@ -112,7 +127,8 @@ class AccountController: UIViewController, FriendsTableViewOutput {
                          friendUnderlineView,
                          settingsBackgroundView,
                          exitButton,
-                         notificationButton)
+                         notificationButton,
+                         addFriendView)
         userBackView.addSubviews(userImageView)
         
         settingsBackgroundView.addGestureRecognizer(tapRecognizer)
@@ -183,6 +199,11 @@ class AccountController: UIViewController, FriendsTableViewOutput {
         
         settingsBackgroundView.pin
             .all()
+        
+        addFriendView.pin
+            .vCenter()
+            .horizontally(20)
+            .height(300)
     }
     
     private func setupNavigationItem() {
@@ -207,6 +228,9 @@ class AccountController: UIViewController, FriendsTableViewOutput {
             }
             
             AccountViewConfigure.getSettingsViewBlur(settingsBackgroundView)
+            
+            addFriendView.layer.cornerRadius = 20
+            AccountViewConfigure.getBasicViewShadow(addFriendView)
         }
     }
     
@@ -233,7 +257,7 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     
     @objc
     private func addFriendButtonTapped() {
-        presenter?.addFriendButtonTapped()
+        addViewAnimation()
     }
     
     @objc
@@ -259,30 +283,6 @@ class AccountController: UIViewController, FriendsTableViewOutput {
     private func backViewTapped() {
         dropDownAnimation()
     }
-    
-    // Another methods
-    func showErrorAlertController(with message: String) {
-        presenter?.showErrorAlertController(with: message)
-    }
-    
-    func reloadView() {
-        friendsTableView.reloadData()
-    }
-
-    func setUp(with user: User) {
-        userImageView.image = UIImage(named: user.image)
-        userNameLabel.text = user.name
-        toDoInLabel.text = user.email
-    }
-    
-    func getFriend(by index: Int) -> User? {
-        presenter?.getFriend(by: index)
-    }
-    
-    func getAllFriends() -> [User]? {
-        presenter?.getAllFriends()
-    }
-
     
     // Drop-down menu animation
     func dropDownAnimation() {
@@ -316,5 +316,68 @@ class AccountController: UIViewController, FriendsTableViewOutput {
         
         isSettingsMenuHidden.toggle()
     }
+    
+    private func addViewAnimation() {
+        var alpha: CGFloat = 0
+        dismissKeyboard()
+        
+        if isAddViewHidden == true {
+            alpha = 1
+            self.addFriendView.isHidden = false
+            self.settingsBackgroundView.isHidden = false
+            settingsBackgroundView.addGestureRecognizer(tapAddFriendRecognizer)
+        }
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseIn]) { [weak self] in
+            self?.settingsBackgroundView.alpha = alpha
+        }
+        
+        UIView.animate(withDuration: 0.2, delay: 0.1, options: [.curveEaseOut]) { [weak self] in
+            self?.addFriendView.alpha = alpha
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
+            if self.isAddViewHidden == true {
+                self.addFriendView.isHidden = true
+                self.settingsBackgroundView.gestureRecognizers?.removeAll()
+            }
+        }
+        isAddViewHidden.toggle()
+    }
 }
 
+extension AccountController: AccountView {
+    func showErrorAlertController(with message: String) {
+        presenter?.showErrorAlertController(with: message)
+    }
+    
+    func showError(with error: String) {
+        addFriendView.showError(with: error)
+    }
+    
+    func reloadView() {
+        friendsTableView.reloadData()
+    }
+
+    func setUp(with user: User) {
+        userImageView.image = UIImage(named: user.image)
+        userNameLabel.text = user.name
+        toDoInLabel.text = user.email
+    }
+    
+    func getFriend(by index: Int) -> User? {
+        presenter?.getFriend(by: index)
+    }
+    
+    func getAllFriends() -> [User]? {
+        presenter?.getAllFriends()
+    }
+    
+    func addNewFriend(_ email: String) {
+        presenter?.addNewFriend(email)
+    }
+    
+    func dismissAddNewFriendView() {
+        addViewAnimation()
+    }
+
+}

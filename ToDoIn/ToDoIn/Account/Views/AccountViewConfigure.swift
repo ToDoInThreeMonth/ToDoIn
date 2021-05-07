@@ -52,6 +52,15 @@ struct AccountViewConfigure {
         return CustomSearchTextField()
     }()
     
+    static var addButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Добавить друга", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
+        button.backgroundColor = .accentColor
+        button.tintColor = .darkTextColor
+        return button
+    }()
+    
     static var addFriendButton: UIButton = {
         let button = UIButton(type: .system)
         button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
@@ -112,6 +121,11 @@ struct AccountViewConfigure {
         button.addShadow(type: .outside, power: 3, alpha: 0.3, offset: 0)
     }
     
+    static func getAddButtonShadow(_ button: UIButton) {
+        button.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
+        button.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
+    }
+    
     static func getSettingButtonGradiend(_ button: UIButton) {
         button.addLinearGradiend()
     }
@@ -123,5 +137,11 @@ struct AccountViewConfigure {
         blurredEffectView.alpha = 0.8
         
         view.addSubview(blurredEffectView)
+    }
+    
+    static func getBasicViewShadow(_ view: UIView) {
+        view.addShadow(type: .outside, power: 10, alpha: 0.2, offset: 1)
+        view.addShadow(type: .outside, color: .white, power: 2, alpha: 1, offset: -1)
+        view.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
     }
 }

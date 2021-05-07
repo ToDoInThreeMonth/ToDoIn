@@ -1,8 +1,18 @@
 import Foundation
 
+protocol GroupSettingsViewPresenter {
+    func setCoordinator(with coordinator: GroupsChildCoordinator)
+    func getUsers(from userIdArray: [String])
+    func groupTitleDidChange(with title: String?)
+    func addUserButtonTapped()
+    func getUser(by section: Int) -> User
+}
+
 class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Properties
+    
+    weak var coordinator: GroupsChildCoordinator?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     
@@ -19,12 +29,16 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     required init(groupSettingsView: GroupSettingsView) {
         self.groupSettingsView = groupSettingsView
     }
+    
+    func setCoordinator(with coordinator: GroupsChildCoordinator) {
+        self.coordinator = coordinator
+    }
 
     // MARK: - Handlers
     
     func getUsers(from userIdArray: [String]) {
         for userId in userIdArray {
-            groupsManager.getUser(by: userId) { [weak self] (result) in
+            groupsManager.getUser(userId: userId) { [weak self] (result) in
                 switch result {
                 case .success(let user):
                     self?.users.append(user)
@@ -46,6 +60,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     func addUserButtonTapped() {
         // добавление нового участника в комнату
+        coordinator?.showAddUserToGroup()
     }
     
 }

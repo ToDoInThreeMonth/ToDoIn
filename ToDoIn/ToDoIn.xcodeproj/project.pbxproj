@@ -19,6 +19,9 @@
 		4335965E2643D11500D5FB64 /* AddGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335965D2643D11500D5FB64 /* AddGroupController.swift */; };
 		433596612643D15200D5FB64 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433596602643D15200D5FB64 /* ImagePicker.swift */; };
 		433596642643D3D200D5FB64 /* AddGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433596632643D3D200D5FB64 /* AddGroupPresenter.swift */; };
+		433596672644235100D5FB64 /* AddUserToGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433596662644235100D5FB64 /* AddUserToGroupController.swift */; };
+		4335966A2644250600D5FB64 /* AddUserToGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433596692644250600D5FB64 /* AddUserToGroupPresenter.swift */; };
+		4335966D264432FD00D5FB64 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335966C264432FD00D5FB64 /* AddFriendView.swift */; };
 		4335D6392629DF1100DA47DA /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D6382629DF1100DA47DA /* Protocols.swift */; };
 		4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D63C2629E05000DA47DA /* GroupsPresenter.swift */; };
 		4335D6402629E3E200DA47DA /* GroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4335D63F2629E3E200DA47DA /* GroupPresenter.swift */; };
@@ -81,6 +84,9 @@
 		4335965D2643D11500D5FB64 /* AddGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupController.swift; sourceTree = "<group>"; };
 		433596602643D15200D5FB64 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		433596632643D3D200D5FB64 /* AddGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupPresenter.swift; sourceTree = "<group>"; };
+		433596662644235100D5FB64 /* AddUserToGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserToGroupController.swift; sourceTree = "<group>"; };
+		433596692644250600D5FB64 /* AddUserToGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserToGroupPresenter.swift; sourceTree = "<group>"; };
+		4335966C264432FD00D5FB64 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		4335D6382629DF1100DA47DA /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		4335D63C2629E05000DA47DA /* GroupsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsPresenter.swift; sourceTree = "<group>"; };
 		4335D63F2629E3E200DA47DA /* GroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPresenter.swift; sourceTree = "<group>"; };
@@ -204,6 +210,7 @@
 				4335D6422629E7CE00DA47DA /* TaskPresenter.swift */,
 				43429916262AC22300BD85F5 /* GroupSettingsPresenter.swift */,
 				433596632643D3D200D5FB64 /* AddGroupPresenter.swift */,
+				433596692644250600D5FB64 /* AddUserToGroupPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -314,6 +321,7 @@
 				4354B311261CC2ED0080F577 /* TaskController.swift */,
 				439CEDED262088510005091A /* GroupSettingsController.swift */,
 				4335965D2643D11500D5FB64 /* AddGroupController.swift */,
+				433596662644235100D5FB64 /* AddUserToGroupController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -369,6 +377,7 @@
 				43FD16A22642B558008BA21A /* FriendTableViewCell.swift */,
 				43FD16A52642B580008BA21A /* FriendsTableView.swift */,
 				43FD16A82642B599008BA21A /* SearchTextField.swift */,
+				4335966C264432FD00D5FB64 /* AddFriendView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -510,6 +519,7 @@
 				433596612643D15200D5FB64 /* ImagePicker.swift in Sources */,
 				4351797F26184DF5009F898B /* GroupsService.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
+				4335966A2644250600D5FB64 /* AddUserToGroupPresenter.swift in Sources */,
 				43AEF86D262B29EC0063D925 /* GroupsFlowCoordinator.swift in Sources */,
 				4366F3612641572D00C95BFA /* AuthController.swift in Sources */,
 				43FD16AC2642B5E3008BA21A /* AccountProtocols.swift in Sources */,
@@ -517,6 +527,7 @@
 				4354B312261CC2ED0080F577 /* TaskController.swift in Sources */,
 				43FD16A92642B599008BA21A /* SearchTextField.swift in Sources */,
 				4335965E2643D11500D5FB64 /* AddGroupController.swift in Sources */,
+				433596672644235100D5FB64 /* AddUserToGroupController.swift in Sources */,
 				43C4FAA9261737C20019816F /* GroupTableViewCell.swift in Sources */,
 				43AEF875262B2BD80063D925 /* AccountController.swift in Sources */,
 				4352BF0F26419EF300AACE8C /* AccountPresenter.swift in Sources */,
@@ -525,6 +536,7 @@
 				4366F35E264121B100C95BFA /* Date+extension.swift in Sources */,
 				43FD16A32642B558008BA21A /* FriendTableViewCell.swift in Sources */,
 				43DDECE22614DE4B000FFC78 /* GroupsController.swift in Sources */,
+				4335966D264432FD00D5FB64 /* AddFriendView.swift in Sources */,
 				43FD16B32642BA59008BA21A /* AlertControllerCreator.swift in Sources */,
 				43D689402641877600850CE2 /* MainPresenter.swift in Sources */,
 				43FD169F2642B53B008BA21A /* AccountViewConfigure.swift in Sources */,

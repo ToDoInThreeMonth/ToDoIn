@@ -64,7 +64,7 @@ class GroupPresenter: GroupViewPresenter {
     
     func getUsers(from userIdArray: [String]) {
         for userId in userIdArray {
-            groupsManager.getUser(by: userId) { [weak self] (result) in
+            groupsManager.getUser(userId: userId) { [weak self] (result) in
                 switch result {
                 case .success(let user):
                     self?.users.append(user)
