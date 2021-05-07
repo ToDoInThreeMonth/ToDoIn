@@ -39,7 +39,7 @@ class GroupTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
-    func setupLayouts() {
+    private func setupLayouts() {
         groupView.pin
             .horizontally(50)
             .vertically(groupViewPadding)
@@ -57,7 +57,7 @@ class GroupTableViewCell: UITableViewCell {
             .vertically(groupViewPadding)
     }
     
-    func setupSublayers() {
+    private func setupSublayers() {
         configureGroupView()
         configureDimmingView()
         configureGroupLabel()
@@ -65,7 +65,7 @@ class GroupTableViewCell: UITableViewCell {
     }
     
     
-    func configureGroupView() {
+    private func configureGroupView() {
         groupView.backgroundColor = .accentColor
         if groupView.layer.cornerRadius == 0 {
             groupView.layer.cornerRadius = self.frame.height / 2.6
@@ -75,18 +75,18 @@ class GroupTableViewCell: UITableViewCell {
         }
     }
     
-    func configureGroupLabel() {
+    private func configureGroupLabel() {
         groupLabel.textColor = .darkTextColor
         groupLabel.font = UIFont(name: "Inter-Regular", size: 25)
     }
     
-    func configureGroupImageView() {
+    private func configureGroupImageView() {
         groupImageView.makeRound()
         groupImageView.layer.masksToBounds = false
         groupImageView.clipsToBounds = true
     }
     
-    func configureDimmingView() {
+    private func configureDimmingView() {
         dimmingView.frame = groupView.bounds
         dimmingView.backgroundColor = .clear
         dimmingView.layer.cornerRadius = self.frame.height / 2.6

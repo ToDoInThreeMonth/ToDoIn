@@ -113,11 +113,11 @@ extension GroupController: UITableViewDataSource {
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as? TaskTableViewCell else {
-            return UITableViewCell()
-        }
         guard let presenter = presenter else {
             self.showErrorAlert()
+            return UITableViewCell()
+        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as? TaskTableViewCell else {
             return UITableViewCell()
         }
         cell.setUp(task: presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])

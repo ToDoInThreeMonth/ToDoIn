@@ -10,21 +10,21 @@ class GroupSettingsController: UIViewController {
     private let group: Group
     
     private lazy var imageView: UIImageView = {
-       let imageView = SettingsModel.imageView
+       let imageView = SettingsUIComponents.imageView
         imageView.image = UIImage(named: group.image)
         return imageView
     }()
     
-    private lazy var groupBackView = SettingsModel.groupBackView
+    private lazy var groupBackView = SettingsUIComponents.groupBackView
     
     private lazy var groupTitle: UITextField = {
-        let textField = SettingsModel.groupTitle
+        let textField = SettingsUIComponents.groupTitle
         textField.text = group.name
         return textField
     }()
     
     private lazy var addUserButton: UIButton = {
-        let button = SettingsModel.addUserButton
+        let button = SettingsUIComponents.addUserButton
         button.addTarget(self, action: #selector(addUserButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -111,17 +111,17 @@ class GroupSettingsController: UIViewController {
     private func configureImageView() {
         if groupBackView.layer.cornerRadius == 0 {
             groupBackView.makeRound()
-            SettingsModel.getGroupBackViewShadow(groupBackView)
+            SettingsUIComponents.getGroupBackViewShadow(groupBackView)
             
             imageView.makeRound()
-            SettingsModel.getImageViewShadow(imageView)
+            SettingsUIComponents.getImageViewShadow(imageView)
         }
     }
     
     private func configureAddButton() {
         if addUserButton.layer.cornerRadius == 0 {
             addUserButton.layer.cornerRadius = 15
-            SettingsModel.getAddButtonShadow(addUserButton)
+            SettingsUIComponents.getAddButtonShadow(addUserButton)
         }
     }
     
