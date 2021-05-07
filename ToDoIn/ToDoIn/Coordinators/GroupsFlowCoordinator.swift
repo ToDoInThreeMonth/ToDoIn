@@ -5,7 +5,7 @@ protocol GroupsChildCoordinator: ChildCoordinator {
     func showTaskController(group: Group, task: Task, users: [User], isChanging: Bool)
     func showGroupController(group: Group)
     func showSettingsGroupController(group: Group)
-    func showAddUserToGroup()
+    func showAddUserToGroup(with participants: [User])
 }
 
 class GroupsFlowCoordinator: GroupsChildCoordinator {
@@ -58,9 +58,9 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
         navigationController.pushViewController(settingsGroupController, animated: true)
     }
     
-    func showAddUserToGroup() {
+    func showAddUserToGroup(with participants: [User]) {
         let addUserToGroupController = AddUserToGroupController()
-        addUserToGroupController.setPresenter(AddUserToGroupPresenter(addUserToGroupView: addUserToGroupController.self))
+        addUserToGroupController.setPresenter(AddUserToGroupPresenter(addUserToGroupView: addUserToGroupController.self, participants: participants))
         navigationController.viewControllers.last?.present(addUserToGroupController, animated: true, completion: nil)
     }
 }

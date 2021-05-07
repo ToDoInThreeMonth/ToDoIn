@@ -8,6 +8,7 @@ extension UINavigationController {
         case account
         case rooms
         case roomsDetail
+        case roomSettings
     }
     
     // Позволяет настроить кнопки navigation Bar'a в зависимости от экрана)
@@ -37,6 +38,10 @@ extension UINavigationController {
             let rightButtonB = UIBarButtonItem(image: rightButtonBImage, style: .plain, target: nil, action: nil)
             view.navigationItem.setRightBarButtonItems([rightButtonA, rightButtonB], animated: true)
             view.title = "Имя Комнаты"
+        case .roomSettings:
+            let addUserToRoomButtonImage =  UIImage(named: "addUser")?.withRenderingMode(.alwaysOriginal)
+            let addUserButton = UIBarButtonItem(image: addUserToRoomButtonImage, style: .plain, target: nil, action: nil)
+            view.navigationItem.setRightBarButton(addUserButton, animated: true)
         }
     }
 }

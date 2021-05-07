@@ -37,6 +37,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     // MARK: - Handlers
     
     func getUsers(from userIdArray: [String]) {
+//        users.removeAll()
         for userId in userIdArray {
             groupsManager.getUser(userId: userId) { [weak self] (result) in
                 switch result {
@@ -60,7 +61,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     func addUserButtonTapped() {
         // добавление нового участника в комнату
-        coordinator?.showAddUserToGroup()
+        coordinator?.showAddUserToGroup(with: users)
     }
     
 }

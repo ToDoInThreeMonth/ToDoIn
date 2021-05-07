@@ -27,13 +27,7 @@ class GroupSettingsController: UIViewController {
         textField.text = group.title
         return textField
     }()
-    
-    private lazy var addUserButton: UIButton = {
-        let button = SettingsUIComponents.addUserButton
-        button.addTarget(self, action: #selector(addUserButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
+        
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.dataSource = self
@@ -58,9 +52,10 @@ class GroupSettingsController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.getUsers(from: group.users)
+        setupNavigationItem()
         setBackground()
-        view.addSubviews(groupBackView, groupTitle, tableView, addUserButton)
+        
+        view.addSubviews(groupBackView, groupTitle, tableView)
         groupBackView.addSubviews(imageView)
         hideKeyboardWhenTappedAround()
 
@@ -75,15 +70,19 @@ class GroupSettingsController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureImageView()
+//        configureAddButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        presenter?.getUsers(from: group.users)
+
         setupInsets()
-        configureAddButton()
     }
     
     // MARK: - Configures
+    
     private func configureLayouts() {
         groupBackView.pin
             .topCenter(view.pin.safeArea.top)
@@ -98,20 +97,19 @@ class GroupSettingsController: UIViewController {
             .marginTop(20)
             .size(CGSize(width: 200, height: 40))
         
-        addUserButton.pin
-            .below(of: groupTitle)
-            .end(-10)
-            .width(160)
-            .height(40)
-            .marginTop(20)
-        
         tableView.pin
             .top(to: groupTitle.edge.bottom)
             .start(20)
-            .end(to: addUserButton.edge.start)
+            .end(20)
             .bottom(view.pin.safeArea.bottom)
             .marginEnd(10)
             .marginTop(20)
+    }
+    
+    private func setupNavigationItem() {
+        navigationController?.configureBarButtonItems(screen: .roomSettings, for: self)
+        navigationItem.rightBarButtonItem?.target = self
+        navigationItem.rightBarButtonItem?.action = #selector(addUserButtonTapped)
     }
     
     private func configureImageView() {
@@ -124,17 +122,8 @@ class GroupSettingsController: UIViewController {
         }
     }
     
-    private func configureAddButton() {
-        if addUserButton.layer.cornerRadius == 0 {
-            addUserButton.layer.cornerRadius = 15
-            SettingsUIComponents.getAddButtonShadow(addUserButton)
-        }
-    }
-    
     private func setupInsets() {
         tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)
-        addUserButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
-        addUserButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: addUserButton.frame.width - 45 - addUserButton.imageView!.frame.width)
         }
     
     // MARK: - Handlers

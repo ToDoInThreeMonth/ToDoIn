@@ -54,9 +54,7 @@ class AddUserToGroupController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        presenter?.didLoadView()
-        
+            
         setBackground()
         
         view.addSubviews(friendsTableView, chooseUserTitle, addButton)
@@ -79,6 +77,10 @@ class AddUserToGroupController: UIViewController {
             .hCenter()
             .marginTop(20)
             .width(view.bounds.width - 30)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        presenter?.didLoadView()
     }
     
     // MARK: - Handlers

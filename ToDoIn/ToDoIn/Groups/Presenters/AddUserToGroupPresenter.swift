@@ -16,12 +16,14 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
 
     private var user = User()
+    private var participants = [User]()
     private var friends = [User]()
     
     // MARK: - Init
     
-    init(addUserToGroupView: FriendsTableViewOutput) {
+    init(addUserToGroupView: FriendsTableViewOutput, participants: [User]) {
         self.addUserToGroupView = addUserToGroupView
+        self.participants = participants
     }
     
     // MARK: - Handlers
@@ -30,7 +32,6 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
         groupsManager.observeUser { [weak self] (result) in
             switch result {
             case .success(let user):
-                print(user)
                 self?.user = user
                 self?.getFriends(for: user)
                 self?.addUserToGroupView?.reloadView()
@@ -46,9 +47,10 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
             groupsManager.getUser(userId: friendId) { [weak self] (result) in
                 switch result {
                 case .success(let user):
-                    print(user)
-                    self?.friends.append(user)
-                    self?.addUserToGroupView?.reloadView()
+                    if !(self?.participants.contains(user) ?? true) {
+                        self?.friends.append(user)
+                        self?.addUserToGroupView?.reloadView()
+                    }
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
