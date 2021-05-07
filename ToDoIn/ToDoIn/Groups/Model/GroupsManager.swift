@@ -36,7 +36,7 @@ final class GroupsManager: GroupsManagerDescription {
     
     func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
-//            completion(.failure(NetworkError.noSignedUser))
+            completion(.failure(NetworkError.noSignedUser))
             return
         }
         database.collection("groups").addSnapshotListener { (querySnapshot, error) in
