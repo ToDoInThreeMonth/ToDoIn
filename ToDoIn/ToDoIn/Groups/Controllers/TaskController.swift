@@ -30,6 +30,7 @@ class TaskController: UIViewController {
     private let shadowDescriptionSubview = UIView()
     private let dateTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private let isDoneView = UIView()
     private let addButton = UIButton()
     
     // MARK: - Init
@@ -50,7 +51,7 @@ class TaskController: UIViewController {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .accentColor
-        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, userTextField, addButton, shadowDescriptionSubview)
+        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, userTextField, addButton, shadowDescriptionSubview, isDoneView)
     }
     
     override func viewDidLoad() {
@@ -64,7 +65,7 @@ class TaskController: UIViewController {
         configureDescriptionTextView()
         configurePickers()
         configureAddButton()
-        
+        configureIsDoneView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -119,6 +120,13 @@ class TaskController: UIViewController {
             .marginTop(30)
             .horizontally(LayersConstants.horizontalPadding * 2)
             .height(35)
+        
+        if isChanging {
+            isDoneView.pin
+                .below(of: userTextField, aligned: .center)
+                .marginTop(25)
+                .size(CGSize(width: 40, height: 40))
+        }
         
         addButton.pin
             .bottom(view.pin.safeArea.bottom + 20)
@@ -183,6 +191,12 @@ class TaskController: UIViewController {
         dateTextField.text = dateformatter.string(from: task.date)
         userTextField.text = presenter?.getUser(by: task.userId, in: users).name
     }
+    
+    func configureIsDoneView() {
+        isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
+        let tap = UITapGestureRecognizer(target: self, action: #selector(isDoneViewTapped))
+        isDoneView.addGestureRecognizer(tap)
+    }
 
     func configureAddButton() {
         addButton.setTitle(isChanging ? "Изменить" : "Добавить", for: .normal)
@@ -201,6 +215,11 @@ class TaskController: UIViewController {
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+            isDoneView.makeRound()
+//            isDoneView.addShadow(side: .topLeft, type: .innearRadial, power: 0.3, alpha: 0.3, offset: 3)
+//            isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.3, alpha: 0.5, offset: 4)
+//            isDoneView.addShadow(type: .outside, power: 4, alpha: 0.15, offset: 1)
+//            isDoneView.addShadow(type: .outside, color: .white, power: 4, alpha: 1, offset: -1)
         }
     }
     
@@ -239,14 +258,19 @@ class TaskController: UIViewController {
                 date = datePicker.date
             }
         }
-        var newTask = Task(userId: userId, title: title, description: descriptionTextView.text, date: date)
+        var newTask = Task(userId: userId, title: title, description: descriptionTextView.text, date: date, isDone: task.isDone)
         if isChanging {
             newTask.id = task.id
         }
         presenter?.buttonTapped(isChanging, task: newTask, group: group)
         dismiss(animated: true, completion: nil)
     }
-
+    
+    @objc
+    func isDoneViewTapped() {
+        task.isDone.toggle()
+        isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
+    }
 }
 
 

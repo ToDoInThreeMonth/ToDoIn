@@ -77,13 +77,12 @@ class TaskTableViewCell: UITableViewCell {
     
     
     func configureIsDoneView() {
-//        isDoneView.backgroundColor = .accentColor
         if isDoneView.layer.cornerRadius == 0 {
             isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2
-            isDoneView.addShadow(side: .topLeft, type: .innearRadial, power: 0.3, alpha: 0.3, offset: 3)
-            isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.3, alpha: 0.5, offset: 4)
-            isDoneView.addShadow(type: .outside, power: 4, alpha: 0.15, offset: 1)
-            isDoneView.addShadow(type: .outside, color: .white, power: 4, alpha: 1, offset: -1)
+//            isDoneView.addShadow(side: .topLeft, type: .innearRadial, power: 0.3, alpha: 0.3, offset: 3)
+//            isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.3, alpha: 0.5, offset: 4)
+//            isDoneView.addShadow(type: .outside, power: 4, alpha: 0.15, offset: 1)
+//            isDoneView.addShadow(type: .outside, color: .white, power: 4, alpha: 1, offset: -1)
         }
     }
     
@@ -93,7 +92,7 @@ class TaskTableViewCell: UITableViewCell {
             return
         }
         taskLabel.text = task.title
-        isDoneView.backgroundColor = task.isDone ? UIColor.pistachioColor.withAlphaComponent(0.5) : UIColor.accentColor
+        isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor.withAlphaComponent(0.5) : UIColor.lightRedColor
     }
     
 }

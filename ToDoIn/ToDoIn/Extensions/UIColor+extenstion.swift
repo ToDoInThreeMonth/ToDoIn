@@ -7,5 +7,7 @@ extension UIColor {
     
     static let lightTextColor = UIColor(red: 0.008, green: 0.173, blue: 0.447, alpha: 0.4)
     
-    static let pistachioColor = UIColor(red: 190/255, green: 245/255, blue: 116/255, alpha: 1)
+    static let lightGreenColor = UIColor(red: 190/255, green: 245/255, blue: 116/255, alpha: 0.5)
+    
+    static let lightRedColor = UIColor(red: 255/255, green: 127/255, blue: 80/255, alpha: 0.5)
 }
