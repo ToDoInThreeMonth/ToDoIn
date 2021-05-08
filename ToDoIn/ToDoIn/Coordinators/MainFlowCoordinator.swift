@@ -22,8 +22,9 @@ class MainFlowCoordinator: MainChildCoordinator {
         
         // Пример настройки viewController
         viewController.view.backgroundColor = .white
+
         viewController.title = title
-        
+       
         navigationController.pushViewController(viewController, animated: false)
     }
     

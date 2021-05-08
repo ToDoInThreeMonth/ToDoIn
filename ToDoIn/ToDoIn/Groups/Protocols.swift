@@ -1,3 +1,4 @@
+
 import Foundation
 
 // GroupsController
@@ -46,4 +47,5 @@ protocol TaskViewPresenter {
 protocol GroupSettingsViewPresenter {
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
+
 }
