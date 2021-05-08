@@ -107,7 +107,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
             .sizeToFit()
         
         addButton.pin
-            .bottom(15)
+            .bottom(view.pin.safeArea.bottom + 20)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.buttonHeight)
         
@@ -176,7 +176,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     func addButtonTapped() {
         let selectedIndexes = friendsTableView.indexPathsForSelectedRows
         if let groupName = nameTextField.text, !groupName.isEmpty {
-            presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [])
+            presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [], photo: imageView.image)
             transitionToMain()
         }
     }

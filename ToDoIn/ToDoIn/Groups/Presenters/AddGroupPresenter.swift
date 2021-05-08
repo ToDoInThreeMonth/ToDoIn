@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol AddGroupViewPresenter {
     func didLoadView()
@@ -6,7 +7,7 @@ protocol AddGroupViewPresenter {
     func getAllFriends() -> [User]
     func getFriend(by index: Int) -> User?
     
-    func addButtonTapped(title: String, selectedUsers: [IndexPath])
+    func addButtonTapped(title: String, selectedUsers: [IndexPath], photo: UIImage?)
 }
 
 class AddGroupPresenter: AddGroupViewPresenter {
@@ -68,7 +69,7 @@ class AddGroupPresenter: AddGroupViewPresenter {
         return nil
     }
     
-    func addButtonTapped(title: String, selectedUsers: [IndexPath]) {
+    func addButtonTapped(title: String, selectedUsers: [IndexPath], photo: UIImage?) {
         guard let currentUserId = authManager.getCurrentUserId() else {
             return
         }
@@ -79,7 +80,6 @@ class AddGroupPresenter: AddGroupViewPresenter {
             }
             usersId.append(userId)
         }
-        print(usersId)
-        groupsManager.addGroup(title: title, users: usersId)
+        groupsManager.addGroup(title: title, users: usersId, photo: photo)
     }
 }

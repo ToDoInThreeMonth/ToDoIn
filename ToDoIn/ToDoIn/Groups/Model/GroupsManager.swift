@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 enum NetworkError: Error {
     case unexpected
@@ -14,7 +15,7 @@ protocol GroupsManagerDescription {
     func observeUser(by userId: String?, completion: @escaping (Result<User, Error>) -> Void)
     func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void)
     
-    func addGroup(title: String, users: [String])
+    func addGroup(title: String, users: [String], photo: UIImage?)
     func addFriend(friend: User)
     func addUser(_ user: User, to group: Group)
     func addTask(_ task: Task, in group: Group)
@@ -24,6 +25,8 @@ protocol GroupsManagerDescription {
     func getUser(email: String, completion: @escaping (Result<User, Error>) -> Void)
     
     func changeTask(_ task: Task, in group: Group)
+    
+    func loadPhoto(url: String, completion: @escaping (Result<UIImage, Error>) -> Void)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -118,17 +121,26 @@ final class GroupsManager: GroupsManagerDescription {
     }
     
     
-    func addGroup(title: String, users: [String]) {
+    func addGroup(title: String, users: [String], photo: UIImage?) {
         let ref = database.collection("groups").document()
         let docId = ref.documentID
-        ref.setData(["id" : docId,
-                    "title" : title,
-                    "image" : "group",
-                    "tasks" : [],
-                    "users" : users]) { (error) in
-            if error != nil {
-                // Show error message
-                print("Error saving user data")
+        var imageName: String = "group"
+        uploadPhoto(id: docId, photo: photo) { (myResult) in
+            switch myResult {
+            case .success(let url):
+                imageName = url.absoluteString
+            case .failure(let error):
+                imageName = "group"
+                print(error.localizedDescription)
+            }
+            ref.setData(["id" : docId,
+                        "title" : title,
+                        "image" : imageName,
+                        "tasks" : [],
+                        "users" : users]) { (error) in
+                if error != nil {
+                    print("Error saving user data")
+                }
             }
         }
     }
@@ -146,7 +158,6 @@ final class GroupsManager: GroupsManagerDescription {
             }
         }
     }
-    
     
     func addUser(_ user: User, to group: Group) {
         database.collection("groups").document(group.id).setData(["users": FieldValue.arrayUnion([user.id])], merge: true)
@@ -233,6 +244,45 @@ final class GroupsManager: GroupsManagerDescription {
             }
         }
         return tasks
+    }
+    
+    func uploadPhoto(id: String, photo: UIImage?, completion: @escaping (Result<URL, Error>) -> Void) {
+        let ref = Storage.storage().reference().child("groupsAvatars").child(id)
+        
+        guard let imageData = photo?.jpegData(compressionQuality: 0.4) else { return }
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        ref.putData(imageData, metadata: metadata) { (metadata, error) in
+            if error != nil {
+                completion(.failure(error!))
+            } else {
+                ref.downloadURL { (url, error) in
+                    guard let url = url else {
+                        completion(.failure(error!))
+                        return
+                    }
+                    completion(.success(url))
+                }
+            }
+        }
+    }
+    
+    func loadPhoto(url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        let ref = Storage.storage().reference(forURL: url)
+        let megaByte = Int64(1 * 1024 * 1024)
+        ref.getData(maxSize: megaByte) { (data, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let data = data, let image = UIImage(data: data) else {
+                completion(.failure(NetworkError.unexpected))
+                return
+            }
+            completion(.success(image))
+        }
     }
 }
 

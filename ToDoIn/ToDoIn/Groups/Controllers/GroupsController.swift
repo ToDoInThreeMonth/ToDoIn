@@ -73,6 +73,12 @@ extension GroupsController: GroupsView {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
+    }
 }
 
 extension GroupsController: UITableViewDataSource {
@@ -87,6 +93,7 @@ extension GroupsController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as? GroupTableViewCell else {
             return UITableViewCell()
         }
+        cell.setupController(with: self)
         cell.setUp(group: presenter?.getGroup(at: indexPath.row) ?? Group())
         return cell
     }

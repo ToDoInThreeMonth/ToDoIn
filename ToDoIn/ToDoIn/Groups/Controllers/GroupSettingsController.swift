@@ -16,7 +16,7 @@ class GroupSettingsController: UIViewController {
     
     private lazy var imageView: UIImageView = {
        let imageView = SettingsUIComponents.imageView
-        imageView.image = UIImage(named: group.image)
+        imageView.image = UIImage()
         return imageView
     }()
     
@@ -119,6 +119,15 @@ class GroupSettingsController: UIViewController {
             
             imageView.makeRound()
             SettingsUIComponents.getImageViewShadow(imageView)
+        }
+        
+        // Подгружаем картинку из сети
+        if group.image == "group" {
+            imageView.image = UIImage(named: group.image)
+        } else {
+            presenter?.loadImage(url: group.image) { (image) in
+                self.imageView.image = image
+            }
         }
     }
     

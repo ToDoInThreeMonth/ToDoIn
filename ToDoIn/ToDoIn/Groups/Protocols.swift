@@ -1,10 +1,13 @@
 import Foundation
+import UIKit
 
 // GroupsController
 
 protocol GroupsView: class {
     func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator)
     func reloadView()
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
 
@@ -16,6 +19,8 @@ protocol GroupsViewPresenter {
     
     func getGroup(at index: Int) -> Group
     
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+
     func showGroupController(group: Group)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     

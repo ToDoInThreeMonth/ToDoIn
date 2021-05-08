@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol GroupSettingsViewPresenter {
     func didLoadView()
@@ -11,6 +12,8 @@ protocol GroupSettingsViewPresenter {
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
     func getUser(by section: Int) -> User
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
 class GroupSettingsPresenter: GroupSettingsViewPresenter {
@@ -81,6 +84,17 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     func addUserButtonTapped() {
         // добавление нового участника в комнату
         coordinator?.showAddUser(to: group, with: users)
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        groupsManager.loadPhoto(url: url) { (result) in
+            switch result {
+            case .success(let resImage):
+                completion(resImage)
+            case .failure(_):
+                completion(UIImage(named: "group") ?? UIImage())
+            }
+        }
     }
     
 }

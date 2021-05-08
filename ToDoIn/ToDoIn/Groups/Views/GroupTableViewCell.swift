@@ -4,6 +4,8 @@ class GroupTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    private weak var controller: GroupsView?
+    
     static let identifier = "GroupCell"
     
     var groupView = UIView()
@@ -29,6 +31,10 @@ class GroupTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupController(with controller: GroupsView) {
+        self.controller = controller
     }
     
     
@@ -83,6 +89,7 @@ class GroupTableViewCell: UITableViewCell {
         groupImageView.makeRound()
         groupImageView.layer.masksToBounds = false
         groupImageView.clipsToBounds = true
+        groupImageView.contentMode = .scaleAspectFill
     }
     
     func configureDimmingView() {
@@ -93,7 +100,13 @@ class GroupTableViewCell: UITableViewCell {
     
     func setUp(group: Group) {
         groupLabel.text = group.title
-        groupImageView.image = UIImage(named: group.image)
+        if group.image == "group" {
+            groupImageView.image = UIImage(named: group.image)
+        } else {
+            controller?.loadImage(url: group.image) { (image) in
+                self.groupImageView.image = image
+            }
+        }
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

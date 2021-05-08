@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class GroupsPresenter: GroupsViewPresenter {
     
@@ -55,6 +56,17 @@ class GroupsPresenter: GroupsViewPresenter {
                 self?.groups.removeAll()
                 self?.groupsView?.reloadView()
                 print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        groupsManager.loadPhoto(url: url) { (result) in
+            switch result {
+            case .success(let resImage):
+                completion(resImage)
+            case .failure(_):
+                completion(UIImage(named: "group") ?? UIImage())
             }
         }
     }
