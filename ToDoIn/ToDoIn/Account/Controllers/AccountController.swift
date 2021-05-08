@@ -6,7 +6,6 @@ protocol FriendsTableViewOutput: class {
     func showErrorAlertController(with message: String)
     
     func reloadView()
-    func setUp(with user: User)
     
     func getFriend(by index: Int) -> User?
     func getAllFriends() -> [User]?
@@ -22,6 +21,7 @@ protocol AddFriendViewOutput: class {
 protocol AccountView: FriendsTableViewOutput, AddFriendViewOutput {
     func showError(with error: String)
     func cleanErrorLabel()
+    func setUp(with user: User)
 }
 
 class AccountController: UIViewController {

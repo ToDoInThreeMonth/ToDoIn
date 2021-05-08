@@ -115,10 +115,6 @@ extension AddUserToGroupController: FriendsTableViewOutput {
         
     }
     
-    func setUp(with user: User) {
-        
-    }
-    
     func getFriend(by index: Int) -> User? {
         presenter?.getFriend(by: index)
     }

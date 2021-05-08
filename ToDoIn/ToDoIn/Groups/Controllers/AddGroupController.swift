@@ -205,10 +205,6 @@ extension AddGroupController: FriendsTableViewOutput {
         friendsTableView.reloadData()
     }
     
-    func setUp(with user: User) {
-        // TODO: - Remove this method
-    }
-    
     func showErrorAlertController(with message: String) {
         print(#function)
     }
