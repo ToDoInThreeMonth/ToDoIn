@@ -121,7 +121,7 @@ class TaskController: UIViewController {
             .height(35)
         
         addButton.pin
-            .bottom(15)
+            .bottom(view.pin.safeArea.bottom + 20)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.buttonHeight)
     }
