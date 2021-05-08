@@ -8,6 +8,8 @@ protocol AddGroupViewPresenter {
     func getFriend(by index: Int) -> User?
     
     func addButtonTapped(title: String, selectedUsers: [IndexPath], photo: UIImage?)
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
 class AddGroupPresenter: AddGroupViewPresenter {
@@ -81,5 +83,16 @@ class AddGroupPresenter: AddGroupViewPresenter {
             usersId.append(userId)
         }
         groupsManager.addGroup(title: title, users: usersId, photo: photo)
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhoto(url: url) { (result) in
+            switch result {
+            case .success(let resImage):
+                completion(resImage)
+            case .failure(_):
+                completion(UIImage(named: "default") ?? UIImage())
+            }
+        }
     }
 }

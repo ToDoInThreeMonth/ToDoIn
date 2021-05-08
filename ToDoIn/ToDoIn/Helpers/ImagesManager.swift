@@ -31,16 +31,13 @@ final class ImagesManager {
         let megaByte = Int64(1 * 1024 * 1024)
         ref.getData(maxSize: megaByte) { (data, error) in
             if error != nil {
-                print(error!)
                 completion(.failure(СustomError.error))
                 return
             }
             guard let data = data, let image = UIImage(data: data) else {
-                print("error")
                 completion(.failure(СustomError.unexpected))
                 return
             }
-            print("ok")
             completion(.success(image))
         }
     }

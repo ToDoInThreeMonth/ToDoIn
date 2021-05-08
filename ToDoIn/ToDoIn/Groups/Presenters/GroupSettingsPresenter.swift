@@ -8,10 +8,10 @@ protocol GroupSettingsViewPresenter {
     
     var usersCount: Int { get }
     
-    func getUsers(from userIdArray: [String])
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
     func getUser(by section: Int) -> User
+    func getAllUsers() -> [User]
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
@@ -75,6 +75,10 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     func getUser(by section: Int) -> User {
         return section < users.count ? users[section] : User()
+    }
+    
+    func getAllUsers() -> [User] {
+        users
     }
 
     func groupTitleDidChange(with title: String?) {

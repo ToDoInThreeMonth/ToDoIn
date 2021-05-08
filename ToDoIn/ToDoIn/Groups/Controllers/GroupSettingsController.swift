@@ -28,14 +28,13 @@ class GroupSettingsController: UIViewController {
         return textField
     }()
         
+    private lazy var usersTVDelegate = FriendsTVDelegate()
+    private lazy var usersTVDataSource = FriendsTVDataSource(controller: self)
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = UIColor.clear
-        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
+        let tableView = FriendsTableView(frame: .zero, style: .plain)
+        tableView.dataSource = usersTVDataSource
+        tableView.delegate = usersTVDelegate
+        tableView.allowsMultipleSelection = true
         return tableView
     }()
     
@@ -163,6 +162,32 @@ extension GroupSettingsController: GroupSettingsView {
     func reloadView() {
         tableView.reloadData()
     }
+}
+
+extension GroupSettingsController: FriendsTableViewOutput {
+    func showErrorAlertController(with message: String) {
+        
+    }
+    
+    func setUp(with user: User) {
+        
+    }
+    
+    func getFriend(by index: Int) -> User? {
+        presenter?.getUser(by: index)
+    }
+    
+    func getAllFriends() -> [User]? {
+        presenter?.getAllUsers()
+    }
+    
+    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
+    }
+    
+    
 }
 
 extension GroupSettingsController: UITableViewDataSource {

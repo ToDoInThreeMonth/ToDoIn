@@ -19,14 +19,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     private let usersLabel = UILabel()
     private let addButton = UIButton()
 
-    private lazy var imageView: UIImageView = {
-        let imageView = SettingsUIComponents.imageView
-        imageView.image = UIImage(named: "default")
-        let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
-        imageView.addGestureRecognizer(tap)
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
+    private var imageView = UIImageView()
     
     private lazy var friendsTVDelegate = FriendsTVDelegate()
     private lazy var friendsTVDataSource = FriendsTVDataSource(controller: self)
@@ -65,12 +58,12 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         configureLabels()
         configureNameTextField()
         configureAddButton()
+        configureImageView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureLayouts()
-        configureImageView()
         configureShadowsAndCornerRadius()
     }
     
@@ -119,7 +112,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     func configureNameTextField() {
-        nameTextField.placeholder = "День рождения Вовы"
+        nameTextField.placeholder = "Название комнаты"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
     }
@@ -132,11 +125,6 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         usersLabel.text = "Выберите участников комнаты:"
         [titleLabel, nameLabel, imageViewLabel, usersLabel].forEach { $0.textColor = .darkTextColor }
         
-    }
-    
-    private func configureImageView() {
-        imageView.makeRound()
-        SettingsUIComponents.getImageViewShadow(imageView)
     }
     
     func configureAddButton() {
@@ -153,12 +141,20 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         addButton.backgroundColor = .orange
     }
     
+    func configureImageView() {
+        imageView.layer.masksToBounds = true
+        imageView.image = UIImage(named: "default")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+    }
+    
     func configureShadowsAndCornerRadius() {
-        if nameTextField.layer.cornerRadius == 0 {
-            [nameTextField, addButton].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
-            [nameTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-            [nameTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
-        }
+        [nameTextField, addButton].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
+        [nameTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+        [nameTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+        imageView.makeRound()
+        SettingsUIComponents.getImageViewShadow(imageView)
     }
     
     // MARK: - Handlers
@@ -191,7 +187,9 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
 extension AddGroupController: FriendsTableViewOutput {
     
     func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
-        
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
     }
     
     func getFriend(by index: Int) -> User? {
