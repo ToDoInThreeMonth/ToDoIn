@@ -38,7 +38,7 @@ class AddGroupPresenter: AddGroupViewPresenter {
                 self?.getFriends(for: user)
                 self?.addGroupView?.reloadView()
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.addGroupView?.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -52,7 +52,7 @@ class AddGroupPresenter: AddGroupViewPresenter {
                     self?.friends.append(user)
                     self?.addGroupView?.reloadView()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self?.addGroupView?.showErrorAlertController(with: error.toString())
                 }
             }
         }

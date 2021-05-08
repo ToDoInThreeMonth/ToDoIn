@@ -122,7 +122,7 @@ class GroupSettingsController: UIViewController {
         }
         
         // Подгружаем картинку из сети
-        if group.image == "group" {
+        if group.image == "default" {
             imageView.image = UIImage(named: group.image)
         } else {
             presenter?.loadImage(url: group.image) { (image) in
@@ -177,6 +177,7 @@ extension GroupSettingsController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as? UserTableViewCell, let user = presenter?.getUser(by: indexPath.row) else {
             return UITableViewCell()
         }
+        
         cell.setUp(user: user)
         return cell
     }

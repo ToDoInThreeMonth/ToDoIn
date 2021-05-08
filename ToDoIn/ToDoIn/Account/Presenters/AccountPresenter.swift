@@ -6,7 +6,6 @@ protocol AccountViewPresenter {
     
     func showExitAlertController(completion: @escaping () -> ())
     func showErrorAlertController(with message: String)
-    func addFriendButtonTapped()
     
     func exitButtonTapped()
     
@@ -17,6 +16,8 @@ protocol AccountViewPresenter {
     func getFriends(for user: User)
     
     func addNewFriend(_ email: String)
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
 class AccountPresenter: AccountViewPresenter {
@@ -56,7 +57,7 @@ class AccountPresenter: AccountViewPresenter {
                 self?.accountView?.setUp(with: user)
                 self?.accountView?.reloadView()
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.accountView?.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -70,8 +71,19 @@ class AccountPresenter: AccountViewPresenter {
                     self?.friends.append(user)
                     self?.accountView?.reloadView()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self?.accountView?.showErrorAlertController(with: error.toString())
                 }
+            }
+        }
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhoto(url: url) { (result) in
+            switch result {
+            case .success(let resImage):
+                completion(resImage)
+            case .failure(_):
+                completion(UIImage(named: "default") ?? UIImage())
             }
         }
     }
@@ -113,10 +125,6 @@ class AccountPresenter: AccountViewPresenter {
             return friends[index]
         }
         return nil
-    }
-    
-    func addFriendButtonTapped() {
-        coordinator?.showFriendSearch()
     }
     
     func addNewFriend(_ email: String) {

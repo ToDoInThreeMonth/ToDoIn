@@ -3,17 +3,11 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
 
-enum NetworkError: Error {
-    case unexpected
-    case noSignedUser
-    case noUser
-}
-
 protocol GroupsManagerDescription {
-    func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void)
-    func observeGroup(by userId: String, completion: @escaping (Result<Group, Error>) -> Void)
-    func observeUser(by userId: String?, completion: @escaping (Result<User, Error>) -> Void)
-    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void)
+    func observeGroups(completion: @escaping (Result<[Group], СustomError>) -> Void)
+    func observeGroup(by userId: String, completion: @escaping (Result<Group, СustomError>) -> Void)
+    func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void)
+    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], СustomError>) -> Void)
     
     func addGroup(title: String, users: [String], photo: UIImage?)
     func addFriend(friend: User)
@@ -21,12 +15,11 @@ protocol GroupsManagerDescription {
     func addTask(_ task: Task, in group: Group)
 
     func getTasks(for userId: String, from group: Group) -> [Task]
-    func getUser(userId: String, completion: @escaping (Result<User, Error>) -> Void)
-    func getUser(email: String, completion: @escaping (Result<User, Error>) -> Void)
+    func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void)
+    func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void)
     
     func changeTask(_ task: Task, in group: Group)
     
-    func loadPhoto(url: String, completion: @escaping (Result<UIImage, Error>) -> Void)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -37,19 +30,19 @@ final class GroupsManager: GroupsManagerDescription {
     
     private init() {}
     
-    func observeGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
+    func observeGroups(completion: @escaping (Result<[Group], СustomError>) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
-            completion(.failure(NetworkError.noSignedUser))
+            completion(.failure(СustomError.noSignedUser))
             return
         }
         database.collection("groups").addSnapshotListener { (querySnapshot, error) in
-            if let error = error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(СustomError.error))
                 return
             }
             
             guard let documents = querySnapshot?.documents else {
-                completion(.failure(NetworkError.unexpected))
+                completion(.failure(СustomError.unexpected))
                 return
             }
             var groups = [Group]()
@@ -63,15 +56,15 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func observeGroup(by userId: String, completion: @escaping (Result<Group, Error>) -> Void) {
+    func observeGroup(by userId: String, completion: @escaping (Result<Group, СustomError>) -> Void) {
         database.collection("groups").document(userId).addSnapshotListener { (querySnapshot, error) in
-            if let error = error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(СustomError.error))
                 return
             }
             
             guard let data = querySnapshot else {
-                completion(.failure(NetworkError.unexpected))
+                completion(.failure(СustomError.unexpected))
                 return
             }
             
@@ -80,7 +73,7 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func observeUser(by userId: String?, completion: @escaping (Result<User, Error>) -> Void) {
+    func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void) {
         let saveUserId: String
         if userId == nil {
             saveUserId = Auth.auth().currentUser?.uid ?? ""
@@ -88,12 +81,12 @@ final class GroupsManager: GroupsManagerDescription {
             saveUserId = userId!
         }
         database.collection("users").document(saveUserId).addSnapshotListener { (snapshot, error) in
-            if let error = error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(СustomError.error))
                 return
             }
             guard let data = snapshot?.data() else {
-                completion(.failure(NetworkError.unexpected))
+                completion(.failure(СustomError.unexpected))
                 return
             }
             let user = GroupsConverter.user(from: data)
@@ -102,16 +95,16 @@ final class GroupsManager: GroupsManagerDescription {
     }
     
     
-    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], Error>) -> Void) {
+    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], СustomError>) -> Void) {
         var res = [User]()
         for friendId in friends {
             self.database.collection("users").document(friendId).addSnapshotListener { (snapshot, error) in
-                if let error = error {
-                    completion(.failure(error))
+                if error != nil {
+                    completion(.failure(СustomError.error))
                     return
                 }
                 guard let data = snapshot?.data() else {
-                    completion(.failure(NetworkError.unexpected))
+                    completion(.failure(СustomError.unexpected))
                     return
                 }
                 res.append(GroupsConverter.user(from: data))
@@ -124,14 +117,13 @@ final class GroupsManager: GroupsManagerDescription {
     func addGroup(title: String, users: [String], photo: UIImage?) {
         let ref = database.collection("groups").document()
         let docId = ref.documentID
-        var imageName: String = "group"
-        uploadPhoto(id: docId, photo: photo) { (myResult) in
+        var imageName: String = "default"
+        ImagesManager.uploadPhoto(id: docId, photo: photo) { (myResult) in
             switch myResult {
             case .success(let url):
                 imageName = url.absoluteString
-            case .failure(let error):
-                imageName = "group"
-                print(error.localizedDescription)
+            case .failure(_):
+                imageName = "default"
             }
             ref.setData(["id" : docId,
                         "title" : title,
@@ -164,17 +156,17 @@ final class GroupsManager: GroupsManagerDescription {
     }
     
     
-    func getUser(userId: String, completion: @escaping (Result<User, Error>) -> Void) {
+    func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void) {
         let docRef = database.collection("users").document(userId)
         docRef.getDocument { (document, error) in
-            if let error = error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(СustomError.error))
                 return
             }
             guard let document = document,
                   document.exists,
                   let data = document.data() else {
-                completion(.failure(NetworkError.unexpected))
+                completion(.failure(СustomError.unexpected))
                 return
             }
             
@@ -183,14 +175,14 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func getUser(email: String, completion: @escaping (Result<User, Error>) -> Void) {
+    func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void) {
         database.collection("users").getDocuments { (snapshot, error) in
-            if let error = error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(СustomError.error))
                 return
             }
             guard let documents = snapshot?.documents else {
-                completion(.failure(NetworkError.unexpected))
+                completion(.failure(СustomError.unexpected))
                 return
             }
             for document in documents {
@@ -203,7 +195,7 @@ final class GroupsManager: GroupsManagerDescription {
                     return
                 }
             }
-            completion(.failure(NetworkError.noUser))
+            completion(.failure(СustomError.noUser))
         }
     }
     
@@ -246,44 +238,6 @@ final class GroupsManager: GroupsManagerDescription {
         return tasks
     }
     
-    func uploadPhoto(id: String, photo: UIImage?, completion: @escaping (Result<URL, Error>) -> Void) {
-        let ref = Storage.storage().reference().child("groupsAvatars").child(id)
-        
-        guard let imageData = photo?.jpegData(compressionQuality: 0.4) else { return }
-        
-        let metadata = StorageMetadata()
-        metadata.contentType = "image/jpeg"
-        
-        ref.putData(imageData, metadata: metadata) { (metadata, error) in
-            if error != nil {
-                completion(.failure(error!))
-            } else {
-                ref.downloadURL { (url, error) in
-                    guard let url = url else {
-                        completion(.failure(error!))
-                        return
-                    }
-                    completion(.success(url))
-                }
-            }
-        }
-    }
-    
-    func loadPhoto(url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        let ref = Storage.storage().reference(forURL: url)
-        let megaByte = Int64(1 * 1024 * 1024)
-        ref.getData(maxSize: megaByte) { (data, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let data = data, let image = UIImage(data: data) else {
-                completion(.failure(NetworkError.unexpected))
-                return
-            }
-            completion(.success(image))
-        }
-    }
 }
 
 final class GroupsConverter {

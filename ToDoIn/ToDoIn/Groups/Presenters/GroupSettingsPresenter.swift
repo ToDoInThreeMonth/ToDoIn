@@ -53,7 +53,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
                 self?.group = group
                 self?.getUsers(from: group.users)
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error.toString())
             }
         }
     }
@@ -67,7 +67,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
                     self?.users.append(user)
                     self?.groupSettingsView?.reloadView()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print(error.toString())
                 }
             }
         }
@@ -87,12 +87,12 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     }
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        groupsManager.loadPhoto(url: url) { (result) in
+        ImagesManager.loadPhoto(url: url) { (result) in
             switch result {
             case .success(let resImage):
                 completion(resImage)
             case .failure(_):
-                completion(UIImage(named: "group") ?? UIImage())
+                completion(UIImage(named: "default") ?? UIImage())
             }
         }
     }

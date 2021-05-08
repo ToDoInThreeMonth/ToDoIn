@@ -100,7 +100,7 @@ class GroupTableViewCell: UITableViewCell {
     
     func setUp(group: Group) {
         groupLabel.text = group.title
-        if group.image == "group" {
+        if group.image == "default" {
             groupImageView.image = UIImage(named: group.image)
         } else {
             controller?.loadImage(url: group.image) { (image) in

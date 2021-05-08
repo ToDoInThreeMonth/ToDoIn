@@ -8,7 +8,7 @@ struct Group: Equatable {
     var users: [String]
     var tasks: [Task]
     
-    init(id: String = "", title: String = "", image: String = "", tasks: [Task] = [], users: [String] = []) {
+    init(id: String = "", title: String = "", image: String = "default", tasks: [Task] = [], users: [String] = []) {
         self.id = id
         self.title = title
         self.image = image
@@ -28,7 +28,7 @@ struct User: Equatable {
     var image: String
     var friends: [String]
     
-    init(id: String = "", name: String = "", email: String = "", image: String = "user", friends: [String] = []) {
+    init(id: String = "", name: String = "", email: String = "", image: String = "default", friends: [String] = []) {
         self.id = id
         self.name = name
         self.email = email

@@ -1,10 +1,13 @@
 import Foundation
+import UIKit
 
 protocol AuthViewPresenter {
     init(authView: AuthView)
     func setCoordinator(with coordinator: AccountChildCoordinator)
 
-    func buttonSignTapped(isSignIn: Bool)
+    func buttonSignInTapped()
+    func buttonSignUpTapped(photo: UIImage?)
+    
     func authSucceed()
 }
 
@@ -30,42 +33,36 @@ class AuthPresenter: AuthViewPresenter {
     
     // MARK: - Handlers
     
-    func buttonSignTapped(isSignIn: Bool) {
+    func buttonSignInTapped() {
         let email = authView?.getEmail() ?? ""
-        let name = authView?.getName() ?? ""
-        let password1 = authView?.getPassword1() ?? ""
-        let password2 = authView?.getPassword2() ?? ""
-        if isSignIn {
-            let res = authManager.signIn(email: email, password: password1) { [weak self] (result) in
-                switch result {
-                case .success(let userId):
-                    print(userId)
-                    self?.authSucceed()
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-            if res != nil {
-                authView?.showError(res!)
-                return
-            }
-        } else {
-            let res = authManager.signUp(email: email, name: name, password1: password1, password2: password2) { [weak self] (result) in
-                switch result {
-                case .success(let userId):
-                    print(userId)
-                    self?.authSucceed()
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-            if res != nil {
-                authView?.showError(res!)
-                return
+        let password = authView?.getPassword1() ?? ""
+        
+        authManager.signIn(email: email, password: password) { [weak self] (result) in
+            switch result {
+            case .success(let userId):
+                self?.authSucceed()
+            case .failure(let error):
+                self?.authView?.showError(error.toString())
             }
         }
     }
     
+    func buttonSignUpTapped(photo: UIImage?) {
+        let email = authView?.getEmail() ?? ""
+        let name = authView?.getName() ?? ""
+        let password1 = authView?.getPassword1() ?? ""
+        let password2 = authView?.getPassword2() ?? ""
+        
+        authManager.signUp(email: email, name: name, password1: password1, password2: password2, photo: photo) { [weak self] (result) in
+            switch result {
+            case .success(let userId):
+                self?.authSucceed()
+            case .failure(let error):
+                self?.authView?.showError(error.toString())
+            }
+        }
+    }
+
     func authSucceed() {
         authView?.transitionToMain()
         coordinator?.showAccount()

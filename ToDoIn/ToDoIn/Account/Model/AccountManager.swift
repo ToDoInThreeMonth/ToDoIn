@@ -27,7 +27,7 @@ final class AccountManager: AccountManagerDescription {
                 return
             }
             guard let data = snapshot?.data() else {
-                completion(.failure(NetworkError.unexpected))
+                completion(.failure(СustomError.unexpected))
                 return
             }
             let user = GroupsConverter.user(from: data)
@@ -42,7 +42,7 @@ final class AccountManager: AccountManagerDescription {
                 return
             }
             guard let documents = snapshot?.documents else {
-                completion(.failure(NetworkError.unexpected))
+                completion(.failure(СustomError.unexpected))
                 return
             }
             for document in documents {

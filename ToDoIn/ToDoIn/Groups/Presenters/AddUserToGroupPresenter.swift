@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol AddUserToGroupViewPresenter {
     func didLoadView()
@@ -7,6 +8,8 @@ protocol AddUserToGroupViewPresenter {
     
     func getFriend(by index: Int) -> User?
     func getAllFriends() -> [User]
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
 class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
@@ -40,7 +43,7 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
                 self?.getFriends(for: user)
                 self?.addUserToGroupView?.reloadView()
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.addUserToGroupView?.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -56,7 +59,7 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
                         self?.addUserToGroupView?.reloadView()
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self?.addUserToGroupView?.showErrorAlertController(with: error.toString())
                 }
             }
         }
@@ -77,6 +80,17 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
             return otherFriends[index]
         }
         return nil
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhoto(url: url) { (result) in
+            switch result {
+            case .success(let resImage):
+                completion(resImage)
+            case .failure(_):
+                completion(UIImage(named: "default") ?? UIImage())
+            }
+        }
     }
     
 }

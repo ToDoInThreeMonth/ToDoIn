@@ -3,8 +3,8 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol AuthManagerDescription {
-    func signUp(email: String, name: String, password1: String, password2: String, completion: @escaping (Result<String, Error>) -> Void) -> String?
-    func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String?
+    func signUp(email: String, name: String, password1: String, password2: String, photo: UIImage?, completion: @escaping (Result<String, СustomError>) -> Void)
+    func signIn(email: String, password: String, completion: @escaping (Result<String, СustomError>) -> Void)
     func signOut()
     func isSignedIn() -> Bool
     
@@ -37,70 +37,71 @@ final class AuthManager: AuthManagerDescription {
         return user
     }
     
-    func signUp(email: String, name: String, password1: String, password2: String, completion: @escaping (Result<String, Error>) -> Void) -> String? {
+    func signUp(email: String, name: String, password1: String, password2: String, photo: UIImage?, completion: @escaping (Result<String, СustomError>) -> Void) {
         let error = validateInput(email: email, name: name, password1: password1, password2: password2, isSignIn: false)
         
         if error != nil {
-            return error
+            completion(.failure(error!))
         } else {
             // Create cleaned versions of the data
             let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
             let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = password1.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            var res: String? = nil
             // Create the user
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
                 // Check for errors
                 if err != nil {
-                    print(err!.localizedDescription)
-                    // There was an error creating the user
-                    res = "Error creating user"
+                    completion(.failure(СustomError.failedToCreateUser))
                 } else {
-                    // User was created successfully, now store the first name and last name
-                    self.database
-                        .collection("users")
-                        .document(result!.user.uid)
-                        .setData(["email" : email,
-                                  "name" : name,
-                                  "image" : "user",
-                                  "id" : result!.user.uid,
-                                  "friends" : []]) { (error) in
-                        if error != nil {
-                            // Show error message
-                            res = "Error saving user data"
-                        } else {
-                            UserDefaults.standard.set(true, forKey: "status")
-                            completion(.success(Auth.auth().currentUser?.uid ?? "nil"))
+                    var imageName: String = "default"
+                    ImagesManager.uploadPhoto(id: result!.user.uid, photo: photo) { (myResult) in
+                        switch myResult {
+                        case .success(let url):
+                            imageName = url.absoluteString
+                        case .failure(_):
+                            imageName = "default"
                         }
+                        self.database
+                            .collection("users")
+                            .document(result!.user.uid)
+                            .setData(["email" : email,
+                                      "name" : name,
+                                      "image" : imageName,
+                                      "id" : result!.user.uid,
+                                      "friends" : []]) { (error) in
+                                if error != nil {
+                                    completion(.failure(СustomError.failedToSaveUserInFireStore))
+                                } else {
+                                    UserDefaults.standard.set(true, forKey: "status")
+                                    completion(.success(Auth.auth().currentUser?.uid ?? "nil"))
+                                }
+                            }
                     }
                 }
             }
-            return res
         }
     }
     
-    func signIn(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) -> String? {
+    func signIn(email: String, password: String, completion: @escaping (Result<String, СustomError>) -> Void) {
         let error = validateInput(email: email, password1: password, isSignIn: true)
         
         if error != nil {
-            return error
+            completion(.failure(error!))
         } else {
             // Create cleaned versions of the text field
             let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = password.trimmingCharacters(in: .whitespacesAndNewlines)
             
             // Signing in the user
-            var res: String? = nil
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
-                    res = error?.localizedDescription
+                    completion(.failure(СustomError.noUser))
                 } else {
                     UserDefaults.standard.set(true, forKey: "status")
                     completion(.success(Auth.auth().currentUser?.uid ?? "nil"))
                 }
             }
-            return res
         }
     }
     
@@ -126,27 +127,27 @@ final class AuthManager: AuthManagerDescription {
     }
     
     /// Check the fields and validate that the data is correct. If everything is correct, this method returns nil. Otherwise, it returns the error message
-    func validateInput(email: String, name: String = "", password1: String, password2: String = "", isSignIn: Bool) -> String? {
+    func validateInput(email: String, name: String = "", password1: String, password2: String = "", isSignIn: Bool) -> СustomError? {
         
         // Check that all fields are filled in
         if email.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             password1.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            return "Пожалуйста, заполните все поля."
+            return СustomError.emptyInput
         }
         if !isSignIn {
             if name.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
                 password2.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-                return "Пожалуйста, заполните все поля."
+                return СustomError.emptyInput
             }
             // Check if the password is secure
             let cleanedPassword1 = password1.trimmingCharacters(in: .whitespacesAndNewlines)
             let cleanedPassword2 = password2.trimmingCharacters(in: .whitespacesAndNewlines)
             if cleanedPassword1 != cleanedPassword2 {
-                return "Вы ввели разные пароли."
+                return СustomError.differentPasswords
             }
             if cleanedPassword1.count < 6 {
                 // Password isn't secure enough
-                return "Пожалуйста, убедитесь, что Ваш пароль содержит хотя бы 6 символа."
+                return СustomError.incorrectPassword
             }
         }
         return nil

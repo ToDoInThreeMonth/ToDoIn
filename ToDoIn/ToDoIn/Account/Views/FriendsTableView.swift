@@ -49,7 +49,14 @@ class FriendsTVDataSource: NSObject, UITableViewDataSource {
             controller.showErrorAlertController(with: "Ячейки пользователей не могут быть созданы")
             return UITableViewCell()}
       
-        safeCell.friend = controller.getFriend(by: indexPath.row) //presenter?.getFriend(by: indexPath.row)
+        let friend = controller.getFriend(by: indexPath.row)
+        safeCell.friend = friend
+        let friendImage = friend?.image
+        if friendImage != nil {
+            controller.getPhoto(by: friendImage!) { (image) in
+                safeCell.setFriendAvatar(with: image)
+            }
+        }
         return safeCell
     }
 }

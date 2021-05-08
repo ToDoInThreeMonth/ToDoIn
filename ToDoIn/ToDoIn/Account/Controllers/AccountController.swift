@@ -10,6 +10,8 @@ protocol FriendsTableViewOutput: class {
     
     func getFriend(by index: Int) -> User?
     func getAllFriends() -> [User]?
+    
+    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void)
 }
 
 protocol AddFriendViewOutput: class {
@@ -98,7 +100,7 @@ class AccountController: UIViewController {
         
         setBackground()
         hideKeyboardWhenTappedAround()
-
+        
         setupViews()
         setupNavigationItem()
         
@@ -347,6 +349,13 @@ class AccountController: UIViewController {
 }
 
 extension AccountController: AccountView {
+    
+    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
+    }
+
     func showErrorAlertController(with message: String) {
         presenter?.showErrorAlertController(with: message)
     }
@@ -364,9 +373,15 @@ extension AccountController: AccountView {
     }
 
     func setUp(with user: User) {
-        userImageView.image = UIImage(named: user.image)
         userNameLabel.text = user.name
         toDoInLabel.text = user.email
+        if user.image == "default" {
+            userImageView.image = UIImage(named: user.image)
+        } else {
+            presenter?.loadImage(url: user.image) { (image) in
+                self.userImageView.image = image
+            }
+        }
     }
     
     func getFriend(by index: Int) -> User? {

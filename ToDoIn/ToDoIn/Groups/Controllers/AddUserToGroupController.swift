@@ -104,6 +104,13 @@ extension AddUserToGroupController: AddUserToGroupView {
 }
 
 extension AddUserToGroupController: FriendsTableViewOutput {
+    
+    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
+    }
+    
     func showErrorAlertController(with message: String) {
         
     }

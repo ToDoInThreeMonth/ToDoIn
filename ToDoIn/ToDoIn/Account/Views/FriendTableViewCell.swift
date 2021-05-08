@@ -6,7 +6,7 @@ class FriendTableViewCell: UITableViewCell {
     var friend: User? {
         didSet {
             guard let friend = friend else { return }
-            friendAvatar.image = UIImage(named: friend.image)
+            friendAvatar.image = UIImage(named: "default")
             friendName.text = friend.name
         }
     }
@@ -83,5 +83,12 @@ class FriendTableViewCell: UITableViewCell {
             friendView.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
             friendView.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 3)
         }
+    }
+    
+    func setFriendAvatar(with image: UIImage?) {
+        guard let image = image else {
+            return
+        }
+        friendAvatar.image = image
     }
 }

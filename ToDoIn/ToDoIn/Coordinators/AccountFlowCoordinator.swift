@@ -4,7 +4,6 @@ protocol AccountChildCoordinator: ChildCoordinator {
     func showAuthController(isSignIn: Bool)
     func showAccount()
     func showLogin()
-    func showFriendSearch()
     
     func presentExitController(completion: @escaping () -> ())
     func presentErrorController(with message: String)
@@ -64,12 +63,6 @@ class AccountFlowCoordinator: AccountChildCoordinator {
         let tabBarImage = UIImage(named: imageName)
         loginController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
         navigationController.setViewControllers([loginController], animated: false)
-    }
-    
-    func showFriendSearch() {
-        let friendSearchController = FriendSearchController()
-        friendSearchController.setPresenter(presenter: FriendSearchPresenter(friendSearchView: friendSearchController), coordinator: self)
-        navigationController.viewControllers.last?.present(friendSearchController, animated: true, completion: nil)
     }
     
     func presentExitController(completion: @escaping () -> ()) {

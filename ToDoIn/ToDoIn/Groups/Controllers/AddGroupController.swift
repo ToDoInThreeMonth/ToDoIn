@@ -21,7 +21,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
 
     private lazy var imageView: UIImageView = {
         let imageView = SettingsUIComponents.imageView
-        imageView.image = UIImage(named: "group")
+        imageView.image = UIImage(named: "default")
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -189,6 +189,11 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
 // MARK: - Extensions
 
 extension AddGroupController: FriendsTableViewOutput {
+    
+    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
+        
+    }
+    
     func getFriend(by index: Int) -> User? {
         presenter?.getFriend(by: index)
     }

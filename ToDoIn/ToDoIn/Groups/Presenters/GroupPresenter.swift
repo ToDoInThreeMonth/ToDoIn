@@ -41,7 +41,7 @@ class GroupPresenter: GroupViewPresenter {
                 self?.group = group
                 self?.getUsers(from: group.users)
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error.toString())
             }
         }
     }
@@ -49,18 +49,6 @@ class GroupPresenter: GroupViewPresenter {
     func getTasks(for userId: String) -> [Task] {
         return groupsManager.getTasks(for: userId, from: group)
     }
-    
-//    func getUser(by userId: String) {
-//        groupsManager.getUser(by: userId) { [weak self] (result) in
-//            switch result {
-//            case .success(let user):
-//                self?.users.append(user)
-//                self?.groupView?.reloadView()
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
     
     func getUsers(from userIdArray: [String]) {
         users.removeAll()
@@ -71,7 +59,7 @@ class GroupPresenter: GroupViewPresenter {
                     self?.users.append(user)
                     self?.groupView?.reloadView()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print(error.toString())
                 }
             }
         }

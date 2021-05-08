@@ -5,7 +5,7 @@ struct AccountViewConfigure {
     static var userImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "user")
+        imageView.image = UIImage(named: "default")
         imageView.backgroundColor = .accentColor
         return imageView
     }()
