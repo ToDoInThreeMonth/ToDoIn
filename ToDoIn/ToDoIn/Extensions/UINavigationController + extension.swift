@@ -42,13 +42,13 @@ extension UINavigationController {
             view.title = "Аккаунт"
         case .groupsDetail:
             let rightButtonA = UIButton(type: .system)
-            rightButtonA.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+            rightButtonA.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
             rightButtonA.setImage(UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
             rightButtonA.imageView?.contentMode = .scaleAspectFit
             rightButtonA.contentEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: -10)
             
             let rightButtonB = UIButton(type: .system)
-            rightButtonB.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+            rightButtonB.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
             rightButtonB.setImage(UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
             rightButtonB.imageView?.contentMode = .scaleAspectFit
             rightButtonB.contentEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: -10)
