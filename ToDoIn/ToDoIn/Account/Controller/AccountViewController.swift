@@ -249,7 +249,7 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     private func searchTFDidChanged() {
         guard let text = searchTextField.text else { return }
         
-        if text == "" {
+        if text.isEmpty {
             users = presenter.getAllFriends()
         } else {
             users = presenter.getFriends(from: text)
@@ -299,20 +299,19 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
             settingsBackgroundView.addGestureRecognizer(tapDropDownRecognizer)
         }
         
-        UIView.animate(withDuration: delay, delay: 0, options: [.curveEaseOut]) { [weak self] in
-            self?.settingsBackgroundView.alpha = backgroundAlpha
+        UIView.animate(withDuration: delay, delay: 0, options: [.curveEaseOut]) {
+            self.settingsBackgroundView.alpha = backgroundAlpha
         }
         
-        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) { [weak self] in
-            self?.notificationButton.alpha = notificationButtonAlpha
+        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) {
+            self.notificationButton.alpha = notificationButtonAlpha
         }
         
         delay *= 2
         
-        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) { [weak self] in
-            self?.exitButton.alpha = exitButtonAlpha
-        } completion: { [weak self] _ in
-            guard let self = self else { return }
+        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) {
+            self.exitButton.alpha = exitButtonAlpha
+        } completion: { _ in
             if self.isSettingMenuHidden == true {
                 self.exitButton.isHidden = true
                 self.notificationButton.isHidden = true
@@ -334,14 +333,13 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
             settingsBackgroundView.addGestureRecognizer(tapAddFriendRecognizer)
         }
         
-        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseIn]) { [weak self] in
-            self?.settingsBackgroundView.alpha = alpha
+        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseIn]) {
+            self.settingsBackgroundView.alpha = alpha
         }
         
-        UIView.animate(withDuration: 0.2, delay: 0.1, options: [.curveEaseOut]) { [weak self] in
-            self?.addFriendView.alpha = alpha
-        } completion: { [weak self] _ in
-            guard let self = self else { return }
+        UIView.animate(withDuration: 0.2, delay: 0.1, options: [.curveEaseOut]) {
+            self.addFriendView.alpha = alpha
+        } completion: { _ in
             if self.isAddViewHidden == true {
                 self.addFriendView.isHidden = true
                 self.settingsBackgroundView.gestureRecognizers?.removeAll()

@@ -38,11 +38,11 @@ class FriendsTVDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendTableViewCell.self), for: indexPath) as? FriendTableViewCell
         guard let controller = controller else {
             return UITableViewCell()
         }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendTableViewCell.self), for: indexPath) as? FriendTableViewCell
         guard let safeCell = cell else {
             controller.showErrorAlertController(with: "Ячейки пользователей не могут быть созданы")
             return UITableViewCell()}
