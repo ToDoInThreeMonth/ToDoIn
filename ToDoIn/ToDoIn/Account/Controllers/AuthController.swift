@@ -13,6 +13,7 @@ protocol AuthView: class {
     
     func showError(_ message:String)
     func transitionToMain()
+    func stopActivityIndicator()
 }
 
 class AuthController: UIViewController {
@@ -33,14 +34,14 @@ class AuthController: UIViewController {
         static let textFieldHeight: CGFloat = 35
     }
     
-    private var emailTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
-    private var nameTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
-    private var passwordTextField1 = CustomTextField(insets: LayersConstants.textFieldInsets)
-    private var passwordTextField2 = CustomTextField(insets: LayersConstants.textFieldInsets)
-    private var errorLabel = UILabel()
-    private var button = UIButton()
-    
-    private var imageView = UIImageView()
+    private let imageView = CustomImageView()
+    private let emailTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private let nameTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private let passwordTextField1 = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private let passwordTextField2 = CustomTextField(insets: LayersConstants.textFieldInsets)
+    private let errorLabel = UILabel()
+    private let button = CustomButton()
+    private let activityIndicator = UIActivityIndicatorView()
 
     
     // MARK: - Init
@@ -67,7 +68,10 @@ class AuthController: UIViewController {
         configureErrorLabel()
         configureImageView()
         
-        self.view.addSubviews(imageView, emailTextField, nameTextField, passwordTextField1, passwordTextField2, button, errorLabel)
+        if !isSignIn {
+            view.addSubview(imageView)
+        }
+        view.addSubviews(emailTextField, nameTextField, passwordTextField1, passwordTextField2, button, errorLabel)
 
     }
     
@@ -89,7 +93,7 @@ class AuthController: UIViewController {
         
         emailTextField.pin
             .top(to: isSignIn ? view.edge.top : imageView.edge.bottom)
-            .marginTop(isSignIn ? 100 : 10)
+            .marginTop(isSignIn ? 100 : 20)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.textFieldHeight)
 
@@ -119,17 +123,13 @@ class AuthController: UIViewController {
             .below(of: isSignIn ? passwordTextField1 : passwordTextField2 )
             .marginTop(LayersConstants.margin)
             .horizontally(LayersConstants.horizontalPadding)
-            .height(LayersConstants.textFieldHeight)
+            .height(LayersConstants.textFieldHeight * 2)
         
         button.pin
-            .below(of: errorLabel)
-            .horizontally(LayersConstants.horizontalPadding)
-            .height(LayersConstants.textFieldHeight)
+            .below(of: errorLabel, aligned: .center)
     }
     
     func configureImageView() {
-        imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "default")
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -138,6 +138,7 @@ class AuthController: UIViewController {
     func configureErrorLabel() {
         errorLabel.alpha = 0
         errorLabel.textAlignment = .center
+        errorLabel.numberOfLines = 0
     }
     
     func configureTextFields() {
@@ -154,25 +155,15 @@ class AuthController: UIViewController {
     }
     
     func configureAddButton() {
-        button.setTitle(isSignIn ? "Войти" : "Зарегистрироваться", for: .normal)
+        button.setTitle(isSignIn ? "Войти" : "Зарегистрироваться")
         button.addTarget(self, action: #selector(buttonSignTapped), for: .touchUpInside)
-        
-        button.setTitleColor(.darkTextColor, for: .normal)
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
-        gradientLayer.cornerRadius = LayersConstants.buttonCornerRadius
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
-        button.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func configureShadowsAndCornerRadius() {
         if nameTextField.layer.cornerRadius == 0 {
-            imageView.makeRound()
-            SettingsUIComponents.getImageViewShadow(imageView)
-            [emailTextField, nameTextField, passwordTextField1, passwordTextField2, button].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
-            [emailTextField, nameTextField, passwordTextField1, passwordTextField2, button].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-            [emailTextField, nameTextField, passwordTextField1, passwordTextField2, button].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+            [emailTextField, nameTextField, passwordTextField1, passwordTextField2].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
+            [emailTextField, nameTextField, passwordTextField1, passwordTextField2].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+            [emailTextField, nameTextField, passwordTextField1, passwordTextField2].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
         }
     }
     
@@ -180,25 +171,32 @@ class AuthController: UIViewController {
     // MARK: - Handlers
 
     @objc
-    func buttonSignTapped() {
+    private func buttonSignTapped() {
+        startActivityIndicator()
         if isSignIn {
             presenter?.buttonSignInTapped()
         } else {
-            presenter?.buttonSignUpTapped(photo: imageView.image)
+            presenter?.buttonSignUpTapped(photo: imageView.getImage())
         }
     }
     
     @objc
-    func imageViewTapped() {
+    private func imageViewTapped() {
         ImagePickerManager().pickImage(self) { image in
-            self.imageView.image = image
-            SettingsUIComponents.getImageViewShadow(self.imageView)
+            self.imageView.setImage(with: image)
             self.imageView.contentMode = .scaleAspectFill
         }
     }
     
     func transitionToMain() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func startActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.pin.below(of: button, aligned: .center).marginTop(10).sizeToFit()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
     }
 }
 
@@ -208,6 +206,7 @@ extension AuthController: AuthView {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }
+    
     func getEmail() -> String {
         emailTextField.text ?? ""
     }
@@ -228,5 +227,9 @@ extension AuthController: AuthView {
         errorLabel.text = message
         errorLabel.alpha = 1
         errorLabel.textColor = .red
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
     }
 }

@@ -31,7 +31,7 @@ class AddFriendView: UIView {
     }()
     
     private lazy var addButton: UIButton = {
-        let button = AccountViewConfigure.addButton
+        let button = AccountUIComponents.addButton
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -103,9 +103,9 @@ class AddFriendView: UIView {
             addButton.layer.cornerRadius = 20
             emailTextField.layer.cornerRadius = 20
             
-            AccountViewConfigure.getSearchTFShadow(emailTextField)
-            AccountViewConfigure.getAddButtonShadow(addButton)
-            AccountViewConfigure.getSettingButtonGradiend(addButton)
+            AccountUIComponents.getSearchTFShadow(emailTextField)
+            AccountUIComponents.getAddButtonShadow(addButton)
+            AccountUIComponents.getSettingButtonGradiend(addButton)
         }
     }
     

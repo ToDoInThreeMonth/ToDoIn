@@ -4,7 +4,7 @@ import FirebaseStorage
 final class ImagesManager {
     
     static func uploadPhoto(id: String, photo: UIImage?, completion: @escaping (Result<URL, СustomError>) -> Void) {
-        let ref = Storage.storage().reference().child("groupsAvatars").child(id)
+        let ref = Storage.storage().reference().child(id)
         
         guard let imageData = photo?.jpegData(compressionQuality: 0.3) else { return }
         

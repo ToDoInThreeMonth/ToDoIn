@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
+		430B85F7264801FB009D4D4B /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B85F6264801FB009D4D4B /* CustomImageView.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
 		4313B440260BBFA500E6381A /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43F260BBFA500E6381A /* MainController.swift */; };
 		4313B445260BBFA800E6381A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4313B444260BBFA800E6381A /* Assets.xcassets */; };
@@ -32,12 +33,11 @@
 		43429917262AC22300BD85F5 /* GroupSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43429916262AC22300BD85F5 /* GroupSettingsPresenter.swift */; };
 		4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8B32621740400069AB6 /* UserTableViewCell.swift */; };
 		4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */; };
-		434D41FD2637EBB70072494B /* SettingsUIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434D41FC2637EBB70072494B /* SettingsUIComponents.swift */; };
 		435179792618390D009F898B /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435179782618390D009F898B /* UIView+extension.swift */; };
-		4351797F26184DF5009F898B /* GroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351797E26184DF5009F898B /* GroupsService.swift */; };
 		4351798226185190009F898B /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4351798126185190009F898B /* TaskTableViewCell.swift */; };
 		4352BF0F26419EF300AACE8C /* AccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4352BF0E26419EF300AACE8C /* AccountPresenter.swift */; };
 		4354B312261CC2ED0080F577 /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4354B311261CC2ED0080F577 /* TaskController.swift */; };
+		4365A21B26471B710054485F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4365A21A26471B710054485F /* CustomButton.swift */; };
 		4366F35E264121B100C95BFA /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4366F35D264121B100C95BFA /* Date+extension.swift */; };
 		4366F3612641572D00C95BFA /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4366F3602641572D00C95BFA /* AuthController.swift */; };
 		437C92FE263D50FC008F1B85 /* GroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437C92FD263D50FC008F1B85 /* GroupsManager.swift */; };
@@ -58,7 +58,7 @@
 		43FD168B2642757E008BA21A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD168A2642757E008BA21A /* LoginController.swift */; };
 		43FD168F264275B8008BA21A /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD168E264275B8008BA21A /* LoginPresenter.swift */; };
 		43FD169B26428F64008BA21A /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD169A26428F64008BA21A /* AccountManager.swift */; };
-		43FD169F2642B53B008BA21A /* AccountViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD169E2642B53B008BA21A /* AccountViewConfigure.swift */; };
+		43FD169F2642B53B008BA21A /* AccountUIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD169E2642B53B008BA21A /* AccountUIComponents.swift */; };
 		43FD16A32642B558008BA21A /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16A22642B558008BA21A /* FriendTableViewCell.swift */; };
 		43FD16A62642B580008BA21A /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16A52642B580008BA21A /* FriendsTableView.swift */; };
 		43FD16A92642B599008BA21A /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16A82642B599008BA21A /* SearchTextField.swift */; };
@@ -72,6 +72,7 @@
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
+		430B85F6264801FB009D4D4B /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4313B43B260BBFA500E6381A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4313B43F260BBFA500E6381A /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
@@ -97,12 +98,11 @@
 		43429916262AC22300BD85F5 /* GroupSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsPresenter.swift; sourceTree = "<group>"; };
 		4349D8B32621740400069AB6 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		4349D8BA26218B6800069AB6 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
-		434D41FC2637EBB70072494B /* SettingsUIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUIComponents.swift; sourceTree = "<group>"; };
 		435179782618390D009F898B /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
-		4351797E26184DF5009F898B /* GroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsService.swift; sourceTree = "<group>"; };
 		4351798126185190009F898B /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		4352BF0E26419EF300AACE8C /* AccountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPresenter.swift; sourceTree = "<group>"; };
 		4354B311261CC2ED0080F577 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
+		4365A21A26471B710054485F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		4366F35D264121B100C95BFA /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		4366F3602641572D00C95BFA /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		437C92FD263D50FC008F1B85 /* GroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsManager.swift; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 		43FD168A2642757E008BA21A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		43FD168E264275B8008BA21A /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		43FD169A26428F64008BA21A /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
-		43FD169E2642B53B008BA21A /* AccountViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewConfigure.swift; sourceTree = "<group>"; };
+		43FD169E2642B53B008BA21A /* AccountUIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUIComponents.swift; sourceTree = "<group>"; };
 		43FD16A22642B558008BA21A /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		43FD16A52642B580008BA21A /* FriendsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
 		43FD16A82642B599008BA21A /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -242,6 +242,8 @@
 			children = (
 				4322866D260E04A20096C905 /* CustomTabBarController.swift */,
 				43228670260E08FA0096C905 /* CustomTabBar.swift */,
+				4365A21A26471B710054485F /* CustomButton.swift */,
+				430B85F6264801FB009D4D4B /* CustomImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,8 +295,6 @@
 				43D6893B264186DA00850CE2 /* MainProtocols.swift */,
 				43D6893A264186B500850CE2 /* Presenters */,
 				43D68939264186AD00850CE2 /* Controllers */,
-				43D689382641869A00850CE2 /* Model */,
-				43D689372641869200850CE2 /* Views */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -303,7 +303,6 @@
 			isa = PBXGroup;
 			children = (
 				43C4FAA5261733AA0019816F /* Group.swift */,
-				4351797E26184DF5009F898B /* GroupsService.swift */,
 				437C92FD263D50FC008F1B85 /* GroupsManager.swift */,
 			);
 			path = Model;
@@ -342,24 +341,9 @@
 				43DA628B261881D00057F063 /* SectionHeaderView.swift */,
 				4349D8B32621740400069AB6 /* UserTableViewCell.swift */,
 				439AE9A4262051D50051BB01 /* CustomTextField.swift */,
-				434D41FC2637EBB70072494B /* SettingsUIComponents.swift */,
 				433596602643D15200D5FB64 /* ImagePicker.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		43D689372641869200850CE2 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		43D689382641869A00850CE2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		43D68939264186AD00850CE2 /* Controllers */ = {
@@ -381,11 +365,11 @@
 		43FD169D2642B525008BA21A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				43FD169E2642B53B008BA21A /* AccountViewConfigure.swift */,
 				43FD16A22642B558008BA21A /* FriendTableViewCell.swift */,
 				43FD16A52642B580008BA21A /* FriendsTableView.swift */,
 				43FD16A82642B599008BA21A /* SearchTextField.swift */,
 				4335966C264432FD00D5FB64 /* AddFriendView.swift */,
+				43FD169E2642B53B008BA21A /* AccountUIComponents.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -525,7 +509,7 @@
 				4349D8B42621740400069AB6 /* UserTableViewCell.swift in Sources */,
 				43D6893C264186DA00850CE2 /* MainProtocols.swift in Sources */,
 				433596612643D15200D5FB64 /* ImagePicker.swift in Sources */,
-				4351797F26184DF5009F898B /* GroupsService.swift in Sources */,
+				4365A21B26471B710054485F /* CustomButton.swift in Sources */,
 				4322866E260E04A20096C905 /* CustomTabBarController.swift in Sources */,
 				4335966A2644250600D5FB64 /* AddUserToGroupPresenter.swift in Sources */,
 				433013182646B12F00756816 /* Errors.swift in Sources */,
@@ -548,9 +532,10 @@
 				4335966D264432FD00D5FB64 /* AddFriendView.swift in Sources */,
 				43FD16B32642BA59008BA21A /* AlertControllerCreator.swift in Sources */,
 				43D689402641877600850CE2 /* MainPresenter.swift in Sources */,
-				43FD169F2642B53B008BA21A /* AccountViewConfigure.swift in Sources */,
+				43FD169F2642B53B008BA21A /* AccountUIComponents.swift in Sources */,
 				4335D63D2629E05000DA47DA /* GroupsPresenter.swift in Sources */,
 				435179792618390D009F898B /* UIView+extension.swift in Sources */,
+				430B85F7264801FB009D4D4B /* CustomImageView.swift in Sources */,
 				43FD168B2642757E008BA21A /* LoginController.swift in Sources */,
 				43C4FAA6261733AA0019816F /* Group.swift in Sources */,
 				43FD168F264275B8008BA21A /* LoginPresenter.swift in Sources */,
@@ -572,7 +557,6 @@
 				433596642643D3D200D5FB64 /* AddGroupPresenter.swift in Sources */,
 				43AEF870262B29F90063D925 /* AccountFlowCoordinator.swift in Sources */,
 				4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */,
-				434D41FD2637EBB70072494B /* SettingsUIComponents.swift in Sources */,
 				43228674260E33980096C905 /* UIColor+extenstion.swift in Sources */,
 				43429917262AC22300BD85F5 /* GroupSettingsPresenter.swift in Sources */,
 				4349D8BB26218B6800069AB6 /* UIViewController+extension.swift in Sources */,

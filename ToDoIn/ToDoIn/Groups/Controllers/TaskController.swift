@@ -31,7 +31,7 @@ class TaskController: UIViewController {
     private let dateTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let isDoneView = UIView()
-    private let addButton = UIButton()
+    private let addButton = CustomButton()
     
     // MARK: - Init
     
@@ -130,8 +130,7 @@ class TaskController: UIViewController {
         
         addButton.pin
             .bottom(view.pin.safeArea.bottom + 20)
-            .horizontally(LayersConstants.horizontalPadding)
-            .height(LayersConstants.buttonHeight)
+            .hCenter()
     }
     
     func configureLabels() {
@@ -199,22 +198,15 @@ class TaskController: UIViewController {
     }
 
     func configureAddButton() {
-        addButton.setTitle(isChanging ? "Изменить" : "Добавить", for: .normal)
-        addButton.setTitleColor(.darkTextColor, for: .normal)
+        addButton.setTitle(isChanging ? "Изменить" : "Добавить")
         addButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
-        gradientLayer.cornerRadius = LayersConstants.cornerRadius
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
-        addButton.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func configureShadowsAndCornerRadius() {
         if nameTextField.layer.cornerRadius == 0 {
-            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
-            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
+            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
             isDoneView.makeRound()
 //            isDoneView.addShadow(side: .topLeft, type: .innearRadial, power: 0.3, alpha: 0.3, offset: 3)
 //            isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.3, alpha: 0.5, offset: 4)

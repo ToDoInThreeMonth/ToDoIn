@@ -17,9 +17,9 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     private let nameTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let imageViewLabel = UILabel()
     private let usersLabel = UILabel()
-    private let addButton = UIButton()
+    private let addButton = CustomButton(with: "Добавить")
 
-    private var imageView = UIImageView()
+    private var imageView = CustomImageView()
     
     private lazy var friendsTVDelegate = FriendsTVDelegate()
     private lazy var friendsTVDataSource = FriendsTVDataSource(controller: self)
@@ -91,8 +91,6 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         imageView.pin
             .below(of: imageViewLabel, aligned: .center)
             .marginTop(15)
-            .height(150)
-            .width(150)
         
         usersLabel.pin
             .below(of: imageView, aligned: .center)
@@ -101,8 +99,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         
         addButton.pin
             .bottom(view.pin.safeArea.bottom + 20)
-            .horizontally(LayersConstants.horizontalPadding)
-            .height(LayersConstants.buttonHeight)
+            .hCenter()
         
         friendsTableView.pin
             .below(of: usersLabel)
@@ -128,33 +125,19 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     func configureAddButton() {
-        addButton.setTitle("Добавить", for: .normal)
-        addButton.setTitleColor(.darkTextColor, for: .normal)
-        
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
-        gradientLayer.cornerRadius = LayersConstants.cornerRadius
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
-        addButton.layer.insertSublayer(gradientLayer, at: 0)
-        addButton.backgroundColor = .orange
     }
     
     func configureImageView() {
-        imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "default")
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
     }
     
     func configureShadowsAndCornerRadius() {
-        [nameTextField, addButton].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
-        [nameTextField, addButton].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-        [nameTextField, addButton].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
-        imageView.makeRound()
-        SettingsUIComponents.getImageViewShadow(imageView)
+        nameTextField.layer.cornerRadius = LayersConstants.cornerRadius
+        nameTextField.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
+        nameTextField.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
     }
     
     // MARK: - Handlers
@@ -162,8 +145,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     @objc
     func imageViewTapped() {
         ImagePickerManager().pickImage(self) { image in
-            self.imageView.image = image
-            SettingsUIComponents.getImageViewShadow(self.imageView)
+            self.imageView.setImage(with: image)
             self.imageView.contentMode = .scaleAspectFill
         }
     }
@@ -172,7 +154,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     func addButtonTapped() {
         let selectedIndexes = friendsTableView.indexPathsForSelectedRows
         if let groupName = nameTextField.text, !groupName.isEmpty {
-            presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [], photo: imageView.image)
+            presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [], photo: imageView.getImage())
             transitionToMain()
         }
     }

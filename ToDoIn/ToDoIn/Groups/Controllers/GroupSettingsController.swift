@@ -14,19 +14,9 @@ class GroupSettingsController: UIViewController {
     
     private let group: Group
     
-    private lazy var imageView: UIImageView = {
-       let imageView = SettingsUIComponents.imageView
-        imageView.image = UIImage()
-        return imageView
-    }()
-    
-    private lazy var groupBackView = SettingsUIComponents.groupBackView
-    
-    private lazy var groupTitle: UITextField = {
-        let textField = SettingsUIComponents.groupTitle
-        textField.text = group.title
-        return textField
-    }()
+    private let imageView = CustomImageView()
+
+    private let groupTitle = UITextField()
         
     private lazy var usersTVDelegate = FriendsTVDelegate()
     private lazy var usersTVDataSource = FriendsTVDataSource(controller: self)
@@ -34,7 +24,6 @@ class GroupSettingsController: UIViewController {
         let tableView = FriendsTableView(frame: .zero, style: .plain)
         tableView.dataSource = usersTVDataSource
         tableView.delegate = usersTVDelegate
-        tableView.allowsMultipleSelection = true
         return tableView
     }()
     
@@ -54,10 +43,11 @@ class GroupSettingsController: UIViewController {
         setupNavigationItem()
         setBackground()
         
-        view.addSubviews(groupBackView, groupTitle, tableView)
-        groupBackView.addSubviews(imageView)
+        view.addSubviews(imageView, groupTitle, tableView)
         hideKeyboardWhenTappedAround()
-
+        
+        configureGroupTitle()
+        configureImageView()
     }
     
     override func viewWillLayoutSubviews() {
@@ -66,11 +56,10 @@ class GroupSettingsController: UIViewController {
        
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        configureImageView()
-//        configureAddButton()
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        configureImageView()
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -83,16 +72,12 @@ class GroupSettingsController: UIViewController {
     // MARK: - Configures
     
     private func configureLayouts() {
-        groupBackView.pin
+        imageView.pin
             .topCenter(view.pin.safeArea.top)
             .margin(30)
-            .size(CGSize(width: 150, height: 150))
-        
-        imageView.pin
-            .all().margin(20)
         
         groupTitle.pin
-            .below(of: groupBackView, aligned: .center)
+            .below(of: imageView, aligned: .center)
             .marginTop(20)
             .size(CGSize(width: 200, height: 40))
         
@@ -112,23 +97,21 @@ class GroupSettingsController: UIViewController {
     }
     
     private func configureImageView() {
-        if groupBackView.layer.cornerRadius == 0 {
-            groupBackView.makeRound()
-            SettingsUIComponents.getGroupBackViewShadow(groupBackView)
-            
-            imageView.makeRound()
-            SettingsUIComponents.getImageViewShadow(imageView)
-        }
-        
         // Подгружаем картинку из сети
-        if group.image == "default" {
-            imageView.image = UIImage(named: group.image)
-        } else {
+        if group.image != "default" {
             presenter?.loadImage(url: group.image) { (image) in
-                self.imageView.image = image
+                self.imageView.setImage(with: image)
             }
         }
     }
+
+    private func configureGroupTitle() {
+        groupTitle.text = group.title
+        groupTitle.font = UIFont.systemFont(ofSize: 20)
+        groupTitle.textColor = .darkTextColor
+        groupTitle.textAlignment = .center
+    }
+    
     
     private func setupInsets() {
         tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)

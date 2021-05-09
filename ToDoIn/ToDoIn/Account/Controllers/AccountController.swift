@@ -30,31 +30,30 @@ class AccountController: UIViewController {
     private var presenter: AccountViewPresenter?
     
     // Lazy stored properties
-    private lazy var userImageView = AccountViewConfigure.userImageView
-    private lazy var userBackView = AccountViewConfigure.userBackView
-    private lazy var userNameLabel = AccountViewConfigure.userNameLabel
-    private lazy var toDoInLabel = AccountViewConfigure.toDoInLabel
-    private lazy var friendsLabel = AccountViewConfigure.friendsLabel
-    private lazy var friendUnderlineView = AccountViewConfigure.friendUnderlineView
+    private lazy var userImageView = CustomImageView()
+    private lazy var userNameLabel = AccountUIComponents.userNameLabel
+    private lazy var toDoInLabel = AccountUIComponents.toDoInLabel
+    private lazy var friendsLabel = AccountUIComponents.friendsLabel
+    private lazy var friendUnderlineView = AccountUIComponents.friendUnderlineView
     private lazy var isSettingsMenuHidden = true
-    private lazy var settingsBackgroundView = AccountViewConfigure.settingsBackgroundView
+    private lazy var settingsBackgroundView = AccountUIComponents.settingsBackgroundView
     private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backViewTapped))
     private lazy var tapAddFriendRecognizer = UITapGestureRecognizer(target: self, action: #selector(addFriendButtonTapped))
         
     private lazy var exitButton: UIButton = {
-        let button = AccountViewConfigure.exitButton
+        let button = AccountUIComponents.exitButton
         button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var notificationButton: UIButton = {
-        let button = AccountViewConfigure.notificationButton
+        let button = AccountUIComponents.notificationButton
         button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var addFriendButton: UIButton = {
-        let button = AccountViewConfigure.addFriendButton
+        let button = AccountUIComponents.addFriendButton
         button.addTarget(self, action: #selector(addFriendButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -69,6 +68,7 @@ class AccountController: UIViewController {
     }()
     
     private lazy var addFriendView = AddFriendView(controller: self)
+    
     private var isAddViewHidden = true
     private var isSettingMenuHidden = true
     
@@ -121,8 +121,8 @@ class AccountController: UIViewController {
     // UI configure methods
     private func setupViews() {
         view.backgroundColor = .accentColor
-        view.addSubviews(friendsTableView,
-                         userBackView,
+        view.addSubviews(userImageView,
+                         friendsTableView,
                          userNameLabel,
                          toDoInLabel,
                          friendsLabel,
@@ -132,22 +132,17 @@ class AccountController: UIViewController {
                          exitButton,
                          notificationButton,
                          addFriendView)
-        userBackView.addSubviews(userImageView)
         
         settingsBackgroundView.addGestureRecognizer(tapRecognizer)
     }
     
     private func setupLayouts() {
-        userBackView.pin
+        userImageView.pin
             .topCenter(view.pin.safeArea.top)
             .margin(30)
-            .size(CGSize(width: 150, height: 150))
-        
-        userImageView.pin
-            .all().margin(20)
         
         userNameLabel.pin
-            .top(to: userBackView.edge.bottom)
+            .top(to: userImageView.edge.bottom)
             .hCenter()
             .marginTop(20)
             .size(CGSize(width: 300, height: 24))
@@ -216,24 +211,18 @@ class AccountController: UIViewController {
     }
     
     private func configureViews() {
-        if userBackView.layer.cornerRadius == 0 {
-            userBackView.makeRound()
-            AccountViewConfigure.getUserBackShadow(userBackView)
-            
-            userImageView.makeRound()
-            AccountViewConfigure.getUserImageViewShadow(userImageView)
-            
+        if addFriendButton.layer.cornerRadius == 0 {
             
             [exitButton, notificationButton, addFriendButton].forEach{
                 $0.layer.cornerRadius = 20
-                AccountViewConfigure.getSettingButtonShadow($0)
-                AccountViewConfigure.getSettingButtonGradiend($0)
+                AccountUIComponents.getSettingButtonShadow($0)
+                AccountUIComponents.getSettingButtonGradiend($0)
             }
             
-            AccountViewConfigure.getSettingsViewBlur(settingsBackgroundView)
+            AccountUIComponents.getSettingsViewBlur(settingsBackgroundView)
             
             addFriendView.layer.cornerRadius = 20
-            AccountViewConfigure.getBasicViewShadow(addFriendView)
+            AccountUIComponents.getBasicViewShadow(addFriendView)
         }
     }
     
@@ -375,11 +364,9 @@ extension AccountController: AccountView {
     func setUp(with user: User) {
         userNameLabel.text = user.name
         toDoInLabel.text = user.email
-        if user.image == "default" {
-            userImageView.image = UIImage(named: user.image)
-        } else {
+        if user.image != "default" {
             presenter?.loadImage(url: user.image) { (image) in
-                self.userImageView.image = image
+                self.userImageView.setImage(with: image)
             }
         }
     }

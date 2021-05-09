@@ -39,11 +39,12 @@ class AuthPresenter: AuthViewPresenter {
         
         authManager.signIn(email: email, password: password) { [weak self] (result) in
             switch result {
-            case .success(let userId):
+            case .success(_):
                 self?.authSucceed()
             case .failure(let error):
                 self?.authView?.showError(error.toString())
             }
+            self?.authView?.stopActivityIndicator()
         }
     }
     
@@ -55,11 +56,12 @@ class AuthPresenter: AuthViewPresenter {
         
         authManager.signUp(email: email, name: name, password1: password1, password2: password2, photo: photo) { [weak self] (result) in
             switch result {
-            case .success(let userId):
+            case .success(_):
                 self?.authSucceed()
             case .failure(let error):
                 self?.authView?.showError(error.toString())
             }
+            self?.authView?.stopActivityIndicator()
         }
     }
 

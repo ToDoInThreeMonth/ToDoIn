@@ -1,20 +1,8 @@
 import UIKit
 
-struct AccountViewConfigure {
-    // Static stored properties
-    static var userImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "default")
-        imageView.backgroundColor = .accentColor
-        return imageView
-    }()
+struct AccountUIComponents {
     
-    static var userBackView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .accentColor
-        return view
-    }()
+    // MARK: - Properties
     
     static var userNameLabel: UILabel = {
         let label = UILabel()
@@ -99,18 +87,7 @@ struct AccountViewConfigure {
         return view
     }()
     
-    // Static functions
-    static func getUserBackShadow(_ view: UIView) {
-        view.addShadow(side: .bottomRight, type: .outside, alpha: 0.15)
-        view.addShadow(side: .bottomRight, type: .outside, color: .white, alpha: 1, offset: -10)
-        view.addShadow(side: .topLeft, type: .innearRadial, color: .white, power: 0.15, alpha: 1, offset: 10)
-        view.addShadow(side: .bottomRight, type: .innearRadial, power: 0.15, offset: 10)
-    }
-    
-    static func getUserImageViewShadow(_ imageView: UIImageView) {
-        imageView.addShadow(side: .topLeft, type: .innearRadial, power: 0.1, alpha: 0.3, offset: 10)
-        imageView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.1, alpha: 0.5, offset: 10)
-    }
+    // MARK: - Handlers
     
     static func getSearchTFShadow(_ textField: UITextField) {
         textField.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)

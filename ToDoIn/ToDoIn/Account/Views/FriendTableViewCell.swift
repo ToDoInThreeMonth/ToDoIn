@@ -15,6 +15,7 @@ class FriendTableViewCell: UITableViewCell {
     private lazy var friendAvatar: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

@@ -36,19 +36,7 @@ class AddUserToGroupController: UIViewController {
         return label
     }()
     
-    private let addButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Добавить", for: .normal)
-        button.setTitleColor(.darkTextColor, for: .normal)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - LayersConstants.horizontalPadding * 2, height: LayersConstants.buttonHeight)
-        gradientLayer.cornerRadius = LayersConstants.cornerRadius
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.accentColor.cgColor]
-        button.layer.insertSublayer(gradientLayer, at: 0)
-        return button
-    }()
+    private let addButton = CustomButton(with: "Добавить")
     
     // MARK: - Init
 
@@ -57,6 +45,8 @@ class AddUserToGroupController: UIViewController {
         presenter?.didLoadView()
 
         setBackground()
+        
+        addButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         view.addSubviews(friendsTableView, chooseUserTitle, addButton)
     }

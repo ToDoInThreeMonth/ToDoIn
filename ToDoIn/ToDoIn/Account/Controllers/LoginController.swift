@@ -10,32 +10,44 @@ class LoginController: UIViewController {
     
     private var presenter: LoginViewPresenter?
     
-    let buttonSignIn = UIButton()
-    let buttonSignUp = UIButton()
+    private var logoImageView = CustomImageView()
+    private let buttonSignIn = CustomButton(with: "Войти")
+    private let buttonSignUp = CustomButton(with: "Зарегистрироваться")
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setBackground()
         
-        navigationController?.configureBarButtonItems(screen: .account, for: self)
+        navigationController?.configureBarButtonItems(screen: .login, for: self)
         
-        buttonSignIn.backgroundColor = .gray
-        buttonSignUp.backgroundColor = .gray
+        configureButtons()
         
-        buttonSignIn.setTitle("Войти", for: .normal)
-        buttonSignUp.setTitle("Зарегистрироваться", for: .normal)
-        
-        buttonSignIn.addTarget(self, action: #selector(buttonSignInPressed), for: .touchUpInside)
-        buttonSignUp.addTarget(self, action: #selector(buttonSignUpPressed), for: .touchUpInside)
-        
-        self.view.addSubviews(buttonSignIn, buttonSignUp)
+        view.addSubviews(buttonSignIn, buttonSignUp, logoImageView)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        buttonSignIn.pin.center().sizeToFit()
-        buttonSignUp.pin.below(of: buttonSignIn, aligned: .center).sizeToFit()
+        
+        configureLayouts()
+    }
+    
+    func configureLayouts() {
+        logoImageView.pin
+            .topCenter(view.pin.safeArea.top)
+            .margin(30)
+                
+        buttonSignIn.pin
+            .center()
+        
+        buttonSignUp.pin
+            .below(of: buttonSignIn, aligned: .center)
+            .marginTop(20)
+    }
+    
+    func configureButtons() {
+        buttonSignIn.addTarget(self, action: #selector(buttonSignInPressed), for: .touchUpInside)
+        buttonSignUp.addTarget(self, action: #selector(buttonSignUpPressed), for: .touchUpInside)
     }
     
     @objc
