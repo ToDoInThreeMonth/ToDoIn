@@ -1,8 +1,10 @@
 import UIKit
 
 protocol AccountChildCoordinator: ChildCoordinator {
+
     func presentErrorController(with message: String)
     func presentExitController(completion: @escaping () -> ())
+
 }
 
 class AccountFlowCoordinator: AccountChildCoordinator {
@@ -18,8 +20,11 @@ class AccountFlowCoordinator: AccountChildCoordinator {
     }
     
     func start() {
+
         let presenter = AccountPresenter(coordinator: self)
         let viewController = AccountViewController(presenter: presenter)
+
+
         
         let tabBarImage = UIImage(named: imageName)
         
