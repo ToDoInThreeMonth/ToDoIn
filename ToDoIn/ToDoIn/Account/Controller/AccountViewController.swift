@@ -100,7 +100,7 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     
     // UI configure methods
     private func setupViews() {
-        view.backgroundColor = .darkAccentColor
+        view.backgroundColor = .accentColor
         view.addSubviews(friendsTableView,
                          userBackView,
                          userNameLabel,
@@ -324,7 +324,7 @@ class AccountViewController: UIViewController, FriendsTableViewOutput {
     
     private func addViewAnimation() {
         var alpha: CGFloat = 0
-        dismissKeyboard()
+        hideKeyboardWhenTappedAround()
         
         if isAddViewHidden == true {
             alpha = 1

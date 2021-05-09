@@ -12,7 +12,7 @@ struct AccountViewConfigure {
     
     static var userBackView: UIView = {
         let view = UIView()
-        view.backgroundColor = .darkAccentColor
+        view.backgroundColor = .accentColor
         return view
     }()
     
@@ -55,7 +55,7 @@ struct AccountViewConfigure {
         button.setImage(UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
         button.setTitle("Выйти", for: .normal)
-        button.backgroundColor = .darkAccentColor
+        button.backgroundColor = .accentColor
         button.tintColor = .darkTextColor
         button.alpha = 0
         return button
@@ -66,7 +66,7 @@ struct AccountViewConfigure {
         button.setImage(UIImage(named: "offNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("Уведомления", for: .normal)
         button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
-        button.backgroundColor = .darkAccentColor
+        button.backgroundColor = .accentColor
         button.tintColor = .darkTextColor
         button.alpha = 0
         return button
@@ -82,7 +82,7 @@ struct AccountViewConfigure {
         let button = UIButton(type: .system)
         button.setTitle("Добавить друга", for: .normal)
         button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
-        button.backgroundColor = .darkAccentColor
+        button.backgroundColor = .accentColor
         button.tintColor = .darkTextColor
         return button
     }()

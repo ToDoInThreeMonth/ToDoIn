@@ -55,7 +55,7 @@ class AddFriendView: UIView {
     
     private func setupViews() {
         isHidden = true 
-        backgroundColor = .darkAccentColor
+        backgroundColor = .accentColor
         addSubviews(titleLabel,
                     emailLabel,
                     emailTextField,
