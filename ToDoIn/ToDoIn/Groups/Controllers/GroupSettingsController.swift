@@ -57,6 +57,7 @@ class GroupSettingsController: UIViewController {
         view.addSubviews(groupBackView, groupTitle, tableView, addUserButton)
         groupBackView.addSubviews(imageView)
         hideKeyboardWhenTappedAround()
+        
 
     }
     

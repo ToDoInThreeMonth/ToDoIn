@@ -40,9 +40,7 @@ class FriendsTVDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("method start")
         guard let users = controller?.users else { return 0 }
-        print("table view number of rows123")
         return users.count
     }
 
