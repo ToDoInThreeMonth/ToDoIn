@@ -44,5 +44,3 @@ class AccountFlowCoordinator: AccountChildCoordinator {
         navigationController.present(alertVC, animated: true)
     }
 }
-    
-    

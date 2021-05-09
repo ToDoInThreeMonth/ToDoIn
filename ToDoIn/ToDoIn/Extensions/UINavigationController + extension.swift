@@ -4,6 +4,7 @@
 //
 //  Created by Philip on 26.04.2021.
 //
+
 import UIKit
 
 extension UINavigationController {
@@ -18,7 +19,9 @@ extension UINavigationController {
     
     // Позволяет настроить кнопки navigation Bar'a в зависимости от экрана)
     func configureBarButtonItems(screen: State, for view: UIViewController) {
-        self.navigationBar.barTintColor = UIColor.darkAccentColor
+
+        self.navigationBar.barTintColor = UIColor.accentColor
+
         self.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.darkTextColor, .font : UIFont(name: "Georgia", size: 24) as Any]
         switch screen {
         case .main:
@@ -46,3 +49,4 @@ extension UINavigationController {
         }
     }
 }
+
