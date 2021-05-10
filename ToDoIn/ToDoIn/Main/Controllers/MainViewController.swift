@@ -118,6 +118,11 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
+    func deleteSection(_ number: Int) {
+        presenter?.deleteSection(number)
+        updateUI()
+    }
+    
     
     func getAllSections() -> [OfflineSection] {
         guard let presenter = presenter else { return [] }
@@ -157,6 +162,8 @@ extension MainViewController: MainTableViewOutput {
             self.tableView.reloadData()
         }
     }
+    
+    
 }
 
 extension MainViewController: AuthViewOutput {

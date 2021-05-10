@@ -11,6 +11,7 @@ protocol MainViewPresenter {
     func getNumberOfSections() -> Int
     func getNumberOfRows(in section: Int) -> Int
     func getTask(from indexPath: IndexPath) -> OfflineTask?
+    func deleteSection(_ number: Int)
 }
 
 protocol MainTableViewOutput: class {
@@ -22,6 +23,7 @@ protocol MainTableViewOutput: class {
     func getNumberOfSections() -> Int
     func getNumberOfRows(in section: Int) -> Int
     func getTask(from indexPath: IndexPath) -> OfflineTask?
+    func deleteSection(_ number: Int)
 }
 
 protocol AuthViewOutput: class {

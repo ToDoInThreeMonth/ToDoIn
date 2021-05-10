@@ -76,4 +76,20 @@ struct RealmBase {
             oldSection.name = text
         }
     }
+    
+    static func deleteTask(section: Int, row: Int) {
+        guard let realm = realm else { return }
+        let task = realm.objects(OfflineSection.self)[section].tasks[row]
+        try? realm.write {
+            realm.delete(task)
+        }
+    }
+    
+    static func deleteSection(section: Int) {
+        guard let realm = realm else { return }
+        let section = realm.objects(OfflineSection.self)[section]
+        try? realm.write {
+            realm.delete(section)
+        }
+    }
 }

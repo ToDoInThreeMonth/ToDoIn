@@ -47,5 +47,10 @@ class MainPresenter: MainViewPresenter {
         section.name = text
         RealmBase.addSection(section)
     }
+    
+    
+    func deleteSection(_ number: Int) {
+        RealmBase.deleteSection(section: number)
+    }
 
 }
