@@ -39,6 +39,7 @@ class TaskController: UIViewController {
     private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let isDoneView = UIView()
     private let addButton = CustomButton()
+    private let deleteButton = CustomButton(with: "Удалить")
     
     // MARK: - Init
     
@@ -57,6 +58,9 @@ class TaskController: UIViewController {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .accentColor
+        if isChanging {
+            view.addSubview(deleteButton)
+        }
         view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, userTextField, addButton, shadowDescriptionSubview, isDoneView)
     }
     
@@ -70,7 +74,7 @@ class TaskController: UIViewController {
         configureNameTextField()
         configureDescriptionTextView()
         configurePickers()
-        configureAddButton()
+        configureButtons()
         configureIsDoneView()
     }
     
@@ -89,7 +93,7 @@ class TaskController: UIViewController {
         
         nameLabel.pin
             .below(of: titleLabel, aligned: .center)
-            .marginTop(35)
+            .marginTop(25)
             .sizeToFit()
         
         nameTextField.pin
@@ -100,20 +104,20 @@ class TaskController: UIViewController {
         
         descriptionLabel.pin
             .below(of: nameTextField, aligned: .center)
-            .marginTop(20)
+            .marginTop(15)
             .sizeToFit()
         
         shadowDescriptionSubview.pin
             .below(of: descriptionLabel)
             .marginTop(15)
             .horizontally(LayersConstants.horizontalPadding)
-            .height(200)
+            .height(150)
         
         descriptionTextView.pin
             .below(of: descriptionLabel)
             .marginTop(15)
             .horizontally(10)
-            .height(200)
+            .height(150)
         
         dateTextField.pin
             .below(of: descriptionTextView)
@@ -130,13 +134,22 @@ class TaskController: UIViewController {
         if isChanging {
             isDoneView.pin
                 .below(of: userTextField, aligned: .center)
-                .marginTop(25)
+                .marginTop(20)
                 .size(CGSize(width: 40, height: 40))
+            
+            deleteButton.pin
+                .bottom(view.pin.safeArea.bottom + 20)
+                .hCenter()
+            
+            addButton.pin
+                .above(of: deleteButton, aligned: .center)
+                .marginBottom(15)
+        } else {
+            addButton.pin
+                .bottom(view.pin.safeArea.bottom + 20)
+                .hCenter()
         }
-        
-        addButton.pin
-            .bottom(view.pin.safeArea.bottom + 20)
-            .hCenter()
+
     }
     
     func configureLabels() {
@@ -203,9 +216,11 @@ class TaskController: UIViewController {
         isDoneView.addGestureRecognizer(tap)
     }
 
-    func configureAddButton() {
+    func configureButtons() {
         addButton.setTitle(isChanging ? "Изменить" : "Добавить")
-        addButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        deleteButton.setTitleColor(.systemRed, for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
     func configureShadowsAndCornerRadius() {
@@ -214,10 +229,6 @@ class TaskController: UIViewController {
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
             isDoneView.makeRound()
-//            isDoneView.addShadow(side: .topLeft, type: .innearRadial, power: 0.3, alpha: 0.3, offset: 3)
-//            isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.3, alpha: 0.5, offset: 4)
-//            isDoneView.addShadow(type: .outside, power: 4, alpha: 0.15, offset: 1)
-//            isDoneView.addShadow(type: .outside, color: .white, power: 4, alpha: 1, offset: -1)
         }
     }
     
@@ -240,7 +251,7 @@ class TaskController: UIViewController {
     }
     
     @objc
-    func buttonTapped() {
+    func addButtonTapped() {
         guard let title = nameTextField.text, !title.isEmpty, !(userTextField.text?.isEmpty ?? true) else {
             dismiss(animated: true, completion: nil)
             return
@@ -260,7 +271,13 @@ class TaskController: UIViewController {
         if isChanging {
             newTask.id = task.id
         }
-        presenter?.buttonTapped(isChanging, task: newTask, group: group)
+        presenter?.addButtonTapped(isChanging, task: newTask, group: group)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc
+    func deleteButtonTapped() {
+        presenter?.deleteButtonTapped(task: task, group: group)
         dismiss(animated: true, completion: nil)
     }
     

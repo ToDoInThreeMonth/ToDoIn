@@ -6,7 +6,8 @@ protocol TaskViewPresenter {
     
     func doneDateTapped(date: Date)
     func doneUserTapped(user: User)
-    func buttonTapped(_ isChanging: Bool, task: Task, group: Group)
+    func addButtonTapped(_ isChanging: Bool, task: Task, group: Group)
+    func deleteButtonTapped(task: Task, group: Group)
     func getUser(by userId: String, in users: [User]) -> User
 }
 
@@ -42,7 +43,7 @@ class TaskPresenter: TaskViewPresenter {
         taskView?.setUser(with: user.name)
     }
     
-    func buttonTapped(_ isChanging: Bool, task: Task, group: Group) {
+    func addButtonTapped(_ isChanging: Bool, task: Task, group: Group) {
         if isChanging {
             groupsManager.changeTask(task, in: group) { [weak self] (result) in
                 if result != nil {
@@ -54,6 +55,11 @@ class TaskPresenter: TaskViewPresenter {
             groupsManager.addTask(task, in: group)
         }
     }
+    
+    func deleteButtonTapped(task: Task, group: Group) {
+        groupsManager.deleteTask(task, in: group)
+    }
+
     
     func getUser(by userId: String, in users: [User]) -> User {
         for user in users {

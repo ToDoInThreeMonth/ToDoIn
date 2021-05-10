@@ -21,6 +21,7 @@ protocol GroupsManagerDescription {
     
     func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void)
     
+    func deleteTask(_ task: Task, in group: Group)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -219,6 +220,18 @@ final class GroupsManager: GroupsManagerDescription {
         database.collection("groups").document(group.id).updateData([ "tasks": tasks ]) { err in
             if err != nil {
                 completion(.unexpected)
+            }
+        }
+    }
+    
+    func deleteTask(_ task: Task, in group: Group) {
+        database.collection("groups").document(group.id).updateData([
+            "tasks": FieldValue.arrayRemove([GroupsConverter.task(from: task)]),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
             }
         }
     }
