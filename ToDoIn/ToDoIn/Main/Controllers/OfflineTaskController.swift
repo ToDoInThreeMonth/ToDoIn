@@ -5,6 +5,7 @@ class OfflineTaskController: TaskController {
     private var presenter: OfflineTaskViewPresenter = OfflineTaskPresenter()
     private var indexPath: IndexPath
     private var isChanging: Bool
+    weak var delegate: MainTableViewOutput?
     
     init(task: OfflineTask = OfflineTask(),indexPath: IndexPath, isChanging: Bool = false) {
         let onlineTask = Task(user: User(), name: task.title, description: task.descriptionText, date: task.date)
@@ -28,6 +29,7 @@ class OfflineTaskController: TaskController {
         } else {
             presenter.addTask(task, in: indexPath)
         }
+        delegate?.updateUI()
         dismiss(animated: true, completion: nil)
     }
     

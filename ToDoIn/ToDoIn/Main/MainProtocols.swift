@@ -12,6 +12,7 @@ protocol MainViewPresenter {
     func getNumberOfRows(in section: Int) -> Int
     func getTask(from indexPath: IndexPath) -> OfflineTask?
     func deleteSection(_ number: Int)
+    func showDeleteSectionController(_ number: Int)
 }
 
 protocol MainTableViewOutput: class {
@@ -23,7 +24,7 @@ protocol MainTableViewOutput: class {
     func getNumberOfSections() -> Int
     func getNumberOfRows(in section: Int) -> Int
     func getTask(from indexPath: IndexPath) -> OfflineTask?
-    func deleteSection(_ number: Int)
+    func showDeleteSectionController(_ number: Int)
 }
 
 protocol AuthViewOutput: class {
@@ -32,6 +33,10 @@ protocol AuthViewOutput: class {
 
 protocol SectionAlertDelegate: class {
     func addNewSection(with text: String)
+}
+
+protocol DeleteAlertDelegate: class {
+    func deleteSection(_ number: Int)
 }
 
 // TaskController

@@ -118,11 +118,9 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
-    func deleteSection(_ number: Int) {
-        presenter?.deleteSection(number)
-        updateUI()
+    func showDeleteSectionController(_ number: Int) {
+        presenter?.showDeleteSectionController(number)
     }
-    
     
     func getAllSections() -> [OfflineSection] {
         guard let presenter = presenter else { return [] }
@@ -176,6 +174,13 @@ extension MainViewController: AuthViewOutput {
 extension MainViewController: SectionAlertDelegate {
     func addNewSection(with text: String) {
         presenter?.addNewSection(with: text)
+        updateUI()
+    }
+}
+
+extension MainViewController: DeleteAlertDelegate {
+    func deleteSection(_ number: Int) {
+        presenter?.deleteSection(number)
         updateUI()
     }
 }

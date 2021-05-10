@@ -7,10 +7,11 @@ struct AlertControllerCreator {
         case logOut
         case error
         case section
+        case deleteSection
     }
     
     // Static functions
-    static func getController (title: String?, message: String?, style: UIAlertController.Style, type: TypeAlert, delegate: SectionAlertDelegate? = nil) -> UIAlertController {
+    static func getController (title: String?, message: String?, style: UIAlertController.Style, type: TypeAlert) -> UIAlertController {
         switch type {
         case .logOut:
             let alertController = ExitAlertController(title: title, message: message, preferredStyle: style)
@@ -20,7 +21,9 @@ struct AlertControllerCreator {
             return alertController
         case .section:
             let alertController = SectionAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.delegate = delegate
+            return alertController
+        case .deleteSection:
+            let alertController = DeleteAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
         }
     }
@@ -94,4 +97,27 @@ class SectionAlertController: UIAlertController {
             textField.placeholder = "Работа"
         }
     }
+}
+
+class DeleteAlertController: UIAlertController {
+    weak var delegate: DeleteAlertDelegate?
+    var section: Int?
+    
+    // ViewController lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButton()
+    }
+    
+    // UI configure methods
+    private func setupButton() {
+        let addButton = UIAlertAction(title: "Отменить", style: .cancel)
+        let closeButton = UIAlertAction(title: "Удалить", style: .default) { [unowned self] _ in
+            guard let section = self.section else { return }
+            self.delegate?.deleteSection(section)
+        }
+        addAction(addButton)
+        addAction(closeButton)
+    }
+    
 }

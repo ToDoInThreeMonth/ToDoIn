@@ -52,5 +52,9 @@ class MainPresenter: MainViewPresenter {
     func deleteSection(_ number: Int) {
         RealmBase.deleteSection(section: number)
     }
+    
+    func showDeleteSectionController(_ number: Int) {
+        coordinator?.presentDeleteSectionController(number)
+    }
 
 }

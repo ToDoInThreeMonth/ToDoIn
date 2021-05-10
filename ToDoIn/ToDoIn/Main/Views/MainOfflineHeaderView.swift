@@ -42,14 +42,6 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
         static let deleteSize = CGSize(width: 15, height: 15)
     }
     
-//    private lazy var stackView: UIStackView = {
-//        let stackView = UIStackView(frame: .zero)
-//        stackView.axis = .horizontal
-//        stackView.spacing = 9
-//        stackView.alignment = .center
-//        return stackView
-//    }()
-    
     private lazy var sectionNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
@@ -79,8 +71,6 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
     }
     
     private func setupViews() {
-//        stackView.addArrangedSubview(deleteSectionButton)
-//        stackView.addArrangedSubview(sectionNameLabel)
         contentView.addSubviews(taskButton, sectionNameLabel, deleteSectionButton)
     }
     
@@ -110,7 +100,7 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
     @objc
     private func deleteSectionTapped() {
         guard let section = section else { return }
-        delegate?.deleteSection(section)
+        delegate?.showDeleteSectionController(section)
     }
     
 }
