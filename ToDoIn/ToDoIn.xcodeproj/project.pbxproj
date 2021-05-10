@@ -26,6 +26,7 @@
 		159B48D326442B0000C652EC /* RealmBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159B48D226442B0000C652EC /* RealmBase.swift */; };
 		15B4E1E4260C8D0100599AF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */; };
 		15B4E1E7260C91BF00599AF4 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */; };
+		15CC28DD2648BAA7005400ED /* OfflineTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CC28DC2648BAA7005400ED /* OfflineTaskPresenter.swift */; };
 		15F3B78C261F05DF004C2FB6 /* UIColor + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */; };
 		15FCA74A2641C60A009F235F /* UINavigationController + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA7492641C60A009F235F /* UINavigationController + extension.swift */; };
 		4313B43C260BBFA500E6381A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313B43B260BBFA500E6381A /* AppDelegate.swift */; };
@@ -55,6 +56,7 @@
 		159B48D226442B0000C652EC /* RealmBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBase.swift; sourceTree = "<group>"; };
 		15B4E1E3260C8D0100599AF4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		15B4E1E6260C91BF00599AF4 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		15CC28DC2648BAA7005400ED /* OfflineTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskPresenter.swift; sourceTree = "<group>"; };
 		15F3B78B261F05DF004C2FB6 /* UIColor + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extensions.swift"; sourceTree = "<group>"; };
 		15FCA7492641C60A009F235F /* UINavigationController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + extension.swift"; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				15498E562641C84500EE5A2E /* MainPresenter.swift */,
+				15CC28DC2648BAA7005400ED /* OfflineTaskPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				15498E5A2641C9C100EE5A2E /* MainTableView.swift in Sources */,
 				15498E5E2641CA7400EE5A2E /* TaskTableViewCell.swift in Sources */,
 				15686BC12623A1EF001FA228 /* MainOfflineHeaderView.swift in Sources */,
+				15CC28DD2648BAA7005400ED /* OfflineTaskPresenter.swift in Sources */,
 				15498E652641CCFC00EE5A2E /* Group.swift in Sources */,
 				15498E712641F49300EE5A2E /* TaskController.swift in Sources */,
 				159B48D326442B0000C652EC /* RealmBase.swift in Sources */,

@@ -2,7 +2,8 @@ import UIKit
 
 protocol MainChildCoordinator: ChildCoordinator {
     func presentAddSectionController()
-    func presentAddTaskController(with task: OfflineTask?)
+    func presentAddTaskController(with section: Int)
+    func presentChangeTaskController(with task: OfflineTask, in indexPath: IndexPath)
     func showAddSectionController()
 }
 
@@ -24,14 +25,16 @@ class MainFlowCoordinator: MainChildCoordinator {
     
     func presentAddSectionController() {}
     
-    func presentAddTaskController(with task: OfflineTask?) {
-        if let task = task {
-            let controller = OfflineTaskController(task: task, isChanging: true)
-            navigationController.present(controller, animated: true)
-        } else {
-            let controller = OfflineTaskController(isChanging: false)
-            navigationController.present(controller, animated: true)
-        }
+    func presentAddTaskController(with section: Int) {
+        let indexPath = IndexPath(row: 0, section: section)
+        let controller = OfflineTaskController(indexPath: indexPath, isChanging: false)
+        navigationController.present(controller, animated: true)
+    }
+    
+    func presentChangeTaskController(with task: OfflineTask, in indexPath: IndexPath) {
+        let controller = OfflineTaskController(task: task, indexPath: indexPath, isChanging: true)
+        print("Зашел")
+        navigationController.present(controller, animated: true)
     }
     
     func showAddSectionController() {

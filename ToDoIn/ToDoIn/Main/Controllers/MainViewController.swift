@@ -50,6 +50,11 @@ class MainViewController: UIViewController {
         updateUI()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateUI()
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setupLayouts()
@@ -113,6 +118,7 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
+    
     func getAllSections() -> [OfflineSection] {
         guard let presenter = presenter else { return [] }
         return presenter.getAllSections()
@@ -134,12 +140,12 @@ extension MainViewController: MainTableViewOutput {
     }
     
     
-    func cellDidSelect(with indexPath: IndexPath) {
-        presenter?.showAddTaskController(with: indexPath)
+    func cellDidSelect(in indexPath: IndexPath) {
+        presenter?.showChangeTaskController(with: indexPath)
     }
     
-    func addTaskButtonTapped() {
-        presenter?.showAddTaskController(with: nil)
+    func showAddTaskController(with section: Int) {
+        presenter?.showAddTaskController(with: section)
     }
     
     func doneViewTapped(with indexPath: IndexPath) {
@@ -147,8 +153,9 @@ extension MainViewController: MainTableViewOutput {
     }
     
     func updateUI() {
-        presenter?.updateBase()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 

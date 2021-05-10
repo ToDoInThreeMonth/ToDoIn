@@ -78,6 +78,7 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
         guard let saveHeaderView = headerView else { return nil }
         guard let controller = controller else { return nil }
         saveHeaderView.delegate = controller
+        saveHeaderView.section = section
         
         let sectionName = controller.getAllSections()[section].name
         saveHeaderView.sectionName = sectionName
@@ -93,7 +94,7 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        controller?.cellDidSelect(with: indexPath)
+        controller?.cellDidSelect(in: indexPath)
     }
     
     

@@ -17,6 +17,7 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
     }
     
     weak var delegate: MainTableViewOutput?
+    var section: Int?
     
     private lazy var taskButton: UIButton = {
         let button = UIButton(type: .system)
@@ -72,7 +73,8 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
     
     @objc
     private func taskButtonTapped() {
-        delegate?.addTaskButtonTapped()
+        guard let section = section else { return }
+        delegate?.showAddTaskController(with: section)
     }
     
 }

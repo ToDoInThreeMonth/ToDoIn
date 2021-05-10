@@ -10,6 +10,7 @@ class TaskController: UIViewController, TaskView {
     private var group: Group
     private var task: Task
     private let isChanging: Bool
+    private var date: Date?
     
     struct LayersConstants {
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
@@ -216,6 +217,7 @@ class TaskController: UIViewController, TaskView {
     func doneDateTapped() {
         if let datePicker = self.dateTextField.inputView as? UIDatePicker {
             presenter?.doneDateTapped(date: datePicker.date)
+            date = datePicker.date
         }
         self.dateTextField.resignFirstResponder()
     }
@@ -236,6 +238,20 @@ class TaskController: UIViewController, TaskView {
 
     func hiddenUserTF() {
         userTextField.isHidden = true
+    }
+    
+    func getTask() -> OfflineTask {
+        let task = OfflineTask()
+        guard let description = descriptionTextView.text else {
+            return task }
+        guard let title = nameTextField.text else {
+            return task }
+//        guard let date = date else { return task }
+//        task.date = date
+        task.descriptionText = description
+        task.title = title
+        print(task)
+        return task
     }
 }
 

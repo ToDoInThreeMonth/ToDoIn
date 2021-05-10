@@ -15,43 +15,31 @@ final class OfflineSection: Object {
 
 struct RealmBase {
     private static let realm = try? Realm()
-    private static var sections: [OfflineSection] = []
     
     private init() {}
     
-    static func downloadSections() {
-//        randomUsers() // Заглушка
-        
-        guard let realm = realm else { return }
-        // Обнуляем секции
-        sections.removeAll()
-        // Достаем секции из базы
-        let sections = realm.objects(OfflineSection.self)
-        
-        // Добавляем в коллекцию
-        for section in sections {
-            self.sections.append(section)
-        }
-    }
-    
     static func getAllSections() -> [OfflineSection] {
-        return sections
+        guard let realm = realm else { return [] }
+        let results = realm.objects(OfflineSection.self)
+        return Array(results)
     }
     
     static func getNumberOfSections() -> Int {
-        return sections.count
+        guard let realm = realm else { return 0 }
+        let count = realm.objects(OfflineSection.self).count
+        return count
     }
     
     static func getNumberOfRows(in section: Int) -> Int {
-        return sections[section].tasks.count
+        guard let realm = realm else { return 0 }
+        let count = realm.objects(OfflineSection.self)[section].tasks.count
+        return count
     }
     
     static func getTask(section: Int, row: Int) -> OfflineTask? {
-        if sections[section].tasks.isEmpty {
-            return nil
-        }
-        
-        return sections[section].tasks[row]
+        guard let realm = realm else { return nil }
+        let task = realm.objects(OfflineSection.self)[section].tasks[row]
+        return task
     }
     
     static func addSection(_ section: OfflineSection) {
@@ -60,47 +48,32 @@ struct RealmBase {
         realm.add(section)
         try? realm.commitWrite()
     }
+
+    static func addTask(_ task: OfflineTask, in section: Int) {
+        guard let realm = realm else { return }
+        let currentSection = realm.objects(OfflineSection.self)[section]
+        // Auto - updating values
+        try? realm.write {
+            currentSection.tasks.append(task)
+        }
+    }
     
-//    // Заглушка
-//    static func randomUsers() {
-//        guard let realm = realm else { return }
-//        realm.beginWrite()
-//        realm.deleteAll()
-//        // Массивы для фейк - данных
-//        var tasks: [OfflineTask] = []
-//        var sections: [OfflineSection] = []
-//
-//        for _ in 1...4 {
-//            // Создаем и наполняем задачи
-//            let task = OfflineTask()
-//            task.date = Date()
-//            task.title = "Много думать"
-//            task.descriptionText = "Много думать - это лень :("
-//            task.isCompleted = false
-//
-//            tasks.append(task)
-//        }
-//
-//        for _ in 1...3 {
-//            // Создаем и наполняем секции
-//            let section = OfflineSection()
-//            section.name = "Работа"
-//            tasks.forEach {
-//                section.tasks.append($0)
-//            }
-//            sections.append(section)
-//        }
-//
-//        realm.add(sections)
-//        try? realm.commitWrite()
-//
-//    }
+    static func changeTask(_ task: OfflineTask, indexPath: IndexPath) {
+        guard let realm = realm else { return }
+        let oldTask = realm.objects(OfflineSection.self)[indexPath.section].tasks[indexPath.row]
+        
+        try? realm.write {
+            oldTask.date = task.date
+            oldTask.descriptionText = task.descriptionText
+            oldTask.title = task.title
+        }
+    }
     
-    
-    
-//    static func addNewTask(_ task: OfflineTask, from section: Int) {
-//        guard let realm = realm else { return }
-//        realm.beginWrite()
-//        realm.
-//    }
+    static func changeSectionTitle(from text: String, in section: Int) {
+        guard let realm = realm else { return }
+        let oldSection = realm.objects(OfflineSection.self)[section]
+        try? realm.write {
+            oldSection.name = text
+        }
+    }
 }

@@ -7,13 +7,15 @@ class MainPresenter: MainViewPresenter {
         self.coordinator = coordinator
     }
     
-    func showAddTaskController(with indexPath: IndexPath?) {
-        if let indexPath = indexPath {
-            let task = getTask(from: indexPath)
-            coordinator?.presentAddTaskController(with: task)
-        } else {
-            coordinator?.presentAddTaskController(with: nil)
-        }
+    func showAddTaskController(with section: Int) {
+        coordinator?.presentAddTaskController(with: section)
+    }
+    
+    func showChangeTaskController(with indexPath: IndexPath) {
+        let section = indexPath.section
+        let row = indexPath.row
+        guard let task = RealmBase.getTask(section: section, row: row) else { return }
+        coordinator?.presentChangeTaskController(with: task, in: indexPath)
     }
     
     func showAddSectionController() {
@@ -40,13 +42,10 @@ class MainPresenter: MainViewPresenter {
         return RealmBase.getTask(section: indexPath.section, row: indexPath.row)
     }
     
-    func updateBase() {
-        RealmBase.downloadSections()
-    }
-    
     func addNewSection(with text: String) {
         let section = OfflineSection()
         section.name = text
         RealmBase.addSection(section)
     }
+
 }
