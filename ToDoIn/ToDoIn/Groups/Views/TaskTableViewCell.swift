@@ -37,7 +37,7 @@ class TaskTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
-    func setupLayouts() {
+    private func setupLayouts() {
         taskView.pin
             .horizontally(30)
             .vertically(taskViewPadding)
@@ -53,14 +53,14 @@ class TaskTableViewCell: UITableViewCell {
             .size(taskView.frame.height - isDoneViewPadding * 2)
     }
     
-    func setupSublayers() {
+    private func setupSublayers() {
         configureTaskView()
         configureTaskLabel()
         configureIsDoneView()
     }
     
     
-    func configureTaskView() {
+    private func configureTaskView() {
         taskView.backgroundColor = .accentColor
         if taskView.layer.cornerRadius == 0 {
             taskView.layer.cornerRadius = self.frame.height / 2.6
@@ -70,13 +70,13 @@ class TaskTableViewCell: UITableViewCell {
         }
     }
     
-    func configureTaskLabel() {
+    private func configureTaskLabel() {
         taskLabel.font = UIFont(name: "Inter-Regular", size: 12)
         taskLabel.textColor = .darkTextColor
     }
     
     
-    func configureIsDoneView() {
+    private func configureIsDoneView() {
         isDoneView.backgroundColor = .accentColor
         if isDoneView.layer.cornerRadius == 0 {
             isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2

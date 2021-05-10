@@ -1,3 +1,4 @@
+
 import Foundation
 import UIKit
 
@@ -52,4 +53,5 @@ protocol TaskViewPresenter {
 protocol GroupSettingsViewPresenter {
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
+
 }

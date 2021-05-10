@@ -61,7 +61,7 @@ extension UINavigationController {
 
             let rightButtons = UIBarButtonItem(customView: buttonsStackView)
             view.navigationItem.rightBarButtonItem = rightButtons
-            
+
             view.title = "Имя Комнаты"
         }
     }

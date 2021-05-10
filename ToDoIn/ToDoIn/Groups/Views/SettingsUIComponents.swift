@@ -1,6 +1,6 @@
 import UIKit
 
-struct SettingsModel {
+struct SettingsUIComponents {
     static var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true

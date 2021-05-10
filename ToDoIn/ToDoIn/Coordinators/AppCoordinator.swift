@@ -28,6 +28,7 @@ class AppCoordinator: MainCoordinator {
 // Запускает основной координатор (отображает UITabBarController с его viewController'ами)
     func start() {
         var navigationControllers = [UINavigationController]()
+        
         for coordinator in childCoordinators {
             navigationControllers.append(coordinator.navigationController)
             coordinator.start()
