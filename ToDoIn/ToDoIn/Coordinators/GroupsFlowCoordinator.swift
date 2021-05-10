@@ -6,6 +6,7 @@ protocol GroupsChildCoordinator: ChildCoordinator {
     func showGroupController(group: Group)
     func showSettingsGroupController(group: Group)
     func showAddUser(to group: Group, with participants: [User])
+    func presentErrorController(with message: String)
 }
 
 class GroupsFlowCoordinator: GroupsChildCoordinator {
@@ -38,12 +39,14 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     
     func showAddGroup() {
         let addGroupController = AddGroupController()
-        addGroupController.setPresenter(presenter: AddGroupPresenter(addGroupView: addGroupController.self))
+        addGroupController.setPresenter(presenter: AddGroupPresenter(addGroupView: addGroupController.self), coordinator: self)
         navigationController.viewControllers.last?.present(addGroupController, animated: true, completion: nil)
     }
     
     func showTaskController(group: Group, task: Task, users: [User], isChanging: Bool) {
-        navigationController.viewControllers.last?.present(TaskController(group: group, task: task, users: users, isChanging: isChanging), animated: true, completion: nil)
+        let taskController = TaskController(group: group, task: task, users: users, isChanging: isChanging)
+        taskController.setPresenter(presenter: TaskPresenter(addingTaskView: taskController.self), coordinator: self)
+        navigationController.viewControllers.last?.present(taskController, animated: true, completion: nil)
     }
     
     func showGroupController(group: Group) {
@@ -60,8 +63,15 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     
     func showAddUser(to group: Group, with participants: [User]) {
         let addUserToGroupController = AddUserToGroupController()
-        addUserToGroupController.setPresenter(AddUserToGroupPresenter(addUserToGroupView: addUserToGroupController.self, group: group, participants: participants))
+        addUserToGroupController.setPresenter(AddUserToGroupPresenter(addUserToGroupView: addUserToGroupController.self, group: group, participants: participants), coordinator: self)
         navigationController.viewControllers.last?.present(addUserToGroupController, animated: true, completion: nil)
+    }
+    
+    func presentErrorController(with message: String) {
+        let alertTitle = "Произошла ошибка 😔"
+        let alertVC = AlertControllerCreator.getController(title: alertTitle, message: message, style: .alert, type: .error)
+        
+        navigationController.present(alertVC, animated: true)
     }
 }
 

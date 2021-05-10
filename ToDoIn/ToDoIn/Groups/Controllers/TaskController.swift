@@ -1,6 +1,13 @@
 import UIKit
 import PinLayout
 
+protocol TaskView: class {
+    func setPresenter(presenter: TaskViewPresenter, coordinator: GroupsChildCoordinator)
+
+    func setDate(with date: String)
+    func setUser(with name: String)
+}
+
 class TaskController: UIViewController {
     
     // MARK: - Properties
@@ -41,7 +48,6 @@ class TaskController: UIViewController {
         self.isChanging = isChanging
         self.users = users
         super.init(nibName: nil, bundle: nil)
-        self.presenter = TaskPresenter(addingTaskView: self)
     }
     
     required init?(coder: NSCoder) {
@@ -269,6 +275,12 @@ class TaskController: UIViewController {
 // MARK: - Extensions
 
 extension TaskController: TaskView {
+    
+    func setPresenter(presenter: TaskViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
+    }
+    
     func setDate(with date: String) {
         dateTextField.text = date
     }

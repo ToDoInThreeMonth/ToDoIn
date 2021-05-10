@@ -1,8 +1,20 @@
 import Foundation
 
+protocol TaskViewPresenter {
+    init(addingTaskView: TaskView)
+    func setCoordinator(with coordinator: GroupsChildCoordinator)
+    
+    func doneDateTapped(date: Date)
+    func doneUserTapped(user: User)
+    func buttonTapped(_ isChanging: Bool, task: Task, group: Group)
+    func getUser(by userId: String, in users: [User]) -> User
+}
+
 class TaskPresenter: TaskViewPresenter {
     
     // MARK: - Properties
+    
+    weak var coordinator: GroupsChildCoordinator?
     
     private let taskView: TaskView?
     
@@ -12,6 +24,12 @@ class TaskPresenter: TaskViewPresenter {
     
     required init(addingTaskView: TaskView) {
         self.taskView = addingTaskView
+    }
+    
+    // MARK: - Configures
+    
+    func setCoordinator(with coordinator: GroupsChildCoordinator) {
+        self.coordinator = coordinator
     }
     
     // MARK: - Handlers
@@ -26,16 +44,16 @@ class TaskPresenter: TaskViewPresenter {
     
     func buttonTapped(_ isChanging: Bool, task: Task, group: Group) {
         if isChanging {
-            groupsManager.changeTask(task, in: group)
+            groupsManager.changeTask(task, in: group) { [weak self] (result) in
+                if result != nil {
+                    self?.showErrorAlertController(with: result!.toString())
+                }
+            }
         }
         else {
             groupsManager.addTask(task, in: group)
         }
     }
-    
-//    func getUser(by index: Int, in group: Group) -> User {
-//        return groupsManager.getUser(by: group.users[index])
-//    }
     
     func getUser(by userId: String, in users: [User]) -> User {
         for user in users {
@@ -44,6 +62,10 @@ class TaskPresenter: TaskViewPresenter {
             }
         }
         return User()
+    }
+    
+    func showErrorAlertController(with message: String) {
+        coordinator?.presentErrorController(with: message)
     }
 }
     

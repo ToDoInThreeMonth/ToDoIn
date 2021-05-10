@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 protocol AddGroupViewPresenter {
+    func setCoordinator(with coordinator: GroupsChildCoordinator)
     func didLoadView()
     
     func getAllFriends() -> [User]
@@ -10,11 +11,15 @@ protocol AddGroupViewPresenter {
     func addButtonTapped(title: String, selectedUsers: [IndexPath], photo: UIImage?)
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    
+    func showErrorAlertController(with message: String)
 }
 
 class AddGroupPresenter: AddGroupViewPresenter {
     
     // MARK: - Properties
+    
+    private weak var coordinator: GroupsChildCoordinator?
     
     private let addGroupView: FriendsTableViewOutput?
     
@@ -28,6 +33,10 @@ class AddGroupPresenter: AddGroupViewPresenter {
     
     required init(addGroupView: FriendsTableViewOutput) {
         self.addGroupView = addGroupView
+    }
+    
+    func setCoordinator(with coordinator: GroupsChildCoordinator) {
+        self.coordinator = coordinator
     }
     
     // MARK: - Handlers
@@ -94,5 +103,9 @@ class AddGroupPresenter: AddGroupViewPresenter {
                 completion(UIImage(named: "default") ?? UIImage())
             }
         }
+    }
+    
+    func showErrorAlertController(with message: String) {
+        coordinator?.presentErrorController(with: message)
     }
 }

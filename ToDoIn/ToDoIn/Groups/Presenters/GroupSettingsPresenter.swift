@@ -53,21 +53,21 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
                 self?.group = group
                 self?.getUsers(from: group.users)
             case .failure(let error):
-                print(error.toString())
+                self?.showErrorAlertController(with: error.toString())
             }
         }
     }
     
     func getUsers(from userIdArray: [String]) {
-        users.removeAll()
+        users = []
         for userId in userIdArray {
-            groupsManager.observeUser(by: userId) { [weak self] (result) in
+            groupsManager.getUser(userId: userId) { [weak self] (result) in
                 switch result {
                 case .success(let user):
                     self?.users.append(user)
                     self?.groupSettingsView?.reloadView()
                 case .failure(let error):
-                    print(error.toString())
+                    self?.showErrorAlertController(with: error.toString())
                 }
             }
         }
@@ -101,4 +101,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
         }
     }
     
+    func showErrorAlertController(with message: String) {
+        coordinator?.presentErrorController(with: message)
+    }
 }

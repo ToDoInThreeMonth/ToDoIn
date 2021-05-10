@@ -1,6 +1,24 @@
 import Foundation
 import UIKit
 
+protocol GroupsViewPresenter {
+    var groupsCount: Int { get }
+    
+    init(groupsView: GroupsView)
+    func setCoordinator(with coordinator: GroupsChildCoordinator)
+    func didLoadView()
+    
+    func getGroup(at index: Int) -> Group
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+
+    func showGroupController(group: Group)
+    
+    func addGroupButtonTapped()
+    
+    func showErrorAlertController(with message: String)
+}
+
 class GroupsPresenter: GroupsViewPresenter {
     
     // MARK: - Properties
@@ -47,16 +65,21 @@ class GroupsPresenter: GroupsViewPresenter {
     }
     
     func didLoadView() {
-        groupsManager.observeGroups { [weak self] (result) in
-            switch result {
-            case .success(let groups):
-                self?.groups = groups.map { $0 }
-                self?.groupsView?.reloadView()
-            case .failure(let error):
-                self?.groups.removeAll()
-                self?.groupsView?.reloadView()
-                print(error.toString())
+        if authManager.isSignedIn() {
+            groupsManager.observeGroups { [weak self] (result) in
+                switch result {
+                case .success(let groups):
+                    self?.groups = groups.map { $0 }
+                    self?.groupsView?.reloadView()
+                case .failure(let error):
+                    self?.groups.removeAll()
+                    self?.groupsView?.reloadView()
+                    self?.showErrorAlertController(with: error.toString())
+                }
             }
+        } else {
+            groups.removeAll()
+            groupsView?.reloadView()
         }
     }
     
@@ -69,5 +92,9 @@ class GroupsPresenter: GroupsViewPresenter {
                 completion(UIImage(named: "default") ?? UIImage())
             }
         }
+    }
+    
+    func showErrorAlertController(with message: String) {
+        coordinator?.presentErrorController(with: message)
     }
 }

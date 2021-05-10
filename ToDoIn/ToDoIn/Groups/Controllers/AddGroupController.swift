@@ -1,7 +1,7 @@
 import UIKit
 
 protocol AddGroupView {
-    func setPresenter(presenter: AddGroupViewPresenter)
+    func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator)
     
     func transitionToMain()
 }
@@ -188,12 +188,13 @@ extension AddGroupController: FriendsTableViewOutput {
     }
     
     func showErrorAlertController(with message: String) {
-        print(#function)
+        presenter?.showErrorAlertController(with: message)
     }
 }
 
 extension AddGroupController: AddGroupView {
-    func setPresenter(presenter: AddGroupViewPresenter) {
+    func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
     }
 }

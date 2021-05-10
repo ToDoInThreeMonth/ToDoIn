@@ -1,8 +1,8 @@
 import UIKit
 
 protocol AddUserToGroupView: class {
-    func setPresenter(_ presenter: AddUserToGroupViewPresenter)
-    
+    func setPresenter(_ presenter: AddUserToGroupViewPresenter, coordinator: GroupsChildCoordinator)
+
     func reloadView()
 }
 
@@ -84,8 +84,9 @@ class AddUserToGroupController: UIViewController {
 }
 
 extension AddUserToGroupController: AddUserToGroupView {
-    func setPresenter(_ presenter: AddUserToGroupViewPresenter) {
+    func setPresenter(_ presenter: AddUserToGroupViewPresenter, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
     }
     
     func reloadView() {
@@ -102,7 +103,7 @@ extension AddUserToGroupController: FriendsTableViewOutput {
     }
     
     func showErrorAlertController(with message: String) {
-        
+        presenter?.showErrorAlertController(with: message)
     }
     
     func getFriend(by index: Int) -> User? {

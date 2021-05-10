@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 protocol AddUserToGroupViewPresenter {
+    func setCoordinator(with coordinator: GroupsChildCoordinator)
     func didLoadView()
     
     func addButtonTapped(selectedUsers: [IndexPath])
@@ -10,11 +11,15 @@ protocol AddUserToGroupViewPresenter {
     func getAllFriends() -> [User]
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    
+    func showErrorAlertController(with message: String)
 }
 
 class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
     
     // MARK: - Preperties
+    
+    private weak var coordinator: GroupsChildCoordinator?
     
     private let addUserToGroupView: FriendsTableViewOutput?
     
@@ -31,6 +36,10 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
         self.addUserToGroupView = addUserToGroupView
         self.participants = participants
         self.group = group
+    }
+    
+    func setCoordinator(with coordinator: GroupsChildCoordinator) {
+        self.coordinator = coordinator
     }
     
     // MARK: - Handlers
@@ -66,9 +75,11 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
     }
     
     func addButtonTapped(selectedUsers: [IndexPath]) {
+        var users = [User]()
         for index in selectedUsers {
-            groupsManager.addUser(otherFriends[index.row], to: group)
+            users.append(otherFriends[index.row])
         }
+        groupsManager.addUsers(users, to: group)
     }
     
     func getAllFriends() -> [User] {
@@ -91,6 +102,10 @@ class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
                 completion(UIImage(named: "default") ?? UIImage())
             }
         }
+    }
+    
+    func showErrorAlertController(with message: String) {
+        coordinator?.presentErrorController(with: message)
     }
     
 }

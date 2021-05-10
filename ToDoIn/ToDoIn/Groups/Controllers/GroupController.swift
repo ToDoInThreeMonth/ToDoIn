@@ -1,6 +1,11 @@
 import UIKit
 import PinLayout
 
+protocol GroupView: class {
+    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator)
+    func reloadView()
+}
+
 class GroupController: UIViewController {
     
     // MARK: - Properties

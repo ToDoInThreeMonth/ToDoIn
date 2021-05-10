@@ -1,5 +1,25 @@
 import UIKit
 
+protocol GroupViewPresenter {
+    var usersCount: Int { get }
+
+    init(groupView: GroupView)
+    func didLoadView(by userId: String)
+    
+    func setCoordinator(with coordinator: GroupsChildCoordinator)
+    
+    func getTasks(for userId: String) -> [Task]
+    func getUser(by section: Int) -> User
+    func getUsers(from userIdArray: [String])
+    func getUser(by userId: String, in users: [User]) -> User
+
+
+    func showSettingsGroupController()
+    func showTaskCotroller(task: Task, isChanging: Bool)
+    
+    func showErrorAlertController(with message: String)
+}
+
 class GroupPresenter: GroupViewPresenter {
 
     // MARK: - Properties
@@ -41,7 +61,7 @@ class GroupPresenter: GroupViewPresenter {
                 self?.group = group
                 self?.getUsers(from: group.users)
             case .failure(let error):
-                print(error.toString())
+                self?.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -59,7 +79,7 @@ class GroupPresenter: GroupViewPresenter {
                     self?.users.append(user)
                     self?.groupView?.reloadView()
                 case .failure(let error):
-                    print(error.toString())
+                    self?.showErrorAlertController(with: error.toString())
                 }
             }
         }
@@ -84,5 +104,9 @@ class GroupPresenter: GroupViewPresenter {
     
     func showSettingsGroupController() {
         coordinator?.showSettingsGroupController(group: group)
+    }
+    
+    func showErrorAlertController(with message: String) {
+        coordinator?.presentErrorController(with: message)
     }
 }

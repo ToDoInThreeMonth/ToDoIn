@@ -12,13 +12,14 @@ protocol GroupsManagerDescription {
     func addGroup(title: String, users: [String], photo: UIImage?)
     func addFriend(friend: User)
     func addUser(_ user: User, to group: Group)
+    func addUsers(_ users: [User], to group: Group)
     func addTask(_ task: Task, in group: Group)
 
     func getTasks(for userId: String, from group: Group) -> [Task]
     func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void)
     func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void)
     
-    func changeTask(_ task: Task, in group: Group)
+    func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void)
     
 }
 
@@ -129,11 +130,7 @@ final class GroupsManager: GroupsManagerDescription {
                         "title" : title,
                         "image" : imageName,
                         "tasks" : [],
-                        "users" : users]) { (error) in
-                if error != nil {
-                    print("Error saving user data")
-                }
-            }
+                        "users" : users])
         }
     }
     
@@ -142,17 +139,19 @@ final class GroupsManager: GroupsManagerDescription {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
-        database.collection("users").document(userId).updateData(["friends" : FieldValue.arrayUnion([friend.id])]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-            }
-        }
+        database.collection("users").document(userId).updateData(["friends" : FieldValue.arrayUnion([friend.id])])
     }
     
     func addUser(_ user: User, to group: Group) {
         database.collection("groups").document(group.id).setData(["users": FieldValue.arrayUnion([user.id])], merge: true)
+    }
+    
+    func addUsers(_ users: [User], to group: Group) {
+        var usersId = [String]()
+        for user in users {
+            usersId.append(user.id)
+        }
+        database.collection("groups").document(group.id).setData(["users": FieldValue.arrayUnion(usersId)], merge: true)
     }
     
     
@@ -210,20 +209,16 @@ final class GroupsManager: GroupsManagerDescription {
 //        database.collection("groups").document(group.id).setData(["tasks": FieldValue.arrayUnion([dictTask])], merge: true)
     }
     
-    func changeTask(_ task: Task, in group: Group) {
+    func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void) {
         var tasks = [GroupsConverter.task(from: task)]
         for el in group.tasks {
             if el.id != task.id {
                 tasks.append(GroupsConverter.task(from: el))
             }
         }
-        database.collection("groups").document(group.id).updateData([
-            "tasks": tasks
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
+        database.collection("groups").document(group.id).updateData([ "tasks": tasks ]) { err in
+            if err != nil {
+                completion(.unexpected)
             }
         }
     }

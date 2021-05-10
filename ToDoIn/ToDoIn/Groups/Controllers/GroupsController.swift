@@ -1,6 +1,13 @@
 import UIKit
 import PinLayout
 
+protocol GroupsView: class {
+    func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator)
+    func reloadView()
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+}
+
 class GroupsController: UIViewController {
         
     // MARK: - Properties
