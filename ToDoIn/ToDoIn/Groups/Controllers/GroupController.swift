@@ -35,9 +35,8 @@ class GroupController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.didLoadView(by: group.id)
-//        presenter?.getUsers(from: group.users)
         configureTableView()
-        configureBarButtonItems()
+        setupNavigationItem()
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,6 +45,15 @@ class GroupController: UIViewController {
     }
         
     // MARK: Configures
+    
+    private func setupNavigationItem() {
+        navigationController?.configureBarButtonItems(screen: .roomsDetail, for: self)
+        navigationItem.rightBarButtonItems?.first?.target = self
+        navigationItem.rightBarButtonItems?.last?.target = self
+        navigationItem.rightBarButtonItems?.first?.action = #selector(settingsButtonTapped)
+        navigationItem.rightBarButtonItems?.last?.action = #selector(addingTaskButtonTapped)
+        title = group.title
+    }
     
     func configureTableView() {
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.identifier)
@@ -59,24 +67,6 @@ class GroupController: UIViewController {
         self.tableView.alwaysBounceVertical = true
         
         view.addSubview(tableView)
-    }
-    
-    func configureBarButtonItems() {
-        configureSettingButton()
-        configureAddingTaskButton()
-        navigationItem.setRightBarButtonItems([settingsButton, addingTaskButton], animated: true)
-    }
-    
-    func configureSettingButton() {
-        settingsButton.image = UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal)
-        settingsButton.target = self
-        settingsButton.action = #selector(settingsButtonTapped)
-    }
-    
-    func configureAddingTaskButton() {
-        addingTaskButton.image = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
-        addingTaskButton.target = self
-        addingTaskButton.action = #selector(addingTaskButtonTapped)
     }
     
     // MARK: - Handlers

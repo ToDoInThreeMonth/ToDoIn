@@ -17,7 +17,6 @@ class GroupsController: UIViewController {
         setupNavigationItem()
         setBackground()
         
-//        presenter?.didLoadView()
         configureTableView()
         
         self.view.addSubview(tableView)
