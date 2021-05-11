@@ -55,7 +55,7 @@ final class AuthManager: AuthManagerDescription {
                     completion(.failure(СustomError.failedToCreateUser))
                 } else {
                     var imageName: String = "default"
-                    ImagesManager.uploadPhoto(id: result!.user.uid, photo: photo) { (myResult) in
+                    ImagesManager.loadPhotoToStorage(id: result!.user.uid, photo: photo) { (myResult) in
                         switch myResult {
                         case .success(let url):
                             imageName = url.absoluteString

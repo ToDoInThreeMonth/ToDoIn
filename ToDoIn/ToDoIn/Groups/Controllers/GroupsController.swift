@@ -16,7 +16,7 @@ class GroupsController: UIViewController {
     
     private let tableView = UITableView()
     
-    // MARK: - Init
+    // MARK: - Override functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +36,6 @@ class GroupsController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.pin.all().marginTop(view.pin.safeArea.top + 15)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     // MARK: Configures
@@ -129,6 +125,7 @@ extension GroupsController: UITableViewDelegate {
         tableView.bounds.height / 10
     }
     
+    // удаление комнаты
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         .delete
     }

@@ -3,14 +3,15 @@ import FirebaseStorage
 
 final class ImagesManager {
     
-    static func uploadPhoto(id: String, photo: UIImage?, completion: @escaping (Result<URL, СustomError>) -> Void) {
+    static private let imageCache = NSCache<NSString, UIImage>()
+    
+    static func loadPhotoToStorage(id: String, photo: UIImage?, completion: @escaping (Result<URL, СustomError>) -> Void) {
         let ref = Storage.storage().reference().child(id)
         
         guard let imageData = photo?.jpegData(compressionQuality: 0.3) else { return }
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
-        
         ref.putData(imageData, metadata: metadata) { (metadata, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
@@ -26,7 +27,13 @@ final class ImagesManager {
         }
     }
     
-    static func loadPhoto(url: String, completion: @escaping (Result<UIImage, СustomError>) -> Void) {
+    static func loadPhotoFromStorage(url: String, completion: @escaping (Result<UIImage, СustomError>) -> Void) {
+        
+        if let cachedImage = imageCache.object(forKey: url as NSString) {
+            completion(.success(cachedImage))
+            return
+        }
+        
         let ref = Storage.storage().reference(forURL: url)
         let megaByte = Int64(1 * 1024 * 1024)
         ref.getData(maxSize: megaByte) { (data, error) in
@@ -38,6 +45,7 @@ final class ImagesManager {
                 completion(.failure(СustomError.unexpected))
                 return
             }
+            imageCache.setObject(image, forKey: url as NSString)
             completion(.success(image))
         }
     }

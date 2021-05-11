@@ -91,7 +91,7 @@ class GroupSettingsPresenter: GroupSettingsViewPresenter {
     }
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        ImagesManager.loadPhoto(url: url) { (result) in
+        ImagesManager.loadPhotoFromStorage(url: url) { (result) in
             switch result {
             case .success(let resImage):
                 completion(resImage)

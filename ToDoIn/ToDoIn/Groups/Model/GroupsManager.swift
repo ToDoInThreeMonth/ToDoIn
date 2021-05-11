@@ -121,7 +121,7 @@ final class GroupsManager: GroupsManagerDescription {
         let ref = database.collection("groups").document()
         let docId = ref.documentID
         var imageName: String = "default"
-        ImagesManager.uploadPhoto(id: docId, photo: photo) { (myResult) in
+        ImagesManager.loadPhotoToStorage(id: docId, photo: photo) { (myResult) in
             switch myResult {
             case .success(let url):
                 imageName = url.absoluteString
@@ -228,13 +228,7 @@ final class GroupsManager: GroupsManagerDescription {
     func deleteTask(_ task: Task, in group: Group) {
         database.collection("groups").document(group.id).updateData([
             "tasks": FieldValue.arrayRemove([GroupsConverter.task(from: task)]),
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-            }
-        }
+        ])
     }
     
     func deleteGroup(_ group: Group, completion: @escaping (Error?) -> Void) {
