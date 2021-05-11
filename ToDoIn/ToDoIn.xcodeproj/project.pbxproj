@@ -253,9 +253,9 @@
 		4352BF0726419E5100AACE8C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				43AEF874262B2BD80063D925 /* AccountController.swift */,
 				43FD168A2642757E008BA21A /* LoginController.swift */,
 				4366F3602641572D00C95BFA /* AuthController.swift */,
+				43AEF874262B2BD80063D925 /* AccountController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

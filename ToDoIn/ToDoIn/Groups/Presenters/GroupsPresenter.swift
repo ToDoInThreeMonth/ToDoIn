@@ -21,7 +21,7 @@ protocol GroupsViewPresenter {
     func isSignedIn() -> Bool
     func removeAll()
     
-    func deleteTapped(for group: Group, at index: Int, completion: @escaping (Error?) -> Void)
+    func deleteTapped(for group: Group, at index: Int)
 }
 
 class GroupsPresenter: GroupsViewPresenter {
@@ -69,15 +69,8 @@ class GroupsPresenter: GroupsViewPresenter {
         }
     }
     
-    func deleteTapped(for group: Group, at index: Int, completion: @escaping (Error?) -> Void) {
-        groupsManager.deleteGroup(group) { [weak self] (error) in
-            if error == nil {
-                self?.groups.remove(at: index)
-                completion(nil)
-            } else {
-                completion(error)
-            }
-        }
+    func deleteTapped(for group: Group, at index: Int) {
+        groupsManager.deleteGroup(group)
     }
     
     func didLoadView() {

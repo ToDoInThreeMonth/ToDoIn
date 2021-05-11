@@ -8,9 +8,9 @@ class GroupTableViewCell: UITableViewCell {
     
     static let identifier = "GroupCell"
     
-    var groupView = UIView()
-    var groupLabel = UILabel()
-    var groupImageView = UIImageView()
+    private var groupView = UIView()
+    private var groupLabel = UILabel()
+    private var groupImageView = UIImageView(image: UIImage(named: "default"))
     
     var dimmingView = UIView()
     
@@ -89,7 +89,6 @@ class GroupTableViewCell: UITableViewCell {
         groupImageView.makeRound()
         groupImageView.layer.masksToBounds = false
         groupImageView.clipsToBounds = true
-        groupImageView.image = UIImage(named: "default")
         groupImageView.contentMode = .scaleAspectFill
     }
     
@@ -102,8 +101,8 @@ class GroupTableViewCell: UITableViewCell {
     func setUp(group: Group) {
         groupLabel.text = group.title
         if group.image != "default" {
-            controller?.loadImage(url: group.image) { (image) in
-                self.groupImageView.image = image
+            controller?.loadImage(url: group.image) { [weak self] (image) in
+                self?.groupImageView.image = image
             }
         }
     }

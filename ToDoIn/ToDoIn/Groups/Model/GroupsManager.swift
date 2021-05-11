@@ -22,7 +22,7 @@ protocol GroupsManagerDescription {
     func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void)
     
     func deleteTask(_ task: Task, in group: Group)
-    func deleteGroup(_ group: Group, completion: @escaping (Error?) -> Void)
+    func deleteGroup(_ group: Group)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -231,14 +231,8 @@ final class GroupsManager: GroupsManagerDescription {
         ])
     }
     
-    func deleteGroup(_ group: Group, completion: @escaping (Error?) -> Void) {
-        database.collection("groups").document(group.id).delete() { err in
-            if let err = err {
-                completion(err)
-            } else {
-                completion(nil)
-            }
-        }
+    func deleteGroup(_ group: Group) {
+        database.collection("groups").document(group.id).delete()
     }
     
     func getTasks(for userId: String, from group: Group) -> [Task] {

@@ -58,7 +58,7 @@ class AccountController: UIViewController {
         return button
     }()
     
-    private lazy var friendsTVDelegate = FriendsTVDelegate(controller: self)
+    private lazy var friendsTVDelegate = FriendsTVDelegate()
     private lazy var friendsTVDataSource = FriendsTVDataSource(controller: self)
     private lazy var friendsTableView: UITableView = {
         let tableView = FriendsTableView(frame: .zero, style: .plain)
