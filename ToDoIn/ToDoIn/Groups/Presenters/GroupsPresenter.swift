@@ -17,6 +17,11 @@ protocol GroupsViewPresenter {
     func addGroupButtonTapped()
     
     func showErrorAlertController(with message: String)
+    
+    func isSignedIn() -> Bool
+    func removeAll()
+    
+    func deleteTapped(for group: Group, at index: Int, completion: @escaping (Error?) -> Void)
 }
 
 class GroupsPresenter: GroupsViewPresenter {
@@ -64,6 +69,17 @@ class GroupsPresenter: GroupsViewPresenter {
         }
     }
     
+    func deleteTapped(for group: Group, at index: Int, completion: @escaping (Error?) -> Void) {
+        groupsManager.deleteGroup(group) { [weak self] (error) in
+            if error == nil {
+                self?.groups.remove(at: index)
+                completion(nil)
+            } else {
+                completion(error)
+            }
+        }
+    }
+    
     func didLoadView() {
         if authManager.isSignedIn() {
             groupsManager.observeGroups { [weak self] (result) in
@@ -97,4 +113,14 @@ class GroupsPresenter: GroupsViewPresenter {
     func showErrorAlertController(with message: String) {
         coordinator?.presentErrorController(with: message)
     }
+    
+    func isSignedIn() -> Bool {
+        authManager.isSignedIn()
+    }
+    
+    func removeAll() {
+        groups.removeAll()
+        groupsView?.reloadView()
+    }
+
 }

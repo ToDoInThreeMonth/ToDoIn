@@ -120,4 +120,21 @@ extension GroupsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         tableView.bounds.height / 10
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            guard let deletedGroup = presenter?.getGroup(at: indexPath.row) else { return }
+            presenter?.deleteTapped(for: deletedGroup, at: indexPath.row) { (error) in
+                if error == nil {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+            }
+            tableView.endUpdates()
+        }
+    }
 }
