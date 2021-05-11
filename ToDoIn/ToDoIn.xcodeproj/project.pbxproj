@@ -60,7 +60,6 @@
 		43FD16A32642B558008BA21A /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16A22642B558008BA21A /* FriendTableViewCell.swift */; };
 		43FD16A62642B580008BA21A /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16A52642B580008BA21A /* FriendsTableView.swift */; };
 		43FD16A92642B599008BA21A /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16A82642B599008BA21A /* SearchTextField.swift */; };
-		43FD16AC2642B5E3008BA21A /* AccountProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16AB2642B5E3008BA21A /* AccountProtocols.swift */; };
 		43FD16AF2642B677008BA21A /* UINavigationController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16AE2642B677008BA21A /* UINavigationController+extension.swift */; };
 		43FD16B32642BA59008BA21A /* AlertControllerCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FD16B22642BA59008BA21A /* AlertControllerCreator.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
@@ -123,7 +122,6 @@
 		43FD16A22642B558008BA21A /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		43FD16A52642B580008BA21A /* FriendsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
 		43FD16A82642B599008BA21A /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
-		43FD16AB2642B5E3008BA21A /* AccountProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProtocols.swift; sourceTree = "<group>"; };
 		43FD16AE2642B677008BA21A /* UINavigationController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+extension.swift"; sourceTree = "<group>"; };
 		43FD16B22642BA59008BA21A /* AlertControllerCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerCreator.swift; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -279,7 +277,6 @@
 				4352BF0826419E6000AACE8C /* Presenters */,
 				4352BF0726419E5100AACE8C /* Controllers */,
 				4352BF0626419E4A00AACE8C /* Model */,
-				43FD16AB2642B5E3008BA21A /* AccountProtocols.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -509,7 +506,6 @@
 				433013182646B12F00756816 /* Errors.swift in Sources */,
 				43AEF86D262B29EC0063D925 /* GroupsFlowCoordinator.swift in Sources */,
 				4366F3612641572D00C95BFA /* AuthController.swift in Sources */,
-				43FD16AC2642B5E3008BA21A /* AccountProtocols.swift in Sources */,
 				43D6894626418F0700850CE2 /* AuthManager.swift in Sources */,
 				4354B312261CC2ED0080F577 /* TaskController.swift in Sources */,
 				43FD16A92642B599008BA21A /* SearchTextField.swift in Sources */,

@@ -21,12 +21,16 @@ class GroupsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        presenter?.didLoadView()
+        
         setupNavigationItem()
         setBackground()
         
         configureTableView()
         
         self.view.addSubview(tableView)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ReceivedNotification(notification:)), name: Notification.Name("AuthChanged"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -36,7 +40,6 @@ class GroupsController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        presenter?.didLoadView()
     }
     
     // MARK: Configures
@@ -62,6 +65,11 @@ class GroupsController: UIViewController {
     @objc
     func addGroupButtonTapped() {
         presenter?.addGroupButtonTapped()
+    }
+    
+    @objc
+    func ReceivedNotification(notification: Notification){
+        presenter?.didLoadView()
     }
     
 }

@@ -99,6 +99,7 @@ final class AuthManager: AuthManagerDescription {
                     completion(.failure(СustomError.noUser))
                 } else {
                     UserDefaults.standard.set(true, forKey: "status")
+                    NotificationCenter.default.post(name: Notification.Name("AuthChanged"), object: nil, userInfo: nil)
                     completion(.success(Auth.auth().currentUser?.uid ?? "nil"))
                 }
             }
@@ -110,6 +111,7 @@ final class AuthManager: AuthManagerDescription {
         do {
             try firebaseAuth.signOut()
             UserDefaults.standard.set(false, forKey: "status")
+            NotificationCenter.default.post(name: Notification.Name("AuthChanged"), object: nil, userInfo: nil)
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
