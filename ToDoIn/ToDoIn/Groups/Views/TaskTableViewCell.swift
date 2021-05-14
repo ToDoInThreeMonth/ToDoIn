@@ -21,7 +21,7 @@ class TaskTableViewCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
         taskView.addSubviews(taskLabel, isDoneView)
-        addSubview(taskView)
+        contentView.addSubview(taskView)
     }
     
     required init?(coder: NSCoder) {
