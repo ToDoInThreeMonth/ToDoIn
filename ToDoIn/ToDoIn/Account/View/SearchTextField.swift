@@ -6,7 +6,7 @@ class CustomSearchTextField: UITextField {
         super.init(frame: frame)
         placeholder = "Введите имя"
         returnKeyType = .done
-        textColor = .darkGrayTextColor
+        textColor = .darkTextColor
         backgroundColor = .systemGray6
         font = UIFont.systemFont(ofSize: 18)
         setupLeftView()

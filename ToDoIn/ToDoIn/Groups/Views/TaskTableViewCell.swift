@@ -21,7 +21,7 @@ class TaskTableViewCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
         taskView.addSubviews(taskLabel, isDoneView)
-        addSubview(taskView)
+        contentView.addSubview(taskView)
     }
     
     required init?(coder: NSCoder) {
@@ -37,7 +37,7 @@ class TaskTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
-    private func setupLayouts() {
+    func setupLayouts() {
         taskView.pin
             .horizontally(30)
             .vertically(taskViewPadding)
@@ -53,14 +53,14 @@ class TaskTableViewCell: UITableViewCell {
             .size(taskView.frame.height - isDoneViewPadding * 2)
     }
     
-    private func setupSublayers() {
+    func setupSublayers() {
         configureTaskView()
         configureTaskLabel()
         configureIsDoneView()
     }
     
     
-    private func configureTaskView() {
+    func configureTaskView() {
         taskView.backgroundColor = .accentColor
         if taskView.layer.cornerRadius == 0 {
             taskView.layer.cornerRadius = self.frame.height / 2.6
@@ -70,27 +70,25 @@ class TaskTableViewCell: UITableViewCell {
         }
     }
     
-    private func configureTaskLabel() {
+    func configureTaskLabel() {
         taskLabel.font = UIFont(name: "Inter-Regular", size: 12)
         taskLabel.textColor = .darkTextColor
     }
     
     
-    private func configureIsDoneView() {
-        isDoneView.backgroundColor = .accentColor
+    func configureIsDoneView() {
         if isDoneView.layer.cornerRadius == 0 {
             isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2
-            isDoneView.addShadow(side: .topLeft, type: .innearRadial, power: 0.3, alpha: 0.3, offset: 3)
-            isDoneView.addShadow(side: .bottomRight, type: .innearRadial, color: .white, power: 0.5, alpha: 1, offset: 4)
-            isDoneView.addShadow(type: .outside, power: 4, alpha: 0.15, offset: 1)
-            isDoneView.addShadow(type: .outside, color: .white, power: 4, alpha: 1, offset: -1)
         }
     }
     
     
     func setUp(task: Task?) {
-        taskLabel.text = task?.name
+        guard let task = task else {
+            return
+        }
+        taskLabel.text = task.title
+        isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor.withAlphaComponent(0.5) : UIColor.lightRedColor
     }
     
 }
-

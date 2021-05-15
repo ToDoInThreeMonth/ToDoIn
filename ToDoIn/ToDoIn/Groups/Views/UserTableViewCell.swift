@@ -32,7 +32,7 @@ class UserTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
-    private func setupLayouts() {
+    func setupLayouts() {
         
         userImage.pin
             .left(10).vCenter()
@@ -44,26 +44,27 @@ class UserTableViewCell: UITableViewCell {
             .sizeToFit()
     }
     
-    private func setupSublayers() {
+    func setupSublayers() {
         configureUserName()
         configureUserImageView()
     }
     
-    private func configureUserName() {
+    func configureUserName() {
         userName.textColor = .darkTextColor
         userName.font = UIFont(name: "Inter-Regular", size: 25)
     }
     
-    private func configureUserImageView() {
+    func configureUserImageView() {
         userImage.makeRound()
         userImage.layer.masksToBounds = false
         userImage.clipsToBounds = true
     }
     
     
-    func setUp(userName: String, userImage: String) {
-        self.userName.text = userName
-        self.userImage.image = UIImage(named: userImage)
+    func setUp(user: User) {
+        self.userName.text = user.name
+        self.userImage.image = UIImage(named: user.image)
     }
 
 }
+

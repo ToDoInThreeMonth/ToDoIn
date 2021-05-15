@@ -1,10 +1,12 @@
 import UIKit
 
 protocol AccountChildCoordinator: ChildCoordinator {
-
-    func presentErrorController(with message: String)
+    func showAuthController(isSignIn: Bool)
+    func showAccount()
+    func showLogin()
+    
     func presentExitController(completion: @escaping () -> ())
-
+    func presentErrorController(with message: String)
 }
 
 class AccountFlowCoordinator: AccountChildCoordinator {
@@ -20,18 +22,34 @@ class AccountFlowCoordinator: AccountChildCoordinator {
     }
     
     func start() {
-
-        let presenter = AccountPresenter(coordinator: self)
-        let viewController = AccountViewController(presenter: presenter)
-
-
-        
+        let isSignedIn = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
+        if isSignedIn {
+            showAccount()
+        } else {
+            showLogin()
+        }
+    }
+    
+    func showAuthController(isSignIn: Bool) {
+        let authController = AuthController(isSignIn: isSignIn)
+        authController.setPresenter(presenter: AuthPresenter(authView: authController.self), coordinator: self)
+        navigationController.viewControllers.last?.present(authController, animated: true, completion: nil)
+    }
+    
+    func showAccount() {
+        let accountController = AccountController()
+        accountController.setPresenter(presenter: AccountPresenter(accountView: accountController.self), coordinator: self)
         let tabBarImage = UIImage(named: imageName)
-        
-        // Пример настройки tabBar'a
-        viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
-        
-        navigationController.pushViewController(viewController, animated: false)
+        accountController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
+        navigationController.setViewControllers([accountController], animated: false)
+    }
+    
+    func showLogin() {
+        let loginController = LoginController()
+        loginController.setPresenter(presenter: LoginPresenter(loginView: loginController.self), coordinator: self)
+        let tabBarImage = UIImage(named: imageName)
+        loginController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
+        navigationController.setViewControllers([loginController], animated: false)
     }
     
     func presentExitController(completion: @escaping () -> ()) {
@@ -49,5 +67,3 @@ class AccountFlowCoordinator: AccountChildCoordinator {
         navigationController.present(alertVC, animated: true)
     }
 }
-    
-    

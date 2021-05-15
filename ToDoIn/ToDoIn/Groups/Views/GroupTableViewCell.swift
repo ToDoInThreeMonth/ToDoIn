@@ -4,11 +4,13 @@ class GroupTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    private weak var controller: GroupsView?
+    
     static let identifier = "GroupCell"
     
-    var groupView = UIView()
-    var groupLabel = UILabel()
-    var groupImageView = UIImageView()
+    private var groupView = UIView()
+    private var groupLabel = UILabel()
+    private var groupImageView = UIImageView(image: UIImage(named: "default"))
     
     var dimmingView = UIView()
     
@@ -22,12 +24,17 @@ class GroupTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         selectionStyle = .none
-        [groupLabel, groupImageView, dimmingView].forEach {groupView.addSubview($0)}
+        [groupLabel, groupImageView].forEach {groupView.addSubview($0)}
+        groupView.insertSubview(dimmingView, at: 0)
         addSubview(groupView)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupController(with controller: GroupsView) {
+        self.controller = controller
     }
     
     
@@ -39,7 +46,7 @@ class GroupTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
-    private func setupLayouts() {
+    func setupLayouts() {
         groupView.pin
             .horizontally(50)
             .vertically(groupViewPadding)
@@ -52,12 +59,10 @@ class GroupTableViewCell: UITableViewCell {
             .left(20).vCenter()
             .sizeToFit()
         
-        dimmingView.pin
-            .horizontally(50)
-            .vertically(groupViewPadding)
+        dimmingView.pin.all()
     }
     
-    private func setupSublayers() {
+    func setupSublayers() {
         configureGroupView()
         configureDimmingView()
         configureGroupLabel()
@@ -65,7 +70,7 @@ class GroupTableViewCell: UITableViewCell {
     }
     
     
-    private func configureGroupView() {
+    func configureGroupView() {
         groupView.backgroundColor = .accentColor
         if groupView.layer.cornerRadius == 0 {
             groupView.layer.cornerRadius = self.frame.height / 2.6
@@ -75,36 +80,41 @@ class GroupTableViewCell: UITableViewCell {
         }
     }
     
-    private func configureGroupLabel() {
+    func configureGroupLabel() {
         groupLabel.textColor = .darkTextColor
         groupLabel.font = UIFont(name: "Inter-Regular", size: 25)
     }
     
-    private func configureGroupImageView() {
+    func configureGroupImageView() {
         groupImageView.makeRound()
         groupImageView.layer.masksToBounds = false
         groupImageView.clipsToBounds = true
+        groupImageView.contentMode = .scaleAspectFill
     }
     
-    private func configureDimmingView() {
-        dimmingView.frame = groupView.bounds
+    func configureDimmingView() {
         dimmingView.backgroundColor = .clear
         dimmingView.layer.cornerRadius = self.frame.height / 2.6
     }
     
     
     func setUp(group: Group) {
-        groupLabel.text = group.name
-        groupImageView.image = UIImage(named: group.image)
+        groupLabel.text = group.title
+        if group.image != "default" {
+            controller?.loadImage(url: group.image) { [weak self] (image) in
+                self?.groupImageView.image = image
+            }
+        }
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         if highlighted {
-            dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+            dimmingView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.2)
         } else {
             dimmingView.backgroundColor = .clear
         }
     }
     
 }
+

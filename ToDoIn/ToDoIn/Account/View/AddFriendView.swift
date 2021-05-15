@@ -31,9 +31,17 @@ class AddFriendView: UIView {
     }()
     
     private lazy var addButton: UIButton = {
-        let button = AccountViewConfigure.addButton
+        let button = AccountUIComponents.addButton
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .red
+        label.alpha = 0
+        return label
     }()
         
     
@@ -54,11 +62,12 @@ class AddFriendView: UIView {
     }
     
     private func setupViews() {
-        isHidden = true 
+        isHidden = true
         backgroundColor = .accentColor
         addSubviews(titleLabel,
                     emailLabel,
                     emailTextField,
+                    errorLabel,
                     addButton)
     }
     
@@ -77,6 +86,10 @@ class AddFriendView: UIView {
             .end(to: emailTextField.edge.end)
             .marginBottom(10)
             .sizeToFit(.width)
+        errorLabel.pin
+            .below(of: emailTextField, aligned: .center)
+            .marginTop(15)
+            .size(CGSize(width: self.bounds.width - 10, height: 25))
         addButton.pin
             .bottom(20)
             .end(40)
@@ -90,15 +103,26 @@ class AddFriendView: UIView {
             addButton.layer.cornerRadius = 20
             emailTextField.layer.cornerRadius = 20
             
-            AccountViewConfigure.getSearchTFShadow(emailTextField)
-            AccountViewConfigure.getAddButtonShadow(addButton)
-            AccountViewConfigure.getSettingButtonGradiend(addButton)
+            AccountUIComponents.getSearchTFShadow(emailTextField)
+            AccountUIComponents.getAddButtonShadow(addButton)
+            AccountUIComponents.getSettingButtonGradiend(addButton)
         }
     }
     
     @objc
     private func addButtonTapped() {
-        guard let mail = emailTextField.text else { return }
+        guard let mail = emailTextField.text, !mail.isEmpty else { return }
         controller?.addNewFriend(mail)
+        emailTextField.text = ""
+    }
+    
+    func showError(with error: String) {
+        errorLabel.text = error
+        errorLabel.alpha = 1
+    }
+    
+    func cleanErrorLabel() {
+        errorLabel.text = ""
+        errorLabel.alpha = 0
     }
 }

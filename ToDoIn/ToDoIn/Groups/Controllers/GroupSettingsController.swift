@@ -1,42 +1,29 @@
 import UIKit
 import PinLayout
 
+protocol GroupSettingsView: class {
+    func setPresenter(presenter: GroupSettingsViewPresenter, coordinator: GroupsChildCoordinator)
+    func reloadView()
+}
+
 class GroupSettingsController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: GroupSettingsViewPresenter = GroupSettingsPresenter()
+    private var presenter: GroupSettingsViewPresenter?
     
     private let group: Group
     
-    private lazy var imageView: UIImageView = {
-       let imageView = SettingsUIComponents.imageView
-        imageView.image = UIImage(named: group.image)
-        return imageView
-    }()
-    
-    private lazy var groupBackView = SettingsUIComponents.groupBackView
-    
-    private lazy var groupTitle: UITextField = {
-        let textField = SettingsUIComponents.groupTitle
-        textField.text = group.name
-        return textField
-    }()
-    
-    private lazy var addUserButton: UIButton = {
-        let button = SettingsUIComponents.addUserButton
-        button.addTarget(self, action: #selector(addUserButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
+    private let imageView = CustomImageView()
+
+    private let groupTitle = UITextField()
+        
+    private lazy var usersTVDelegate = FriendsTVDelegate()
+    private lazy var usersTVDataSource = FriendsTVDataSource(controller: self)
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = UIColor.clear
-        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
+        let tableView = FriendsTableView(frame: .zero, style: .plain)
+        tableView.dataSource = usersTVDataSource
+        tableView.delegate = usersTVDelegate
         return tableView
     }()
     
@@ -53,11 +40,14 @@ class GroupSettingsController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationItem()
         setBackground()
-        view.addSubviews(groupBackView, groupTitle, tableView, addUserButton)
-        groupBackView.addSubviews(imageView)
+        
+        view.addSubviews(imageView, groupTitle, tableView)
         hideKeyboardWhenTappedAround()
-
+        
+        configureGroupTitle()
+        configureImageView()
     }
     
     override func viewWillLayoutSubviews() {
@@ -66,100 +56,128 @@ class GroupSettingsController: UIViewController {
        
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        configureImageView()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        presenter?.didLoadView()
+
         setupInsets()
-        configureAddButton()
     }
     
     // MARK: - Configures
+    
     private func configureLayouts() {
-        groupBackView.pin
+        imageView.pin
             .topCenter(view.pin.safeArea.top)
             .margin(30)
-            .size(CGSize(width: 150, height: 150))
-        
-        imageView.pin
-            .all().margin(20)
         
         groupTitle.pin
-            .below(of: groupBackView, aligned: .center)
+            .below(of: imageView, aligned: .center)
             .marginTop(20)
             .size(CGSize(width: 200, height: 40))
-        
-        addUserButton.pin
-            .below(of: groupTitle)
-            .end(-10)
-            .width(160)
-            .height(40)
-            .marginTop(20)
         
         tableView.pin
             .top(to: groupTitle.edge.bottom)
             .start(20)
-            .end(to: addUserButton.edge.start)
+            .end(20)
             .bottom(view.pin.safeArea.bottom)
             .marginEnd(10)
             .marginTop(20)
     }
     
-    private func configureImageView() {
-        if groupBackView.layer.cornerRadius == 0 {
-            groupBackView.makeRound()
-            SettingsUIComponents.getGroupBackViewShadow(groupBackView)
-            
-            imageView.makeRound()
-            SettingsUIComponents.getImageViewShadow(imageView)
-        }
+    private func setupNavigationItem() {
+        navigationController?.configureBarButtonItems(screen: .roomSettings, for: self)
+        navigationItem.rightBarButtonItem?.target = self
+        navigationItem.rightBarButtonItem?.action = #selector(addUserButtonTapped)
     }
     
-    private func configureAddButton() {
-        if addUserButton.layer.cornerRadius == 0 {
-            addUserButton.layer.cornerRadius = 15
-            SettingsUIComponents.getAddButtonShadow(addUserButton)
+    private func configureImageView() {
+        // Подгружаем картинку из сети
+        if group.image != "default" {
+            presenter?.loadImage(url: group.image) { (image) in
+                self.imageView.setImage(with: image)
+            }
         }
     }
+
+    private func configureGroupTitle() {
+        groupTitle.text = group.title
+        groupTitle.font = UIFont.systemFont(ofSize: 20)
+        groupTitle.textColor = .darkTextColor
+        groupTitle.textAlignment = .center
+    }
+    
     
     private func setupInsets() {
         tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)
-        addUserButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
-        addUserButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: addUserButton.frame.width - 45 - (addUserButton.imageView?.frame.width ?? 0))
         }
     
     // MARK: - Handlers
+    
     @objc
     func groupTitleDidChange() {
         // сохранение нового названия комнаты
-        presenter.groupTitleDidChange(with: groupTitle.text ?? nil)
+        presenter?.groupTitleDidChange(with: groupTitle.text ?? nil)
     }
     
     @objc
     func addUserButtonTapped() {
         // добавление нового участника
-        presenter.addUserButtonTapped()
+        presenter?.addUserButtonTapped()
     }
 }
 
 
 // MARK: - Extensions
+
+extension GroupSettingsController: GroupSettingsView {
+    
+    func setPresenter(presenter: GroupSettingsViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
+    }
+    
+    func reloadView() {
+        tableView.reloadData()
+    }
+}
+
+extension GroupSettingsController: FriendsTableViewOutput {
+    func showErrorAlertController(with message: String) {
+        
+    }
+    
+    func getFriend(by index: Int) -> User? {
+        presenter?.getUser(by: index)
+    }
+    
+    func getAllFriends() -> [User]? {
+        presenter?.getAllUsers()
+    }
+    
+    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
+    }
+    
+    
+}
+
 extension GroupSettingsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        group.users.count
+        presenter?.usersCount ?? 0
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as? UserTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as? UserTableViewCell, let user = presenter?.getUser(by: indexPath.row) else {
             return UITableViewCell()
         }
-        cell.setUp(userName: group.users[indexPath.row].name, userImage: group.users[indexPath.row].image)
+        
+        cell.setUp(user: user)
         return cell
     }
 }
@@ -177,5 +195,3 @@ extension GroupSettingsController: UITableViewDelegate {
         tableView.bounds.height / 6
     }
 }
-
-

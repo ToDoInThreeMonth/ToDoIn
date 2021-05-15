@@ -1,36 +1,36 @@
 import UIKit
 import PinLayout
 
-class GroupsController: UIViewController, GroupsView {
+protocol GroupsView: class {
+    func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator)
+    func reloadView()
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+}
+
+class GroupsController: UIViewController {
         
     // MARK: - Properties
     
     private var presenter: GroupsViewPresenter?
     
-    private var groups = [Group]()
-    
     private let tableView = UITableView()
     
-    // MARK: - Init
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func loadView() {
-        super.loadView()
-        setBackground()
-        presenter?.getGroups()
-        self.view.addSubview(tableView)
-    }
+    // MARK: - Override functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter?.didLoadView()
+        
+        setupNavigationItem()
+        setBackground()
+        
         configureTableView()
+        
+        self.view.addSubview(tableView)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ReceivedNotification(notification:)), name: Notification.Name("AuthChanged"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,10 +50,32 @@ class GroupsController: UIViewController, GroupsView {
         tableView.dataSource = self
     }
     
+    private func setupNavigationItem() {
+        navigationController?.configureBarButtonItems(screen: .rooms, for: self)
+        navigationItem.rightBarButtonItem?.target = self
+        navigationItem.rightBarButtonItem?.action = #selector(addGroupButtonTapped)
+    }
+    
     // MARK: - Handlers
     
-    func setGroups(groups: [Group]) {
-        self.groups = groups
+    @objc
+    func addGroupButtonTapped() {
+        presenter?.addGroupButtonTapped()
+    }
+    
+    @objc
+    func ReceivedNotification(notification: Notification){
+        presenter?.didLoadView()
+    }
+    
+}
+
+
+// MARK: - Extensions
+
+extension GroupsController: GroupsView {
+    
+    func reloadView() {
         tableView.reloadData()
     }
     
@@ -61,16 +83,19 @@ class GroupsController: UIViewController, GroupsView {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
+    }
 }
-
-
-// MARK: - Extensions
 
 extension GroupsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        presenter?.groupsCount ?? 0
     }
     
     // дизайн ячейки
@@ -78,7 +103,8 @@ extension GroupsController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as? GroupTableViewCell else {
             return UITableViewCell()
         }
-        cell.setUp(group: groups[indexPath.row])
+        cell.setupController(with: self)
+        cell.setUp(group: presenter?.getGroup(at: indexPath.row) ?? Group())
         return cell
     }
 }
@@ -91,11 +117,23 @@ extension GroupsController: UITableViewDelegate {
             self.showErrorAlert()
             return
         }
-        presenter.showGroupController(group: groups[indexPath.row])
+        presenter.showGroupController(group: presenter.getGroup(at: indexPath.row))
     }
     
     // размер ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         tableView.bounds.height / 10
+    }
+    
+    // удаление комнаты
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let deletedGroup = presenter?.getGroup(at: indexPath.row) else { return }
+            presenter?.deleteTapped(for: deletedGroup, at: indexPath.row)
+        }
     }
 }
