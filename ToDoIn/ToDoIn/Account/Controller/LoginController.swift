@@ -4,7 +4,7 @@ protocol LoginView: class {
     func setPresenter(presenter: LoginViewPresenter, coordinator: AccountChildCoordinator)
 }
 
-class LoginController: UIViewController {
+final class LoginController: UIViewController {
 
     // MARK: - Properties
     

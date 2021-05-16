@@ -1,12 +1,13 @@
 import UIKit
 
-class UserTableViewCell: UITableViewCell {
+final class UserTableViewCell: UITableViewCell {
 
     // MARK: - Properties
+    
     static let identifier = "SettingsGroupCell"
     
-    private var userName = UILabel()
-    private var userImage = UIImageView()
+    private let userName = UILabel()
+    private let userImage = UIImageView()
     
     private let imagePadding: CGFloat = 6
 
@@ -24,7 +25,7 @@ class UserTableViewCell: UITableViewCell {
     }
     
     
-    // MARK: - Handlers
+    // MARK: - Override functions
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -32,8 +33,9 @@ class UserTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
-    func setupLayouts() {
-        
+    // MARK: - Configures
+    
+    private func setupLayouts() {
         userImage.pin
             .left(10).vCenter()
             .size(self.frame.height - imagePadding * 2)
@@ -44,22 +46,23 @@ class UserTableViewCell: UITableViewCell {
             .sizeToFit()
     }
     
-    func setupSublayers() {
+    private func setupSublayers() {
         configureUserName()
         configureUserImageView()
     }
     
-    func configureUserName() {
+    private func configureUserName() {
         userName.textColor = .darkTextColor
         userName.font = UIFont(name: "Inter-Regular", size: 25)
     }
     
-    func configureUserImageView() {
+    private func configureUserImageView() {
         userImage.makeRound()
         userImage.layer.masksToBounds = false
         userImage.clipsToBounds = true
     }
     
+    // MARK: - Handlers
     
     func setUp(user: User) {
         self.userName.text = user.name

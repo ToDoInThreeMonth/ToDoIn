@@ -16,7 +16,7 @@ protocol GroupSettingsViewPresenter {
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
-class GroupSettingsPresenter: GroupSettingsViewPresenter {
+final class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Properties
     

@@ -7,7 +7,7 @@ protocol LoginViewPresenter {
     func buttonSignPressed(isSignIn: Bool)
 }
 
-class LoginPresenter: LoginViewPresenter {
+final class LoginPresenter: LoginViewPresenter {
     
     // MARK: - Properties
     

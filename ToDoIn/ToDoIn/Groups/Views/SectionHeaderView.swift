@@ -1,10 +1,14 @@
 import UIKit
 
-class SectionHeaderView: UIView {
+final class SectionHeaderView: UIView {
+    
+    // MARK: - Properties
     
     static let identifier = "SectionHeaderView"
     
     private let label = UILabel()
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -15,20 +19,25 @@ class SectionHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Override functions
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         setupLayouts()
         configureLabel()
     }
     
-    func setupLayouts() {
+    // MARK: - Configures
+    
+    private func setupLayouts() {
         label.pin.left(50)
             .bottom(5)
             .sizeToFit()
     }
     
+    // MARK: - Handlers
     
-    func configureLabel() {
+    private func configureLabel() {
         label.font = UIFont(name: "Inter-Regular", size: 12)
         label.textColor = .darkTextColor
     }

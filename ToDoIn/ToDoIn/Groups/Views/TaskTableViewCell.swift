@@ -1,13 +1,14 @@
 import UIKit
 
-class TaskTableViewCell: UITableViewCell {
+final class TaskTableViewCell: UITableViewCell {
     
     // MARK: - Properties
+    
     static let identifier = "TaskCell"
     
-    var taskView = UIView()
-    var taskLabel = UILabel()
-    var isDoneView = UIView()
+    private let taskView = UIView()
+    private let taskLabel = UILabel()
+    private let isDoneView = UIView()
     
     
     private let taskViewPadding: CGFloat = 5
@@ -29,7 +30,7 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     
-    // MARK: - Handlers
+    // MARK: - Override functions
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -37,7 +38,9 @@ class TaskTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
-    func setupLayouts() {
+    // MARK: - Configures
+    
+    private func setupLayouts() {
         taskView.pin
             .horizontally(30)
             .vertically(taskViewPadding)
@@ -53,14 +56,14 @@ class TaskTableViewCell: UITableViewCell {
             .size(taskView.frame.height - isDoneViewPadding * 2)
     }
     
-    func setupSublayers() {
+    private func setupSublayers() {
         configureTaskView()
         configureTaskLabel()
         configureIsDoneView()
     }
     
     
-    func configureTaskView() {
+    private func configureTaskView() {
         taskView.backgroundColor = .accentColor
         if taskView.layer.cornerRadius == 0 {
             taskView.layer.cornerRadius = self.frame.height / 2.6
@@ -70,18 +73,19 @@ class TaskTableViewCell: UITableViewCell {
         }
     }
     
-    func configureTaskLabel() {
+    private func configureTaskLabel() {
         taskLabel.font = UIFont(name: "Inter-Regular", size: 12)
         taskLabel.textColor = .darkTextColor
     }
     
     
-    func configureIsDoneView() {
+    private func configureIsDoneView() {
         if isDoneView.layer.cornerRadius == 0 {
             isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2
         }
     }
     
+    // MARK: - Handlers
     
     func setUp(task: Task?) {
         guard let task = task else {

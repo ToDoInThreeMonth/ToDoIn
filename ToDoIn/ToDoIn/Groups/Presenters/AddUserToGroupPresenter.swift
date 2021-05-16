@@ -15,7 +15,7 @@ protocol AddUserToGroupViewPresenter {
     func showErrorAlertController(with message: String)
 }
 
-class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
+final class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
     
     // MARK: - Preperties
     

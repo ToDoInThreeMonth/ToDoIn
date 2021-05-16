@@ -20,7 +20,7 @@ protocol AccountViewPresenter {
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
-class AccountPresenter: AccountViewPresenter {
+final class AccountPresenter: AccountViewPresenter {
     
     // MARK: - Properties
     

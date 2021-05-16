@@ -11,7 +11,7 @@ protocol TaskViewPresenter {
     func getUser(by userId: String, in users: [User]) -> User
 }
 
-class TaskPresenter: TaskViewPresenter {
+final class TaskPresenter: TaskViewPresenter {
     
     // MARK: - Properties
     

@@ -24,7 +24,7 @@ protocol GroupsViewPresenter {
     func deleteTapped(for group: Group, at index: Int)
 }
 
-class GroupsPresenter: GroupsViewPresenter {
+final class GroupsPresenter: GroupsViewPresenter {
     
     // MARK: - Properties
     

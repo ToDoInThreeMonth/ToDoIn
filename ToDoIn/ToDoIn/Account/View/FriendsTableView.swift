@@ -1,6 +1,6 @@
 import UIKit
 
-class FriendsTableView: UITableView {
+final class FriendsTableView: UITableView {
     // Initializers
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -26,7 +26,7 @@ class FriendsTableView: UITableView {
 
 //MARK: - Friends TableViewDataSource
 
-class FriendsTVDataSource: NSObject, UITableViewDataSource {
+final class FriendsTVDataSource: NSObject, UITableViewDataSource {
     private weak var controller: FriendsTableViewOutput?
     
     
@@ -62,7 +62,7 @@ class FriendsTVDataSource: NSObject, UITableViewDataSource {
 }
 
 //MARK: - Friends TableViewDelegate
-class FriendsTVDelegate: NSObject, UITableViewDelegate {
+final class FriendsTVDelegate: NSObject, UITableViewDelegate {
     
 }
 

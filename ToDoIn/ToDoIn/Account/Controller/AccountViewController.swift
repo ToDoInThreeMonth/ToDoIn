@@ -24,7 +24,7 @@ protocol AccountView: FriendsTableViewOutput, AddFriendViewOutput {
     func setUp(with user: User)
 }
 
-class AccountController: UIViewController {
+final class AccountController: UIViewController {
     
     // Stored properties
     private var presenter: AccountViewPresenter?

@@ -16,7 +16,7 @@ protocol AuthView: class {
     func stopActivityIndicator()
 }
 
-class AuthController: UIViewController {
+final class AuthController: UIViewController {
     
     // MARK: - Properties
     

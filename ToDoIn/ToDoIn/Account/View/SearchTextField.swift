@@ -1,6 +1,6 @@
 import UIKit
 
-class CustomSearchTextField: UITextField {
+final class CustomSearchTextField: UITextField {
     // Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)

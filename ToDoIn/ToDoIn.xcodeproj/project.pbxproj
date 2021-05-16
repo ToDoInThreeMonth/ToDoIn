@@ -61,6 +61,8 @@
 		4317447A265017FF00D7CC8E /* AddUserToGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43174479265017FF00D7CC8E /* AddUserToGroupController.swift */; };
 		4317447D2650185A00D7CC8E /* Date + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4317447C2650185A00D7CC8E /* Date + extension.swift */; };
 		431744802650190300D7CC8E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4317447F2650190300D7CC8E /* ImagePicker.swift */; };
+		434CF26B2650F5C10095299E /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26A2650F5C10095299E /* Converter.swift */; };
+		434CF26E2650F68B0095299E /* FirestoreKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26D2650F68B0095299E /* FirestoreKeys.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +126,8 @@
 		43174479265017FF00D7CC8E /* AddUserToGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserToGroupController.swift; sourceTree = "<group>"; };
 		4317447C2650185A00D7CC8E /* Date + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + extension.swift"; sourceTree = "<group>"; };
 		4317447F2650190300D7CC8E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		434CF26A2650F5C10095299E /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
+		434CF26D2650F68B0095299E /* FirestoreKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreKeys.swift; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0B3DC4BF660E53D2E6FE999 /* Pods-ToDoIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.debug.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,8 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				4317445F265011EE00D7CC8E /* Helpers */,
-				15CF8444264891EE00F2B73E /* Extensions */,
 				15CF8464264891EE00F2B73E /* Services */,
+				15CF8444264891EE00F2B73E /* Extensions */,
 				15CF8423264891EE00F2B73E /* Coordinators */,
 				15CF8429264891EE00F2B73E /* Groups */,
 				15CF845E264891EE00F2B73E /* Main */,
@@ -327,6 +331,7 @@
 			children = (
 				15CF8465264891EE00F2B73E /* AlertControllerCreator.swift */,
 				4317445C265011D800D7CC8E /* ImagesManager.swift */,
+				434CF26A2650F5C10095299E /* Converter.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -362,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				43174460265011FC00D7CC8E /* CustomError.swift */,
+				434CF26D2650F68B0095299E /* FirestoreKeys.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -491,6 +497,7 @@
 			files = (
 				15CF8491264891EE00F2B73E /* FriendTableViewCell.swift in Sources */,
 				15CF848D264891EE00F2B73E /* AccountViewController.swift in Sources */,
+				434CF26B2650F5C10095299E /* Converter.swift in Sources */,
 				4317445D265011D800D7CC8E /* ImagesManager.swift in Sources */,
 				15CF8475264891EE00F2B73E /* GroupSettingsController.swift in Sources */,
 				15CF8499264891EE00F2B73E /* AlertControllerCreator.swift in Sources */,
@@ -529,6 +536,7 @@
 				15CF846B264891EE00F2B73E /* GroupsFlowCoordinator.swift in Sources */,
 				431744502650110200D7CC8E /* LoginController.swift in Sources */,
 				15CF8487264891EE00F2B73E /* UIColor + extensions.swift in Sources */,
+				434CF26E2650F68B0095299E /* FirestoreKeys.swift in Sources */,
 				15CF8493264891EE00F2B73E /* AddFriendView.swift in Sources */,
 				43174477265017EB00D7CC8E /* AddGroupController.swift in Sources */,
 				43174465265014E600D7CC8E /* CustomButton.swift in Sources */,

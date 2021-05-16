@@ -6,7 +6,7 @@ protocol AddUserToGroupView: class {
     func reloadView()
 }
 
-class AddUserToGroupController: UIViewController {
+final class AddUserToGroupController: UIViewController {
     
     // MARK: - Properties
     
@@ -38,7 +38,7 @@ class AddUserToGroupController: UIViewController {
     
     private let addButton = CustomButton(with: "Добавить")
     
-    // MARK: - Init
+    // MARK: - Override functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +73,7 @@ class AddUserToGroupController: UIViewController {
     // MARK: - Handlers
     
     @objc
-    func buttonTapped() {
+    private func buttonTapped() {
         let selectedIndexes = friendsTableView.indexPathsForSelectedRows ?? []
         if selectedIndexes.count != 0 {
             presenter?.addButtonTapped(selectedUsers: selectedIndexes)

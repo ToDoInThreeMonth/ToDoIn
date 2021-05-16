@@ -6,7 +6,7 @@ protocol AddGroupView {
     func transitionToMain()
 }
 
-class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+final class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     // MARK: - Properties
     
@@ -39,7 +39,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         static let horizontalPadding: CGFloat = 40
     }
     
-    // MARK: - Configures
+    // MARK: - Override functions
     
     override func loadView() {
         super.loadView()
@@ -67,7 +67,9 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         configureShadowsAndCornerRadius()
     }
     
-    func configureLayouts() {
+    // MARK: - Configures
+    
+    private func configureLayouts() {
         titleLabel.pin
             .top(15).hCenter()
             .sizeToFit()
@@ -108,13 +110,13 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
             .horizontally(LayersConstants.horizontalPadding)
     }
     
-    func configureNameTextField() {
+    private func configureNameTextField() {
         nameTextField.placeholder = "Название комнаты"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
     }
     
-    func configureLabels() {
+    private func configureLabels() {
         titleLabel.text = "Создать новую комнату"
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         nameLabel.text = "Название"
@@ -124,17 +126,17 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
         
     }
     
-    func configureAddButton() {
+    private func configureAddButton() {
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
     }
     
-    func configureImageView() {
+    private func configureImageView() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
     }
     
-    func configureShadowsAndCornerRadius() {
+    private func configureShadowsAndCornerRadius() {
         nameTextField.layer.cornerRadius = LayersConstants.cornerRadius
         nameTextField.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
         nameTextField.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
@@ -143,7 +145,7 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     // MARK: - Handlers
     
     @objc
-    func imageViewTapped() {
+    private func imageViewTapped() {
         ImagePickerManager().pickImage(self) { image in
             self.imageView.setImage(with: image)
             self.imageView.contentMode = .scaleAspectFill
@@ -151,16 +153,12 @@ class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     @objc
-    func addButtonTapped() {
+    private func addButtonTapped() {
         let selectedIndexes = friendsTableView.indexPathsForSelectedRows
         if let groupName = nameTextField.text, !groupName.isEmpty {
             presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [], photo: imageView.getImage())
             transitionToMain()
         }
-    }
-    
-    func transitionToMain() {
-        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -196,5 +194,9 @@ extension AddGroupController: AddGroupView {
     func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
+    }
+    
+    func transitionToMain() {
+        dismiss(animated: true, completion: nil)
     }
 }

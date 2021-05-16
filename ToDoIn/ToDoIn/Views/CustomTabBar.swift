@@ -1,6 +1,6 @@
 import UIKit
 
-class CustomTabBar: UITabBar {
+final class CustomTabBar: UITabBar {
 
     private var shapeLayer: CALayer?
     

@@ -1,6 +1,6 @@
 import UIKit
 
-class AddFriendView: UIView {
+final class AddFriendView: UIView {
     private weak var controller: AddFriendViewOutput?
     
     private lazy var titleLabel: UILabel = {

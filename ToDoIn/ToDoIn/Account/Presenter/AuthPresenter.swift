@@ -11,7 +11,7 @@ protocol AuthViewPresenter {
     func authSucceed()
 }
 
-class AuthPresenter: AuthViewPresenter {
+final class AuthPresenter: AuthViewPresenter {
     
     // MARK: - Properties
     

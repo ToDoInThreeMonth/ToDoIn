@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
+final class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     private let buttonView = UIView()
     private let button = UIButton()

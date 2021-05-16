@@ -6,7 +6,7 @@ protocol GroupSettingsView: class {
     func reloadView()
 }
 
-class GroupSettingsController: UIViewController {
+final class GroupSettingsController: UIViewController {
     
     // MARK: - Properties
     
@@ -37,6 +37,8 @@ class GroupSettingsController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Override functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,13 +117,13 @@ class GroupSettingsController: UIViewController {
     // MARK: - Handlers
     
     @objc
-    func groupTitleDidChange() {
+    private func groupTitleDidChange() {
         // сохранение нового названия комнаты
         presenter?.groupTitleDidChange(with: groupTitle.text ?? nil)
     }
     
     @objc
-    func addUserButtonTapped() {
+    private func addUserButtonTapped() {
         // добавление нового участника
         presenter?.addUserButtonTapped()
     }
@@ -144,7 +146,7 @@ extension GroupSettingsController: GroupSettingsView {
 
 extension GroupSettingsController: FriendsTableViewOutput {
     func showErrorAlertController(with message: String) {
-        
+        // TODO: - alert
     }
     
     func getFriend(by index: Int) -> User? {

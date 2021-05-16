@@ -6,7 +6,7 @@ protocol GroupView: class {
     func reloadView()
 }
 
-class GroupController: UIViewController {
+final class GroupController: UIViewController {
     
     // MARK: - Properties
     
@@ -29,6 +29,8 @@ class GroupController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Override functions
     
     override func loadView() {
         super.loadView()
@@ -60,7 +62,7 @@ class GroupController: UIViewController {
         title = group.title
     }
     
-    func configureTableView() {
+    private func configureTableView() {
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.identifier)
         
         tableView.separatorStyle = .none
@@ -75,13 +77,14 @@ class GroupController: UIViewController {
     }
     
     // MARK: - Handlers
+    
     @objc
-    func settingsButtonTapped() {
+    private func settingsButtonTapped() {
         presenter?.showSettingsGroupController()
     }
     
     @objc
-    func addingTaskButtonTapped() {
+    private func addingTaskButtonTapped() {
         presenter?.showTaskCotroller(task: Task(), isChanging: false)
     }
 
@@ -133,12 +136,10 @@ extension GroupController: UITableViewDataSource {
         return cell
     }
     
-    
     // количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
         presenter?.usersCount ?? 0
     }
-
 
     // заголовок секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -147,7 +148,6 @@ extension GroupController: UITableViewDataSource {
         sectionHeaderView.setUp(owner: owner)
         return sectionHeaderView
     }
-    
     
     // высота заголовка секции
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

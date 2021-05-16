@@ -8,7 +8,7 @@ protocol TaskView: class {
     func setUser(with name: String)
 }
 
-class TaskController: UIViewController {
+final class TaskController: UIViewController {
     
     // MARK: - Properties
     
@@ -55,6 +55,8 @@ class TaskController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Override functions
+    
     override func loadView() {
         super.loadView()
         view.backgroundColor = .accentColor
@@ -86,7 +88,7 @@ class TaskController: UIViewController {
     
     // MARK: - Configures
     
-    func configureLayouts() {
+    private func configureLayouts() {
         titleLabel.pin
             .top(15).hCenter()
             .sizeToFit()
@@ -152,7 +154,7 @@ class TaskController: UIViewController {
 
     }
     
-    func configureLabels() {
+    private func configureLabels() {
         titleLabel.text = isChanging ? task.title : "Создать новую задачу"
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         nameLabel.text = "Название"
@@ -160,14 +162,14 @@ class TaskController: UIViewController {
         [titleLabel, nameLabel, descriptionLabel].forEach { $0.textColor = .darkTextColor }
     }
     
-    func configureNameTextField() {
+    private func configureNameTextField() {
         nameTextField.placeholder = "Название задачи"
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
         nameTextField.text = task.title
     }
     
-    func configureDescriptionTextView() {
+    private func configureDescriptionTextView() {
         shadowDescriptionSubview.backgroundColor = .white
         
         descriptionTextView.text = placeholderText
@@ -187,7 +189,7 @@ class TaskController: UIViewController {
         }
     }
     
-    func configurePickers() {
+    private func configurePickers() {
         [dateTextField, userTextField].forEach {
             $0.textColor = .darkTextColor
             $0.backgroundColor = .white
@@ -210,20 +212,20 @@ class TaskController: UIViewController {
         userTextField.text = presenter?.getUser(by: task.userId, in: users).name
     }
     
-    func configureIsDoneView() {
+    private func configureIsDoneView() {
         isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
         let tap = UITapGestureRecognizer(target: self, action: #selector(isDoneViewTapped))
         isDoneView.addGestureRecognizer(tap)
     }
 
-    func configureButtons() {
+    private func configureButtons() {
         addButton.setTitle(isChanging ? "Изменить" : "Добавить")
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         deleteButton.setTitleColor(.systemRed, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
-    func configureShadowsAndCornerRadius() {
+    private func configureShadowsAndCornerRadius() {
         if nameTextField.layer.cornerRadius == 0 {
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
@@ -235,7 +237,7 @@ class TaskController: UIViewController {
     // MARK: - Handlers
     
     @objc
-    func doneDateTapped() {
+    private func doneDateTapped() {
         if let datePicker = self.dateTextField.inputView as? UIDatePicker {
             presenter?.doneDateTapped(date: datePicker.date)
         }
@@ -243,7 +245,7 @@ class TaskController: UIViewController {
     }
     
     @objc
-    func doneUserTapped() {
+    private func doneUserTapped() {
         if let userPicker = self.userTextField.inputView as? UIPickerView {
             presenter?.doneUserTapped(user: users[userPicker.selectedRow(inComponent: 0)])
         }
@@ -251,7 +253,7 @@ class TaskController: UIViewController {
     }
     
     @objc
-    func addButtonTapped() {
+    private func addButtonTapped() {
         guard let title = nameTextField.text, !title.isEmpty, !(userTextField.text?.isEmpty ?? true) else {
             dismiss(animated: true, completion: nil)
             return
@@ -276,13 +278,13 @@ class TaskController: UIViewController {
     }
     
     @objc
-    func deleteButtonTapped() {
+    private func deleteButtonTapped() {
         presenter?.deleteButtonTapped(task: task, group: group)
         dismiss(animated: true, completion: nil)
     }
     
     @objc
-    func isDoneViewTapped() {
+    private func isDoneViewTapped() {
         task.isDone.toggle()
         isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
     }
@@ -348,7 +350,6 @@ extension TaskController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         users[row].name
-        //presenter?.getUser(by: row, in: group).name
     }
 
 }

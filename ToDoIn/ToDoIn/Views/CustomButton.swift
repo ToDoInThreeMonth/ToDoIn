@@ -1,6 +1,6 @@
 import UIKit
 
-class CustomButton: UIButton {
+final class CustomButton: UIButton {
     
     struct LayersConstants {
         static let buttonWidth: CGFloat = UIScreen.main.bounds.width - 80

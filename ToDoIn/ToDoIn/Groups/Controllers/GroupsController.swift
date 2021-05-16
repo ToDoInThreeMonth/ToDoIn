@@ -8,7 +8,7 @@ protocol GroupsView: class {
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
-class GroupsController: UIViewController {
+final class GroupsController: UIViewController {
         
     // MARK: - Properties
     
@@ -40,7 +40,7 @@ class GroupsController: UIViewController {
     
     // MARK: Configures
     
-    func configureTableView() {
+    private func configureTableView() {
         tableView.register(GroupTableViewCell.self, forCellReuseIdentifier: GroupTableViewCell.identifier)
         
         tableView.backgroundColor = .clear
@@ -59,12 +59,12 @@ class GroupsController: UIViewController {
     // MARK: - Handlers
     
     @objc
-    func addGroupButtonTapped() {
+    private func addGroupButtonTapped() {
         presenter?.addGroupButtonTapped()
     }
     
     @objc
-    func ReceivedNotification(notification: Notification){
+    private func ReceivedNotification(notification: Notification){
         presenter?.didLoadView()
     }
     
