@@ -38,13 +38,12 @@ final class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINav
     }
     private func openCamera(){
         alert.dismiss(animated: true, completion: nil)
-        if(UIImagePickerController .isSourceTypeAvailable(.camera)){
+        if(UIImagePickerController.isSourceTypeAvailable(.camera)){
             picker.sourceType = .camera
             self.viewController?.present(picker, animated: true, completion: nil)
         } else {
-            let alertWarning = UIAlertView(title:"Внимание", message: "Камера не обнаружена", delegate:nil, cancelButtonTitle:"Ок", otherButtonTitles:"")
-//                UIAlertController(title: "Внимание", message: "Камера не обнаружена", preferredStyle: .alert)
-            alertWarning.show()
+            let alertVC = UIAlertController(title: "Внимание", message: "Камера не обнаружена", preferredStyle: .alert)
+            viewController?.present(alertVC, animated: true, completion: nil)
         }
     }
     private func openGallery(){
