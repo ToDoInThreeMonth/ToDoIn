@@ -93,7 +93,7 @@ final class AuthController: UIViewController {
         
         emailTextField.pin
             .top(to: isSignIn ? view.edge.top : imageView.edge.bottom)
-            .marginTop(isSignIn ? 100 : 20)
+            .marginTop(isSignIn ? 200 : LayersConstants.margin)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.textFieldHeight)
 
@@ -119,14 +119,15 @@ final class AuthController: UIViewController {
                 .height(LayersConstants.textFieldHeight)
         }
         
+        button.pin
+            .below(of: isSignIn ? passwordTextField1 : passwordTextField2, aligned: .center)
+            .marginTop(LayersConstants.margin * 2)
+        
         errorLabel.pin
-            .below(of: isSignIn ? passwordTextField1 : passwordTextField2 )
-            .marginTop(LayersConstants.margin)
+            .below(of: button)
+            .marginTop(5)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.textFieldHeight * 2)
-        
-        button.pin
-            .below(of: errorLabel, aligned: .center)
     }
     
     func configureImageView() {
@@ -194,7 +195,7 @@ final class AuthController: UIViewController {
     
     private func startActivityIndicator() {
         view.addSubview(activityIndicator)
-        activityIndicator.pin.below(of: button, aligned: .center).marginTop(10).sizeToFit()
+        activityIndicator.pin.above(of: button, aligned: .center).marginBottom(10).sizeToFit()
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
     }

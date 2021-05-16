@@ -6,11 +6,9 @@ protocol GroupsManagerDescription {
     func observeGroups(completion: @escaping (Result<[Group], СustomError>) -> Void)
     func observeGroup(by userId: String, completion: @escaping (Result<Group, СustomError>) -> Void)
     func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void)
-    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], СustomError>) -> Void)
     
-    func addGroup(title: String, users: [String], photo: UIImage?)
+    func addGroup(title: String, users: [String], photo: UIImage?, completion: @escaping (Error?) -> Void)
     func addFriend(friend: User)
-    func addUser(_ user: User, to group: Group)
     func addUsers(_ users: [User], to group: Group)
     func addTask(_ task: Task, in group: Group)
 
@@ -32,12 +30,14 @@ final class GroupsManager: GroupsManagerDescription {
     
     private init() {}
     
+    // MARK: - Observe
+    
     func observeGroups(completion: @escaping (Result<[Group], СustomError>) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             completion(.failure(СustomError.noSignedUser))
             return
         }
-        database.collection("groups").addSnapshotListener { (querySnapshot, error) in
+        database.collection(Collection.groups.rawValue).addSnapshotListener { (querySnapshot, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
                 return
@@ -59,7 +59,7 @@ final class GroupsManager: GroupsManagerDescription {
     }
     
     func observeGroup(by userId: String, completion: @escaping (Result<Group, СustomError>) -> Void) {
-        database.collection("groups").document(userId).addSnapshotListener { (querySnapshot, error) in
+        database.collection(Collection.groups.rawValue).document(userId).addSnapshotListener { (querySnapshot, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
                 return
@@ -82,7 +82,7 @@ final class GroupsManager: GroupsManagerDescription {
         } else {
             saveUserId = userId!
         }
-        database.collection("users").document(saveUserId).addSnapshotListener { (snapshot, error) in
+        database.collection(Collection.users.rawValue).document(saveUserId).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
                 return
@@ -96,28 +96,10 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
+    // MARK: - Add
     
-    func observeFriends(_ friends: [String], completion: @escaping (Result<[User], СustomError>) -> Void) {
-        var res = [User]()
-        for friendId in friends {
-            self.database.collection("users").document(friendId).addSnapshotListener { (snapshot, error) in
-                if error != nil {
-                    completion(.failure(СustomError.error))
-                    return
-                }
-                guard let data = snapshot?.data() else {
-                    completion(.failure(СustomError.unexpected))
-                    return
-                }
-                res.append(GroupsConverter.user(from: data))
-            }
-        }
-        completion(.success(res))
-    }
-    
-    
-    func addGroup(title: String, users: [String], photo: UIImage?) {
-        let ref = database.collection("groups").document()
+    func addGroup(title: String, users: [String], photo: UIImage?, completion: @escaping (Error?) -> Void) {
+        let ref = database.collection(Collection.groups.rawValue).document()
         let docId = ref.documentID
         var imageName: String = "default"
         ImagesManager.loadPhotoToStorage(id: docId, photo: photo) { (myResult) in
@@ -127,24 +109,21 @@ final class GroupsManager: GroupsManagerDescription {
             case .failure(_):
                 imageName = "default"
             }
-            ref.setData(["id" : docId,
-                        "title" : title,
-                        "image" : imageName,
-                        "tasks" : [],
-                        "users" : users])
+            ref.setData([GroupKey.id.rawValue : docId,
+                         GroupKey.title.rawValue : title,
+                         GroupKey.image.rawValue : imageName,
+                         GroupKey.tasks.rawValue : [],
+                         GroupKey.users.rawValue : users]) { err in
+                completion(err)
+            }
         }
     }
-    
     
     func addFriend(friend: User) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
-        database.collection("users").document(userId).updateData(["friends" : FieldValue.arrayUnion([friend.id])])
-    }
-    
-    func addUser(_ user: User, to group: Group) {
-        database.collection("groups").document(group.id).setData(["users": FieldValue.arrayUnion([user.id])], merge: true)
+        database.collection(Collection.users.rawValue).document(userId).updateData([UserKey.friends.rawValue : FieldValue.arrayUnion([friend.id])])
     }
     
     func addUsers(_ users: [User], to group: Group) {
@@ -152,12 +131,24 @@ final class GroupsManager: GroupsManagerDescription {
         for user in users {
             usersId.append(user.id)
         }
-        database.collection("groups").document(group.id).setData(["users": FieldValue.arrayUnion(usersId)], merge: true)
+        database.collection(Collection.groups.rawValue).document(group.id).setData([GroupKey.users.rawValue: FieldValue.arrayUnion(usersId)], merge: true)
     }
     
+    func addTask(_ task: Task, in group: Group) {
+        var tasks = [GroupsConverter.task(from: task)]
+        for task in group.tasks {
+            tasks.append(GroupsConverter.task(from: task))
+        }
+        database.collection(Collection.groups.rawValue).document(group.id).setData([GroupKey.tasks.rawValue: tasks], merge: true)
+        
+//        let dictTask = [GroupsConverter.task(from: task)]
+//        database.collection("groups").document(group.id).setData(["tasks": FieldValue.arrayUnion([dictTask])], merge: true)
+    }
+    
+    // MARK: - Get
     
     func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void) {
-        let docRef = database.collection("users").document(userId)
+        let docRef = database.collection(Collection.users.rawValue).document(userId)
         docRef.getDocument { (document, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
@@ -176,7 +167,7 @@ final class GroupsManager: GroupsManagerDescription {
     }
     
     func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void) {
-        database.collection("users").getDocuments { (snapshot, error) in
+        database.collection(Collection.users.rawValue).getDocuments { (snapshot, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
                 return
@@ -186,7 +177,7 @@ final class GroupsManager: GroupsManagerDescription {
                 return
             }
             for document in documents {
-                guard let docEmail = document["email"] as? String else {
+                guard let docEmail = document[UserKey.email.rawValue] as? String else {
                     continue
                 }
                 if docEmail == email {
@@ -199,41 +190,6 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func addTask(_ task: Task, in group: Group) {
-        var tasks = [GroupsConverter.task(from: task)]
-        for task in group.tasks {
-            tasks.append(GroupsConverter.task(from: task))
-        }
-        database.collection("groups").document(group.id).setData(["tasks": tasks], merge: true)
-        
-//        let dictTask = [GroupsConverter.task(from: task)]
-//        database.collection("groups").document(group.id).setData(["tasks": FieldValue.arrayUnion([dictTask])], merge: true)
-    }
-    
-    func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void) {
-        var tasks = [GroupsConverter.task(from: task)]
-        for el in group.tasks {
-            if el.id != task.id {
-                tasks.append(GroupsConverter.task(from: el))
-            }
-        }
-        database.collection("groups").document(group.id).updateData([ "tasks": tasks ]) { err in
-            if err != nil {
-                completion(.unexpected)
-            }
-        }
-    }
-    
-    func deleteTask(_ task: Task, in group: Group) {
-        database.collection("groups").document(group.id).updateData([
-            "tasks": FieldValue.arrayRemove([GroupsConverter.task(from: task)]),
-        ])
-    }
-    
-    func deleteGroup(_ group: Group) {
-        database.collection("groups").document(group.id).delete()
-    }
-    
     func getTasks(for userId: String, from group: Group) -> [Task] {
         var tasks = [Task]()
         for task in group.tasks {
@@ -242,6 +198,34 @@ final class GroupsManager: GroupsManagerDescription {
             }
         }
         return tasks
+    }
+    
+    // MARK: - Change
+    
+    func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void) {
+        var tasks = [GroupsConverter.task(from: task)]
+        for el in group.tasks {
+            if el.id != task.id {
+                tasks.append(GroupsConverter.task(from: el))
+            }
+        }
+        database.collection(Collection.groups.rawValue).document(group.id).updateData([GroupKey.tasks.rawValue : tasks]) { err in
+            if err != nil {
+                completion(.unexpected)
+            }
+        }
+    }
+    
+    // MARK: - Delete
+    
+    func deleteTask(_ task: Task, in group: Group) {
+        database.collection(Collection.groups.rawValue).document(group.id).updateData([
+            GroupKey.tasks.rawValue : FieldValue.arrayRemove([GroupsConverter.task(from: task)]),
+        ])
+    }
+    
+    func deleteGroup(_ group: Group) {
+        database.collection(Collection.groups.rawValue).document(group.id).delete()
     }
     
 }

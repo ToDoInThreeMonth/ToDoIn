@@ -42,7 +42,7 @@ extension UINavigationController {
             view.navigationItem.setRightBarButton(rightButton, animated: true)
             view.title = "Аккаунт"
         case .roomsDetail:
-            let rightButtonAImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
+            let rightButtonAImage = UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal)
             let rightButtonBImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
             let rightButtonA = UIBarButtonItem(image: rightButtonAImage, style: .plain, target: nil, action: nil)
             let rightButtonB = UIBarButtonItem(image: rightButtonBImage, style: .plain, target: nil, action: nil)

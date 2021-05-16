@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 protocol TaskViewPresenter {
     init(addingTaskView: TaskView)
@@ -9,6 +9,8 @@ protocol TaskViewPresenter {
     func addButtonTapped(_ isChanging: Bool, task: Task, group: Group)
     func deleteButtonTapped(task: Task, group: Group)
     func getUser(by userId: String, in users: [User]) -> User
+    
+    func showDeleteAlertController(on viewController: UIViewController, completion: @escaping () -> ())
 }
 
 final class TaskPresenter: TaskViewPresenter {
@@ -46,8 +48,8 @@ final class TaskPresenter: TaskViewPresenter {
     func addButtonTapped(_ isChanging: Bool, task: Task, group: Group) {
         if isChanging {
             groupsManager.changeTask(task, in: group) { [weak self] (result) in
-                if result != nil {
-                    self?.showErrorAlertController(with: result!.toString())
+                if let result = result {
+                    self?.showErrorAlertController(with: result.toString())
                 }
             }
         }
@@ -57,6 +59,7 @@ final class TaskPresenter: TaskViewPresenter {
     }
     
     func deleteButtonTapped(task: Task, group: Group) {
+        
         groupsManager.deleteTask(task, in: group)
     }
 
@@ -72,6 +75,10 @@ final class TaskPresenter: TaskViewPresenter {
     
     func showErrorAlertController(with message: String) {
         coordinator?.presentErrorController(with: message)
+    }
+    
+    func showDeleteAlertController(on viewController: UIViewController, completion: @escaping () -> ()) {
+        coordinator?.presentDeleteController(on: viewController, completion: completion)
     }
 }
     

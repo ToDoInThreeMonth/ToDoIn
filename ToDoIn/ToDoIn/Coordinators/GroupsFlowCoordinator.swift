@@ -7,6 +7,7 @@ protocol GroupsChildCoordinator: ChildCoordinator {
     func showSettingsGroupController(group: Group)
     func showAddUser(to group: Group, with participants: [User])
     func presentErrorController(with message: String)
+    func presentDeleteController(on viewController: UIViewController, completion: @escaping () -> ())
 }
 
 class GroupsFlowCoordinator: GroupsChildCoordinator {
@@ -25,7 +26,7 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
         let viewController = GroupsController()
         viewController.setPresenter(presenter: GroupsPresenter(groupsView: viewController.self), coordinator: self)
         
-        let tabBarImage = (imageName == "") ? nil : UIImage(named: imageName)
+        let tabBarImage = imageName.isEmpty ? nil : UIImage(named: imageName)
         
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
@@ -72,5 +73,13 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
         let alertVC = AlertControllerCreator.getController(title: alertTitle, message: message, style: .alert, type: .error)
         
         navigationController.present(alertVC, animated: true)
+    }
+    
+    func presentDeleteController(on viewController: UIViewController, completion: @escaping () -> ()) {
+        let alertTitle = "Удаление задачи"
+        let alertMessage = "Вы действительно хотите удалить задачу?"
+        guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .delete) as? ExitAlertController else { return }
+        alertVC.onButtonTapped = completion
+        viewController.present(alertVC, animated: true, completion: nil)
     }
 }

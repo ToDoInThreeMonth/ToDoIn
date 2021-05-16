@@ -6,6 +6,7 @@ struct AlertControllerCreator {
     enum TypeAlert {
         case logOut
         case error
+        case delete
     }
     
     // Static functions
@@ -16,6 +17,9 @@ struct AlertControllerCreator {
             return alertController
         case .error:
             let alertController = ErrorAlertController(title: title, message: message, preferredStyle: .alert)
+            return alertController
+        case .delete:
+            let alertController = ExitAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
         }
     }

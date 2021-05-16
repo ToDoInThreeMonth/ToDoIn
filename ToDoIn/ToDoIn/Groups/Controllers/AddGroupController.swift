@@ -1,9 +1,10 @@
 import UIKit
 
-protocol AddGroupView {
+protocol AddGroupView: FriendsTableViewOutput {
     func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator)
     
     func transitionToMain()
+    func stopActivityIndicator()
 }
 
 final class AddGroupController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -18,8 +19,8 @@ final class AddGroupController: UIViewController, UIImagePickerControllerDelegat
     private let imageViewLabel = UILabel()
     private let usersLabel = UILabel()
     private let addButton = CustomButton(with: "Добавить")
-
     private var imageView = CustomImageView()
+    private let activityIndicator = UIActivityIndicatorView()
     
     private lazy var friendsTVDelegate = FriendsTVDelegate()
     private lazy var friendsTVDataSource = FriendsTVDataSource(controller: self)
@@ -154,17 +155,36 @@ final class AddGroupController: UIViewController, UIImagePickerControllerDelegat
     
     @objc
     private func addButtonTapped() {
+        startActivityIndicator()
         let selectedIndexes = friendsTableView.indexPathsForSelectedRows
         if let groupName = nameTextField.text, !groupName.isEmpty {
             presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [], photo: imageView.getImage())
-            transitionToMain()
         }
+    }
+    
+    private func startActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.pin.above(of: addButton, aligned: .center).marginBottom(10).sizeToFit()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
     }
 }
 
 // MARK: - Extensions
 
-extension AddGroupController: FriendsTableViewOutput {
+extension AddGroupController: AddGroupView {
+    func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
+    }
+    
+    func transitionToMain() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
     
     func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
         presenter?.loadImage(url: url) { (image) in
@@ -187,16 +207,5 @@ extension AddGroupController: FriendsTableViewOutput {
     
     func showErrorAlertController(with message: String) {
         presenter?.showErrorAlertController(with: message)
-    }
-}
-
-extension AddGroupController: AddGroupView {
-    func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator) {
-        self.presenter = presenter
-        self.presenter?.setCoordinator(with: coordinator)
-    }
-    
-    func transitionToMain() {
-        dismiss(animated: true, completion: nil)
     }
 }

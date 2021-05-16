@@ -1,12 +1,12 @@
 import UIKit
 
 
-class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+final class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var picker = UIImagePickerController();
-    var alert = UIAlertController(title: "Выберете изображение", message: nil, preferredStyle: .actionSheet)
-    var viewController: UIViewController?
-    var pickImageCallback : ((UIImage) -> ())?;
+    private var picker = UIImagePickerController();
+    private var alert = UIAlertController(title: "Выберите изображение", message: nil, preferredStyle: .actionSheet)
+    private var viewController: UIViewController?
+    private var pickImageCallback : ((UIImage) -> ())?;
     
     override init(){
         super.init()
@@ -36,7 +36,7 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         
         viewController.present(alert, animated: true, completion: nil)
     }
-    func openCamera(){
+    private func openCamera(){
         alert.dismiss(animated: true, completion: nil)
         if(UIImagePickerController .isSourceTypeAvailable(.camera)){
             picker.sourceType = .camera
@@ -47,7 +47,7 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
             alertWarning.show()
         }
     }
-    func openGallery(){
+    private func openGallery(){
         alert.dismiss(animated: true, completion: nil)
         picker.sourceType = .photoLibrary
         self.viewController!.present(picker, animated: true, completion: nil)

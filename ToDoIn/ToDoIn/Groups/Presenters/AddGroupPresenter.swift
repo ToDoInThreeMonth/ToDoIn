@@ -21,7 +21,7 @@ final class AddGroupPresenter: AddGroupViewPresenter {
     
     private weak var coordinator: GroupsChildCoordinator?
     
-    private let addGroupView: FriendsTableViewOutput?
+    private let addGroupView: AddGroupView?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     private let authManager: AuthManagerDescription = AuthManager.shared
@@ -31,7 +31,7 @@ final class AddGroupPresenter: AddGroupViewPresenter {
         
     // MARK: - Init
     
-    required init(addGroupView: FriendsTableViewOutput) {
+    required init(addGroupView: AddGroupView) {
         self.addGroupView = addGroupView
     }
     
@@ -91,7 +91,10 @@ final class AddGroupPresenter: AddGroupViewPresenter {
             }
             usersId.append(userId)
         }
-        groupsManager.addGroup(title: title, users: usersId, photo: photo)
+        groupsManager.addGroup(title: title, users: usersId, photo: photo) { [weak self] _ in
+            self?.addGroupView?.stopActivityIndicator()
+            self?.addGroupView?.transitionToMain()
+        }
     }
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void) {

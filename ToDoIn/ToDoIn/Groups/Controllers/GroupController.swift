@@ -166,7 +166,7 @@ extension GroupController: UITableViewDelegate {
             return
         }
         let userId = presenter.getUser(by: indexPath.section).id
-        if userId != "" {
+        if !userId.isEmpty {
             let currentTask = presenter.getTasks(for: userId)[indexPath.row]
             presenter.showTaskCotroller(task: currentTask, isChanging: true)
         }

@@ -1,5 +1,10 @@
 import Foundation
 
+enum Collection: String {
+    case groups
+    case users
+}
+
 enum GroupKey: String {
     case id
     case title

@@ -211,7 +211,6 @@
 		15CF8430264891EE00F2B73E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				15CF8431264891EE00F2B73E /* Group.swift */,
 				15CF8432264891EE00F2B73E /* GroupsManager.swift */,
 			);
 			path = Model;
@@ -238,7 +237,6 @@
 				15CF843C264891EE00F2B73E /* CustomTextField.swift */,
 				15CF843D264891EE00F2B73E /* UserTableViewCell.swift */,
 				15CF843E264891EE00F2B73E /* TaskTableViewCell.swift */,
-				4317447F2650190300D7CC8E /* ImagePicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -331,6 +329,7 @@
 			children = (
 				15CF8465264891EE00F2B73E /* AlertControllerCreator.swift */,
 				4317445C265011D800D7CC8E /* ImagesManager.swift */,
+				4317447F2650190300D7CC8E /* ImagePicker.swift */,
 				434CF26A2650F5C10095299E /* Converter.swift */,
 			);
 			path = Services;
@@ -366,6 +365,7 @@
 		4317445F265011EE00D7CC8E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				15CF8431264891EE00F2B73E /* Group.swift */,
 				43174460265011FC00D7CC8E /* CustomError.swift */,
 				434CF26D2650F68B0095299E /* FirestoreKeys.swift */,
 			);

@@ -52,8 +52,8 @@ final class FriendsTVDataSource: NSObject, UITableViewDataSource {
         let friend = controller.getFriend(by: indexPath.row)
         safeCell.friend = friend
         let friendImage = friend?.image
-        if friendImage != nil {
-            controller.getPhoto(by: friendImage!) { (image) in
+        if let friendImage = friendImage {
+            controller.getPhoto(by: friendImage) { (image) in
                 safeCell.setFriendAvatar(with: image)
             }
         }

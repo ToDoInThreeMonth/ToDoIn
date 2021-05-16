@@ -180,7 +180,7 @@ final class TaskController: UIViewController {
         
         shadowDescriptionSubview.insertSubview(descriptionTextView, at: 0)
         
-        if task.description == "" {
+        if task.description.isEmpty {
             descriptionTextView.text = placeholderText
             descriptionTextView.textColor = .lightTextColor
         } else {
@@ -279,8 +279,19 @@ final class TaskController: UIViewController {
     
     @objc
     private func deleteButtonTapped() {
-        presenter?.deleteButtonTapped(task: task, group: group)
-        dismiss(animated: true, completion: nil)
+        presenter?.showDeleteAlertController(on: self, completion: {
+            self.presenter?.deleteButtonTapped(task: self.task, group: self.group)
+            self.dismiss(animated: true, completion: nil)
+        })
+//        let alert = UIAlertController(title: "Вы действительно хотите удалить задачу", message: "", preferredStyle: .alert)
+//        let agreeButton = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+//        let disagreeButton = UIAlertAction(title: "Да", style: .default) { (_) in
+//            self.presenter?.deleteButtonTapped(task: self.task, group: self.group)
+//            self.dismiss(animated: true, completion: nil)
+//        }
+//        alert.addAction(agreeButton)
+//        alert.addAction(disagreeButton)
+//        self.present(alert, animated: true, completion: nil)
     }
     
     @objc

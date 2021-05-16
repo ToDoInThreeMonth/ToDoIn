@@ -35,7 +35,6 @@ final class AccountController: UIViewController {
     private lazy var toDoInLabel = AccountUIComponents.toDoInLabel
     private lazy var friendsLabel = AccountUIComponents.friendsLabel
     private lazy var friendUnderlineView = AccountUIComponents.friendUnderlineView
-    private lazy var isSettingsMenuHidden = true
     private lazy var settingsBackgroundView = AccountUIComponents.settingsBackgroundView
     private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backViewTapped))
     private lazy var tapAddFriendRecognizer = UITapGestureRecognizer(target: self, action: #selector(addFriendButtonTapped))
@@ -53,7 +52,11 @@ final class AccountController: UIViewController {
     }()
     
     private lazy var addFriendButton: UIButton = {
-        let button = AccountUIComponents.addFriendButton
+        let button = UIButton(type: .system)
+        button.setTitle("Добавить друга", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
+        button.tintColor = .darkTextColor
+        button.backgroundColor = .accentColor
         button.addTarget(self, action: #selector(addFriendButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -109,7 +112,6 @@ final class AccountController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setupLayouts()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -284,7 +286,7 @@ final class AccountController: UIViewController {
         var duration = 0.3
         var delay = duration / 3
         
-        if !isSettingsMenuHidden {
+        if !isSettingMenuHidden {
             exitButtonAlpha = 0
             notificationButtonAlpha = 0
             backgroundAlpha = 0
@@ -306,7 +308,7 @@ final class AccountController: UIViewController {
             self?.exitButton.alpha = exitButtonAlpha
         }
         
-        isSettingsMenuHidden.toggle()
+        isSettingMenuHidden.toggle()
     }
     
     private func addViewAnimation() {
