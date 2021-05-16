@@ -20,6 +20,7 @@ protocol GroupsManagerDescription {
     
     func deleteTask(_ task: Task, in group: Group)
     func deleteGroup(_ group: Group)
+    func deleteUser(_ user: User, from group: Group)
 }
 
 final class GroupsManager: GroupsManagerDescription {
@@ -228,4 +229,9 @@ final class GroupsManager: GroupsManagerDescription {
         database.collection(Collection.groups.rawValue).document(group.id).delete()
     }
     
+    func deleteUser(_ user: User, from group: Group) {
+        database.collection(Collection.groups.rawValue).document(group.id).updateData([
+            GroupKey.users.rawValue : FieldValue.arrayRemove([user.id]),
+        ])
+    }
 }

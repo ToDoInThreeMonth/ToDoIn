@@ -15,17 +15,8 @@ final class GroupSettingsController: UIViewController {
     private let group: Group
     
     private let imageView = CustomImageView()
-
     private let groupTitle = UITextField()
-        
-    private lazy var usersTVDelegate = FriendsTVDelegate()
-    private lazy var usersTVDataSource = FriendsTVDataSource(controller: self)
-    private lazy var tableView: UITableView = {
-        let tableView = FriendsTableView(frame: .zero, style: .plain)
-        tableView.dataSource = usersTVDataSource
-        tableView.delegate = usersTVDelegate
-        return tableView
-    }()
+    private let tableView = UITableView()
     
     // MARK: - Init
     
@@ -50,6 +41,7 @@ final class GroupSettingsController: UIViewController {
         
         configureGroupTitle()
         configureImageView()
+        configureTableView()
     }
     
     override func viewWillLayoutSubviews() {
@@ -91,6 +83,15 @@ final class GroupSettingsController: UIViewController {
         navigationController?.configureBarButtonItems(screen: .groupSettings, for: self)
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(addUserButtonTapped)
+    }
+    
+    private func configureTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(FriendTableViewCell.self, forCellReuseIdentifier: String(describing: FriendTableViewCell.self))
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
     }
     
     private func configureImageView() {
@@ -140,60 +141,44 @@ extension GroupSettingsController: GroupSettingsView {
     }
     
     func reloadView() {
+        print(presenter?.getAllUsers().count)
         tableView.reloadData()
     }
-}
-
-extension GroupSettingsController: FriendsTableViewOutput {
-    func showErrorAlertController(with message: String) {
-        // TODO: - alert
-    }
-    
-    func getFriend(by index: Int) -> User? {
-        presenter?.getUser(by: index)
-    }
-    
-    func getAllFriends() -> [User]? {
-        presenter?.getAllUsers()
-    }
-    
-    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
-        presenter?.loadImage(url: url) { (image) in
-            completion(image)
-        }
-    }
-    
-    
 }
 
 extension GroupSettingsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.usersCount ?? 0
+        presenter?.getAllUsers().count ?? 0
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as? UserTableViewCell, let user = presenter?.getUser(by: indexPath.row) else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendTableViewCell.self), for: indexPath) as? FriendTableViewCell, let user = presenter?.getUser(by: indexPath.row) else {
             return UITableViewCell()
         }
         
-        cell.setUp(user: user)
+        cell.friend = user
+        let friendImage = user.image
+        presenter?.loadImage(url: friendImage) { (image) in
+            cell.setFriendAvatar(with: image)
+        }
         return cell
     }
 }
 
 
 extension GroupSettingsController: UITableViewDelegate {
-
-    // нажатие на ячейку
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .delete
     }
     
-    // размер ячейки
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        tableView.bounds.height / 6
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let user = presenter?.getUser(by: indexPath.row) else { return }
+            presenter?.deleteTapped(for: user, in: group)
+        }
     }
 }

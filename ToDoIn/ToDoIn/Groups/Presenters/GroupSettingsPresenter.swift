@@ -3,13 +3,14 @@ import UIKit
 
 protocol GroupSettingsViewPresenter {
     func didLoadView()
-
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     
     var usersCount: Int { get }
     
     func groupTitleDidChange(with title: String?)
     func addUserButtonTapped()
+    func deleteTapped(for user: User, in group: Group)
+    
     func getUser(by section: Int) -> User
     func getAllUsers() -> [User]
     
@@ -88,6 +89,10 @@ final class GroupSettingsPresenter: GroupSettingsViewPresenter {
     func addUserButtonTapped() {
         // добавление нового участника в комнату
         coordinator?.showAddUser(to: group, with: users)
+    }
+    
+    func deleteTapped(for user: User, in group: Group) {
+        groupsManager.deleteUser(user, from: group)
     }
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void) {

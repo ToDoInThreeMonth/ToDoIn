@@ -25,7 +25,6 @@
 		15CF8479264891EE00F2B73E /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF843A264891EE00F2B73E /* SectionHeaderView.swift */; };
 		15CF847A264891EE00F2B73E /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF843B264891EE00F2B73E /* GroupTableViewCell.swift */; };
 		15CF847B264891EE00F2B73E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF843C264891EE00F2B73E /* CustomTextField.swift */; };
-		15CF847C264891EE00F2B73E /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF843D264891EE00F2B73E /* UserTableViewCell.swift */; };
 		15CF847D264891EE00F2B73E /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF843E264891EE00F2B73E /* TaskTableViewCell.swift */; };
 		15CF847F264891EE00F2B73E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15CF8440264891EE00F2B73E /* LaunchScreen.storyboard */; };
 		15CF8482264891EE00F2B73E /* UIView + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8446264891EE00F2B73E /* UIView + extension.swift */; };
@@ -86,7 +85,6 @@
 		15CF843A264891EE00F2B73E /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		15CF843B264891EE00F2B73E /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		15CF843C264891EE00F2B73E /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		15CF843D264891EE00F2B73E /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		15CF843E264891EE00F2B73E /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		15CF8441264891EE00F2B73E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15CF8446264891EE00F2B73E /* UIView + extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView + extension.swift"; sourceTree = "<group>"; };
@@ -235,7 +233,6 @@
 				15CF843A264891EE00F2B73E /* SectionHeaderView.swift */,
 				15CF843B264891EE00F2B73E /* GroupTableViewCell.swift */,
 				15CF843C264891EE00F2B73E /* CustomTextField.swift */,
-				15CF843D264891EE00F2B73E /* UserTableViewCell.swift */,
 				15CF843E264891EE00F2B73E /* TaskTableViewCell.swift */,
 			);
 			path = Views;
@@ -503,7 +500,6 @@
 				15CF8499264891EE00F2B73E /* AlertControllerCreator.swift in Sources */,
 				15CF8494264891EE00F2B73E /* FriendsTableView.swift in Sources */,
 				15CF8470264891EE00F2B73E /* GroupPresenter.swift in Sources */,
-				15CF847C264891EE00F2B73E /* UserTableViewCell.swift in Sources */,
 				15CF846E264891EE00F2B73E /* GroupsPresenter.swift in Sources */,
 				15CF846A264891EE00F2B73E /* AccountFlowCoordinator.swift in Sources */,
 				15CF8478264891EE00F2B73E /* TaskController.swift in Sources */,

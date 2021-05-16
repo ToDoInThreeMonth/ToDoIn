@@ -87,9 +87,6 @@ final class FriendTableViewCell: UITableViewCell {
     }
     
     func setFriendAvatar(with image: UIImage?) {
-        guard let image = image else {
-            return
-        }
         friendAvatar.image = image
     }
 }
