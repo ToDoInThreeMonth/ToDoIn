@@ -88,7 +88,7 @@ final class GroupSettingsController: UIViewController {
     }
     
     private func setupNavigationItem() {
-        navigationController?.configureBarButtonItems(screen: .roomSettings, for: self)
+        navigationController?.configureBarButtonItems(screen: .groupSettings, for: self)
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(addUserButtonTapped)
     }

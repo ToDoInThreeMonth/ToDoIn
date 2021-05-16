@@ -54,11 +54,11 @@ final class GroupController: UIViewController {
     // MARK: Configures
     
     private func setupNavigationItem() {
-        navigationController?.configureBarButtonItems(screen: .roomsDetail, for: self)
-        navigationItem.rightBarButtonItems?.first?.target = self
-        navigationItem.rightBarButtonItems?.last?.target = self
-        navigationItem.rightBarButtonItems?.first?.action = #selector(settingsButtonTapped)
-        navigationItem.rightBarButtonItems?.last?.action = #selector(addingTaskButtonTapped)
+        let button1 = UIButton(type: .system)
+        button1.addTarget(self, action: #selector(addingTaskButtonTapped), for: .touchUpInside)
+        let button2 = UIButton(type: .system)
+        button2.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+        navigationController?.configureBarButtonItems(screen: .groupDetail, for: self, button1: button1, button2: button2)
         title = group.title
     }
     
