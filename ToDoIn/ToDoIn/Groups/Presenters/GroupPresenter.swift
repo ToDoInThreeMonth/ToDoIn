@@ -5,7 +5,6 @@ protocol GroupViewPresenter {
 
     init(groupView: GroupView)
     func didLoadView(by userId: String)
-    
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     
     func getTasks(for userId: String) -> [Task]
@@ -13,10 +12,8 @@ protocol GroupViewPresenter {
     func getUsers(from userIdArray: [String])
     func getUser(by userId: String, in users: [User]) -> User
 
-
     func showSettingsGroupController()
     func showTaskCotroller(task: Task, isChanging: Bool)
-    
     func showErrorAlertController(with message: String)
 }
 
@@ -29,11 +26,8 @@ final class GroupPresenter: GroupViewPresenter {
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     
     private let groupView: GroupView?
-    
-//    private let groupsService = GroupsService()
-    
+        
     private var group = Group()
-    
     private var users: [User] = []
     
     var usersCount: Int {

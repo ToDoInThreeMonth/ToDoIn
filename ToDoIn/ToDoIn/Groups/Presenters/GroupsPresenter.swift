@@ -9,19 +9,16 @@ protocol GroupsViewPresenter {
     func didLoadView()
     
     func getGroup(at index: Int) -> Group
-    
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 
     func showGroupController(group: Group)
+    func showErrorAlertController(with message: String)
     
     func addGroupButtonTapped()
-    
-    func showErrorAlertController(with message: String)
+    func deleteTapped(for group: Group, at index: Int)
     
     func isSignedIn() -> Bool
     func removeAll()
-    
-    func deleteTapped(for group: Group, at index: Int)
 }
 
 final class GroupsPresenter: GroupsViewPresenter {

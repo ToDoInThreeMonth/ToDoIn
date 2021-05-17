@@ -9,7 +9,6 @@ protocol FriendsTableViewOutput: class {
     
     func getFriend(by index: Int) -> User?
     func getAllFriends() -> [User]?
-    
     func getPhoto(by url: String, completion: @escaping (UIImage) -> Void)
 }
 

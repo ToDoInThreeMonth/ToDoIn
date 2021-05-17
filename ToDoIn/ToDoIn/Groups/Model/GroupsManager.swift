@@ -141,9 +141,6 @@ final class GroupsManager: GroupsManagerDescription {
             tasks.append(GroupsConverter.task(from: task))
         }
         database.collection(Collection.groups.rawValue).document(group.id).setData([GroupKey.tasks.rawValue: tasks], merge: true)
-        
-//        let dictTask = [GroupsConverter.task(from: task)]
-//        database.collection("groups").document(group.id).setData(["tasks": FieldValue.arrayUnion([dictTask])], merge: true)
     }
     
     // MARK: - Get

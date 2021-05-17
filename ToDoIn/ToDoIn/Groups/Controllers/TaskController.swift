@@ -283,15 +283,6 @@ final class TaskController: UIViewController {
             self.presenter?.deleteButtonTapped(task: self.task, group: self.group)
             self.dismiss(animated: true, completion: nil)
         })
-//        let alert = UIAlertController(title: "Вы действительно хотите удалить задачу", message: "", preferredStyle: .alert)
-//        let agreeButton = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
-//        let disagreeButton = UIAlertAction(title: "Да", style: .default) { (_) in
-//            self.presenter?.deleteButtonTapped(task: self.task, group: self.group)
-//            self.dismiss(animated: true, completion: nil)
-//        }
-//        alert.addAction(agreeButton)
-//        alert.addAction(disagreeButton)
-//        self.present(alert, animated: true, completion: nil)
     }
     
     @objc

@@ -60,7 +60,7 @@ final class GroupSettingsPresenter: GroupSettingsViewPresenter {
     }
     
     func getUsers(from userIdArray: [String]) {
-        users = []
+        users.removeAll()
         for userId in userIdArray {
             groupsManager.getUser(userId: userId) { [weak self] (result) in
                 switch result {

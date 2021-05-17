@@ -146,7 +146,7 @@ final class AuthManager: AuthManagerDescription {
                 return СustomError.differentPasswords
             }
             if cleanedPassword1.count < 6 {
-                // Пароль не безопасный
+                // Небезопасный пароль
                 return СustomError.incorrectPassword
             }
         }

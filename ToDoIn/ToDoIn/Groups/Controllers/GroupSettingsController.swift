@@ -33,6 +33,7 @@ final class GroupSettingsController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.didLoadView()
         setupNavigationItem()
         setBackground()
         
@@ -52,9 +53,6 @@ final class GroupSettingsController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        presenter?.didLoadView()
-
         setupInsets()
     }
     
@@ -141,7 +139,6 @@ extension GroupSettingsController: GroupSettingsView {
     }
     
     func reloadView() {
-        print(presenter?.getAllUsers().count)
         tableView.reloadData()
     }
 }

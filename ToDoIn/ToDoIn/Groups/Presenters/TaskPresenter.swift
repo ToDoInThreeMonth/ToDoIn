@@ -8,6 +8,7 @@ protocol TaskViewPresenter {
     func doneUserTapped(user: User)
     func addButtonTapped(_ isChanging: Bool, task: Task, group: Group)
     func deleteButtonTapped(task: Task, group: Group)
+    
     func getUser(by userId: String, in users: [User]) -> User
     
     func showDeleteAlertController(on viewController: UIViewController, completion: @escaping () -> ())
@@ -59,7 +60,6 @@ final class TaskPresenter: TaskViewPresenter {
     }
     
     func deleteButtonTapped(task: Task, group: Group) {
-        
         groupsManager.deleteTask(task, in: group)
     }
 

@@ -2,7 +2,6 @@ import UIKit
 
 protocol AddUserToGroupView: class {
     func setPresenter(_ presenter: AddUserToGroupViewPresenter, coordinator: GroupsChildCoordinator)
-
     func reloadView()
 }
 
@@ -58,7 +57,7 @@ final class AddUserToGroupController: UIViewController {
             .sizeToFit()
         
         addButton.pin
-            .bottom(15)
+            .bottom(view.pin.safeArea.bottom + 20)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.buttonHeight)
         
