@@ -35,10 +35,7 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     }
     
     
-    func showAddGroup() {
-        let addGroupVC = AddGroupController()
-        navigationController.present(addGroupVC, animated: true, completion: nil)
-    }
+    func showAddGroup() {}
     
     func showTaskController(group: Group, task: Task, isChanging: Bool) {
         navigationController.viewControllers.last?.present(TaskController(group: group, task: task, isChanging: isChanging), animated: true, completion: nil)

@@ -1,6 +1,5 @@
 
 import Foundation
-import UIKit
 
 // GroupsController
 
@@ -15,13 +14,8 @@ protocol GroupsViewPresenter {
     func getGroups()
     func showGroupController(group: Group)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
-    func showAddGroupController()
 }
 
-protocol AddGroupViewPresenter {
-    func getImageForGroup()
-    func addNewGroup()
-}
 
 // GroupController
 

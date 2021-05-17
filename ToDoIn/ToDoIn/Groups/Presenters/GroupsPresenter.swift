@@ -2,8 +2,6 @@ import Foundation
 
 class GroupsPresenter: GroupsViewPresenter {
     
-    
-    
     // MARK: - Properties
     
     weak var coordinator: GroupsChildCoordinator?
@@ -24,7 +22,7 @@ class GroupsPresenter: GroupsViewPresenter {
     }
     
     // MARK: - Handlers
-    
+
     func getGroups() {
         let groups = groupsService.getGroups()
         groupsView?.setGroups(groups: groups)
@@ -32,9 +30,5 @@ class GroupsPresenter: GroupsViewPresenter {
     
     func showGroupController(group: Group) {
         coordinator?.showGroupController(group: group)
-    }
-    
-    func showAddGroupController() {
-        coordinator?.showAddGroup()
     }
 }

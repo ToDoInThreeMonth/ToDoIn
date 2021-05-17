@@ -36,7 +36,6 @@ class GroupController: UIViewController {
         super.viewDidLoad()
         configureTableView()
         configureBarButtonItems()
-        navigationController?.configureBarButtonItems(screen: .groupsDetail, for: self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,7 +62,7 @@ class GroupController: UIViewController {
     func configureBarButtonItems() {
         configureSettingButton()
         configureAddingTaskButton()
-      //  navigationItem.setRightBarButtonItems([settingsButton, addingTaskButton], animated: true)
+        navigationItem.setRightBarButtonItems([settingsButton, addingTaskButton], animated: true)
     }
     
     func configureSettingButton() {
