@@ -57,7 +57,6 @@ protocol TaskViewPresenter {
 protocol OfflineTaskViewPresenter {
     func addTask(_ task: OfflineTask, in indexPath: IndexPath)
     func changeTask(_ task: OfflineTask, in indexPath: IndexPath)
-    func setRealmOutput(_ output: mainFrameRealmOutput)
 }
 
 // RealmBase
@@ -73,6 +72,7 @@ protocol MainFrameRealmProtocol: class {
     func changeSectionTitle(from text: String, in section: Int)
     func deleteTask(section: Int, row: Int)
     func deleteSection(section: Int)
+    func setOutput(_ output: mainFrameRealmOutput)
 }
 
 protocol mainFrameRealmOutput: class {

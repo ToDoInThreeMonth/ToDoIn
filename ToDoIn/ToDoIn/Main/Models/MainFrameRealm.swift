@@ -14,11 +14,14 @@ final class OfflineSection: Object {
 }
 
 class MainFrameRealm: MainFrameRealmProtocol {
-    private var output: mainFrameRealmOutput
+    static let shared = MainFrameRealm()
+    private var output: mainFrameRealmOutput?
     private let realm = try? Realm()
     private var token: NotificationToken?
     
-    init(output: mainFrameRealmOutput) {
+    private init() {}
+    
+    func setOutput(_ output: mainFrameRealmOutput) {
         self.output = output
         addObserver()
     }
@@ -28,7 +31,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
             guard let self = self else { return }
             switch notification {
             case .didChange:
-                self.output.updateUI()
+                self.output?.updateUI()
             default:
                 return
             }

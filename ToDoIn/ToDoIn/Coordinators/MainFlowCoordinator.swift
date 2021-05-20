@@ -30,7 +30,7 @@ class MainFlowCoordinator: MainChildCoordinator {
     func presentAddTaskController(with section: Int) {
         guard let delegate = navigationController.viewControllers.last as? MainViewController else { return }
         let indexPath = IndexPath(row: 0, section: section)
-        let presenter = OfflineTaskPresenter()
+        let presenter: OfflineTaskViewPresenter = OfflineTaskPresenter()
         let controller = OfflineTaskController(indexPath: indexPath, isChanging: false, presenter: presenter)
         
         controller.delegate = delegate
@@ -38,9 +38,8 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func presentChangeTaskController(with task: OfflineTask, in indexPath: IndexPath) {
-        let presenter = OfflineTaskPresenter()
+        let presenter: OfflineTaskViewPresenter = OfflineTaskPresenter()
         let controller = OfflineTaskController(task: task, indexPath: indexPath, isChanging: true, presenter: presenter)
-        print("Зашел")
         navigationController.present(controller, animated: true)
     }
     

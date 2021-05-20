@@ -250,7 +250,6 @@ class TaskController: UIViewController, TaskView {
 //        task.date = date
         task.descriptionText = description
         task.title = title
-        print(task)
         return task
     }
 }

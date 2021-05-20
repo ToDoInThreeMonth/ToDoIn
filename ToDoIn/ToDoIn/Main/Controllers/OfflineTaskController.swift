@@ -10,6 +10,7 @@ class OfflineTaskController: TaskController {
     init(task: OfflineTask = OfflineTask(),indexPath: IndexPath, isChanging: Bool = false, presenter: OfflineTaskViewPresenter) {
         let onlineTask = Task(user: User(), name: task.title, description: task.descriptionText, date: task.date)
         self.indexPath = indexPath
+        self.presenter = presenter
         self.isChanging = isChanging
         super.init(group: Group(), task: onlineTask, isChanging: isChanging)
         hiddenUserTF()
