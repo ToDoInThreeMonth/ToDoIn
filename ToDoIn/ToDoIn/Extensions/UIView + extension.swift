@@ -179,7 +179,7 @@ extension UIView {
             oldLayer.masksToBounds = false
             layer.insertSublayer(oldLayer, at: 0)
         }
-    
+        
         let outsideShadowLayer = CALayer()
         /// Настройка внешней тени
         outsideShadowLayer.name = "outsideShadow"
@@ -191,4 +191,27 @@ extension UIView {
         
         layer.insertSublayer(outsideShadowLayer, at: 0)
     }
+    
+    func addDashBorder() {
+           let color = UIColor.darkTextColor.cgColor
+
+           let shapeLayer:CAShapeLayer = CAShapeLayer()
+
+           let frameSize = self.frame.size
+           let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
+
+           shapeLayer.bounds = shapeRect
+           shapeLayer.name = "DashBorder"
+           shapeLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
+           shapeLayer.fillColor = UIColor.clear.cgColor
+           shapeLayer.strokeColor = color
+           shapeLayer.lineWidth = 1.5
+           shapeLayer.lineJoin = .round
+           shapeLayer.lineDashPattern = [2,4]
+        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: layer.cornerRadius).cgPath
+
+           self.layer.masksToBounds = false
+
+           self.layer.addSublayer(shapeLayer)
+       }
 }

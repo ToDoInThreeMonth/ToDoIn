@@ -13,13 +13,13 @@ protocol MainViewPresenter {
     func getTask(from indexPath: IndexPath) -> OfflineTask?
     func deleteSection(_ number: Int)
     func showDeleteSectionController(_ number: Int)
+    func setRealmOutput(_ output: mainFrameRealmOutput)
 }
 
 protocol MainTableViewOutput: class {
     func showAddTaskController(with section: Int)
     func cellDidSelect(in indexPath: IndexPath)
     func doneViewTapped(with indexPath: IndexPath)
-    func updateUI()
     func getAllSections() -> [OfflineSection]
     func getNumberOfSections() -> Int
     func getNumberOfRows(in section: Int) -> Int
@@ -57,4 +57,24 @@ protocol TaskViewPresenter {
 protocol OfflineTaskViewPresenter {
     func addTask(_ task: OfflineTask, in indexPath: IndexPath)
     func changeTask(_ task: OfflineTask, in indexPath: IndexPath)
+    func setRealmOutput(_ output: mainFrameRealmOutput)
+}
+
+// RealmBase
+
+protocol MainFrameRealmProtocol: class {
+    func getAllSections() -> [OfflineSection]
+    func getNumberOfSections() -> Int
+    func getNumberOfRows(in section: Int) -> Int
+    func getTask(section: Int, row: Int) -> OfflineTask?
+    func addSection(_ section: OfflineSection)
+    func addTask(_ task: OfflineTask, in section: Int)
+    func changeTask(_ task: OfflineTask, indexPath: IndexPath)
+    func changeSectionTitle(from text: String, in section: Int)
+    func deleteTask(section: Int, row: Int)
+    func deleteSection(section: Int)
+}
+
+protocol mainFrameRealmOutput: class {
+    func updateUI()
 }

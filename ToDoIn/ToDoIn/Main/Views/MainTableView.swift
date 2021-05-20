@@ -37,7 +37,7 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
     // Создание ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell
-        cell?.contentView.isUserInteractionEnabled = true
+//        cell?.contentView.isUserInteractionEnabled = true
         guard let controller = controller else {
             return UITableViewCell()
         }
@@ -48,6 +48,8 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
         
         guard let task = controller.getTask(from: indexPath) else { return UITableViewCell() }
         safeCell.setUp(with: task)
+        safeCell.index = indexPath
+        
         return safeCell
     }
     

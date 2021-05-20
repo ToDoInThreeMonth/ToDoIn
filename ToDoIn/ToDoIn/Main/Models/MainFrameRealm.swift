@@ -13,43 +13,60 @@ final class OfflineSection: Object {
     var tasks = List<OfflineTask>()
 }
 
-struct RealmBase {
-    private static let realm = try? Realm()
+class MainFrameRealm: MainFrameRealmProtocol {
+    private var output: mainFrameRealmOutput
+    private let realm = try? Realm()
+    private var token: NotificationToken?
     
-    private init() {}
+    init(output: mainFrameRealmOutput) {
+        self.output = output
+        addObserver()
+    }
     
-    static func getAllSections() -> [OfflineSection] {
+    private func addObserver() {
+        token = realm?.observe { [weak self] notification, _ in
+            guard let self = self else { return }
+            switch notification {
+            case .didChange:
+                self.output.updateUI()
+            default:
+                return
+            }
+        }
+    }
+    
+    func getAllSections() -> [OfflineSection] {
         guard let realm = realm else { return [] }
         let results = realm.objects(OfflineSection.self)
         return Array(results)
     }
     
-    static func getNumberOfSections() -> Int {
+    func getNumberOfSections() -> Int {
         guard let realm = realm else { return 0 }
         let count = realm.objects(OfflineSection.self).count
         return count
     }
     
-    static func getNumberOfRows(in section: Int) -> Int {
+    func getNumberOfRows(in section: Int) -> Int {
         guard let realm = realm else { return 0 }
         let count = realm.objects(OfflineSection.self)[section].tasks.count
         return count
     }
     
-    static func getTask(section: Int, row: Int) -> OfflineTask? {
+    func getTask(section: Int, row: Int) -> OfflineTask? {
         guard let realm = realm else { return nil }
         let task = realm.objects(OfflineSection.self)[section].tasks[row]
         return task
     }
     
-    static func addSection(_ section: OfflineSection) {
+    func addSection(_ section: OfflineSection) {
         guard let realm = realm else { return }
-        realm.beginWrite()
-        realm.add(section)
-        try? realm.commitWrite()
+        try? realm.write {
+            realm.add(section)
+        }
     }
 
-    static func addTask(_ task: OfflineTask, in section: Int) {
+    func addTask(_ task: OfflineTask, in section: Int) {
         guard let realm = realm else { return }
         let currentSection = realm.objects(OfflineSection.self)[section]
         // Auto - updating values
@@ -58,7 +75,7 @@ struct RealmBase {
         }
     }
     
-    static func changeTask(_ task: OfflineTask, indexPath: IndexPath) {
+    func changeTask(_ task: OfflineTask, indexPath: IndexPath) {
         guard let realm = realm else { return }
         let oldTask = realm.objects(OfflineSection.self)[indexPath.section].tasks[indexPath.row]
         
@@ -69,7 +86,7 @@ struct RealmBase {
         }
     }
     
-    static func changeSectionTitle(from text: String, in section: Int) {
+    func changeSectionTitle(from text: String, in section: Int) {
         guard let realm = realm else { return }
         let oldSection = realm.objects(OfflineSection.self)[section]
         try? realm.write {
@@ -77,7 +94,7 @@ struct RealmBase {
         }
     }
     
-    static func deleteTask(section: Int, row: Int) {
+    func deleteTask(section: Int, row: Int) {
         guard let realm = realm else { return }
         let task = realm.objects(OfflineSection.self)[section].tasks[row]
         try? realm.write {
@@ -85,7 +102,7 @@ struct RealmBase {
         }
     }
     
-    static func deleteSection(section: Int) {
+    func deleteSection(section: Int) {
         guard let realm = realm else { return }
         let section = realm.objects(OfflineSection.self)[section]
         try? realm.write {

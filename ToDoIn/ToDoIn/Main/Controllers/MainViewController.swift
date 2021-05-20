@@ -23,6 +23,17 @@ class MainViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var addSectionButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(systemName: "plus")
+        button.setTitle("Добавить секцию", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.setImage(image, for: .normal)
+        button.tintColor = .darkTextColor
+        button.addTarget(self, action: #selector(addSectionButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var authView: AuthView = {
         let view = AuthView(frame: .zero)
         view.delegate = self
@@ -47,56 +58,72 @@ class MainViewController: UIViewController {
         setupViews()
         setBackground()
         setupNavigationItem()
-        updateUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateUI()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setupLayouts()
+        setupAddSectionButton()
     }
     
     // UI configure methods
     private func setupViews() {
         view.backgroundColor = .accentColor
         view.addSubviews(tableView,
-                         authView)
+                         authView,
+                         addSectionButton)
     }
     
     private func setupLayouts() {
         authView.pin
             .bottom(view.pin.safeArea.bottom)
             .horizontally(10)
-            .height(250)
-            .marginBottom(-20)
+            .height(230)
+            .marginBottom(-40)
         
         if isAuth {
-            tableView.pin
-                .top()
-                .horizontally()
-                .bottom()
-                .marginTop(20)
+            addSectionButton.pin
+                .bottom(view.pin.safeArea.bottom)
+                .horizontally(30)
+                .height(40)
                 .marginBottom(10)
-            
-        } else {
             tableView.pin
                 .top(view.pin.safeArea.top)
                 .horizontally()
+                .bottom(to: addSectionButton.edge.top)
+                .marginTop(10)
+                .marginBottom(10)
+        } else {
+            addSectionButton.pin
                 .bottom(to: authView.edge.top)
-                .marginTop(20)
+                .horizontally(30)
+                .height(40)
+                .marginBottom(10)
+            tableView.pin
+                .top(view.pin.safeArea.top)
+                .horizontally()
+                .bottom(to: addSectionButton.edge.top)
+                .marginTop(10)
                 .marginBottom(10)
         }
     }
     
     private func setupNavigationItem() {
         navigationController?.configureBarButtonItems(screen: .main, for: self)
+    }
+    
+    private func setupAddSectionButton() {
+        if addSectionButton.layer.cornerRadius == 0 {
+            addSectionButton.layer.cornerRadius = 20
+            addSectionButton.addDashBorder()
+            
+            addSectionButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        }
         
-        navigationItem.rightBarButtonItem?.action = #selector(addSectionButtonTapped)
-        navigationItem.rightBarButtonItem?.target = self
     }
     
     private func changeSizeTableView() {
@@ -154,16 +181,15 @@ extension MainViewController: MainTableViewOutput {
     func doneViewTapped(with indexPath: IndexPath) {
         presenter?.taskComplete(with: indexPath)
     }
-    
-    func updateUI() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-    
-    
 }
 
+extension MainViewController: mainFrameRealmOutput {
+    func updateUI() {
+        tableView.reloadData()
+    }
+}
+
+//MARK: - AuthViewOutput
 extension MainViewController: AuthViewOutput {
     func authButtonTapped() {
         hiddenAuthView()
@@ -171,16 +197,16 @@ extension MainViewController: AuthViewOutput {
     }
 }
 
+//MARK: - SectionAlertDelegate
 extension MainViewController: SectionAlertDelegate {
     func addNewSection(with text: String) {
         presenter?.addNewSection(with: text)
-        updateUI()
     }
 }
 
+//MARK: - DeleteAlertDelegate
 extension MainViewController: DeleteAlertDelegate {
     func deleteSection(_ number: Int) {
         presenter?.deleteSection(number)
-        updateUI()
     }
 }

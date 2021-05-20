@@ -18,6 +18,7 @@ class MainFlowCoordinator: MainChildCoordinator {
     func start() {
         let presenter = MainPresenter(coordinator: self)
         let viewController = MainViewController(presenter: presenter)
+        presenter.setRealmOutput(viewController)
         // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "checkmark"), selectedImage: UIImage(systemName: "checkmark"))
         
@@ -29,14 +30,16 @@ class MainFlowCoordinator: MainChildCoordinator {
     func presentAddTaskController(with section: Int) {
         guard let delegate = navigationController.viewControllers.last as? MainViewController else { return }
         let indexPath = IndexPath(row: 0, section: section)
-        let controller = OfflineTaskController(indexPath: indexPath, isChanging: false)
+        let presenter = OfflineTaskPresenter()
+        let controller = OfflineTaskController(indexPath: indexPath, isChanging: false, presenter: presenter)
         
         controller.delegate = delegate
         navigationController.present(controller, animated: true)
     }
     
     func presentChangeTaskController(with task: OfflineTask, in indexPath: IndexPath) {
-        let controller = OfflineTaskController(task: task, indexPath: indexPath, isChanging: true)
+        let presenter = OfflineTaskPresenter()
+        let controller = OfflineTaskController(task: task, indexPath: indexPath, isChanging: true, presenter: presenter)
         print("Зашел")
         navigationController.present(controller, animated: true)
     }

@@ -2,9 +2,15 @@ import Foundation
 
 class MainPresenter: MainViewPresenter {
     private weak var coordinator: MainFlowCoordinator?
+    private var dataBase: MainFrameRealmProtocol?
     
     init(coordinator: MainFlowCoordinator) {
         self.coordinator = coordinator
+    }
+    
+    func setRealmOutput(_ output: mainFrameRealmOutput) {
+        let base = MainFrameRealm(output: output)
+        dataBase = base
     }
     
     func showAddTaskController(with section: Int) {
@@ -14,7 +20,7 @@ class MainPresenter: MainViewPresenter {
     func showChangeTaskController(with indexPath: IndexPath) {
         let section = indexPath.section
         let row = indexPath.row
-        guard let task = RealmBase.getTask(section: section, row: row) else { return }
+        guard let task = dataBase?.getTask(section: section, row: row) else { return }
         coordinator?.presentChangeTaskController(with: task, in: indexPath)
     }
     
@@ -27,30 +33,36 @@ class MainPresenter: MainViewPresenter {
     }
     
     func getAllSections() -> [OfflineSection] {
-        return RealmBase.getAllSections()
+        guard let dataBase = dataBase else { return [] }
+        return dataBase.getAllSections()
     }
     
     func getNumberOfSections() -> Int {
-        return RealmBase.getNumberOfSections()
+        guard let dataBase = dataBase else { return 0 }
+        return dataBase.getNumberOfSections()
     }
     
     func getNumberOfRows(in section: Int) -> Int {
-        return RealmBase.getNumberOfRows(in: section)
+        guard let dataBase = dataBase else { return 0 }
+        return dataBase.getNumberOfRows(in: section)
     }
     
     func getTask(from indexPath: IndexPath) -> OfflineTask? {
-        return RealmBase.getTask(section: indexPath.section, row: indexPath.row)
+        guard let dataBase = dataBase else { return nil }
+        return dataBase.getTask(section: indexPath.section, row: indexPath.row)
     }
     
     func addNewSection(with text: String) {
+        guard let dataBase = dataBase else { return }
         let section = OfflineSection()
         section.name = text
-        RealmBase.addSection(section)
+        dataBase.addSection(section)
     }
     
     
     func deleteSection(_ number: Int) {
-        RealmBase.deleteSection(section: number)
+        guard let dataBase = dataBase else { return }
+        dataBase.deleteSection(section: number)
     }
     
     func showDeleteSectionController(_ number: Int) {

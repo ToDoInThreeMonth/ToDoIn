@@ -19,7 +19,7 @@ class TaskTableViewCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
         taskView.addSubviews(taskLabel, isDoneView)
-        addSubview(taskView)
+        contentView.addSubview(taskView)
     }
     
     required init?(coder: NSCoder) {
@@ -90,4 +90,7 @@ class TaskTableViewCell: UITableViewCell {
         taskLabel.text = task?.name
     }
     
+    func draggConfigure(gesture: UIPanGestureRecognizer) {
+        taskView.addGestureRecognizer(gesture)
+    }
 }
