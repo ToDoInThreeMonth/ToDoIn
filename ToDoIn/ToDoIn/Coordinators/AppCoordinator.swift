@@ -1,12 +1,12 @@
 import UIKit
 
-protocol MainCoordinator: class {
+protocol MainCoordinator: AnyObject {
     var childCoordinators: [ChildCoordinator] { get set }
     var tabBarController: CustomTabBarController { get set }
     func start()
 }
 
-protocol ChildCoordinator: class {
+protocol ChildCoordinator: AnyObject {
     var navigationController: UINavigationController { get set }
     func start()
 }

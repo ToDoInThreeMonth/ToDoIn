@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-protocol FriendsTableViewOutput: class {
+protocol FriendsTableViewOutput: AnyObject {
 
     func showErrorAlertController(with message: String)
     
@@ -12,7 +12,7 @@ protocol FriendsTableViewOutput: class {
     func getPhoto(by url: String, completion: @escaping (UIImage) -> Void)
 }
 
-protocol AddFriendViewOutput: class {
+protocol AddFriendViewOutput: AnyObject {
     func addNewFriend(_ mail: String)
     func dismissAddNewFriendView()
 }

@@ -18,6 +18,7 @@ protocol GroupsViewPresenter {
     func deleteTapped(for group: Group, at index: Int)
     
     func isSignedIn() -> Bool
+    // TODO: - Нужна ли эта фунция
     func removeAll()
 }
 

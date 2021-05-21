@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 protocol GroupViewPresenter {
     var usersCount: Int { get }

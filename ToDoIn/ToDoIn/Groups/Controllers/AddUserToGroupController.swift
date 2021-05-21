@@ -1,6 +1,6 @@
 import UIKit
 
-protocol AddUserToGroupView: class {
+protocol AddUserToGroupView: AnyObject {
     func setPresenter(_ presenter: AddUserToGroupViewPresenter, coordinator: GroupsChildCoordinator)
     func reloadView()
 }

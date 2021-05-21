@@ -2,7 +2,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-protocol AuthView: class {
+protocol AuthView: AnyObject {
     
     func setPresenter(presenter: AuthViewPresenter, coordinator: AccountChildCoordinator)
     

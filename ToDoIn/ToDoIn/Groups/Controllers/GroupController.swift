@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-protocol GroupView: class {
+protocol GroupView: AnyObject {
     func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator)
     func reloadView()
 }

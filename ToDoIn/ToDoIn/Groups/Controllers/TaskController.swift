@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-protocol TaskView: class {
+protocol TaskView: AnyObject {
     func setPresenter(presenter: TaskViewPresenter, coordinator: GroupsChildCoordinator)
 
     func setDate(with date: String)

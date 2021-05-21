@@ -1,6 +1,6 @@
 import UIKit
 
-protocol LoginView: class {
+protocol LoginView: AnyObject {
     func setPresenter(presenter: LoginViewPresenter, coordinator: AccountChildCoordinator)
 }
 
