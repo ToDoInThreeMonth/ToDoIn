@@ -26,6 +26,17 @@ class MainFrameRealm: MainFrameRealmProtocol {
         addObserver()
     }
     
+    func taskIsComplete(in indexPath: IndexPath) {
+        guard let realm = realm else { return }
+        let task = realm.objects(OfflineSection.self)[indexPath.section].tasks[indexPath.row]
+        
+        if task.isCompleted == false {
+            try? realm.write {
+                task.isCompleted = true
+            }
+        }
+    }
+    
     private func addObserver() {
         token = realm?.observe { [weak self] notification, _ in
             guard let self = self else { return }

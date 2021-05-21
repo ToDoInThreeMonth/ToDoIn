@@ -6,13 +6,10 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
     
     private lazy var dimmingView = UIView()
     private lazy var tapDoneViewRecognizer = UITapGestureRecognizer(target: self, action: #selector(doneViewTapped))
-    private var panGesture = UIPanGestureRecognizer(target: self, action: #selector(cellDragged(gesture:)))
-    private var longTap = UILongPressGestureRecognizer(target: self, action: #selector(longTapped))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        cellDraggConfigure()
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +41,6 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
     private func doneViewTapped() {
         guard let index = index else { return }
         delegate?.doneViewTapped(with: index)
-        isDoneView.backgroundColor = .systemBlue
     }
     
     override func setupLayouts() {
@@ -65,37 +61,6 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
     override func configureIsDoneView() {
         super.configureIsDoneView()
         isDoneView.addGestureRecognizer(tapDoneViewRecognizer)
-    }
-    
-    private func cellDraggConfigure() {
-        isDoneView.addGestureRecognizer(longTap)
-//        taskView.isUserInteractionEnabled = true
-        isDoneView.addGestureRecognizer(panGesture)
-        
-        panGesture.delegate = self
-    }
-    
-    @objc
-    private func longTapped() {
-        print("вова = пидор")
-//        guard let index = index else {
-//            return
-//        }
-//        delegate?.cellDidSelect(in: index)
-    }
-    
-    @objc
-    private func cellDragged(gesture: UIPanGestureRecognizer) {
-//        guard let index = index else {
-//            return
-//        }
-//        delegate?.cellDidSelect(in: index)
-        print("Вызвал")
-//        guard let viewController = delegate as? UIViewController else { return }
-//        let view = viewController.view
-//        let translation = gesture.translation(in: view)
-//
-//        dimmingView.center.x = translation.x
     }
     
 }

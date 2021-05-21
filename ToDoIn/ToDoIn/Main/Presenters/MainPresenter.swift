@@ -28,7 +28,7 @@ class MainPresenter: MainViewPresenter {
     }
     
     func taskComplete(with indexPath: IndexPath) {
-        print("Прошло")
+        realmBase.taskIsComplete(in: indexPath)
     }
     
     func getAllSections() -> [OfflineSection] {

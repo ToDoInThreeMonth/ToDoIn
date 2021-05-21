@@ -73,6 +73,7 @@ protocol MainFrameRealmProtocol: class {
     func deleteTask(section: Int, row: Int)
     func deleteSection(section: Int)
     func setOutput(_ output: mainFrameRealmOutput)
+    func taskIsComplete(in indexPath: IndexPath)
 }
 
 protocol mainFrameRealmOutput: class {

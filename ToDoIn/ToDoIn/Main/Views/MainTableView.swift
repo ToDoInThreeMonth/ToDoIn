@@ -98,6 +98,4 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         controller?.cellDidSelect(in: indexPath)
     }
-    
-    
 }
