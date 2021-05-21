@@ -17,11 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), title: "Главная")
         
-        let acountFlowCoordinator = AccountFlowCoordinator(navigationController: UINavigationController(), imageName: "account", title: "Аккаунт")
-        
+        let acсountFlowCoordinator = AccountFlowCoordinator(navigationController: UINavigationController(), imageName: "account", title: "Аккаунт")
+
         let groupsFlowCoordinator = GroupsFlowCoordinator(navigationController: UINavigationController(), imageName: "groups", title: "Комнаты")
         
-        appCoordinator = AppCoordinator(tabBarController: CustomTabBarController(), childCoordinators: [acountFlowCoordinator, mainFlowCoordinator, groupsFlowCoordinator])
+        appCoordinator = AppCoordinator(tabBarController: CustomTabBarController(), childCoordinators: [groupsFlowCoordinator, mainFlowCoordinator, acсountFlowCoordinator])
+        
         appCoordinator?.start()
         
         window = UIWindow(frame: UIScreen.main.bounds)

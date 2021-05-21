@@ -19,7 +19,9 @@ extension UINavigationController {
     
     // Позволяет настроить кнопки navigation Bar'a в зависимости от экрана)
     func configureBarButtonItems(screen: State, for view: UIViewController) {
+
         self.navigationBar.barTintColor = UIColor.accentColor
+
         self.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.darkTextColor, .font : UIFont(name: "Georgia", size: 24) as Any]
         switch screen {
         case .main:
@@ -33,11 +35,9 @@ extension UINavigationController {
             view.navigationItem.setRightBarButton(addRoomButton, animated: true)
             view.title = "Комнаты"
         case .account:
-            let leftButtonImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
-            let leftButton = UIBarButtonItem(image: leftButtonImage, style: .plain, target: nil, action: nil)
-            let rightButtonImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
+
+            let rightButtonImage = UIImage(named: "accountSettings")?.withRenderingMode(.alwaysOriginal)
             let rightButton = UIBarButtonItem(image: rightButtonImage, style: .plain, target: nil, action: nil)
-            view.navigationItem.setLeftBarButton(leftButton, animated: true)
             view.navigationItem.setRightBarButton(rightButton, animated: true)
             view.title = "Аккаунт"
         case .roomsDetail:
@@ -50,5 +50,3 @@ extension UINavigationController {
         }
     }
 }
-
-

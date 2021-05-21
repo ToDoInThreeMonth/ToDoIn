@@ -35,5 +35,8 @@ class AppCoordinator: MainCoordinator {
         }
         
         tabBarController.viewControllers = navigationControllers
+        
+        guard let mainVC = tabBarController.viewControllers?[1] else { return }
+        tabBarController.selectedViewController = mainVC
     }
 }

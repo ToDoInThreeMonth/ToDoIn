@@ -31,6 +31,17 @@ extension UIView {
         layer.cornerRadius = bounds.width / 2
     }
     
+    func addLinearGradiend() {
+           let gradient = CAGradientLayer()
+           gradient.colors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0).cgColor]
+           gradient.startPoint = CGPoint(x: 0.5, y: 0)
+           gradient.endPoint = CGPoint(x: 0.5, y: 0.5)
+           gradient.frame = bounds
+           gradient.cornerRadius = layer.cornerRadius
+           gradient.locations = [0, 1]
+           layer.addSublayer(gradient)
+       }
+    
     /**
      Это универсальный метод добавления тени. В зависимости от параметров можно добавить обычную/множественную внешнюю/внутреннюю тень
      - Parameter side: Указатель смещения тени. 9 направлений для innearLinear. Для innearRadial 4 направления в разные углы. Не влияет на другие виды тени.
@@ -179,16 +190,5 @@ extension UIView {
         outsideShadowLayer.shadowOpacity = alpha
         
         layer.insertSublayer(outsideShadowLayer, at: 0)
-    }
-    
-    func addLinearGradiend() {
-            let gradient = CAGradientLayer()
-            gradient.colors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0).cgColor]
-            gradient.startPoint = CGPoint(x: 0.5, y: 0)
-            gradient.endPoint = CGPoint(x: 0.5, y: 0.5)
-            gradient.frame = bounds
-            gradient.cornerRadius = layer.cornerRadius
-            gradient.locations = [0, 1]
-            layer.addSublayer(gradient)
     }
 }
