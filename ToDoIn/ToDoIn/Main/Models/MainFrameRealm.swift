@@ -9,7 +9,7 @@ final class OfflineTask: Object {
 
 final class OfflineSection: Object {
     @objc dynamic var name: String = ""
-    @objc dynamic var countCompletedTasks: Float = 0.0
+    @objc dynamic var countCompletedTasks: Int = 0
     
     var tasks = List<OfflineTask>()
 }
@@ -29,25 +29,25 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     func getProgress() -> Float {
         guard let realm = realm else { return 0 }
+        var countTasks: Float = 0
+        var completedTasks: Float = 0
         let sections = realm.objects(OfflineSection.self)
-        let sectionsCount = Float(sections.count)
-        var summaryProgress: Float = 0
-
         for section in sections {
-            if !section.tasks.isEmpty {
-                summaryProgress = section.countCompletedTasks / Float(section.tasks.count)
-            }
+            countTasks += Float(section.tasks.count)
+            completedTasks += Float(section.countCompletedTasks)
         }
-    
-        return summaryProgress / sectionsCount
+        
+        guard countTasks != 0 else { return 0 }
+        return completedTasks / countTasks
     }
     
     func taskIsComplete(in indexPath: IndexPath) {
         guard let realm = realm else { return }
-        let task = realm.objects(OfflineSection.self)[indexPath.section].tasks[indexPath.row]
-        
+        let section = indexPath.section - 1
+        let task = realm.objects(OfflineSection.self)[section].tasks[indexPath.row]
+
         if task.isCompleted == false {
-            let section = realm.objects(OfflineSection.self)[indexPath.section]
+            let section = realm.objects(OfflineSection.self)[section]
             try? realm.write {
                 section.countCompletedTasks += 1
                 task.isCompleted = true
@@ -57,7 +57,6 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     private func addObserver() {
         token = realm?.observe { [weak self] notification, _ in
-            print("прошел")
             guard let self = self else { return }
             switch notification {
             case .didChange:
@@ -82,12 +81,14 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     func getNumberOfRows(in section: Int) -> Int {
         guard let realm = realm else { return 0 }
+        let section = section - 1
         let count = realm.objects(OfflineSection.self)[section].tasks.count
         return count
     }
     
     func getTask(section: Int, row: Int) -> OfflineTask? {
         guard let realm = realm else { return nil }
+        let section = section - 1
         let task = realm.objects(OfflineSection.self)[section].tasks[row]
         return task
     }
@@ -101,6 +102,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
 
     func addTask(_ task: OfflineTask, in section: Int) {
         guard let realm = realm else { return }
+        let section = section - 1
         let currentSection = realm.objects(OfflineSection.self)[section]
         // Auto - updating values
         try? realm.write {
@@ -110,7 +112,8 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     func changeTask(_ task: OfflineTask, indexPath: IndexPath) {
         guard let realm = realm else { return }
-        let oldTask = realm.objects(OfflineSection.self)[indexPath.section].tasks[indexPath.row]
+        let section = indexPath.section - 1
+        let oldTask = realm.objects(OfflineSection.self)[section].tasks[indexPath.row]
         
         try? realm.write {
             oldTask.date = task.date
@@ -121,6 +124,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     func changeSectionTitle(from text: String, in section: Int) {
         guard let realm = realm else { return }
+        let section = section - 1
         let oldSection = realm.objects(OfflineSection.self)[section]
         try? realm.write {
             oldSection.name = text
@@ -129,6 +133,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     func deleteTask(section: Int, row: Int) {
         guard let realm = realm else { return }
+        let section = section - 1
         let task = realm.objects(OfflineSection.self)[section].tasks[row]
         try? realm.write {
             realm.delete(task)
@@ -137,9 +142,10 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     func deleteSection(section: Int) {
         guard let realm = realm else { return }
-        let section = realm.objects(OfflineSection.self)[section]
+        let section = section - 1
+        let offlineSection = realm.objects(OfflineSection.self)[section]
         try? realm.write {
-            realm.delete(section)
+            realm.delete(offlineSection)
         }
     }
 }

@@ -85,6 +85,7 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
             .sizeToFit()
         deleteSectionButton.pin
             .end(to: sectionNameLabel.edge.start)
+//            .start(40)
             .vCenter()
             .size(LayoutConstraints.deleteSize)
             .marginEnd(9)

@@ -52,7 +52,7 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
     // Количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let controller = controller else { return 0 }
-        return controller.getNumberOfSections()
+        return controller.getNumberOfSections() + 1
     }
     
     // Количестве ячеек в секции
@@ -93,7 +93,7 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
             headerView.delegate = controller
             headerView.section = section
             
-            let sectionName = controller.getAllSections()[section].name
+            let sectionName = controller.getAllSections()[section - 1].name
             headerView.sectionName = sectionName
             return headerView
         }

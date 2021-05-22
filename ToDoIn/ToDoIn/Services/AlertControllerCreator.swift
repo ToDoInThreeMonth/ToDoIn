@@ -85,9 +85,7 @@ class SectionAlertController: UIAlertController {
             guard let text = self.textFields?[0].text else { return }
             self.delegate?.addNewSection(with: text)
         }
-        let closeButton = UIAlertAction(title: "Отменить", style: .default) { [unowned self] _ in
-
-        }
+        let closeButton = UIAlertAction(title: "Отменить", style: .default)
         addAction(addButton)
         addAction(closeButton)
     }
