@@ -17,7 +17,7 @@ final class MainProgressTableHeaderView: UITableViewHeaderFooterView {
     }()
     
     struct LayoutConstraints {
-        
+        static let cellHeight: CGFloat = 40
     }
     
     override init(reuseIdentifier: String?) {
@@ -37,7 +37,7 @@ final class MainProgressTableHeaderView: UITableViewHeaderFooterView {
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         contentView.pin.width(size.width)
-        return CGSize(width: contentView.frame.width, height: 40)
+        return CGSize(width: contentView.frame.width, height: LayoutConstraints.cellHeight)
     }
     
     private func setupViews() {
@@ -47,7 +47,7 @@ final class MainProgressTableHeaderView: UITableViewHeaderFooterView {
     
     private func setupLayouts() {
         progressLabel.pin
-            .top()
+            .top(5)
             .horizontally(30)
             .sizeToFit(.width)
         progressView.pin

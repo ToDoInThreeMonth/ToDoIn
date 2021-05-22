@@ -2,6 +2,7 @@ import Foundation
 
 // MainController
 protocol MainViewPresenter {
+    func showChangeSectionController(with section: Int)
     func getProgress() -> Float
     func showAddTaskController(with section: Int)
     func showChangeTaskController(with indexPath: IndexPath)
@@ -18,6 +19,7 @@ protocol MainViewPresenter {
 }
 
 protocol MainTableViewOutput: class {
+    func showChangeSectionController(with section: Int)
     func getProgress() -> Float
     func showAddTaskController(with section: Int)
     func cellDidSelect(in indexPath: IndexPath)
@@ -33,8 +35,12 @@ protocol AuthViewOutput: class {
     func authButtonTapped()
 }
 
-protocol SectionAlertDelegate: class {
+protocol AddSectionAlertDelegate: class {
     func addNewSection(with text: String)
+}
+
+protocol ChangeSectionAlertDelegate: class {
+    func changeSection(with number: Int, text: String)
 }
 
 protocol DeleteAlertDelegate: class {

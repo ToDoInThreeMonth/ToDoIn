@@ -35,11 +35,18 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
         return button
     }()
     
+    private lazy var changeSectionButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(named: "changeSection")?.withRenderingMode(.alwaysOriginal)
+        button.addTarget(self, action: #selector(changeSectionTapped), for: .touchUpInside)
+        button.setImage(image, for: .normal)
+        return button
+    }()
+    
     struct LayoutConstraints {
         static let end: CGFloat = 35
-        static let taskSize = CGSize(width: 25, height: 26)
-        static let sumTaskWidth: CGFloat = taskSize.width + end
-        static let deleteSize = CGSize(width: 15, height: 15)
+        static let buttonSize = CGSize(width: 25, height: 26)
+        static let sumTaskWidth: CGFloat = buttonSize.width + end
     }
     
     private lazy var sectionNameLabel: UILabel = {
@@ -71,31 +78,42 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
     }
     
     private func setupViews() {
-        contentView.addSubviews(taskButton, sectionNameLabel, deleteSectionButton)
+        contentView.addSubviews(taskButton,
+                                sectionNameLabel,
+                                deleteSectionButton,
+                                changeSectionButton)
     }
     
     private func setupLayouts() {
         taskButton.pin
             .top(5)
             .end(35)
-            .size(CGSize(width: 25, height: 26))
+            .size(LayoutConstraints.buttonSize)
         sectionNameLabel.pin
             .center()
-            .maxWidth(bounds.width - 2 * LayoutConstraints.sumTaskWidth)
+            .maxWidth(bounds.width - 3 * LayoutConstraints.sumTaskWidth)
             .sizeToFit()
         deleteSectionButton.pin
-            .end(to: sectionNameLabel.edge.start)
-//            .start(40)
+            .size(LayoutConstraints.buttonSize)
+            .start(40)
             .vCenter()
-            .size(LayoutConstraints.deleteSize)
+        changeSectionButton.pin
+            .end(to: sectionNameLabel.edge.start)
+            .size(LayoutConstraints.buttonSize)
+            .vCenter()
             .marginEnd(9)
-        
     }
     
     @objc
     private func taskButtonTapped() {
         guard let section = section else { return }
         delegate?.showAddTaskController(with: section)
+    }
+    
+    @objc
+    private func changeSectionTapped() {
+        guard let section = section else { return }
+        delegate?.showChangeSectionController(with: section)
     }
     
     @objc

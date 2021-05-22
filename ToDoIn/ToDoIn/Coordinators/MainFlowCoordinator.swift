@@ -5,6 +5,7 @@ protocol MainChildCoordinator: ChildCoordinator {
     func presentAddTaskController(with section: Int)
     func presentChangeTaskController(with task: OfflineTask, in indexPath: IndexPath)
     func showAddSectionController()
+    func showChangeSectionController(with section: Int, output: ChangeSectionAlertDelegate)
     func presentDeleteSectionController(_ number: Int)
 }
 
@@ -44,9 +45,18 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func showAddSectionController() {
-        guard let controller = navigationController.viewControllers.last as? MainViewController else { return }
-        guard let alertController = AlertControllerCreator.getController(title: "Добавление новой секции", message: "Введите название", style: .alert, type: .section) as? SectionAlertController else { return }
+        guard let controller = navigationController.viewControllers.last as? MainViewController,
+              let alertController = AlertControllerCreator.getController(title: "Добавление новой секции", message: "Введите название", style: .alert, type: .addSection) as? AddSectionAlertController else { return }
         alertController.delegate = controller
+        
+        navigationController.present(alertController, animated: true)
+    }
+    
+    func showChangeSectionController(with section: Int, output: ChangeSectionAlertDelegate) {
+        guard let alertController = AlertControllerCreator.getController(title: "Изменение названия секции", message: "Введите новое название ниже и нажмите \"Сохранить\"", style: .alert, type: .changeSection) as? ChangeSectionAlertController
+        else { return }
+        alertController.delegate = output
+        alertController.section = section
         
         navigationController.present(alertController, animated: true)
     }

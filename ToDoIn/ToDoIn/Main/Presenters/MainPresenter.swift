@@ -65,4 +65,14 @@ class MainPresenter: MainViewPresenter {
     func getProgress() -> Float {
         return realmBase.getProgress()
     }
+    
+    func showChangeSectionController(with section: Int) {
+        coordinator?.showChangeSectionController(with: section, output: self)
+    }
+}
+
+extension MainPresenter: ChangeSectionAlertDelegate {
+    func changeSection(with number: Int, text: String) {
+        realmBase.changeSectionTitle(from: text, in: number)
+    }
 }

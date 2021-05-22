@@ -6,8 +6,9 @@ struct AlertControllerCreator {
     enum TypeAlert {
         case logOut
         case error
-        case section
+        case addSection
         case deleteSection
+        case changeSection
     }
     
     // Static functions
@@ -19,8 +20,11 @@ struct AlertControllerCreator {
         case .error:
             let alertController = ErrorAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
-        case .section:
-            let alertController = SectionAlertController(title: title, message: message, preferredStyle: .alert)
+        case .addSection:
+            let alertController = AddSectionAlertController(title: title, message: message, preferredStyle: .alert)
+            return alertController
+        case .changeSection:
+            let alertController = ChangeSectionAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
         case .deleteSection:
             let alertController = DeleteAlertController(title: title, message: message, preferredStyle: .alert)
@@ -69,8 +73,8 @@ class ErrorAlertController: UIAlertController {
     }
 }
 
-class SectionAlertController: UIAlertController {
-    weak var delegate: SectionAlertDelegate?
+class AddSectionAlertController: UIAlertController {
+    weak var delegate: AddSectionAlertDelegate?
     
     // ViewController lifecycle methods
     override func viewDidLoad() {
@@ -85,8 +89,44 @@ class SectionAlertController: UIAlertController {
             guard let text = self.textFields?[0].text else { return }
             self.delegate?.addNewSection(with: text)
         }
-        let closeButton = UIAlertAction(title: "Отменить", style: .default)
         addAction(addButton)
+        
+        let closeButton = UIAlertAction(title: "Отменить", style: .default)
+        
+        addAction(closeButton)
+    }
+    
+    private func setupTextField() {
+        addTextField { textField in
+            textField.placeholder = "Работа"
+        }
+    }
+}
+
+class ChangeSectionAlertController: UIAlertController {
+    weak var delegate: ChangeSectionAlertDelegate?
+    var section: Int?
+    
+    // ViewController lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButton()
+        setupTextField()
+    }
+    
+    // UI configure methods
+    private func setupButton() {
+        let addButton = UIAlertAction(title: "Cохранить", style: .cancel) { [unowned self] _ in
+            guard let text = self.textFields?[0].text,
+                  let section = section
+            else { return }
+            
+            self.delegate?.changeSection(with: section, text: text)
+        }
+        addAction(addButton)
+        
+        let closeButton = UIAlertAction(title: "Отменить", style: .default)
+        
         addAction(closeButton)
     }
     
