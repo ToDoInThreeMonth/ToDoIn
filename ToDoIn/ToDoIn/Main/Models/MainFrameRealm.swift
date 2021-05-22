@@ -9,6 +9,7 @@ final class OfflineTask: Object {
 
 final class OfflineSection: Object {
     @objc dynamic var name: String = ""
+    @objc dynamic var countCompletedTasks: Float = 0.0
     
     var tasks = List<OfflineTask>()
 }
@@ -26,12 +27,29 @@ class MainFrameRealm: MainFrameRealmProtocol {
         addObserver()
     }
     
+    func getProgress() -> Float {
+        guard let realm = realm else { return 0 }
+        let sections = realm.objects(OfflineSection.self)
+        let sectionsCount = Float(sections.count)
+        var summaryProgress: Float = 0
+
+        for section in sections {
+            if !section.tasks.isEmpty {
+                summaryProgress = section.countCompletedTasks / Float(section.tasks.count)
+            }
+        }
+    
+        return summaryProgress / sectionsCount
+    }
+    
     func taskIsComplete(in indexPath: IndexPath) {
         guard let realm = realm else { return }
         let task = realm.objects(OfflineSection.self)[indexPath.section].tasks[indexPath.row]
         
         if task.isCompleted == false {
+            let section = realm.objects(OfflineSection.self)[indexPath.section]
             try? realm.write {
+                section.countCompletedTasks += 1
                 task.isCompleted = true
             }
         }
@@ -39,6 +57,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
     
     private func addObserver() {
         token = realm?.observe { [weak self] notification, _ in
+            print("прошел")
             guard let self = self else { return }
             switch notification {
             case .didChange:

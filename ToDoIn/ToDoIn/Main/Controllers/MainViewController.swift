@@ -145,6 +145,10 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
+    func getProgress() -> Float {
+        guard let presenter = presenter else { return 0 }
+        return presenter.getProgress()
+    }
     func showDeleteSectionController(_ number: Int) {
         presenter?.showDeleteSectionController(number)
     }

@@ -23,6 +23,7 @@ class MainTableView: UITableView {
     private func setupCells() {
         register(OfflineTaskTableViewCell.self, forCellReuseIdentifier: String(describing: OfflineTaskTableViewCell.self))
         register(MainOfflineHeaderView.self, forHeaderFooterViewReuseIdentifier: String(describing: MainOfflineHeaderView.self))
+        register(MainProgressTableHeaderView.self, forHeaderFooterViewReuseIdentifier: String(describing: MainProgressTableHeaderView.self))
     }
 }
 
@@ -36,21 +37,16 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
     
     // Создание ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell
-//        cell?.contentView.isUserInteractionEnabled = true
-        guard let controller = controller else {
-            return UITableViewCell()
-        }
-        guard let safeCell = cell else {
-//            controller.showErrorAlertController(with: "Ячейки c задачами не могут быть созданы")
-            return UITableViewCell()
-        }
+        guard let controller = controller,
+              let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell,
+              let task = controller.getTask(from: indexPath)
+        else { return UITableViewCell() }
+
+        cell.setUp(with: task)
+        cell.index = indexPath
+        cell.delegate = controller
         
-        guard let task = controller.getTask(from: indexPath) else { return UITableViewCell() }
-        safeCell.setUp(with: task)
-        safeCell.index = indexPath
-        
-        return safeCell
+        return cell
     }
     
     // Количество секций
@@ -62,7 +58,13 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
     // Количестве ячеек в секции
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let controller = controller else { return 0 }
-        return controller.getNumberOfRows(in: section)
+        switch section {
+        case 0:
+            return 0
+        default:
+            return controller.getNumberOfRows(in: section)
+        }
+        
     }
 }
 
@@ -76,15 +78,26 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     
     // Хедеры секций
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
-        guard let saveHeaderView = headerView else { return nil }
-        guard let controller = controller else { return nil }
-        saveHeaderView.delegate = controller
-        saveHeaderView.section = section
+        switch section {
+        case 0:
+            guard let controller = controller,
+                  let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainProgressTableHeaderView.self)) as? MainProgressTableHeaderView else { return nil }
+            let progress = controller.getProgress()
+            headerView.setProgress(is: progress)
+            return headerView
+        default:
+            guard let controller = controller,
+                  let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
+            else { return nil}
+            
+            headerView.delegate = controller
+            headerView.section = section
+            
+            let sectionName = controller.getAllSections()[section].name
+            headerView.sectionName = sectionName
+            return headerView
+        }
         
-        let sectionName = controller.getAllSections()[section].name
-        saveHeaderView.sectionName = sectionName
-        return saveHeaderView
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

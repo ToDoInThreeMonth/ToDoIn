@@ -16,6 +16,11 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isDoneView.backgroundColor = .clear
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         setupLayouts()

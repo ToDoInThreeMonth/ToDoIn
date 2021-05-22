@@ -62,4 +62,7 @@ class MainPresenter: MainViewPresenter {
         coordinator?.presentDeleteSectionController(number)
     }
 
+    func getProgress() -> Float {
+        return realmBase.getProgress()
+    }
 }

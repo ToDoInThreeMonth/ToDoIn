@@ -2,6 +2,7 @@ import Foundation
 
 // MainController
 protocol MainViewPresenter {
+    func getProgress() -> Float
     func showAddTaskController(with section: Int)
     func showChangeTaskController(with indexPath: IndexPath)
     func showAddSectionController()
@@ -17,6 +18,7 @@ protocol MainViewPresenter {
 }
 
 protocol MainTableViewOutput: class {
+    func getProgress() -> Float
     func showAddTaskController(with section: Int)
     func cellDidSelect(in indexPath: IndexPath)
     func doneViewTapped(with indexPath: IndexPath)
@@ -74,6 +76,7 @@ protocol MainFrameRealmProtocol: class {
     func deleteSection(section: Int)
     func setOutput(_ output: mainFrameRealmOutput)
     func taskIsComplete(in indexPath: IndexPath)
+    func getProgress() -> Float
 }
 
 protocol mainFrameRealmOutput: class {
