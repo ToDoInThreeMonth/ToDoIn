@@ -196,10 +196,10 @@
 		15CF842A264891EE00F2B73E /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				15CF842B264891EE00F2B73E /* TaskPresenter.swift */,
 				15CF842C264891EE00F2B73E /* GroupsPresenter.swift */,
-				15CF842D264891EE00F2B73E /* GroupSettingsPresenter.swift */,
 				15CF842E264891EE00F2B73E /* GroupPresenter.swift */,
+				15CF842B264891EE00F2B73E /* TaskPresenter.swift */,
+				15CF842D264891EE00F2B73E /* GroupSettingsPresenter.swift */,
 				4317446F2650176400D7CC8E /* AddGroupPresenter.swift */,
 				431744722650177800D7CC8E /* AddUserToGroupPresenter.swift */,
 			);

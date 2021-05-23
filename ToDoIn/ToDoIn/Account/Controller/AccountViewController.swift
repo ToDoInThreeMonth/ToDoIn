@@ -15,11 +15,12 @@ protocol FriendsTableViewOutput: AnyObject {
 protocol AddFriendViewOutput: AnyObject {
     func addNewFriend(_ mail: String)
     func dismissAddNewFriendView()
+    func cleanFriendTextField()
+    func cleanErrorLabel()
 }
 
 protocol AccountView: FriendsTableViewOutput, AddFriendViewOutput {
     func showError(with error: String)
-    func cleanErrorLabel()
     func setUp(with user: User)
 }
 
@@ -75,14 +76,14 @@ final class AccountController: UIViewController {
     private var isSettingMenuHidden = true
     
     // Nested data types
-    struct LayersConstants {
+    private struct LayersConstants {
         static let settingsContentLeft: CGFloat = 20
         static let settingsContentRight: CGFloat = 5
         static let settingImageRight: CGFloat = 45
         static let scrollInsetBottom: CGFloat = 15
     }
     
-    struct AnimationConstants {
+    private struct AnimationConstants {
         static var exitButtonAlpha: CGFloat = 1
         static var notificationButtonAlpha: CGFloat = 1
         static var backgroundAlpha: CGFloat = 0.2
@@ -256,8 +257,9 @@ final class AccountController: UIViewController {
     @objc
     private func exitButtonTapped() {
         presenter?.showExitAlertController { [weak self] in
-            self?.dropDownAnimation()
-            self?.presenter?.exitButtonTapped()
+            guard let self = self else { return }
+            self.dropDownAnimation()
+            self.presenter?.exitButtonTapped()
         }
     }
     
@@ -356,6 +358,10 @@ extension AccountController: AccountView {
     
     func cleanErrorLabel() {
         addFriendView.cleanErrorLabel()
+    }
+    
+    func cleanFriendTextField() {
+        addFriendView.cleanFriendTextField()
     }
     
     func reloadView() {

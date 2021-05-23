@@ -40,7 +40,9 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     
     func showAddGroup() {
         let addGroupController = AddGroupController()
-        addGroupController.setPresenter(presenter: AddGroupPresenter(addGroupView: addGroupController.self), coordinator: self)
+        let presenter = AddGroupPresenter(addGroupView: addGroupController.self)
+        presenter.setDelegate(navigationController.viewControllers.last as? GroupsView)
+        addGroupController.setPresenter(presenter: presenter, coordinator: self)
         navigationController.viewControllers.last?.present(addGroupController, animated: true, completion: nil)
     }
     

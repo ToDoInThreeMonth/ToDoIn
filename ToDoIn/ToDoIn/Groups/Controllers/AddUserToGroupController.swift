@@ -19,7 +19,7 @@ final class AddUserToGroupController: UIViewController {
         return tableView
     }()
     
-    struct LayersConstants {
+    private struct LayersConstants {
         static let buttonHeight: CGFloat = 40
         static let cornerRadius: CGFloat = 15
         static let horizontalPadding: CGFloat = 40

@@ -12,14 +12,16 @@ protocol GroupsManagerDescription {
     func addUsers(_ users: [User], to group: Group)
     func addTask(_ task: Task, in group: Group)
 
+    func getGroups(completion: @escaping (Result<[Group], СustomError>) -> Void)
     func getTasks(for userId: String, from group: Group) -> [Task]
     func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void)
     func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void)
     
     func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void)
+    func changeTitle(in group: Group, with title: String, completion: @escaping (СustomError?) -> Void)
     
     func deleteTask(_ task: Task, in group: Group)
-    func deleteGroup(_ group: Group)
+    func deleteGroup(_ group: Group, completion: @escaping (СustomError?) -> Void)
     func deleteUser(_ user: User, from group: Group)
 }
 
@@ -145,6 +147,32 @@ final class GroupsManager: GroupsManagerDescription {
     
     // MARK: - Get
     
+    func getGroups(completion: @escaping (Result<[Group], СustomError>) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            completion(.failure(СustomError.noSignedUser))
+            return
+        }
+        database.collection(Collection.groups.rawValue).getDocuments { (querySnapshot, error) in
+            if error != nil {
+                completion(.failure(СustomError.error))
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion(.failure(СustomError.unexpected))
+                return
+            }
+            var groups = [Group]()
+            for document in documents {
+                guard let group = GroupsConverter.group(from: document) else { continue }
+                if group.users.contains(currentUserId) {
+                    groups.append(group)
+                }
+            }
+            completion(.success(groups))
+        }
+    }
+    
     func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void) {
         let docRef = database.collection(Collection.users.rawValue).document(userId)
         docRef.getDocument { (document, error) in
@@ -214,6 +242,14 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
+    func changeTitle(in group: Group, with title: String, completion: @escaping (СustomError?) -> Void) {
+        database.collection(Collection.groups.rawValue).document(group.id).updateData([GroupKey.title.rawValue : title]) { err in
+            if err != nil {
+                completion(.unexpected)
+            }
+        }
+    }
+    
     // MARK: - Delete
     
     func deleteTask(_ task: Task, in group: Group) {
@@ -222,8 +258,14 @@ final class GroupsManager: GroupsManagerDescription {
         ])
     }
     
-    func deleteGroup(_ group: Group) {
-        database.collection(Collection.groups.rawValue).document(group.id).delete()
+    func deleteGroup(_ group: Group, completion: @escaping (СustomError?) -> Void) {
+        database.collection(Collection.groups.rawValue).document(group.id).delete { (err) in
+            guard err != nil else {
+                completion(nil)
+                return
+            }
+            completion(.failedToDelete)
+        }
     }
     
     func deleteUser(_ user: User, from group: Group) {

@@ -6,8 +6,8 @@ protocol GroupsViewPresenter {
     
     init(groupsView: GroupsView)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
-    func didLoadView()
-    
+    func loadData()
+
     func getGroup(at index: Int) -> Group
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 
@@ -18,8 +18,6 @@ protocol GroupsViewPresenter {
     func deleteTapped(for group: Group, at index: Int)
     
     func isSignedIn() -> Bool
-    // TODO: - Нужна ли эта фунция
-    func removeAll()
 }
 
 final class GroupsPresenter: GroupsViewPresenter {
@@ -68,20 +66,28 @@ final class GroupsPresenter: GroupsViewPresenter {
     }
     
     func deleteTapped(for group: Group, at index: Int) {
-        groupsManager.deleteGroup(group)
+        groupsManager.deleteGroup(group) { [weak self] (err) in
+            guard let self = self else { return }
+            guard let err = err else {
+                self.loadData()
+                return
+            }
+            self.showErrorAlertController(with: err.toString())
+        }
     }
     
-    func didLoadView() {
+    func loadData() {
         if authManager.isSignedIn() {
-            groupsManager.observeGroups { [weak self] (result) in
+            groupsManager.getGroups { [weak self] (result) in
+                guard let self = self else { return }
                 switch result {
                 case .success(let groups):
-                    self?.groups = groups.map { $0 }
-                    self?.groupsView?.reloadView()
+                    self.groups = groups.map { $0 }
+                    self.groupsView?.reloadView()
                 case .failure(let error):
-                    self?.groups.removeAll()
-                    self?.groupsView?.reloadView()
-                    self?.showErrorAlertController(with: error.toString())
+                    self.groups.removeAll()
+                    self.groupsView?.reloadView()
+                    self.showErrorAlertController(with: error.toString())
                 }
             }
         } else {
@@ -108,10 +114,4 @@ final class GroupsPresenter: GroupsViewPresenter {
     func isSignedIn() -> Bool {
         authManager.isSignedIn()
     }
-    
-    func removeAll() {
-        groups.removeAll()
-        groupsView?.reloadView()
-    }
-
 }

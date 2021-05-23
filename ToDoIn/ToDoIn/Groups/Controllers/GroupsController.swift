@@ -4,6 +4,7 @@ import PinLayout
 protocol GroupsView: AnyObject {
     func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator)
     func reloadView()
+    func loadData()
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
@@ -21,7 +22,7 @@ final class GroupsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter?.didLoadView()
+        loadData()
         
         setupNavigationItem()
         setBackground()
@@ -30,7 +31,7 @@ final class GroupsController: UIViewController {
         
         self.view.addSubview(tableView)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.ReceivedNotification(notification:)), name: Notification.Name("AuthChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: Notification.Name("AuthChanged"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -48,6 +49,9 @@ final class GroupsController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
     }
     
     private func setupNavigationItem() {
@@ -64,8 +68,13 @@ final class GroupsController: UIViewController {
     }
     
     @objc
-    private func ReceivedNotification(notification: Notification){
-        presenter?.didLoadView()
+    private func receivedNotification(notification: Notification){
+        loadData()
+    }
+    
+    @objc
+    private func didPullToRefresh() {
+        loadData()
     }
     
 }
@@ -75,7 +84,12 @@ final class GroupsController: UIViewController {
 
 extension GroupsController: GroupsView {
     
+    func loadData() {
+        presenter?.loadData()
+    }
+    
     func reloadView() {
+        tableView.refreshControl?.endRefreshing()
         tableView.reloadData()
     }
     

@@ -32,7 +32,7 @@ final class AddGroupController: UIViewController, UIImagePickerControllerDelegat
         return tableView
     }()
     
-    struct LayersConstants {
+    private struct LayersConstants {
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         static let textFieldCornerRadius: CGFloat = 15
         static let buttonHeight: CGFloat = 40

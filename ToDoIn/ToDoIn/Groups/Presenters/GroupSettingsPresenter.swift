@@ -7,7 +7,7 @@ protocol GroupSettingsViewPresenter {
     
     var usersCount: Int { get }
     
-    func groupTitleDidChange(with title: String?)
+    func groupTitleDidChange(with title: String)
     func addUserButtonTapped()
     func deleteTapped(for user: User, in group: Group)
     
@@ -49,12 +49,13 @@ final class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     func didLoadView() {
         groupsManager.observeGroup(by: group.id) { [weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .success(let group):
-                self?.group = group
-                self?.getUsers(from: group.users)
+                self.group = group
+                self.getUsers(from: group.users)
             case .failure(let error):
-                self?.showErrorAlertController(with: error.toString())
+                self.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -63,12 +64,13 @@ final class GroupSettingsPresenter: GroupSettingsViewPresenter {
         users.removeAll()
         for userId in userIdArray {
             groupsManager.getUser(userId: userId) { [weak self] (result) in
+                guard let self = self else { return }
                 switch result {
                 case .success(let user):
-                    self?.users.append(user)
-                    self?.groupSettingsView?.reloadView()
+                    self.users.append(user)
+                    self.groupSettingsView?.reloadView()
                 case .failure(let error):
-                    self?.showErrorAlertController(with: error.toString())
+                    self.showErrorAlertController(with: error.toString())
                 }
             }
         }
@@ -82,8 +84,14 @@ final class GroupSettingsPresenter: GroupSettingsViewPresenter {
         users
     }
 
-    func groupTitleDidChange(with title: String?) {
+    func groupTitleDidChange(with title: String) {
         // изменение названия комнаты
+        if group.title != title {
+            groupsManager.changeTitle(in: group, with: title) { [weak self] (err) in
+                guard let err = err else { return }
+                self?.showErrorAlertController(with: err.toString())
+            }
+        }
     }
     
     func addUserButtonTapped() {

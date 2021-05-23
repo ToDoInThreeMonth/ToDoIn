@@ -46,13 +46,14 @@ final class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
     
     func didLoadView() {
         groupsManager.observeUser(by: nil) { [weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .success(let user):
-                self?.user = user
-                self?.getFriends(for: user)
-                self?.addUserToGroupView?.reloadView()
+                self.user = user
+                self.getFriends(for: user)
+                self.addUserToGroupView?.reloadView()
             case .failure(let error):
-                self?.addUserToGroupView?.showErrorAlertController(with: error.toString())
+                self.addUserToGroupView?.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -61,14 +62,15 @@ final class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
         otherFriends = []
         for friendId in user.friends {
             groupsManager.getUser(userId: friendId) { [weak self] (result) in
+                guard let self = self else { return }
                 switch result {
                 case .success(let user):
-                    if !(self?.participants.contains(user) ?? true) {
-                        self?.otherFriends.append(user)
-                        self?.addUserToGroupView?.reloadView()
+                    if !self.participants.contains(user) {
+                        self.otherFriends.append(user)
+                        self.addUserToGroupView?.reloadView()
                     }
                 case .failure(let error):
-                    self?.addUserToGroupView?.showErrorAlertController(with: error.toString())
+                    self.addUserToGroupView?.showErrorAlertController(with: error.toString())
                 }
             }
         }

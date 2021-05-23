@@ -10,6 +10,7 @@ protocol AuthView: AnyObject {
     func getName() -> String
     func getPassword1() -> String
     func getPassword2() -> String
+    func getImage() -> UIImage?
     
     func showError(_ message:String)
     func transitionToMain()
@@ -24,7 +25,7 @@ final class AuthController: UIViewController {
     
     private var isSignIn: Bool
     
-    struct LayersConstants {
+    private struct LayersConstants {
         static let margin: CGFloat = 25
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         static let cornerRadius: CGFloat = 15
@@ -66,12 +67,11 @@ final class AuthController: UIViewController {
         configureTextFields()
         configureAddButton()
         configureErrorLabel()
-        configureImageView()
         
         if !isSignIn {
-            view.addSubview(imageView)
+            configureImageView()
         }
-        view.addSubviews(emailTextField, nameTextField, passwordTextField1, passwordTextField2, button, errorLabel)
+        view.addSubviews(emailTextField, nameTextField, passwordTextField1, passwordTextField2, button, errorLabel, imageView)
 
     }
     
@@ -82,21 +82,20 @@ final class AuthController: UIViewController {
         configureShadowsAndCornerRadius()
     }
     
-    func configureLayouts() {
+    private func configureLayouts() {
         
-        if !isSignIn {
-            imageView.pin.top(5)
-                .hCenter()
-                .height(150)
-                .width(150)
-        }
+        imageView.pin
+            .top(LayersConstants.margin)
+            .hCenter()
+            .height(150)
+            .width(150)
         
         emailTextField.pin
-            .top(to: isSignIn ? view.edge.top : imageView.edge.bottom)
-            .marginTop(isSignIn ? 200 : LayersConstants.margin)
+            .top(to: imageView.edge.bottom)
+            .marginTop(LayersConstants.margin)
             .horizontally(LayersConstants.horizontalPadding)
             .height(LayersConstants.textFieldHeight)
-
+        
         if !isSignIn {
             nameTextField.pin
                 .below(of: emailTextField)
@@ -130,19 +129,19 @@ final class AuthController: UIViewController {
             .height(LayersConstants.textFieldHeight * 2)
     }
     
-    func configureImageView() {
+    private func configureImageView() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
     }
     
-    func configureErrorLabel() {
+    private func configureErrorLabel() {
         errorLabel.alpha = 0
         errorLabel.textAlignment = .center
         errorLabel.numberOfLines = 0
     }
     
-    func configureTextFields() {
+    private func configureTextFields() {
         emailTextField.placeholder = "Почта"
         nameTextField.placeholder = "Имя"
         passwordTextField1.placeholder = "Пароль"
@@ -155,12 +154,12 @@ final class AuthController: UIViewController {
         }
     }
     
-    func configureAddButton() {
+    private func configureAddButton() {
         button.setTitle(isSignIn ? "Войти" : "Зарегистрироваться")
         button.addTarget(self, action: #selector(buttonSignTapped), for: .touchUpInside)
     }
     
-    func configureShadowsAndCornerRadius() {
+    private func configureShadowsAndCornerRadius() {
         if nameTextField.layer.cornerRadius == 0 {
             [emailTextField, nameTextField, passwordTextField1, passwordTextField2].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
             [emailTextField, nameTextField, passwordTextField1, passwordTextField2].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
@@ -177,7 +176,7 @@ final class AuthController: UIViewController {
         if isSignIn {
             presenter?.buttonSignInTapped()
         } else {
-            presenter?.buttonSignUpTapped(photo: imageView.getImage())
+            presenter?.buttonSignUpTapped()
         }
     }
     
@@ -187,10 +186,6 @@ final class AuthController: UIViewController {
             self.imageView.setImage(with: image)
             self.imageView.contentMode = .scaleAspectFill
         }
-    }
-    
-    func transitionToMain() {
-        dismiss(animated: true, completion: nil)
     }
     
     private func startActivityIndicator() {
@@ -224,6 +219,10 @@ extension AuthController: AuthView {
         passwordTextField2.text ?? ""
     }
     
+    func getImage() -> UIImage? {
+        imageView.getImage()
+    }
+    
     func showError(_ message:String) {
         errorLabel.text = message
         errorLabel.alpha = 1
@@ -232,6 +231,10 @@ extension AuthController: AuthView {
     
     func stopActivityIndicator() {
         activityIndicator.stopAnimating()
+    }
+    
+    func transitionToMain() {
+        dismiss(animated: true, completion: nil)
     }
 }
 

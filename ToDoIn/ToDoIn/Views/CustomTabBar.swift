@@ -4,7 +4,7 @@ final class CustomTabBar: UITabBar {
 
     private var shapeLayer: CALayer?
     
-    struct LayersConstants {
+    private struct LayersConstants {
         static let centerArcRadius: CGFloat = 40
         static let sideArcRadius: CGFloat = 20
         static let centerArcWidth = sin(CGFloat.pi / 2 - angle) * centerArcRadius

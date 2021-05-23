@@ -106,19 +106,21 @@ final class GroupSettingsController: UIViewController {
         groupTitle.font = UIFont.systemFont(ofSize: 20)
         groupTitle.textColor = .darkTextColor
         groupTitle.textAlignment = .center
+        groupTitle.addTarget(self, action: #selector(groupTitleDidChange), for: .editingDidEnd)
     }
     
     
     private func setupInsets() {
         tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)
-        }
+    }
     
     // MARK: - Handlers
     
     @objc
     private func groupTitleDidChange() {
         // сохранение нового названия комнаты
-        presenter?.groupTitleDidChange(with: groupTitle.text ?? nil)
+        guard let newTitle = groupTitle.text else { return }
+        presenter?.groupTitleDidChange(with: newTitle)
     }
     
     @objc

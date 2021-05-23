@@ -11,6 +11,8 @@ enum СustomError: String, Error {
     case noUser = "Неверный логин или пароль 🤔"
     case failedToCreateUser = "Эта почта уже занята 🤷‍♀️"
     case failedToSaveUserInFireStore = "Не удалось сохранить данные пользователя 😥"
+    case failedToDelete = "Не удалось удалить 🤷‍♀️"
+    case failedToSignOut = "Не удалось выйти из аккаунта 🤷‍♀️"
     
     func toString() -> String {
         self.rawValue

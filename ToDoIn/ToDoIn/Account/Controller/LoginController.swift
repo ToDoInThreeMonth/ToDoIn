@@ -32,7 +32,7 @@ final class LoginController: UIViewController {
         configureLayouts()
     }
     
-    func configureLayouts() {
+    private func configureLayouts() {
         logoImageView.pin
             .topCenter(view.pin.safeArea.top)
             .margin(30)
@@ -45,18 +45,18 @@ final class LoginController: UIViewController {
             .marginTop(20)
     }
     
-    func configureButtons() {
+    private func configureButtons() {
         buttonSignIn.addTarget(self, action: #selector(buttonSignInPressed), for: .touchUpInside)
         buttonSignUp.addTarget(self, action: #selector(buttonSignUpPressed), for: .touchUpInside)
     }
     
     @objc
-    func buttonSignInPressed() {
+    private func buttonSignInPressed() {
         presenter?.buttonSignPressed(isSignIn: true)
     }
     
     @objc
-    func buttonSignUpPressed() {
+    private func buttonSignUpPressed() {
         presenter?.buttonSignPressed(isSignIn: false)
     }
 }

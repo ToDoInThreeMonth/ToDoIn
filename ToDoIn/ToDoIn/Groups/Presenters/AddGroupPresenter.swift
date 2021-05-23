@@ -3,6 +3,7 @@ import UIKit
 
 protocol AddGroupViewPresenter {
     func setCoordinator(with coordinator: GroupsChildCoordinator)
+    func setDelegate(_ delegate: GroupsView?)
     func didLoadView()
     
     func getAllFriends() -> [User]
@@ -22,6 +23,7 @@ final class AddGroupPresenter: AddGroupViewPresenter {
     private weak var coordinator: GroupsChildCoordinator?
     
     private let addGroupView: AddGroupView?
+    private weak var delegate: GroupsView?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     private let authManager: AuthManagerDescription = AuthManager.shared
@@ -39,17 +41,22 @@ final class AddGroupPresenter: AddGroupViewPresenter {
         self.coordinator = coordinator
     }
     
+    func setDelegate(_ delegate: GroupsView?) {
+        self.delegate = delegate
+    }
+    
     // MARK: - Handlers
     
     func didLoadView() {
         groupsManager.observeUser(by: nil) { [weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .success(let user):
-                self?.user = user
-                self?.getFriends(for: user)
-                self?.addGroupView?.reloadView()
+                self.user = user
+                self.getFriends(for: user)
+                self.addGroupView?.reloadView()
             case .failure(let error):
-                self?.addGroupView?.showErrorAlertController(with: error.toString())
+                self.addGroupView?.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -58,12 +65,13 @@ final class AddGroupPresenter: AddGroupViewPresenter {
         friends = []
         for friendId in user.friends {
             groupsManager.getUser(userId: friendId) { [weak self] (result) in
+                guard let self = self else { return }
                 switch result {
                 case .success(let user):
-                    self?.friends.append(user)
-                    self?.addGroupView?.reloadView()
+                    self.friends.append(user)
+                    self.addGroupView?.reloadView()
                 case .failure(let error):
-                    self?.addGroupView?.showErrorAlertController(with: error.toString())
+                    self.addGroupView?.showErrorAlertController(with: error.toString())
                 }
             }
         }
@@ -92,8 +100,10 @@ final class AddGroupPresenter: AddGroupViewPresenter {
             usersId.append(userId)
         }
         groupsManager.addGroup(title: title, users: usersId, photo: photo) { [weak self] _ in
-            self?.addGroupView?.stopActivityIndicator()
-            self?.addGroupView?.transitionToMain()
+            guard let self = self else { return }
+            self.addGroupView?.stopActivityIndicator()
+            self.addGroupView?.transitionToMain()
+            self.delegate?.loadData()
         }
     }
     

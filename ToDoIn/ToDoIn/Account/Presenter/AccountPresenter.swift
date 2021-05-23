@@ -50,28 +50,30 @@ final class AccountPresenter: AccountViewPresenter {
     
     func didLoadView() {
         groupsManager.observeUser(by: nil) { [weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .success(let user):
-                self?.user = user
-                self?.getFriends(for: user)
-                self?.accountView?.setUp(with: user)
-                self?.accountView?.reloadView()
+                self.user = user
+                self.getFriends(for: user)
+                self.accountView?.setUp(with: user)
+                self.accountView?.reloadView()
             case .failure(let error):
-                self?.accountView?.showErrorAlertController(with: error.toString())
+                self.accountView?.showErrorAlertController(with: error.toString())
             }
         }
     }
     
     func getFriends(for user: User) {
-        friends = []
+        friends.removeAll()
         for friendId in user.friends {
             groupsManager.getUser(userId: friendId) { [weak self] (result) in
+                guard let self = self else { return }
                 switch result {
                 case .success(let user):
-                    self?.friends.append(user)
-                    self?.accountView?.reloadView()
+                    self.friends.append(user)
+                    self.accountView?.reloadView()
                 case .failure(let error):
-                    self?.accountView?.showErrorAlertController(with: error.toString())
+                    self.accountView?.showErrorAlertController(with: error.toString())
                 }
             }
         }
@@ -103,8 +105,12 @@ final class AccountPresenter: AccountViewPresenter {
     }
     
     func exitButtonTapped() {
-        authManager.signOut()
-        coordinator?.showLogin()
+        let err = authManager.signOut()
+        guard let error = err else {
+            coordinator?.showLogin()
+            return
+        }
+        showErrorAlertController(with: error.toString())
     }
     
     func getFriends(from text: String) -> [User] {
@@ -129,13 +135,15 @@ final class AccountPresenter: AccountViewPresenter {
     
     func addNewFriend(_ email: String) {
         groupsManager.getUser(email: email) { [weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .success(let user):
-                self?.groupsManager.addFriend(friend: user)
-                self?.accountView?.dismissAddNewFriendView()
-                self?.accountView?.cleanErrorLabel()
+                self.groupsManager.addFriend(friend: user)
+                self.accountView?.cleanErrorLabel()
+                self.accountView?.cleanFriendTextField()
+                self.accountView?.dismissAddNewFriendView()
             case .failure(_):
-                self?.accountView?.showError(with: "Пользователь не найден")
+                self.accountView?.showError(with: "Пользователь не найден")
             }
         }
     }

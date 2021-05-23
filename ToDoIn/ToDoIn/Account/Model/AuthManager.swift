@@ -3,9 +3,9 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol AuthManagerDescription {
-    func signUp(email: String, name: String, password1: String, password2: String, photo: UIImage?, completion: @escaping (Result<String, СustomError>) -> Void)
+    func signUp(email: String, name: String, password: String, photo: UIImage?, completion: @escaping (Result<String, СustomError>) -> Void)
     func signIn(email: String, password: String, completion: @escaping (Result<String, СustomError>) -> Void)
-    func signOut()
+    func signOut() -> СustomError?
     
     func isSignedIn() -> Bool
     
@@ -21,17 +21,7 @@ final class AuthManager: AuthManagerDescription {
     
     private init() {}
     
-    func signUp(email: String, name: String, password1: String, password2: String, photo: UIImage?, completion: @escaping (Result<String, СustomError>) -> Void) {
-        let error = validateInput(email: email, name: name, password1: password1, password2: password2, isSignIn: false)
-        
-        if let error = error {
-            completion(.failure(error))
-            return
-        }
-        
-        let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        let password = password1.trimmingCharacters(in: .whitespacesAndNewlines)
+    func signUp(email: String, name: String, password: String, photo: UIImage?, completion: @escaping (Result<String, СustomError>) -> Void) {
         
         Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
             guard let result = result else {
@@ -66,16 +56,6 @@ final class AuthManager: AuthManagerDescription {
     }
     
     func signIn(email: String, password: String, completion: @escaping (Result<String, СustomError>) -> Void) {
-        let error = validateInput(email: email, password1: password, isSignIn: true)
-        
-        if let error = error {
-            completion(.failure(error))
-            return
-        }
-        
-        let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        let password = password.trimmingCharacters(in: .whitespacesAndNewlines)
-        
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
                 completion(.failure(СustomError.noUser))
@@ -87,14 +67,15 @@ final class AuthManager: AuthManagerDescription {
         }
     }
     
-    func signOut() {
+    func signOut() -> СustomError? {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
             UserDefaults.standard.set(false, forKey: "status")
             NotificationCenter.default.post(name: Notification.Name("AuthChanged"), object: nil, userInfo: nil)
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
+            return nil
+        } catch _ as NSError {
+            return .failedToSignOut
         }
     }
     
@@ -124,33 +105,6 @@ final class AuthManager: AuthManagerDescription {
     
     func getCurrentUserId() -> String? {
         Auth.auth().currentUser?.uid
-    }
-    
-    /// Проверка введеных пользователем данных
-    func validateInput(email: String, name: String = "", password1: String, password2: String = "", isSignIn: Bool) -> СustomError? {
-        
-        // Все ли поля заполнены
-        if email.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            password1.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            return СustomError.emptyInput
-        }
-        if !isSignIn {
-            if name.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-                password2.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-                return СustomError.emptyInput
-            }
-            // Проверка пароля
-            let cleanedPassword1 = password1.trimmingCharacters(in: .whitespacesAndNewlines)
-            let cleanedPassword2 = password2.trimmingCharacters(in: .whitespacesAndNewlines)
-            if cleanedPassword1 != cleanedPassword2 {
-                return СustomError.differentPasswords
-            }
-            if cleanedPassword1.count < 6 {
-                // Небезопасный пароль
-                return СustomError.incorrectPassword
-            }
-        }
-        return nil
     }
     
 }

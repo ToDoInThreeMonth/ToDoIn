@@ -2,7 +2,7 @@ import UIKit
 
 final class CustomButton: UIButton {
     
-    struct LayersConstants {
+    private struct LayersConstants {
         static let buttonWidth: CGFloat = UIScreen.main.bounds.width - 80
         static let buttonHeight: CGFloat = 40
         static let cornerRadius: CGFloat = 15

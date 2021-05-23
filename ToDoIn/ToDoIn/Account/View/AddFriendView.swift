@@ -113,7 +113,6 @@ final class AddFriendView: UIView {
     private func addButtonTapped() {
         guard let mail = emailTextField.text, !mail.isEmpty else { return }
         controller?.addNewFriend(mail)
-        emailTextField.text = ""
     }
     
     func showError(with error: String) {
@@ -124,5 +123,9 @@ final class AddFriendView: UIView {
     func cleanErrorLabel() {
         errorLabel.text = ""
         errorLabel.alpha = 0
+    }
+    
+    func cleanFriendTextField() {
+        emailTextField.text = ""
     }
 }
