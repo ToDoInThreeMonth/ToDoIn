@@ -8,6 +8,10 @@ class MainPresenter: MainViewPresenter {
         self.coordinator = coordinator
     }
     
+    func getArchiveSection() -> ArchiveSection? {
+        return realmBase.getArchiveSection()
+    }
+    
     func setRealmOutput(_ output: mainFrameRealmOutput) {
         realmBase.setOutput(output)
     }
@@ -19,7 +23,7 @@ class MainPresenter: MainViewPresenter {
     func showChangeTaskController(with indexPath: IndexPath) {
         let section = indexPath.section
         let row = indexPath.row
-        guard let task = realmBase.getTask(section: section, row: row) else { return }
+        guard let task = realmBase.getTask(section: section, row: row, isArchive: false) else { return }
         coordinator?.presentChangeTaskController(with: task, in: indexPath)
     }
     
@@ -32,19 +36,19 @@ class MainPresenter: MainViewPresenter {
     }
     
     func getAllSections() -> [OfflineSection] {
-        return realmBase.getAllSections()
+        return realmBase.getOfflineSections()
     }
     
     func getNumberOfSections() -> Int {
         return realmBase.getNumberOfSections()
     }
     
-    func getNumberOfRows(in section: Int) -> Int {
-        return realmBase.getNumberOfRows(in: section)
+    func getNumberOfRows(in section: Int, isArchive: Bool) -> Int {
+        return realmBase.getNumberOfRows(in: section, isArchive: isArchive)
     }
     
-    func getTask(from indexPath: IndexPath) -> OfflineTask? {
-        return realmBase.getTask(section: indexPath.section, row: indexPath.row)
+    func getTask(from indexPath: IndexPath, isArchive: Bool) -> OfflineTask? {
+        return realmBase.getTask(section: indexPath.section, row: indexPath.row, isArchive: isArchive)
     }
     
     func addNewSection(with text: String) {

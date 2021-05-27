@@ -1,6 +1,6 @@
 import RealmSwift
 
-final class OfflineTask: Object {
+class OfflineTask: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var descriptionText: String = ""
     @objc dynamic var date: Date = Date()
@@ -10,6 +10,12 @@ final class OfflineTask: Object {
 final class OfflineSection: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var countCompletedTasks: Int = 0
+    
+    var tasks = List<OfflineTask>()
+}
+
+final class ArchiveSection: Object {
+    @objc dynamic var name: String = "Архив"
     
     var tasks = List<OfflineTask>()
 }
@@ -25,6 +31,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
     func setOutput(_ output: mainFrameRealmOutput) {
         self.output = output
         addObserver()
+        addArchiveSection()
     }
     
     func getProgress() -> Float {
@@ -45,7 +52,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
         guard let realm = realm else { return }
         let section = indexPath.section - 1
         let task = realm.objects(OfflineSection.self)[section].tasks[indexPath.row]
-
+        
         if task.isCompleted == false {
             let section = realm.objects(OfflineSection.self)[section]
             try? realm.write {
@@ -67,7 +74,15 @@ class MainFrameRealm: MainFrameRealmProtocol {
         }
     }
     
-    func getAllSections() -> [OfflineSection] {
+    private func addArchiveSection() {
+        guard let realm = realm else { return }
+        let section = ArchiveSection()
+        try? realm.write {
+            realm.add(section)
+        }
+    }
+    
+    func getOfflineSections() -> [OfflineSection] {
         guard let realm = realm else { return [] }
         let results = realm.objects(OfflineSection.self)
         return Array(results)
@@ -79,18 +94,36 @@ class MainFrameRealm: MainFrameRealmProtocol {
         return count
     }
     
-    func getNumberOfRows(in section: Int) -> Int {
+    func getNumberOfRows(in section: Int, isArchive: Bool) -> Int {
         guard let realm = realm else { return 0 }
-        let section = section - 1
-        let count = realm.objects(OfflineSection.self)[section].tasks.count
+        var count = 0
+        if isArchive {
+            guard let archiveSection = realm.objects(ArchiveSection.self).first else { return 0 }
+            count = archiveSection.tasks.count
+        } else {
+            let section = section - 1
+            count = realm.objects(OfflineSection.self)[section].tasks.count
+        }
+        
         return count
     }
     
-    func getTask(section: Int, row: Int) -> OfflineTask? {
+
+    func getTask(section: Int, row: Int, isArchive: Bool) -> OfflineTask? {
         guard let realm = realm else { return nil }
-        let section = section - 1
-        let task = realm.objects(OfflineSection.self)[section].tasks[row]
-        return task
+        if isArchive {
+            let section = section - 1
+            let task = realm.objects(OfflineSection.self)[section].tasks[row]
+            return task
+        } else {
+            guard let archiveSection = realm.objects(ArchiveSection.self).first else { return nil }
+            let task = archiveSection.tasks[row]
+            return task
+        }
+    }
+    
+    func getArchiveSection() -> ArchiveSection? {
+        return realm?.objects(ArchiveSection.self).first
     }
     
     func addSection(_ section: OfflineSection) {
@@ -99,7 +132,7 @@ class MainFrameRealm: MainFrameRealmProtocol {
             realm.add(section)
         }
     }
-
+    
     func addTask(_ task: OfflineTask, in section: Int) {
         guard let realm = realm else { return }
         let section = section - 1

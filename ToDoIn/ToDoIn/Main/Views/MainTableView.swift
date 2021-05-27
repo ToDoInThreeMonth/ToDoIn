@@ -38,31 +38,46 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
     // Создание ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let controller = controller,
-              let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell,
-              let task = controller.getTask(from: indexPath)
+              let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell
         else { return UITableViewCell() }
-
-        cell.setUp(with: task)
-        cell.index = indexPath
-        cell.delegate = controller
+        let offlineSectionCount = controller.getNumberOfSections()
+        if indexPath.section == offlineSectionCount + 1 {
+            guard let task = controller.getTask(from: indexPath, isArchive: false)
+            else { return UITableViewCell() }
+            cell.setUp(with: task)
+            return cell
+        } else {
+            guard let task = controller.getTask(from: indexPath, isArchive: false)
+            else { return UITableViewCell() }
+            cell.setUp(with: task)
+            cell.index = indexPath
+            cell.delegate = controller
+            
+            return cell
+        }
         
-        return cell
     }
     
     // Количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let controller = controller else { return 0 }
+        /// Тут изначально должно быть 2
+        /// В методе получения хэдера должно быть
+        /// Если количество секций 
         return controller.getNumberOfSections() + 1
     }
     
     // Количестве ячеек в секции
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let controller = controller else { return 0 }
+        let offlineSectionCount = controller.getNumberOfSections()
         switch section {
         case 0:
             return 0
+        case offlineSectionCount - 1:
+            return controller.getNumberOfRows(in: section, isArchive: true)
         default:
-            return controller.getNumberOfRows(in: section)
+            return controller.getNumberOfRows(in: section, isArchive: false)
         }
         
     }
@@ -78,16 +93,25 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     
     // Хедеры секций
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let controller = controller else { return nil }
+        let offlineSectionCount = controller.getNumberOfSections()
         switch section {
         case 0:
-            guard let controller = controller,
-                  let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainProgressTableHeaderView.self)) as? MainProgressTableHeaderView else { return nil }
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainProgressTableHeaderView.self)) as? MainProgressTableHeaderView
+            else { return nil }
             let progress = controller.getProgress()
             headerView.setProgress(is: progress)
             return headerView
+        case offlineSectionCount:
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView,
+                  let sectionName = controller.getArchiveSection()?.name
+            else { return nil}
+           
+            headerView.setupArchiveState()
+            headerView.sectionName = sectionName
+            return headerView
         default:
-            guard let controller = controller,
-                  let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
             else { return nil}
             
             headerView.delegate = controller

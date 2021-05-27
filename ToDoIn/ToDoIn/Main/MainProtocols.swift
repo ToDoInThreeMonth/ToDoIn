@@ -11,11 +11,12 @@ protocol MainViewPresenter {
     func taskComplete(with indexPath: IndexPath)
     func getAllSections() -> [OfflineSection]
     func getNumberOfSections() -> Int
-    func getNumberOfRows(in section: Int) -> Int
-    func getTask(from indexPath: IndexPath) -> OfflineTask?
+    func getNumberOfRows(in section: Int, isArchive: Bool) -> Int
+    func getTask(from indexPath: IndexPath, isArchive: Bool) -> OfflineTask?
     func deleteSection(_ number: Int)
     func showDeleteSectionController(_ number: Int)
     func setRealmOutput(_ output: mainFrameRealmOutput)
+    func getArchiveSection() -> ArchiveSection?
 }
 
 protocol MainTableViewOutput: class {
@@ -26,9 +27,10 @@ protocol MainTableViewOutput: class {
     func doneViewTapped(with indexPath: IndexPath)
     func getAllSections() -> [OfflineSection]
     func getNumberOfSections() -> Int
-    func getNumberOfRows(in section: Int) -> Int
-    func getTask(from indexPath: IndexPath) -> OfflineTask?
+    func getNumberOfRows(in section: Int, isArchive: Bool) -> Int
+    func getTask(from indexPath: IndexPath, isArchive: Bool) -> OfflineTask?
     func showDeleteSectionController(_ number: Int)
+    func getArchiveSection() -> ArchiveSection?
 }
 
 protocol AuthViewOutput: class {
@@ -70,10 +72,11 @@ protocol OfflineTaskViewPresenter {
 // RealmBase
 
 protocol MainFrameRealmProtocol: class {
-    func getAllSections() -> [OfflineSection]
+    func getOfflineSections() -> [OfflineSection]
+    func getArchiveSection() -> ArchiveSection?
     func getNumberOfSections() -> Int
-    func getNumberOfRows(in section: Int) -> Int
-    func getTask(section: Int, row: Int) -> OfflineTask?
+    func getNumberOfRows(in section: Int, isArchive: Bool) -> Int
+    func getTask(section: Int, row: Int, isArchive: Bool) -> OfflineTask?
     func addSection(_ section: OfflineSection)
     func addTask(_ task: OfflineTask, in section: Int)
     func changeTask(_ task: OfflineTask, indexPath: IndexPath)

@@ -122,4 +122,16 @@ class MainOfflineHeaderView: UITableViewHeaderFooterView {
         delegate?.showDeleteSectionController(section)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        taskButton.isHidden = false
+        deleteSectionButton.isHidden = false
+        changeSectionButton.isHidden = false
+    }
+    
+    func setupArchiveState() {
+        taskButton.isHidden = true
+        deleteSectionButton.isHidden = true
+        changeSectionButton.isHidden = true
+    }
 }

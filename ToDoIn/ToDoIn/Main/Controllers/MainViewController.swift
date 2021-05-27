@@ -147,6 +147,9 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
+    func getArchiveSection() -> ArchiveSection? {
+        return presenter?.getArchiveSection()
+    }
     func showChangeSectionController(with section: Int) {
         presenter?.showChangeSectionController(with: section)
     }
@@ -169,14 +172,14 @@ extension MainViewController: MainTableViewOutput {
         return presenter.getNumberOfSections()
     }
     
-    func getNumberOfRows(in section: Int) -> Int {
+    func getNumberOfRows(in section: Int, isArchive: Bool) -> Int {
         guard let presenter = presenter else { return 0 }
-        return presenter.getNumberOfRows(in: section)
+        return presenter.getNumberOfRows(in: section, isArchive: isArchive)
     }
     
-    func getTask(from indexPath: IndexPath) -> OfflineTask? {
+    func getTask(from indexPath: IndexPath, isArchive: Bool) -> OfflineTask? {
         guard let presenter = presenter else { return nil }
-        return presenter.getTask(from: indexPath)
+        return presenter.getTask(from: indexPath, isArchive: isArchive)
     }
     
     
