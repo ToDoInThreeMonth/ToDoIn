@@ -20,7 +20,7 @@ extension UINavigationController {
     }
     
     // Позволяет настроить кнопки navigation Bar'a в зависимости от экрана)
-    func configureBarButtonItems(screen: State, for view: UIViewController, button1: UIButton = UIButton(), button2: UIButton = UIButton()) {
+    func configureBarButtonItems(screen: State, for view: UIViewController, rightButton: UIButton = UIButton(), leftButton: UIButton = UIButton()) {
 
         self.navigationBar.barTintColor = UIColor.accentColor
 
@@ -42,13 +42,13 @@ extension UINavigationController {
             view.navigationItem.setRightBarButton(rightButton, animated: true)
             view.title = "Аккаунт"
         case .groupDetail:
-            let rightButtonA = button1
+            let rightButtonA = rightButton
             rightButtonA.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
             rightButtonA.setImage(UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
             rightButtonA.imageView?.contentMode = .scaleAspectFit
             rightButtonA.contentEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: -10)
             
-            let rightButtonB = button2
+            let rightButtonB = leftButton
             rightButtonB.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
             rightButtonB.setImage(UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), for: .normal)
             rightButtonB.imageView?.contentMode = .scaleAspectFit

@@ -32,7 +32,7 @@ struct AccountUIComponents {
     
     static var friendUnderlineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = .lightRedColor
         return view
     }()
     

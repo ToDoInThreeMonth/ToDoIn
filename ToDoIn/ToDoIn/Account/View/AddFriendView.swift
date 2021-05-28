@@ -121,7 +121,7 @@ final class AddFriendView: UIView {
     }
     
     func cleanErrorLabel() {
-        errorLabel.text = ""
+        errorLabel.text = nil
         errorLabel.alpha = 0
     }
     

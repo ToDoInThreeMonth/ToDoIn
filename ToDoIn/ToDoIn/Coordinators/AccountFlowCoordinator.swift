@@ -22,8 +22,7 @@ class AccountFlowCoordinator: AccountChildCoordinator {
     }
     
     func start() {
-        let isSignedIn = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
-        if isSignedIn {
+        if (UserDefaults.standard.value(forKey: "status") as? Bool) != nil {
             showAccount()
         } else {
             showLogin()

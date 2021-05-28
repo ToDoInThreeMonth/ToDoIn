@@ -58,7 +58,7 @@ final class GroupController: UIViewController {
         button1.addTarget(self, action: #selector(addingTaskButtonTapped), for: .touchUpInside)
         let button2 = UIButton(type: .system)
         button2.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
-        navigationController?.configureBarButtonItems(screen: .groupDetail, for: self, button1: button1, button2: button2)
+        navigationController?.configureBarButtonItems(screen: .groupDetail, for: self, rightButton: button1, leftButton: button2)
         title = group.title
     }
     

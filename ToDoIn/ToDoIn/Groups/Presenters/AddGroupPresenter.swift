@@ -62,7 +62,7 @@ final class AddGroupPresenter: AddGroupViewPresenter {
     }
     
     func getFriends(for user: User) {
-        friends = []
+        friends.removeAll()
         for friendId in user.friends {
             groupsManager.getUser(userId: friendId) { [weak self] (result) in
                 guard let self = self else { return }
