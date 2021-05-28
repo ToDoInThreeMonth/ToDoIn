@@ -29,29 +29,35 @@ final class AuthManager: AuthManagerDescription {
                 return
             }
             var imageName: String = "default"
-            ImagesManager.loadPhotoToStorage(id: result.user.uid, photo: photo) { (myResult) in
-                switch myResult {
-                case .success(let url):
-                    imageName = url.absoluteString
-                case .failure(_):
-                    imageName = "default"
-                }
-                self.database
-                    .collection(Collection.users.rawValue)
-                    .document(result.user.uid)
-                    .setData([UserKey.email.rawValue : email,
-                              UserKey.name.rawValue : name,
-                              UserKey.image.rawValue : imageName,
-                              UserKey.id.rawValue : result.user.uid,
-                              UserKey.friends.rawValue : []]) { (error) in
-                        if error != nil {
-                            completion(.failure(СustomError.failedToSaveUserInFireStore))
-                        } else {
-                            UserDefaults.standard.set(true, forKey: "status")
-                            completion(.success(Auth.auth().currentUser?.uid ?? ""))
+            
+            self.database
+                .collection(Collection.users.rawValue)
+                .document(result.user.uid)
+                .setData([UserKey.email.rawValue : email,
+                          UserKey.name.rawValue : name,
+                          UserKey.image.rawValue : imageName,
+                          UserKey.id.rawValue : result.user.uid,
+                          UserKey.friends.rawValue : []]) { (error) in
+                    if error != nil {
+                        completion(.failure(СustomError.failedToSaveUserInFireStore))
+                    } else {
+                        UserDefaults.standard.set(true, forKey: "status")
+                        completion(.success(Auth.auth().currentUser?.uid ?? ""))
+                        
+                        ImagesManager.loadPhotoToStorage(id: result.user.uid, photo: photo) { [weak self] (res) in
+                            switch res {
+                            case .success(let url):
+                                imageName = url.absoluteString
+                                self?.database
+                                    .collection(Collection.users.rawValue)
+                                    .document(result.user.uid)
+                                    .updateData([UserKey.image.rawValue : imageName])
+                            case .failure(_):
+                                imageName = "default"
+                            }
                         }
                     }
-            }
+                }
         }
     }
     
