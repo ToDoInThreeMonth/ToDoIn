@@ -147,6 +147,10 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainTableViewOutput {
+    func deleteTask(section: Int, row: Int, isArchive: Bool) {
+        presenter?.deleteTask(section: section, row: row, isArchive: isArchive)
+    }
+    
     func getArchiveSection() -> ArchiveSection? {
         return presenter?.getArchiveSection()
     }

@@ -48,10 +48,9 @@ class MainFrameRealm: MainFrameRealmProtocol {
         let archiveSection = realm.objects(ArchiveSection.self)[0]
         let offlineSection = realm.objects(OfflineSection.self)[indexPath.section - 1]
         try? realm.write {
-            archiveSection.tasks.append(task)
+            archiveSection.tasks.insert(task, at: 0)
             offlineSection.tasks.remove(at: indexPath.row)
         }
-//        deleteTask(section: indexPath.section, row: indexPath.row)
     }
     
     private func addObserver() {
@@ -152,11 +151,18 @@ class MainFrameRealm: MainFrameRealmProtocol {
         }
     }
     
-    func deleteTask(section: Int, row: Int) {
+    func deleteTask(section: Int, row: Int, isArchive: Bool) {
         guard let realm = realm else { return }
-        let task = realm.objects(OfflineSection.self)[section - 1].tasks[row]
-        try? realm.write {
-            realm.delete(task)
+        if isArchive {
+            let task = realm.objects(ArchiveSection.self)[0].tasks[row]
+            try? realm.write {
+                realm.delete(task)
+            }
+        } else {
+            let task = realm.objects(OfflineSection.self)[section - 1].tasks[row]
+            try? realm.write {
+                realm.delete(task)
+            }
         }
     }
     

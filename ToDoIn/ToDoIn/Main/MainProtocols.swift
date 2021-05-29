@@ -17,6 +17,7 @@ protocol MainViewPresenter {
     func showDeleteSectionController(_ number: Int)
     func setRealmOutput(_ output: mainFrameRealmOutput)
     func getArchiveSection() -> ArchiveSection?
+    func deleteTask(section: Int, row: Int, isArchive: Bool)
 }
 
 protocol MainTableViewOutput: class {
@@ -31,6 +32,7 @@ protocol MainTableViewOutput: class {
     func getTask(from indexPath: IndexPath, isArchive: Bool) -> OfflineTask?
     func showDeleteSectionController(_ number: Int)
     func getArchiveSection() -> ArchiveSection?
+    func deleteTask(section: Int, row: Int, isArchive: Bool)
 }
 
 protocol AuthViewOutput: class {
@@ -81,7 +83,7 @@ protocol MainFrameRealmProtocol: class {
     func addTask(_ task: OfflineTask, in section: Int)
     func changeTask(_ task: OfflineTask, indexPath: IndexPath)
     func changeSectionTitle(from text: String, in section: Int)
-    func deleteTask(section: Int, row: Int)
+    func deleteTask(section: Int, row: Int, isArchive: Bool)
     func deleteSection(section: Int)
     func setOutput(_ output: mainFrameRealmOutput)
     func taskIsComplete(in indexPath: IndexPath)

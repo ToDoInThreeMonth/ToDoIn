@@ -8,6 +8,10 @@ class MainPresenter: MainViewPresenter {
         self.coordinator = coordinator
     }
     
+    func deleteTask(section: Int, row: Int, isArchive: Bool) {
+        realmBase.deleteTask(section: section, row: row, isArchive: isArchive)
+    }
+    
     func getArchiveSection() -> ArchiveSection? {
         return realmBase.getArchiveSection()
     }

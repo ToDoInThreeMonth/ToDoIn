@@ -19,6 +19,8 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         isDoneView.backgroundColor = .clear
+        isDoneView.isHidden = false
+        isUserInteractionEnabled = true
     }
     
     override func layoutSubviews() {
@@ -31,8 +33,11 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
         taskView.insertSubview(dimmingView, at: 0)
     }
     
-    func setUp(with task: OfflineTask) {
+    func setUp(with task: OfflineTask, isArchive: Bool) {
         taskLabel.text = task.title
+        if isArchive {
+            isDoneView.isHidden = true
+        }
     }
     
     private func configureDimmingView() {

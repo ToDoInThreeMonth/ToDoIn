@@ -46,12 +46,13 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
         case sectionCount:
             guard let task = controller.getTask(from: indexPath, isArchive: true)
             else { return UITableViewCell() }
-            cell.setUp(with: task)
+            cell.isUserInteractionEnabled = false
+            cell.setUp(with: task, isArchive: true)
             return cell
-        case 1...sectionCount:
+        case 1..<sectionCount:
             guard let task = controller.getTask(from: indexPath, isArchive: false)
             else { return UITableViewCell() }
-            cell.setUp(with: task)
+            cell.setUp(with: task, isArchive: false)
             cell.index = indexPath
             cell.delegate = controller
             return cell
@@ -78,7 +79,7 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
         case sectionCount:
             return controller.getNumberOfRows(in: section, isArchive: true)
             // Оффлайн секции
-        case 0...sectionCount:
+        case 0..<sectionCount:
             return controller.getNumberOfRows(in: section, isArchive: false)
         default:
            return 0
@@ -115,7 +116,7 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
             headerView.setupArchiveState()
             headerView.sectionName = sectionName
             return headerView
-        case 0...sectionCount:
+        case 0..<sectionCount:
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
             else { return nil}
             
@@ -140,6 +141,15 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        controller?.cellDidSelect(in: indexPath)
+        guard let controller = controller else { return }
+        let sectionCount = controller.getNumberOfSections()
+        
+        switch indexPath.section {
+        case 1..<sectionCount:
+            controller.cellDidSelect(in: indexPath)
+        default:
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
+        
     }
 }
