@@ -40,44 +40,48 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
         guard let controller = controller,
               let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: OfflineTaskTableViewCell.self), for: indexPath) as? OfflineTaskTableViewCell
         else { return UITableViewCell() }
-        let offlineSectionCount = controller.getNumberOfSections()
-        if indexPath.section == offlineSectionCount + 1 {
-            guard let task = controller.getTask(from: indexPath, isArchive: false)
+        let sectionCount = controller.getNumberOfSections()
+        
+        switch indexPath.section {
+        case sectionCount:
+            guard let task = controller.getTask(from: indexPath, isArchive: true)
             else { return UITableViewCell() }
             cell.setUp(with: task)
             return cell
-        } else {
+        case 1...sectionCount:
             guard let task = controller.getTask(from: indexPath, isArchive: false)
             else { return UITableViewCell() }
             cell.setUp(with: task)
             cell.index = indexPath
             cell.delegate = controller
-            
             return cell
+        default:
+            return UITableViewCell()
         }
-        
     }
     
     // Количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let controller = controller else { return 0 }
-        /// Тут изначально должно быть 2
-        /// В методе получения хэдера должно быть
-        /// Если количество секций 
+        // +1 секция - это секция с прогрессом
         return controller.getNumberOfSections() + 1
     }
     
     // Количестве ячеек в секции
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let controller = controller else { return 0 }
-        let offlineSectionCount = controller.getNumberOfSections()
+        let sectionCount = controller.getNumberOfSections()
         switch section {
         case 0:
             return 0
-        case offlineSectionCount - 1:
+            // Последняя секция - всегда архив
+        case sectionCount:
             return controller.getNumberOfRows(in: section, isArchive: true)
-        default:
+            // Оффлайн секции
+        case 0...sectionCount:
             return controller.getNumberOfRows(in: section, isArchive: false)
+        default:
+           return 0
         }
         
     }
@@ -94,7 +98,8 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     // Хедеры секций
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let controller = controller else { return nil }
-        let offlineSectionCount = controller.getNumberOfSections()
+        let sectionCount = controller.getNumberOfSections()
+        
         switch section {
         case 0:
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainProgressTableHeaderView.self)) as? MainProgressTableHeaderView
@@ -102,7 +107,7 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
             let progress = controller.getProgress()
             headerView.setProgress(is: progress)
             return headerView
-        case offlineSectionCount:
+        case sectionCount:
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView,
                   let sectionName = controller.getArchiveSection()?.name
             else { return nil}
@@ -110,7 +115,7 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
             headerView.setupArchiveState()
             headerView.sectionName = sectionName
             return headerView
-        default:
+        case 0...sectionCount:
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: MainOfflineHeaderView.self)) as? MainOfflineHeaderView
             else { return nil}
             
@@ -120,6 +125,8 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
             let sectionName = controller.getAllSections()[section - 1].name
             headerView.sectionName = sectionName
             return headerView
+        default:
+            return nil
         }
         
     }
