@@ -1,6 +1,6 @@
 import UIKit
 
-final class TaskTableViewCell: UITableViewCell {
+class TaskTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
@@ -8,7 +8,7 @@ final class TaskTableViewCell: UITableViewCell {
     
     private let taskView = UIView()
     private let taskLabel = UILabel()
-    private let isDoneView = UIView()
+    let isDoneView = UIView()
     
     
     private let taskViewPadding: CGFloat = 5
@@ -40,7 +40,7 @@ final class TaskTableViewCell: UITableViewCell {
     
     // MARK: - Configures
     
-    private func setupLayouts() {
+    func setupLayouts() {
         taskView.pin
             .horizontally(30)
             .vertically(taskViewPadding)
@@ -79,7 +79,7 @@ final class TaskTableViewCell: UITableViewCell {
     }
     
     
-    private func configureIsDoneView() {
+    func configureIsDoneView() {
         if isDoneView.layer.cornerRadius == 0 {
             isDoneView.layer.cornerRadius = (self.frame.height - (isDoneViewPadding + taskViewPadding) * 2) / 2
         }

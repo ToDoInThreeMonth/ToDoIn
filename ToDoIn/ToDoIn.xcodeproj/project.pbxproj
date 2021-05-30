@@ -40,10 +40,21 @@
 		15CF8492264891EE00F2B73E /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845B264891EE00F2B73E /* SearchTextField.swift */; };
 		15CF8493264891EE00F2B73E /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845C264891EE00F2B73E /* AddFriendView.swift */; };
 		15CF8494264891EE00F2B73E /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845D264891EE00F2B73E /* FriendsTableView.swift */; };
-		15CF8495264891EE00F2B73E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845F264891EE00F2B73E /* ViewController.swift */; };
 		15CF8496264891EE00F2B73E /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8461264891EE00F2B73E /* CustomTabBar.swift */; };
 		15CF8497264891EE00F2B73E /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8462264891EE00F2B73E /* CustomTabBarController.swift */; };
 		15CF8499264891EE00F2B73E /* AlertControllerCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8465264891EE00F2B73E /* AlertControllerCreator.swift */; };
+		311DE6CE2663EAE20016992E /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6BB2663EAE20016992E /* MainProtocols.swift */; };
+		311DE6CF2663EAE20016992E /* MainFrameRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6BD2663EAE20016992E /* MainFrameRealm.swift */; };
+		311DE6D22663EAE20016992E /* OfflineTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6C12663EAE20016992E /* OfflineTaskPresenter.swift */; };
+		311DE6D32663EAE20016992E /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6C22663EAE20016992E /* MainPresenter.swift */; };
+		311DE6D42663EAE20016992E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6C42663EAE20016992E /* MainViewController.swift */; };
+		311DE6D52663EAE20016992E /* OfflineTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6C52663EAE20016992E /* OfflineTaskController.swift */; };
+		311DE6D62663EAE20016992E /* OfflineTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6C72663EAE20016992E /* OfflineTaskTableViewCell.swift */; };
+		311DE6D72663EAE20016992E /* MainTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6C82663EAE20016992E /* MainTableView.swift */; };
+		311DE6DA2663EAE20016992E /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6CB2663EAE20016992E /* MainOfflineHeaderView.swift */; };
+		311DE6DB2663EAE20016992E /* MainProgressTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6CC2663EAE20016992E /* MainProgressTableHeaderView.swift */; };
+		311DE6DC2663EAE20016992E /* GradientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6CD2663EAE20016992E /* GradientProgressView.swift */; };
+		311DE6DE2663EE750016992E /* UIImage + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311DE6DD2663EE750016992E /* UIImage + extension.swift */; };
 		4317444826500EAD00D7CC8E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4317444726500EAD00D7CC8E /* GoogleService-Info.plist */; };
 		4317444C265010C100D7CC8E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4317444B265010C100D7CC8E /* AuthManager.swift */; };
 		431744502650110200D7CC8E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4317444F2650110200D7CC8E /* LoginController.swift */; };
@@ -100,13 +111,24 @@
 		15CF845B264891EE00F2B73E /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		15CF845C264891EE00F2B73E /* AddFriendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		15CF845D264891EE00F2B73E /* FriendsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
-		15CF845F264891EE00F2B73E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		15CF8461264891EE00F2B73E /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		15CF8462264891EE00F2B73E /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		15CF8463264891EE00F2B73E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15CF8465264891EE00F2B73E /* AlertControllerCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertControllerCreator.swift; sourceTree = "<group>"; };
 		15FCA73C2641688B009F235F /* UINavigationController + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + extension.swift"; sourceTree = "<group>"; };
 		16553D4685F1BAD0F87C2FF9 /* Pods-ToDoIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.release.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.release.xcconfig"; sourceTree = "<group>"; };
+		311DE6BB2663EAE20016992E /* MainProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
+		311DE6BD2663EAE20016992E /* MainFrameRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFrameRealm.swift; sourceTree = "<group>"; };
+		311DE6C12663EAE20016992E /* OfflineTaskPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineTaskPresenter.swift; sourceTree = "<group>"; };
+		311DE6C22663EAE20016992E /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		311DE6C42663EAE20016992E /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		311DE6C52663EAE20016992E /* OfflineTaskController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineTaskController.swift; sourceTree = "<group>"; };
+		311DE6C72663EAE20016992E /* OfflineTaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineTaskTableViewCell.swift; sourceTree = "<group>"; };
+		311DE6C82663EAE20016992E /* MainTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableView.swift; sourceTree = "<group>"; };
+		311DE6CB2663EAE20016992E /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
+		311DE6CC2663EAE20016992E /* MainProgressTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProgressTableHeaderView.swift; sourceTree = "<group>"; };
+		311DE6CD2663EAE20016992E /* GradientProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientProgressView.swift; sourceTree = "<group>"; };
+		311DE6DD2663EE750016992E /* UIImage + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + extension.swift"; sourceTree = "<group>"; };
 		4313B438260BBFA500E6381A /* ToDoIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4317444726500EAD00D7CC8E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4317444B265010C100D7CC8E /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -159,7 +181,7 @@
 				15CF8444264891EE00F2B73E /* Extensions */,
 				15CF8423264891EE00F2B73E /* Coordinators */,
 				15CF8429264891EE00F2B73E /* Groups */,
-				15CF845E264891EE00F2B73E /* Main */,
+				311DE6BA2663EAE20016992E /* Main */,
 				15CF844F264891EE00F2B73E /* Account */,
 				15CF8460264891EE00F2B73E /* Views */,
 				15CF8440264891EE00F2B73E /* LaunchScreen.storyboard */,
@@ -247,6 +269,7 @@
 				15CF844B264891EE00F2B73E /* UIColor + extensions.swift */,
 				15CF844D264891EE00F2B73E /* UIStackView + extensions.swift */,
 				4317447C2650185A00D7CC8E /* Date + extension.swift */,
+				311DE6DD2663EE750016992E /* UIImage + extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,14 +325,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		15CF845E264891EE00F2B73E /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				15CF845F264891EE00F2B73E /* ViewController.swift */,
-			);
-			path = Main;
-			sourceTree = "<group>";
-		};
 		15CF8460264891EE00F2B73E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +345,57 @@
 				434CF26A2650F5C10095299E /* Converter.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		311DE6BA2663EAE20016992E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				311DE6BB2663EAE20016992E /* MainProtocols.swift */,
+				311DE6BC2663EAE20016992E /* Models */,
+				311DE6C02663EAE20016992E /* Presenters */,
+				311DE6C32663EAE20016992E /* Controllers */,
+				311DE6C62663EAE20016992E /* Views */,
+			);
+			name = Main;
+			path = ../../../../Main;
+			sourceTree = "<group>";
+		};
+		311DE6BC2663EAE20016992E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				311DE6BD2663EAE20016992E /* MainFrameRealm.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		311DE6C02663EAE20016992E /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				311DE6C12663EAE20016992E /* OfflineTaskPresenter.swift */,
+				311DE6C22663EAE20016992E /* MainPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		311DE6C32663EAE20016992E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				311DE6C42663EAE20016992E /* MainViewController.swift */,
+				311DE6C52663EAE20016992E /* OfflineTaskController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		311DE6C62663EAE20016992E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				311DE6C72663EAE20016992E /* OfflineTaskTableViewCell.swift */,
+				311DE6C82663EAE20016992E /* MainTableView.swift */,
+				311DE6CB2663EAE20016992E /* MainOfflineHeaderView.swift */,
+				311DE6CC2663EAE20016992E /* MainProgressTableHeaderView.swift */,
+				311DE6CD2663EAE20016992E /* GradientProgressView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		3F81D43B9AFA4F14842C4978 /* Frameworks */ = {
@@ -493,9 +559,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				15CF8491264891EE00F2B73E /* FriendTableViewCell.swift in Sources */,
+				311DE6DC2663EAE20016992E /* GradientProgressView.swift in Sources */,
 				15CF848D264891EE00F2B73E /* AccountViewController.swift in Sources */,
 				434CF26B2650F5C10095299E /* Converter.swift in Sources */,
 				4317445D265011D800D7CC8E /* ImagesManager.swift in Sources */,
+				311DE6D72663EAE20016992E /* MainTableView.swift in Sources */,
 				15CF8475264891EE00F2B73E /* GroupSettingsController.swift in Sources */,
 				15CF8499264891EE00F2B73E /* AlertControllerCreator.swift in Sources */,
 				15CF8494264891EE00F2B73E /* FriendsTableView.swift in Sources */,
@@ -504,10 +572,13 @@
 				15CF846A264891EE00F2B73E /* AccountFlowCoordinator.swift in Sources */,
 				15CF8478264891EE00F2B73E /* TaskController.swift in Sources */,
 				15CF8486264891EE00F2B73E /* UINavigationController + extension.swift in Sources */,
+				311DE6D42663EAE20016992E /* MainViewController.swift in Sources */,
 				431744732650177800D7CC8E /* AddUserToGroupPresenter.swift in Sources */,
+				311DE6CF2663EAE20016992E /* MainFrameRealm.swift in Sources */,
 				431744802650190300D7CC8E /* ImagePicker.swift in Sources */,
 				15CF8492264891EE00F2B73E /* SearchTextField.swift in Sources */,
 				15CF8497264891EE00F2B73E /* CustomTabBarController.swift in Sources */,
+				311DE6CE2663EAE20016992E /* MainProtocols.swift in Sources */,
 				4317445A265011A100D7CC8E /* AuthPresenter.swift in Sources */,
 				15CF8472264891EE00F2B73E /* Group.swift in Sources */,
 				431744702650176400D7CC8E /* AddGroupPresenter.swift in Sources */,
@@ -521,27 +592,33 @@
 				431744532650110D00D7CC8E /* AuthController.swift in Sources */,
 				15CF847D264891EE00F2B73E /* TaskTableViewCell.swift in Sources */,
 				15CF8490264891EE00F2B73E /* AccountUIComponents.swift in Sources */,
+				311DE6DA2663EAE20016992E /* MainOfflineHeaderView.swift in Sources */,
 				15CF846F264891EE00F2B73E /* GroupSettingsPresenter.swift in Sources */,
 				15CF8496264891EE00F2B73E /* CustomTabBar.swift in Sources */,
 				15CF848B264891EE00F2B73E /* AccountPresenter.swift in Sources */,
 				15CF8489264891EE00F2B73E /* UIStackView + extensions.swift in Sources */,
-				15CF8495264891EE00F2B73E /* ViewController.swift in Sources */,
 				15CF8474264891EE00F2B73E /* GroupController.swift in Sources */,
 				15CF847B264891EE00F2B73E /* CustomTextField.swift in Sources */,
 				15CF8485264891EE00F2B73E /* UIViewController+extension.swift in Sources */,
 				15CF846B264891EE00F2B73E /* GroupsFlowCoordinator.swift in Sources */,
 				431744502650110200D7CC8E /* LoginController.swift in Sources */,
 				15CF8487264891EE00F2B73E /* UIColor + extensions.swift in Sources */,
+				311DE6DB2663EAE20016992E /* MainProgressTableHeaderView.swift in Sources */,
 				434CF26E2650F68B0095299E /* FirestoreKeys.swift in Sources */,
 				15CF8493264891EE00F2B73E /* AddFriendView.swift in Sources */,
 				43174477265017EB00D7CC8E /* AddGroupController.swift in Sources */,
 				43174465265014E600D7CC8E /* CustomButton.swift in Sources */,
+				311DE6D32663EAE20016992E /* MainPresenter.swift in Sources */,
 				4317447A265017FF00D7CC8E /* AddUserToGroupController.swift in Sources */,
 				15CF8473264891EE00F2B73E /* GroupsManager.swift in Sources */,
+				311DE6D62663EAE20016992E /* OfflineTaskTableViewCell.swift in Sources */,
 				431744572650118D00D7CC8E /* LoginPresenter.swift in Sources */,
 				15CF846D264891EE00F2B73E /* TaskPresenter.swift in Sources */,
 				4317444C265010C100D7CC8E /* AuthManager.swift in Sources */,
+				311DE6D52663EAE20016992E /* OfflineTaskController.swift in Sources */,
+				311DE6D22663EAE20016992E /* OfflineTaskPresenter.swift in Sources */,
 				15CF848A264891EE00F2B73E /* AppDelegate.swift in Sources */,
+				311DE6DE2663EE750016992E /* UIImage + extension.swift in Sources */,
 				15CF847A264891EE00F2B73E /* GroupTableViewCell.swift in Sources */,
 				43174468265014F600D7CC8E /* CustomImageView.swift in Sources */,
 			);

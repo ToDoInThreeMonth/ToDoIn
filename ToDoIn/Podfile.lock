@@ -310,6 +310,11 @@ PODS:
   - nanopb/encode (1.30906.0)
   - PinLayout (1.9.3)
   - PromisesObjC (1.2.12)
+  - Realm (10.7.6):
+    - Realm/Headers (= 10.7.6)
+  - Realm/Headers (10.7.6)
+  - RealmSwift (10.7.6):
+    - Realm (= 10.7.6)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -317,6 +322,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseFirestoreSwift
   - PinLayout
+  - RealmSwift
 
 SPEC REPOS:
   trunk:
@@ -338,6 +344,8 @@ SPEC REPOS:
     - nanopb
     - PinLayout
     - PromisesObjC
+    - Realm
+    - RealmSwift
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -358,7 +366,9 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PinLayout: 4d8733121f8687edcc8f00c19bf1379d12808767
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  Realm: ed860452717c8db8f4bf832b6807f7f2ce708839
+  RealmSwift: e31c4ddbcc42ac879313d656b86f9ca539f6f4f4
 
-PODFILE CHECKSUM: 9981b24d0c4855b85de6206254e7857c93b27f44
+PODFILE CHECKSUM: 25036ee223219efaf9803cfec1480f9709f87a25
 
 COCOAPODS: 1.10.1

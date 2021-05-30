@@ -8,7 +8,7 @@ protocol TaskView: AnyObject {
     func setUser(with name: String)
 }
 
-final class TaskController: UIViewController {
+class TaskController: UIViewController {
     
     // MARK: - Properties
     
@@ -253,7 +253,7 @@ final class TaskController: UIViewController {
     }
     
     @objc
-    private func addButtonTapped() {
+    func addButtonTapped() {
         guard let title = nameTextField.text, !title.isEmpty, !(userTextField.text?.isEmpty ?? true) else {
             dismiss(animated: true, completion: nil)
             return
@@ -289,6 +289,23 @@ final class TaskController: UIViewController {
     private func isDoneViewTapped() {
         task.isDone.toggle()
         isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
+    }
+
+    func hiddenUserTF() {
+        userTextField.isHidden = true
+    }
+    
+    func getTask() -> OfflineTask {
+        let task = OfflineTask()
+        guard let description = descriptionTextView.text else {
+            return task }
+        guard let title = nameTextField.text else {
+            return task }
+//        guard let date = date else { return task }
+//        task.date = date
+        task.descriptionText = description
+        task.title = title
+        return task
     }
 }
 

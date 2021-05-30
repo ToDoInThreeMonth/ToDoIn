@@ -7,6 +7,9 @@ struct AlertControllerCreator {
         case logOut
         case error
         case delete
+        case addSection
+        case deleteSection
+        case changeSection
     }
     
     // Static functions
@@ -20,6 +23,15 @@ struct AlertControllerCreator {
             return alertController
         case .delete:
             let alertController = ExitAlertController(title: title, message: message, preferredStyle: .alert)
+            return alertController
+        case .addSection:
+            let alertController = AddSectionAlertController(title: title, message: message, preferredStyle: .alert)
+            return alertController
+        case .changeSection:
+            let alertController = ChangeSectionAlertController(title: title, message: message, preferredStyle: .alert)
+            return alertController
+        case .deleteSection:
+            let alertController = DeleteAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
         }
     }
@@ -63,4 +75,91 @@ class ErrorAlertController: UIAlertController {
         }
         addAction(reportButton)
     }
+}
+
+class AddSectionAlertController: UIAlertController {
+    weak var delegate: AddSectionAlertDelegate?
+    
+    // ViewController lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButton()
+        setupTextField()
+    }
+    
+    // UI configure methods
+    private func setupButton() {
+        let addButton = UIAlertAction(title: "Добавить", style: .cancel) { [unowned self] _ in
+            guard let text = self.textFields?[0].text else { return }
+            self.delegate?.addNewSection(with: text)
+        }
+        addAction(addButton)
+        
+        let closeButton = UIAlertAction(title: "Отменить", style: .default)
+        
+        addAction(closeButton)
+    }
+    
+    private func setupTextField() {
+        addTextField { textField in
+            textField.placeholder = "Работа"
+        }
+    }
+}
+
+class ChangeSectionAlertController: UIAlertController {
+    weak var delegate: ChangeSectionAlertDelegate?
+    var section: Int?
+    
+    // ViewController lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButton()
+        setupTextField()
+    }
+    
+    // UI configure methods
+    private func setupButton() {
+        let addButton = UIAlertAction(title: "Cохранить", style: .cancel) { [unowned self] _ in
+            guard let text = self.textFields?[0].text,
+                  let section = section
+            else { return }
+            
+            self.delegate?.changeSection(with: section, text: text)
+        }
+        addAction(addButton)
+        
+        let closeButton = UIAlertAction(title: "Отменить", style: .default)
+        
+        addAction(closeButton)
+    }
+    
+    private func setupTextField() {
+        addTextField { textField in
+            textField.placeholder = "Работа"
+        }
+    }
+}
+
+class DeleteAlertController: UIAlertController {
+    weak var delegate: DeleteAlertDelegate?
+    var section: Int?
+    
+    // ViewController lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButton()
+    }
+    
+    // UI configure methods
+    private func setupButton() {
+        let addButton = UIAlertAction(title: "Отменить", style: .cancel)
+        let closeButton = UIAlertAction(title: "Удалить", style: .default) { [unowned self] _ in
+            guard let section = self.section else { return }
+            self.delegate?.deleteSection(section)
+        }
+        addAction(addButton)
+        addAction(closeButton)
+    }
+    
 }
