@@ -1,7 +1,7 @@
 import UIKit
 
-protocol AddUserToGroupView: AnyObject {
-    func setPresenter(_ presenter: AddUserToGroupViewPresenter, coordinator: GroupsChildCoordinator)
+protocol AddUserToGroupViewProtocol: AnyObject {
+    func setPresenter(_ presenter: AddUserToGroupPresenterProtocol, coordinator: GroupsChildCoordinator)
     func reloadView()
 }
 
@@ -25,7 +25,7 @@ final class AddUserToGroupController: UIViewController {
         static let horizontalPadding: CGFloat = 40
     }
     
-    private var presenter: AddUserToGroupViewPresenter?
+    private var presenter: AddUserToGroupPresenterProtocol?
     
     private let chooseUserTitle: UILabel = {
         let label = UILabel()
@@ -82,8 +82,8 @@ final class AddUserToGroupController: UIViewController {
 
 }
 
-extension AddUserToGroupController: AddUserToGroupView {
-    func setPresenter(_ presenter: AddUserToGroupViewPresenter, coordinator: GroupsChildCoordinator) {
+extension AddUserToGroupController: AddUserToGroupViewProtocol {
+    func setPresenter(_ presenter: AddUserToGroupPresenterProtocol, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }

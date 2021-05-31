@@ -19,7 +19,7 @@ protocol AddFriendViewOutput: AnyObject {
     func cleanErrorLabel()
 }
 
-protocol AccountView: FriendsTableViewOutput, AddFriendViewOutput {
+protocol AccountViewProtocol: FriendsTableViewOutput, AddFriendViewOutput {
     func showError(with error: String)
     func setUp(with user: User)
 }
@@ -27,7 +27,7 @@ protocol AccountView: FriendsTableViewOutput, AddFriendViewOutput {
 final class AccountController: UIViewController {
     
     // Stored properties
-    private var presenter: AccountViewPresenter?
+    private var presenter: AccountPresenterProtocol?
     
     // Lazy stored properties
     private lazy var userImageView = CustomImageView()
@@ -91,7 +91,7 @@ final class AccountController: UIViewController {
     
     // Initializers
     
-    func setPresenter(presenter: AccountViewPresenter, coordinator: AccountChildCoordinator) {
+    func setPresenter(presenter: AccountPresenterProtocol, coordinator: AccountChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }
@@ -340,7 +340,7 @@ final class AccountController: UIViewController {
     }
 }
 
-extension AccountController: AccountView {
+extension AccountController: AccountViewProtocol {
     
     func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
         presenter?.loadImage(url: url) { (image) in

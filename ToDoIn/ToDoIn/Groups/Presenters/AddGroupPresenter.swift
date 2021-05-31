@@ -1,9 +1,9 @@
 import Foundation
 import UIKit
 
-protocol AddGroupViewPresenter {
+protocol AddGroupPresenterProtocol {
     func setCoordinator(with coordinator: GroupsChildCoordinator)
-    func setDelegate(_ delegate: GroupsView?)
+    func setDelegate(_ delegate: GroupsViewProtocol?)
     func didLoadView()
     
     func getAllFriends() -> [User]
@@ -16,14 +16,14 @@ protocol AddGroupViewPresenter {
     func showErrorAlertController(with message: String)
 }
 
-final class AddGroupPresenter: AddGroupViewPresenter {
+final class AddGroupPresenter: AddGroupPresenterProtocol {
     
     // MARK: - Properties
     
     private weak var coordinator: GroupsChildCoordinator?
     
-    private let addGroupView: AddGroupView?
-    private weak var delegate: GroupsView?
+    private let addGroupView: AddGroupViewProtocol?
+    private weak var delegate: GroupsViewProtocol?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     private let authManager: AuthManagerDescription = AuthManager.shared
@@ -33,7 +33,7 @@ final class AddGroupPresenter: AddGroupViewPresenter {
         
     // MARK: - Init
     
-    required init(addGroupView: AddGroupView) {
+    required init(addGroupView: AddGroupViewProtocol) {
         self.addGroupView = addGroupView
     }
     
@@ -41,7 +41,7 @@ final class AddGroupPresenter: AddGroupViewPresenter {
         self.coordinator = coordinator
     }
     
-    func setDelegate(_ delegate: GroupsView?) {
+    func setDelegate(_ delegate: GroupsViewProtocol?) {
         self.delegate = delegate
     }
     

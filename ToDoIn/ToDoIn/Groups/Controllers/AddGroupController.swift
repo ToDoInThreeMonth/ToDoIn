@@ -1,7 +1,7 @@
 import UIKit
 
-protocol AddGroupView: FriendsTableViewOutput {
-    func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator)
+protocol AddGroupViewProtocol: FriendsTableViewOutput {
+    func setPresenter(presenter: AddGroupPresenterProtocol, coordinator: GroupsChildCoordinator)
     
     func transitionToMain()
     func stopActivityIndicator()
@@ -11,7 +11,7 @@ final class AddGroupController: UIViewController, UIImagePickerControllerDelegat
     
     // MARK: - Properties
     
-    private var presenter: AddGroupViewPresenter?
+    private var presenter: AddGroupPresenterProtocol?
     
     private let titleLabel = UILabel()
     private let nameLabel = UILabel()
@@ -172,8 +172,8 @@ final class AddGroupController: UIViewController, UIImagePickerControllerDelegat
 
 // MARK: - Extensions
 
-extension AddGroupController: AddGroupView {
-    func setPresenter(presenter: AddGroupViewPresenter, coordinator: GroupsChildCoordinator) {
+extension AddGroupController: AddGroupViewProtocol {
+    func setPresenter(presenter: AddGroupPresenterProtocol, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }

@@ -1,23 +1,23 @@
 import Foundation
 
-protocol LoginViewPresenter {
-    init(loginView: LoginView)
+protocol LoginPresenterProtocol {
+    init(loginView: LoginViewProtocol)
     func setCoordinator(with coordinator: AccountChildCoordinator)
     
     func buttonSignPressed(isSignIn: Bool)
 }
 
-final class LoginPresenter: LoginViewPresenter {
+final class LoginPresenter: LoginPresenterProtocol {
     
     // MARK: - Properties
     
     weak var coordinator: AccountChildCoordinator?
     
-    private let loginView: LoginView?
+    private let loginView: LoginViewProtocol?
     
     // MARK: - Init
     
-    required init(loginView: LoginView) {
+    required init(loginView: LoginViewProtocol) {
         self.loginView = loginView
     }
     

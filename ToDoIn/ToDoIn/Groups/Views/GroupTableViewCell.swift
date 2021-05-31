@@ -4,7 +4,7 @@ final class GroupTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    private weak var controller: GroupsView?
+    private weak var controller: GroupsViewProtocol?
     
     static let identifier = "GroupCell"
     
@@ -95,7 +95,7 @@ final class GroupTableViewCell: UITableViewCell {
     
     // MARK: - Handlers
     
-    func setupController(with controller: GroupsView) {
+    func setupController(with controller: GroupsViewProtocol) {
         self.controller = controller
     }
     

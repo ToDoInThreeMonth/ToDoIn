@@ -1,7 +1,7 @@
 import UIKit
 
-protocol TaskViewPresenter {
-    init(addingTaskView: TaskView)
+protocol TaskPresenterProtocol {
+    init(addingTaskView: TaskViewProtocol)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     
     func doneDateTapped(date: Date)
@@ -14,19 +14,19 @@ protocol TaskViewPresenter {
     func showDeleteAlertController(on viewController: UIViewController, completion: @escaping () -> ())
 }
 
-final class TaskPresenter: TaskViewPresenter {
+final class TaskPresenter: TaskPresenterProtocol {
     
     // MARK: - Properties
     
     weak var coordinator: GroupsChildCoordinator?
     
-    private let taskView: TaskView?
+    private let taskView: TaskViewProtocol?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
         
     // MARK: - Init
     
-    required init(addingTaskView: TaskView) {
+    required init(addingTaskView: TaskViewProtocol) {
         self.taskView = addingTaskView
     }
     

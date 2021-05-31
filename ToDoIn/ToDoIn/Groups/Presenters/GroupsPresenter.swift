@@ -1,10 +1,10 @@
 import Foundation
 import UIKit
 
-protocol GroupsViewPresenter {
+protocol GroupsPresenterProtocol {
     var groupsCount: Int { get }
     
-    init(groupsView: GroupsView)
+    init(groupsView: GroupsViewProtocol)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     func loadData()
 
@@ -20,13 +20,13 @@ protocol GroupsViewPresenter {
     func isSignedIn() -> Bool
 }
 
-final class GroupsPresenter: GroupsViewPresenter {
+final class GroupsPresenter: GroupsPresenterProtocol {
     
     // MARK: - Properties
     
     weak var coordinator: GroupsChildCoordinator?
     
-    private let groupsView: GroupsView?
+    private let groupsView: GroupsViewProtocol?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     private let authManager: AuthManagerDescription = AuthManager.shared
@@ -39,7 +39,7 @@ final class GroupsPresenter: GroupsViewPresenter {
     
     // MARK: - Init
     
-    required init(groupsView: GroupsView) {
+    required init(groupsView: GroupsViewProtocol) {
         self.groupsView = groupsView
     }
     

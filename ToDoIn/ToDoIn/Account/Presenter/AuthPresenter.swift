@@ -1,8 +1,8 @@
 import Foundation
 import UIKit
 
-protocol AuthViewPresenter {
-    init(authView: AuthView)
+protocol AuthPresenterProtocol {
+    init(authView: AuthViewProtocol)
     func setCoordinator(with coordinator: AccountChildCoordinator)
 
     func buttonSignInTapped()
@@ -11,7 +11,7 @@ protocol AuthViewPresenter {
     func authSucceed()
 }
 
-final class AuthPresenter: AuthViewPresenter {
+final class AuthPresenter: AuthPresenterProtocol {
     
     // MARK: - Properties
     
@@ -19,11 +19,11 @@ final class AuthPresenter: AuthViewPresenter {
     
     private let authManager: AuthManagerDescription = AuthManager.shared
 
-    private let authView: AuthView?
+    private let authView: AuthViewProtocol?
     
     // MARK: - Init
     
-    required init(authView: AuthView) {
+    required init(authView: AuthViewProtocol) {
         self.authView = authView
     }
     

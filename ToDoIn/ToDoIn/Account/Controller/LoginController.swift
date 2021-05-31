@@ -1,14 +1,14 @@
 import UIKit
 
-protocol LoginView: AnyObject {
-    func setPresenter(presenter: LoginViewPresenter, coordinator: AccountChildCoordinator)
+protocol LoginViewProtocol: AnyObject {
+    func setPresenter(presenter: LoginPresenterProtocol, coordinator: AccountChildCoordinator)
 }
 
 final class LoginController: UIViewController {
 
     // MARK: - Properties
     
-    private var presenter: LoginViewPresenter?
+    private var presenter: LoginPresenterProtocol?
     
     private var logoImageView = CustomImageView()
     private let buttonSignIn = CustomButton(with: "Войти")
@@ -61,8 +61,8 @@ final class LoginController: UIViewController {
     }
 }
 
-extension LoginController: LoginView {
-    func setPresenter(presenter: LoginViewPresenter, coordinator: AccountChildCoordinator) {
+extension LoginController: LoginViewProtocol {
+    func setPresenter(presenter: LoginPresenterProtocol, coordinator: AccountChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }

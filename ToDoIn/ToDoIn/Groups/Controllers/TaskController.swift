@@ -1,8 +1,8 @@
 import UIKit
 import PinLayout
 
-protocol TaskView: AnyObject {
-    func setPresenter(presenter: TaskViewPresenter, coordinator: GroupsChildCoordinator)
+protocol TaskViewProtocol: AnyObject {
+    func setPresenter(presenter: TaskPresenterProtocol, coordinator: GroupsChildCoordinator)
 
     func setDate(with date: String)
     func setUser(with name: String)
@@ -12,7 +12,7 @@ final class TaskController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: TaskViewPresenter?
+    private var presenter: TaskPresenterProtocol?
     
     private var group: Group
     private var task: Task
@@ -295,9 +295,9 @@ final class TaskController: UIViewController {
 
 // MARK: - Extensions
 
-extension TaskController: TaskView {
+extension TaskController: TaskViewProtocol {
     
-    func setPresenter(presenter: TaskViewPresenter, coordinator: GroupsChildCoordinator) {
+    func setPresenter(presenter: TaskPresenterProtocol, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }

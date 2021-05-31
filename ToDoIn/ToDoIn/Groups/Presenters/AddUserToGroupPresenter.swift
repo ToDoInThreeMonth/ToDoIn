@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-protocol AddUserToGroupViewPresenter {
+protocol AddUserToGroupPresenterProtocol {
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     func didLoadView()
     
@@ -15,7 +15,7 @@ protocol AddUserToGroupViewPresenter {
     func showErrorAlertController(with message: String)
 }
 
-final class AddUserToGroupPresenter: AddUserToGroupViewPresenter {
+final class AddUserToGroupPresenter: AddUserToGroupPresenterProtocol {
     
     // MARK: - Preperties
     

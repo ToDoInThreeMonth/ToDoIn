@@ -1,8 +1,8 @@
 import UIKit
 import PinLayout
 
-protocol GroupSettingsView: AnyObject {
-    func setPresenter(presenter: GroupSettingsViewPresenter, coordinator: GroupsChildCoordinator)
+protocol GroupSettingsViewProtocol: AnyObject {
+    func setPresenter(presenter: GroupSettingsPresenterProtocol, coordinator: GroupsChildCoordinator)
     func reloadView()
 }
 
@@ -10,7 +10,7 @@ final class GroupSettingsController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: GroupSettingsViewPresenter?
+    private var presenter: GroupSettingsPresenterProtocol?
     
     private let group: Group
     
@@ -133,9 +133,9 @@ final class GroupSettingsController: UIViewController {
 
 // MARK: - Extensions
 
-extension GroupSettingsController: GroupSettingsView {
+extension GroupSettingsController: GroupSettingsViewProtocol {
     
-    func setPresenter(presenter: GroupSettingsViewPresenter, coordinator: GroupsChildCoordinator) {
+    func setPresenter(presenter: GroupSettingsPresenterProtocol, coordinator: GroupsChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }

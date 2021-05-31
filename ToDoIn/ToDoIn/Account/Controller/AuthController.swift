@@ -2,9 +2,9 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-protocol AuthView: AnyObject {
+protocol AuthViewProtocol: AnyObject {
     
-    func setPresenter(presenter: AuthViewPresenter, coordinator: AccountChildCoordinator)
+    func setPresenter(presenter: AuthPresenterProtocol, coordinator: AccountChildCoordinator)
     
     func getEmail() -> String
     func getName() -> String
@@ -21,7 +21,7 @@ final class AuthController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: AuthViewPresenter?
+    private var presenter: AuthPresenterProtocol?
     
     private var isSignIn: Bool
     
@@ -196,9 +196,9 @@ final class AuthController: UIViewController {
     }
 }
 
-extension AuthController: AuthView {
+extension AuthController: AuthViewProtocol {
     
-    func setPresenter(presenter: AuthViewPresenter, coordinator: AccountChildCoordinator) {
+    func setPresenter(presenter: AuthPresenterProtocol, coordinator: AccountChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }

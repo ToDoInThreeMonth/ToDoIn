@@ -1,6 +1,6 @@
 import UIKit
 
-protocol AccountViewPresenter {
+protocol AccountPresenterProtocol {
     func didLoadView()
     func setCoordinator(with coordinator: AccountChildCoordinator)
     
@@ -20,7 +20,7 @@ protocol AccountViewPresenter {
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
-final class AccountPresenter: AccountViewPresenter {
+final class AccountPresenter: AccountPresenterProtocol {
     
     // MARK: - Properties
     
@@ -29,7 +29,7 @@ final class AccountPresenter: AccountViewPresenter {
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     private let authManager: AuthManagerDescription = AuthManager.shared
     
-    private let accountView: AccountView?
+    private let accountView: AccountViewProtocol?
     
     private var isNotificationTurnedOn = false
     
@@ -38,7 +38,7 @@ final class AccountPresenter: AccountViewPresenter {
     
     // MARK: - Init
     
-    init(accountView: AccountView) {
+    init(accountView: AccountViewProtocol) {
         self.accountView = accountView
     }
     

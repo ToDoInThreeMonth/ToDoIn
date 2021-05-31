@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-protocol GroupSettingsViewPresenter {
+protocol GroupSettingsPresenterProtocol {
     func didLoadView()
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     
@@ -17,7 +17,7 @@ protocol GroupSettingsViewPresenter {
     func loadImage(url: String, completion: @escaping (UIImage) -> Void)
 }
 
-final class GroupSettingsPresenter: GroupSettingsViewPresenter {
+final class GroupSettingsPresenter: GroupSettingsPresenterProtocol {
     
     // MARK: - Properties
     
@@ -25,7 +25,7 @@ final class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     
-    private let groupSettingsView: GroupSettingsView?
+    private let groupSettingsView: GroupSettingsViewProtocol?
 
     private var group: Group
     private var users: [User] = []
@@ -36,7 +36,7 @@ final class GroupSettingsPresenter: GroupSettingsViewPresenter {
     
     // MARK: - Init
     
-    required init(groupSettingsView: GroupSettingsView, group: Group) {
+    required init(groupSettingsView: GroupSettingsViewProtocol, group: Group) {
         self.groupSettingsView = groupSettingsView
         self.group = group
     }

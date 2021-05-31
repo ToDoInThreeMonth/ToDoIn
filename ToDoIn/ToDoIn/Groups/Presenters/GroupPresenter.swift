@@ -1,9 +1,9 @@
 import Foundation
 
-protocol GroupViewPresenter {
+protocol GroupPresenterProtocol {
     var usersCount: Int { get }
 
-    init(groupView: GroupView)
+    init(groupView: GroupViewProtocol)
     func didLoadView(by userId: String)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
     
@@ -17,7 +17,7 @@ protocol GroupViewPresenter {
     func showErrorAlertController(with message: String)
 }
 
-final class GroupPresenter: GroupViewPresenter {
+final class GroupPresenter: GroupPresenterProtocol {
 
     // MARK: - Properties
     
@@ -25,7 +25,7 @@ final class GroupPresenter: GroupViewPresenter {
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     
-    private let groupView: GroupView?
+    private let groupView: GroupViewProtocol?
         
     private var group = Group()
     private var users: [User] = []
@@ -36,7 +36,7 @@ final class GroupPresenter: GroupViewPresenter {
     
     // MARK: - Init
     
-    required init(groupView: GroupView) {
+    required init(groupView: GroupViewProtocol) {
         self.groupView = groupView
     }
     
