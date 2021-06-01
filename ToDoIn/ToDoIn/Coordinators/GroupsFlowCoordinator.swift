@@ -28,10 +28,8 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
         
         let tabBarImage = imageName.isEmpty ? nil : UIImage(named: imageName)
         
-        // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
         
-        // Пример настройки viewController
         viewController.title = title
         
         navigationController.pushViewController(viewController, animated: false)

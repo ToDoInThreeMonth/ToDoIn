@@ -269,7 +269,11 @@ class TaskController: UIViewController {
                 date = datePicker.date
             }
         }
-        var newTask = Task(userId: userId, title: title, description: descriptionTextView.text, date: date, isDone: task.isDone)
+        var description = ""
+        if descriptionTextView.text != placeholderText {
+            description = descriptionTextView.text
+        }
+        var newTask = Task(userId: userId, title: title, description: description, date: date, isDone: task.isDone)
         if isChanging {
             newTask.id = task.id
         }

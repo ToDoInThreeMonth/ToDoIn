@@ -24,7 +24,7 @@ final class FriendsTableView: UITableView {
     }
 }
 
-//MARK: - Friends TableViewDataSource
+// MARK: - Friends TableViewDataSource
 
 final class FriendsTVDataSource: NSObject, UITableViewDataSource {
     private weak var controller: FriendsTableViewOutput?
@@ -61,7 +61,7 @@ final class FriendsTVDataSource: NSObject, UITableViewDataSource {
     }
 }
 
-//MARK: - Friends TableViewDelegate
+// MARK: - Friends TableViewDelegate
 final class FriendsTVDelegate: NSObject, UITableViewDelegate {
     
 }

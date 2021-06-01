@@ -1,7 +1,6 @@
 import UIKit
 
 protocol MainChildCoordinator: ChildCoordinator {
-    func presentAddSectionController()
     func presentAddTaskController(with section: Int)
     func presentChangeTaskController(with task: OfflineTask, in indexPath: IndexPath, isArchive: Bool)
     func showAddSectionController()
@@ -24,13 +23,9 @@ class MainFlowCoordinator: MainChildCoordinator {
         navigationController.pushViewController(viewController, animated: false)
     }
     
-    // TODO delete
-    func presentAddSectionController() {}
-    
     func presentAddTaskController(with section: Int) {
         guard let delegate = navigationController.viewControllers.last as? MainViewController else { return }
         let indexPath = IndexPath(row: 0, section: section)
-//        let presenter: OfflineTaskViewPresenter = OfflineTaskPresenter()
         let controller = OfflineTaskController(indexPath: indexPath, isChanging: false)
         controller.setPresenter(presenter: OfflineTaskPresenter(taskView: controller.self), coordinator: self)
         
@@ -39,8 +34,7 @@ class MainFlowCoordinator: MainChildCoordinator {
     }
     
     func presentChangeTaskController(with task: OfflineTask, in indexPath: IndexPath, isArchive: Bool) {
-//        let presenter: OfflineTaskViewPresenter = OfflineTaskPresenter()
-        let controller = OfflineTaskController(task: task, indexPath: indexPath, isChanging: true, isArchive: isArchive)
+        let controller = OfflineTaskController(task: task, indexPath: indexPath, isChanging: isArchive ? false : true, isArchive: isArchive)
         controller.setPresenter(presenter: OfflineTaskPresenter(taskView: controller.self), coordinator: self)
         navigationController.present(controller, animated: true)
     }

@@ -16,8 +16,26 @@ protocol MainTableViewOutput: class {
     func deleteTask(section: Int, row: Int, isArchive: Bool)
 }
 
+protocol mainFrameRealmOutput: class {
+    func updateUI()
+}
+
+protocol AddSectionAlertDelegate: class {
+    func addNewSection(with text: String)
+}
+
+protocol ChangeSectionAlertDelegate: class {
+    func changeSection(with number: Int, text: String)
+}
+
+protocol DeleteAlertDelegate: class {
+    func deleteSection(_ number: Int)
+}
+
 class MainViewController: UIViewController {
-    // Private stored properties
+    
+    // MARK: - Properties
+    
     private var presenter: MainViewPresenter?
     
     private lazy var mainTVDelegate = MainTVDelegate(controller: self)
@@ -42,16 +60,8 @@ class MainViewController: UIViewController {
         return button
     }()
     
-//    private lazy var authView: AuthView = {
-//        let view = AuthView(frame: .zero)
-//        view.delegate = self
-//        return view
-//    }()
+    // MARK: - Init
     
-//    Если будут онлайн секции - это проверка на регистрацию
-//    private var isAuth = false
-    
-    // Initializers
     init(presenter: MainViewPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -61,7 +71,7 @@ class MainViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // ViewController lifecycle methods
+    // MARK: - Override functions
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -79,23 +89,15 @@ class MainViewController: UIViewController {
         setupAddSectionButton()
     }
     
-    // UI configure methods
+    // MARK: - Configures
+    
     private func setupViews() {
         view.backgroundColor = .accentColor
         view.addSubviews(tableView,
-//                         authView,
                          addSectionButton)
     }
     
     private func setupLayouts() {
-//  Вьюха регистрации
-//        authView.pin
-//            .bottom(view.pin.safeArea.bottom)
-//            .horizontally(10)
-//            .height(230)
-//            .marginBottom(-40)
-        
-//        if isAuth {
             addSectionButton.pin
                 .bottom(view.pin.safeArea.bottom)
                 .horizontally(30)
@@ -107,19 +109,6 @@ class MainViewController: UIViewController {
                 .bottom(to: addSectionButton.edge.top)
                 .marginTop(10)
                 .marginBottom(10)
-//        } else {
-//            addSectionButton.pin
-//                .bottom(to: authView.edge.top)
-//                .horizontally(30)
-//                .height(40)
-//                .marginBottom(10)
-//            tableView.pin
-//                .top(view.pin.safeArea.top)
-//                .horizontally()
-//                .bottom(to: addSectionButton.edge.top)
-//                .marginTop(10)
-//                .marginBottom(10)
-//        }
     }
     
     private func setupNavigationItem() {
@@ -136,23 +125,15 @@ class MainViewController: UIViewController {
         
     }
     
-//    private func changeSizeTableView() {
-//        isAuth.toggle()
-//
-//        UIView.animate(withDuration: 0.3) {
-//            self.setupLayouts()
-//        }
-//    }
-    
-//    private func hiddenAuthView() {
-//        authView.isHidden = true
-//    }
+    // MARK: - Handlers
     
     @objc
     private func addSectionButtonTapped() {
         presenter?.showAddSectionController()
     }
 }
+
+// MARK: - Extensions
 
 extension MainViewController: MainTableViewOutput {
     func deleteTask(section: Int, row: Int, isArchive: Bool) {
@@ -214,15 +195,8 @@ extension MainViewController: mainFrameRealmOutput {
     }
 }
 
-//MARK: - AuthViewOutput
-//extension MainViewController: AuthViewOutput {
-//    func authButtonTapped() {
-//        hiddenAuthView()
-//        changeSizeTableView()
-//    }
-//}
-
 //MARK: - SectionAlertDelegate
+
 extension MainViewController: AddSectionAlertDelegate {
     func addNewSection(with text: String) {
         presenter?.addNewSection(with: text)
@@ -230,6 +204,7 @@ extension MainViewController: AddSectionAlertDelegate {
 }
 
 //MARK: - DeleteAlertDelegate
+
 extension MainViewController: DeleteAlertDelegate {
     func deleteSection(_ number: Int) {
         presenter?.deleteSection(number)

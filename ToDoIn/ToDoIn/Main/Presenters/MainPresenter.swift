@@ -46,7 +46,7 @@ class MainPresenter: MainViewPresenter {
     func showChangeTaskController(with indexPath: IndexPath, isArchive: Bool) {
         let section = indexPath.section
         let row = indexPath.row
-        guard let task = realmBase.getTask(section: section, row: row, isArchive: false) else { return }
+        guard let task = realmBase.getTask(section: section, row: row, isArchive: isArchive) else { return }
         coordinator?.presentChangeTaskController(with: task, in: indexPath, isArchive: isArchive)
     }
     

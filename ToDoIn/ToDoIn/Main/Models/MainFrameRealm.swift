@@ -18,7 +18,24 @@ final class ArchiveSection: Object {
     var tasks = List<OfflineTask>()
 }
 
-class MainFrameRealm: MainFrameRealmProtocol {
+protocol MainFrameRealmProtocol: class {
+    func getOfflineSections() -> [OfflineSection]
+    func getArchiveSection() -> ArchiveSection?
+    func getNumberOfSections() -> Int
+    func getNumberOfRows(in section: Int, isArchive: Bool) -> Int
+    func getTask(section: Int, row: Int, isArchive: Bool) -> OfflineTask?
+    func addSection(_ section: OfflineSection)
+    func addTask(_ task: OfflineTask, in section: Int)
+    func changeTask(_ task: OfflineTask, indexPath: IndexPath)
+    func changeSectionTitle(from text: String, in section: Int)
+    func deleteTask(section: Int, row: Int, isArchive: Bool)
+    func deleteSection(section: Int)
+    func setOutput(_ output: mainFrameRealmOutput)
+    func taskIsComplete(in indexPath: IndexPath)
+    func getProgress() -> Float
+}
+
+final class MainFrameRealm: MainFrameRealmProtocol {
     static let shared = MainFrameRealm()
     private var output: mainFrameRealmOutput?
     private let realm = try? Realm()

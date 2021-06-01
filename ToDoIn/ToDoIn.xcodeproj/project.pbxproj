@@ -61,13 +61,11 @@
 		431744802650190300D7CC8E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4317447F2650190300D7CC8E /* ImagePicker.swift */; };
 		434CF26B2650F5C10095299E /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26A2650F5C10095299E /* Converter.swift */; };
 		434CF26E2650F68B0095299E /* FirestoreKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26D2650F68B0095299E /* FirestoreKeys.swift */; };
-		43EB69CE26663B91006E09B2 /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69CD26663B91006E09B2 /* MainProtocols.swift */; };
 		43EB69D726663BF3006E09B2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69D626663BF3006E09B2 /* MainViewController.swift */; };
 		43EB69DB26663C28006E09B2 /* OfflineTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69DA26663C28006E09B2 /* OfflineTaskController.swift */; };
 		43EB69DE26663C7A006E09B2 /* MainFrameRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69DD26663C7A006E09B2 /* MainFrameRealm.swift */; };
 		43EB69E126663D62006E09B2 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E026663D62006E09B2 /* MainPresenter.swift */; };
 		43EB69E426663D84006E09B2 /* OfflineTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E326663D84006E09B2 /* OfflineTaskPresenter.swift */; };
-		43EB69E726663DA9006E09B2 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E626663DA9006E09B2 /* AuthView.swift */; };
 		43EB69EA26663E04006E09B2 /* GradientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E926663E04006E09B2 /* GradientProgressView.swift */; };
 		43EB69ED26663E1D006E09B2 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69EC26663E1D006E09B2 /* MainOfflineHeaderView.swift */; };
 		43EB69F026663E3B006E09B2 /* MainProgressTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69EF26663E3A006E09B2 /* MainProgressTableHeaderView.swift */; };
@@ -137,13 +135,11 @@
 		4317447F2650190300D7CC8E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		434CF26A2650F5C10095299E /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		434CF26D2650F68B0095299E /* FirestoreKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreKeys.swift; sourceTree = "<group>"; };
-		43EB69CD26663B91006E09B2 /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
 		43EB69D626663BF3006E09B2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		43EB69DA26663C28006E09B2 /* OfflineTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskController.swift; sourceTree = "<group>"; };
 		43EB69DD26663C7A006E09B2 /* MainFrameRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFrameRealm.swift; sourceTree = "<group>"; };
 		43EB69E026663D62006E09B2 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		43EB69E326663D84006E09B2 /* OfflineTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskPresenter.swift; sourceTree = "<group>"; };
-		43EB69E626663DA9006E09B2 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		43EB69E926663E04006E09B2 /* GradientProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressView.swift; sourceTree = "<group>"; };
 		43EB69EC26663E1D006E09B2 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
 		43EB69EF26663E3A006E09B2 /* MainProgressTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProgressTableHeaderView.swift; sourceTree = "<group>"; };
@@ -334,7 +330,6 @@
 				43EB69D326663BB4006E09B2 /* Presenters */,
 				43EB69D426663BC7006E09B2 /* Models */,
 				43EB69D526663BD0006E09B2 /* Views */,
-				43EB69CD26663B91006E09B2 /* MainProtocols.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -427,7 +422,6 @@
 		43EB69D526663BD0006E09B2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				43EB69E626663DA9006E09B2 /* AuthView.swift */,
 				43EB69E926663E04006E09B2 /* GradientProgressView.swift */,
 				43EB69EC26663E1D006E09B2 /* MainOfflineHeaderView.swift */,
 				43EB69EF26663E3A006E09B2 /* MainProgressTableHeaderView.swift */,
@@ -598,7 +592,6 @@
 				15CF8496264891EE00F2B73E /* CustomTabBar.swift in Sources */,
 				15CF848B264891EE00F2B73E /* AccountPresenter.swift in Sources */,
 				15CF8489264891EE00F2B73E /* UIStackView + extensions.swift in Sources */,
-				43EB69CE26663B91006E09B2 /* MainProtocols.swift in Sources */,
 				15CF8474264891EE00F2B73E /* GroupController.swift in Sources */,
 				15CF847B264891EE00F2B73E /* CustomTextField.swift in Sources */,
 				15CF8485264891EE00F2B73E /* UIViewController+extension.swift in Sources */,
@@ -611,7 +604,6 @@
 				43EB69E426663D84006E09B2 /* OfflineTaskPresenter.swift in Sources */,
 				43174477265017EB00D7CC8E /* AddGroupController.swift in Sources */,
 				43174465265014E600D7CC8E /* CustomButton.swift in Sources */,
-				43EB69E726663DA9006E09B2 /* AuthView.swift in Sources */,
 				4317447A265017FF00D7CC8E /* AddUserToGroupController.swift in Sources */,
 				15CF8473264891EE00F2B73E /* GroupsManager.swift in Sources */,
 				43EB69D726663BF3006E09B2 /* MainViewController.swift in Sources */,

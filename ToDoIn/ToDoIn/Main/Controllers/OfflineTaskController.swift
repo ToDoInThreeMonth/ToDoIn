@@ -1,38 +1,3 @@
-//import UIKit
-//
-//class OfflineTaskController: TaskController {
-//    // Private stored properties
-//    private var presenter: OfflineTaskViewPresenter?
-//    private var indexPath: IndexPath
-//    private var isChanging: Bool
-//    weak var delegate: MainTableViewOutput?
-//    
-//    init(task: OfflineTask = OfflineTask(),indexPath: IndexPath, isChanging: Bool = false, presenter: OfflineTaskViewPresenter) {
-//        let onlineTask = Task(id: "", userId: "", title: task.title, description: task.descriptionText, date: task.date, isDone: false)
-//        self.indexPath = indexPath
-//        self.presenter = presenter
-//        self.isChanging = isChanging
-//        super.init(group: Group(), task: onlineTask, users: [], isChanging: isChanging)
-//        hiddenUserTF()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    @objc
-//    override func addButtonTapped() {
-//        let task = getTask()
-//        if isChanging {
-//            presenter?.changeTask(task, in: indexPath)
-//        } else {
-//            presenter?.addTask(task, in: indexPath)
-//        }
-//        dismiss(animated: true, completion: nil)
-//    }
-//}
-
-
 import UIKit
 import PinLayout
 
@@ -41,23 +6,19 @@ protocol OfflineTaskView: class {
     func setDate(with date: String)
 }
 
-class OfflineTaskController: UIViewController {
+final class OfflineTaskController: UIViewController {
     
     // MARK: - Properties
     
     private var presenter: OfflineTaskViewPresenter?
     
+    private var task: Task
     private var indexPath: IndexPath
     private var isChanging: Bool
     private var isArchive: Bool
     private var isDone: Bool = false
     weak var delegate: MainTableViewOutput?
-    
-//    private var group: Group
-    private var task: Task
-//    private var users: [User]
-//    private let isChanging: Bool
-    
+        
     private struct LayersConstants {
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         static let textFieldCornerRadius: CGFloat = 15
@@ -82,13 +43,10 @@ class OfflineTaskController: UIViewController {
     // MARK: - Init
     
     init(task: OfflineTask = OfflineTask(), indexPath: IndexPath, isChanging: Bool = false, isArchive: Bool = false) {
-        // TODO поменять TASK на OFFLINETASK
         self.task = Task(id: "", userId: "", title: task.title, description: task.descriptionText, date: task.date, isDone: false)
         self.indexPath = indexPath
         self.isChanging = isChanging
         self.isArchive = isArchive
-//        super.init(group: Group(), task: onlineTask, users: [], isChanging: isChanging)
-//        hiddenUserTF()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -101,10 +59,13 @@ class OfflineTaskController: UIViewController {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .accentColor
-        if isChanging {
+        if isChanging || isArchive {
             view.addSubview(deleteButton)
         }
-        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, addButton, shadowDescriptionSubview, isDoneView)
+        if !isArchive {
+            view.addSubview(addButton)
+        }
+        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, shadowDescriptionSubview, isDoneView)
     }
     
     override func viewDidLoad() {
@@ -181,6 +142,10 @@ class OfflineTaskController: UIViewController {
             addButton.pin
                 .above(of: deleteButton, aligned: .center)
                 .marginBottom(15)
+        } else if isArchive {
+            deleteButton.pin
+                .bottom(view.pin.safeArea.bottom + 20)
+                .hCenter()
         } else {
             addButton.pin
                 .bottom(view.pin.safeArea.bottom + 20)
@@ -202,6 +167,9 @@ class OfflineTaskController: UIViewController {
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
         nameTextField.text = task.title
+        if isArchive {
+            nameTextField.isUserInteractionEnabled = true
+        }
     }
     
     private func configureDescriptionTextView() {
@@ -222,6 +190,9 @@ class OfflineTaskController: UIViewController {
             descriptionTextView.text = task.description
             descriptionTextView.textColor = .darkTextColor
         }
+        if isArchive {
+            descriptionTextView.isUserInteractionEnabled = true
+        }
     }
     
     private func configurePickers() {
@@ -237,6 +208,9 @@ class OfflineTaskController: UIViewController {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "dd.MM.yyyy HH:mm"
         dateTextField.text = dateformatter.string(from: task.date)
+        if isArchive {
+            dateTextField.isUserInteractionEnabled = true
+        }
     }
     
     private func configureIsDoneView() {
@@ -286,7 +260,7 @@ class OfflineTaskController: UIViewController {
     
     @objc
     private func deleteButtonTapped() {
-        presenter?.showDeleteAlertController(on: self) { // TODO: [weak self]
+        presenter?.showDeleteAlertController(on: self) {
             self.presenter?.deleteButtonTapped(section: self.indexPath.section, row: self.indexPath.row, isArchive: self.isArchive)
             self.dismiss(animated: true, completion: nil)
         }
@@ -294,17 +268,18 @@ class OfflineTaskController: UIViewController {
     
     @objc
     private func isDoneViewTapped() {
-//        task.isDone.toggle()
         isDone.toggle()
         isDoneView.backgroundColor = isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
     }
     
-    func getTask() -> OfflineTask {
+    private func getTask() -> OfflineTask {
         let task = OfflineTask()
         guard let description = descriptionTextView.text else {
-            return task }
+            return task
+        }
         guard let title = nameTextField.text else {
-            return task }
+            return task
+        }
         var date = self.task.date
         if let datePicker = self.dateTextField.inputView as? UIDatePicker {
             if dateTextField.text == datePicker.date.toString() {
@@ -312,7 +287,7 @@ class OfflineTaskController: UIViewController {
             }
         }
         task.date = date
-        task.descriptionText = description
+        task.descriptionText = (description == placeholderText) ? "" : description
         task.title = title
         return task
     }

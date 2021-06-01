@@ -44,7 +44,6 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
         case sectionCount:
             guard let task = controller.getTask(from: indexPath, isArchive: true)
             else { return UITableViewCell() }
-            cell.isUserInteractionEnabled = false
             cell.setUp(with: task, isArchive: true)
             return cell
         case 1..<sectionCount:
@@ -86,7 +85,7 @@ class MainTVDataSource: NSObject, UITableViewDataSource {
     }
 }
 
-//MARK: - Friends TableViewDelegate
+// MARK: - Friends TableViewDelegate
 class MainTVDelegate: NSObject, UITableViewDelegate {
     private weak var controller: MainTableViewOutput?
     
@@ -133,17 +132,13 @@ class MainTVDelegate: NSObject, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return .leastNormalMagnitude
     }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return nil
-    }
-    
+        
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let controller = controller else { return }
         let sectionCount = controller.getNumberOfSections()
         
         switch indexPath.section {
-        case 1..<sectionCount:
+        case 1...sectionCount:
             controller.cellDidSelect(in: indexPath, isArchive: indexPath.section == sectionCount ? true : false)
         default:
             tableView.deselectRow(at: indexPath, animated: false)
