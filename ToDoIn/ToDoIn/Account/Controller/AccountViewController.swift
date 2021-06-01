@@ -26,30 +26,17 @@ protocol AccountViewProtocol: FriendsTableViewOutput, AddFriendViewOutput {
 
 final class AccountController: UIViewController {
     
-    // Stored properties
+    // MARK: - Properties
+    
     private var presenter: AccountPresenterProtocol?
     
-    // Lazy stored properties
     private lazy var userImageView = CustomImageView()
     private lazy var userNameLabel = AccountUIComponents.userNameLabel
     private lazy var toDoInLabel = AccountUIComponents.toDoInLabel
     private lazy var friendsLabel = AccountUIComponents.friendsLabel
     private lazy var friendUnderlineView = AccountUIComponents.friendUnderlineView
     private lazy var settingsBackgroundView = AccountUIComponents.settingsBackgroundView
-    private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backViewTapped))
     private lazy var tapAddFriendRecognizer = UITapGestureRecognizer(target: self, action: #selector(addFriendButtonTapped))
-        
-    private lazy var exitButton: UIButton = {
-        let button = AccountUIComponents.exitButton
-        button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var notificationButton: UIButton = {
-        let button = AccountUIComponents.notificationButton
-        button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
-        return button
-    }()
     
     private lazy var addFriendButton: UIButton = {
         let button = UIButton(type: .system)
@@ -75,7 +62,6 @@ final class AccountController: UIViewController {
     private var isAddViewHidden = true
     private var isSettingMenuHidden = true
     
-    // Nested data types
     private struct LayersConstants {
         static let settingsContentLeft: CGFloat = 20
         static let settingsContentRight: CGFloat = 5
@@ -89,14 +75,8 @@ final class AccountController: UIViewController {
         static var backgroundAlpha: CGFloat = 0.2
     }
     
-    // Initializers
+    // MARK: - Override functions
     
-    func setPresenter(presenter: AccountPresenterProtocol, coordinator: AccountChildCoordinator) {
-        self.presenter = presenter
-        self.presenter?.setCoordinator(with: coordinator)
-    }
-    
-    // ViewController lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.didLoadView()
@@ -120,7 +100,8 @@ final class AccountController: UIViewController {
         setupInsets()
     }
     
-    // UI configure methods
+    // MARK: - Configures
+    
     private func setupViews() {
         view.backgroundColor = .accentColor
         view.addSubviews(userImageView,
@@ -131,11 +112,7 @@ final class AccountController: UIViewController {
                          addFriendButton,
                          friendUnderlineView,
                          settingsBackgroundView,
-                         exitButton,
-                         notificationButton,
                          addFriendView)
-        
-        settingsBackgroundView.addGestureRecognizer(tapRecognizer)
     }
     
     private func setupLayouts() {
@@ -167,20 +144,6 @@ final class AccountController: UIViewController {
             .width(friendsLabel.bounds.width + 20)
             .height(3)
         
-        notificationButton.pin
-            .top(view.pin.safeArea.top)
-            .end(12)
-            .width(view.bounds.width / 2)
-            .height(40)
-            .marginTop(12)
-        
-        exitButton.pin
-            .top(to: notificationButton.edge.bottom)
-            .end(12)
-            .width(view.bounds.width / 2)
-            .height(40)
-            .marginTop(12)
-        
         friendsTableView.pin
             .top(to: friendUnderlineView.edge.bottom)
             .start(20)
@@ -209,17 +172,15 @@ final class AccountController: UIViewController {
     private func setupNavigationItem() {
         navigationController?.configureBarButtonItems(screen: .account, for: self)
         navigationItem.rightBarButtonItem?.target = self
-        navigationItem.rightBarButtonItem?.action = #selector(settingsButtonTapped)
+        navigationItem.rightBarButtonItem?.action = #selector(exitButtonTapped)
     }
     
     private func configureViews() {
         if addFriendButton.layer.cornerRadius == 0 {
             
-            [exitButton, notificationButton, addFriendButton].forEach{
-                $0.layer.cornerRadius = 20
-                AccountUIComponents.getSettingButtonShadow($0)
-                AccountUIComponents.getSettingButtonGradiend($0)
-            }
+            addFriendButton.layer.cornerRadius = 20
+            AccountUIComponents.getSettingButtonShadow(addFriendButton)
+            AccountUIComponents.getSettingButtonGradiend(addFriendButton)
             
             AccountUIComponents.getSettingsViewBlur(settingsBackgroundView)
             
@@ -233,21 +194,9 @@ final class AccountController: UIViewController {
                                                                       left: 0,
                                                                       bottom: LayersConstants.scrollInsetBottom,
                                                                       right: 0)
-        [exitButton, notificationButton].forEach{
-            guard let imageView = $0.imageView else { return }
-            
-            $0.contentEdgeInsets = UIEdgeInsets(top: 0,
-                                                left: LayersConstants.settingsContentLeft,
-                                                bottom: 0,
-                                                right: LayersConstants.settingsContentRight)
-            $0.imageEdgeInsets = UIEdgeInsets(top: 0,
-                                              left: 0,
-                                              bottom: 0,
-                                              right: $0.frame.width - LayersConstants.settingImageRight - imageView.frame.width)
-        }
     }
     
-    // Actions methods
+    // MARK: - Handlers
     
     @objc
     private func addFriendButtonTapped() {
@@ -258,58 +207,8 @@ final class AccountController: UIViewController {
     private func exitButtonTapped() {
         presenter?.showExitAlertController { [weak self] in
             guard let self = self else { return }
-            self.dropDownAnimation()
             self.presenter?.exitButtonTapped()
         }
-    }
-    
-    @objc
-    private func notificationButtonTapped() {
-        let image = presenter?.toggleNotifications()
-        notificationButton.setImage(image, for: .normal)
-    }
-    
-    @objc
-    private func settingsButtonTapped() {
-        dropDownAnimation()
-    }
-    
-    @objc
-    private func backViewTapped() {
-        dropDownAnimation()
-    }
-    
-    // Drop-down menu animation
-    func dropDownAnimation() {
-        var exitButtonAlpha: CGFloat = 1
-        var notificationButtonAlpha: CGFloat = 1
-        var backgroundAlpha: CGFloat = 1
-        var duration = 0.3
-        var delay = duration / 3
-        
-        if !isSettingMenuHidden {
-            exitButtonAlpha = 0
-            notificationButtonAlpha = 0
-            backgroundAlpha = 0
-            duration = 0.1
-            delay = 0
-        }
-        
-        UIView.animate(withDuration: delay, delay: 0, options: [.curveEaseOut]) { [weak self] in
-            self?.settingsBackgroundView.alpha = backgroundAlpha
-        }
-        
-        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) { [weak self] in
-            self?.notificationButton.alpha = notificationButtonAlpha
-        }
-        
-        delay *= 2
-        
-        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseOut]) { [weak self] in
-            self?.exitButton.alpha = exitButtonAlpha
-        }
-        
-        isSettingMenuHidden.toggle()
     }
     
     private func addViewAnimation() {
@@ -337,6 +236,11 @@ final class AccountController: UIViewController {
             }
         }
         isAddViewHidden.toggle()
+    }
+    
+    func setPresenter(presenter: AccountPresenterProtocol, coordinator: AccountChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
     }
 }
 
