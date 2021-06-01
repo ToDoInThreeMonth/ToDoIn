@@ -1,6 +1,0 @@
-framework module Pods_ToDoIn {
-  umbrella header "Pods-ToDoIn-umbrella.h"
-
-  export *
-  module * { export * }
-}

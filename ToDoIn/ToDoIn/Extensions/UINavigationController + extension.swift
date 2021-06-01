@@ -13,12 +13,14 @@ extension UINavigationController {
     enum State {
         case main
         case account
-        case rooms
-        case roomsDetail
+        case groups
+        case groupDetail
+        case groupSettings
+        case login
     }
     
     // Позволяет настроить кнопки navigation Bar'a в зависимости от экрана)
-    func configureBarButtonItems(screen: State, for view: UIViewController) {
+    func configureBarButtonItems(screen: State, for view: UIViewController, rightButton: UIButton = UIButton(), leftButton: UIButton = UIButton()) {
 
         self.navigationBar.barTintColor = UIColor.accentColor
 
@@ -29,24 +31,43 @@ extension UINavigationController {
             let addSectionButton = UIBarButtonItem(image: addSectionButtonImage, style: .plain, target: nil, action: nil)
             view.navigationItem.setRightBarButton(addSectionButton, animated: true)
             view.title = "Главная"
-        case .rooms:
+        case .groups:
             let addRoomButtonImage =  UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
             let addRoomButton = UIBarButtonItem(image: addRoomButtonImage, style: .plain, target: nil, action: nil)
             view.navigationItem.setRightBarButton(addRoomButton, animated: true)
             view.title = "Комнаты"
         case .account:
-
             let rightButtonImage = UIImage(named: "accountSettings")?.withRenderingMode(.alwaysOriginal)
             let rightButton = UIBarButtonItem(image: rightButtonImage, style: .plain, target: nil, action: nil)
             view.navigationItem.setRightBarButton(rightButton, animated: true)
             view.title = "Аккаунт"
-        case .roomsDetail:
-            let rightButtonAImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
-            let rightButtonBImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
-            let rightButtonA = UIBarButtonItem(image: rightButtonAImage, style: .plain, target: nil, action: nil)
-            let rightButtonB = UIBarButtonItem(image: rightButtonBImage, style: .plain, target: nil, action: nil)
-            view.navigationItem.setRightBarButtonItems([rightButtonA, rightButtonB], animated: true)
-            view.title = "Имя Комнаты"
+        case .groupDetail:
+            let rightButtonA = rightButton
+            rightButtonA.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+            rightButtonA.setImage(UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            rightButtonA.imageView?.contentMode = .scaleAspectFit
+            rightButtonA.contentEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: -10)
+            
+            let rightButtonB = leftButton
+            rightButtonB.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+            rightButtonB.setImage(UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            rightButtonB.imageView?.contentMode = .scaleAspectFit
+            rightButtonB.contentEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: -10)
+            
+            let buttonsStackView = UIStackView(arrangedSubviews: [rightButtonA, rightButtonB])
+            buttonsStackView.distribution = .equalSpacing
+            buttonsStackView.spacing = 8
+            buttonsStackView.alignment = .center
+            buttonsStackView.axis = .horizontal
+            
+            let rightButtons = UIBarButtonItem(customView: buttonsStackView)
+            view.navigationItem.rightBarButtonItem = rightButtons
+        case .groupSettings:
+            let addUserToRoomButtonImage =  UIImage(named: "addUser")?.withRenderingMode(.alwaysOriginal)
+            let addUserButton = UIBarButtonItem(image: addUserToRoomButtonImage, style: .plain, target: nil, action: nil)
+            view.navigationItem.setRightBarButton(addUserButton, animated: true)
+        case .login:
+            view.title = "Аккаунт"
         }
     }
 }

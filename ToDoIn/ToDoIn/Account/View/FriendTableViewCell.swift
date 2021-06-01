@@ -1,12 +1,12 @@
 import UIKit
 import PinLayout
 
-class FriendTableViewCell: UITableViewCell {
+final class FriendTableViewCell: UITableViewCell {
     // Computable properties
-    var friend: FriendModelProtocol? {
+    var friend: User? {
         didSet {
             guard let friend = friend else { return }
-            friendAvatar.image = friend.image
+            friendAvatar.image = UIImage(named: "default")
             friendName.text = friend.name
         }
     }
@@ -15,6 +15,7 @@ class FriendTableViewCell: UITableViewCell {
     private lazy var friendAvatar: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -28,7 +29,7 @@ class FriendTableViewCell: UITableViewCell {
     private lazy var friendName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .darkGrayTextColor
+        label.textColor = .darkTextColor
         label.text = "Kamnev Vladimir Sergeevich Djan"
         return label
     }()
@@ -83,5 +84,9 @@ class FriendTableViewCell: UITableViewCell {
             friendView.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
             friendView.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 3)
         }
+    }
+    
+    func setFriendAvatar(with image: UIImage?) {
+        friendAvatar.image = image
     }
 }

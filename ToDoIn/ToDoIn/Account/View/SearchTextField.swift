@@ -1,12 +1,12 @@
 import UIKit
 
-class CustomSearchTextField: UITextField {
+final class CustomSearchTextField: UITextField {
     // Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         placeholder = "Введите имя"
         returnKeyType = .done
-        textColor = .darkGrayTextColor
+        textColor = .darkTextColor
         backgroundColor = .systemGray6
         font = UIFont.systemFont(ofSize: 18)
         setupLeftView()

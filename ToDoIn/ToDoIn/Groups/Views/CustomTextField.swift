@@ -1,8 +1,12 @@
 import UIKit
 
-class CustomTextField: UITextField {
+final class CustomTextField: UITextField {
+    
+    // MARK: - Properties
 
     let insets: UIEdgeInsets
+    
+    // MARK: - Init
 
     init(insets: UIEdgeInsets, cornerRadius: CGFloat = 0) {
         self.insets = insets
@@ -15,6 +19,8 @@ class CustomTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Override functions
+    
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: insets)
     }
@@ -22,6 +28,9 @@ class CustomTextField: UITextField {
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: insets)
     }
+    
+    
+    // MARK: - Handlers
     
     func setInputViewTimePicker(target: Any, selector: Selector) {
         // Create a UIDatePicker object and assign to inputView
@@ -47,7 +56,7 @@ class CustomTextField: UITextField {
 
     }
     
-    func configureToolBar(screenWidth: CGFloat, selector: Selector) {
+    private func configureToolBar(screenWidth: CGFloat, selector: Selector) {
         let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(tapCancel))

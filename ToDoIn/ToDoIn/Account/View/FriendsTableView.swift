@@ -1,6 +1,6 @@
 import UIKit
 
-class FriendsTableView: UITableView {
+final class FriendsTableView: UITableView {
     // Initializers
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -25,34 +25,44 @@ class FriendsTableView: UITableView {
 }
 
 //MARK: - Friends TableViewDataSource
-class FriendsTVDataSource: NSObject, UITableViewDataSource {
+
+final class FriendsTVDataSource: NSObject, UITableViewDataSource {
     private weak var controller: FriendsTableViewOutput?
+    
     
     init(controller: FriendsTableViewOutput) {
         self.controller = controller
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let users = controller?.users else { return 0 }
+        guard let users = controller?.getAllFriends() else { return 0 }
         return users.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendTableViewCell.self), for: indexPath) as? FriendTableViewCell
         guard let controller = controller else {
             return UITableViewCell()
         }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendTableViewCell.self), for: indexPath) as? FriendTableViewCell
         guard let safeCell = cell else {
             controller.showErrorAlertController(with: "Ячейки пользователей не могут быть созданы")
             return UITableViewCell()}
       
-        safeCell.friend = controller.users[indexPath.row]
+        let friend = controller.getFriend(by: indexPath.row)
+        safeCell.friend = friend
+        let friendImage = friend?.image
+        if let friendImage = friendImage {
+            controller.getPhoto(by: friendImage) { (image) in
+                safeCell.setFriendAvatar(with: image)
+            }
+        }
         return safeCell
     }
 }
 
 //MARK: - Friends TableViewDelegate
-class FriendsTVDelegate: NSObject, UITableViewDelegate {
+final class FriendsTVDelegate: NSObject, UITableViewDelegate {
     
 }
+

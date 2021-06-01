@@ -1,11 +1,16 @@
 import UIKit
 import PinLayout
 
-class GroupController: UIViewController {
+protocol GroupViewProtocol: AnyObject {
+    func setPresenter(presenter: GroupPresenterProtocol, coordinator: GroupsChildCoordinator)
+    func reloadView()
+}
+
+final class GroupController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: GroupViewPresenter?
+    private var presenter: GroupPresenterProtocol?
     
     private var group: Group
     
@@ -25,17 +30,20 @@ class GroupController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Override functions
+    
     override func loadView() {
         super.loadView()
         setBackground()
-        title = group.name
+        title = group.title
         self.view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.didLoadView(by: group.id)
         configureTableView()
-        configureBarButtonItems()
+        setupNavigationItem()
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,7 +53,16 @@ class GroupController: UIViewController {
         
     // MARK: Configures
     
-    func configureTableView() {
+    private func setupNavigationItem() {
+        let button1 = UIButton(type: .system)
+        button1.addTarget(self, action: #selector(addingTaskButtonTapped), for: .touchUpInside)
+        let button2 = UIButton(type: .system)
+        button2.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+        navigationController?.configureBarButtonItems(screen: .groupDetail, for: self, rightButton: button1, leftButton: button2)
+        title = group.title
+    }
+    
+    private func configureTableView() {
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.identifier)
         
         tableView.separatorStyle = .none
@@ -59,46 +76,34 @@ class GroupController: UIViewController {
         view.addSubview(tableView)
     }
     
-    func configureBarButtonItems() {
-        configureSettingButton()
-        configureAddingTaskButton()
-        navigationItem.setRightBarButtonItems([settingsButton, addingTaskButton], animated: true)
-    }
-    
-    func configureSettingButton() {
-        settingsButton.image = UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal)
-        settingsButton.target = self
-        settingsButton.action = #selector(settingsButtonTapped)
-    }
-    
-    func configureAddingTaskButton() {
-        addingTaskButton.image = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
-        addingTaskButton.target = self
-        addingTaskButton.action = #selector(addingTaskButtonTapped)
-    }
-    
     // MARK: - Handlers
-
-    func setPresenter(presenter: GroupViewPresenter, coordinator: GroupsChildCoordinator) {
-        self.presenter = presenter
-        presenter.setCoordinator(with: coordinator)
+    
+    @objc
+    private func settingsButtonTapped() {
+        presenter?.showSettingsGroupController()
     }
     
     @objc
-    func settingsButtonTapped() {
-        presenter?.showSettingsGroupController(group: group)
-    }
-    
-    @objc
-    func addingTaskButtonTapped() {
-        presenter?.showTaskCotroller(group: group, task: Task(), isChanging: false)
-//        presenter?.showAddTask(group: group)
+    private func addingTaskButtonTapped() {
+        presenter?.showTaskCotroller(task: Task(), isChanging: false)
     }
 
 }
 
 
 // MARK: - Extensions
+
+extension GroupController: GroupViewProtocol {
+    
+    func setPresenter(presenter: GroupPresenterProtocol, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        presenter.setCoordinator(with: coordinator)
+    }
+
+    func reloadView() {
+        tableView.reloadData()
+    }
+}
 
 extension GroupController: UITableViewDataSource {
     
@@ -108,33 +113,39 @@ extension GroupController: UITableViewDataSource {
             self.showErrorAlert()
             return 0
         }
-        return presenter.getTasks(for: group.users[section], from: group).count
+        let userId = presenter.getUser(by: section).id
+        if !userId.isEmpty {
+            return presenter.getTasks(for: userId).count
+        }
+        return 0
     }
     
     // дизайн ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as? TaskTableViewCell else {
+            return UITableViewCell()
+        }
         guard let presenter = presenter else {
             self.showErrorAlert()
             return UITableViewCell()
         }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as? TaskTableViewCell else {
-            return UITableViewCell()
+        let userId = presenter.getUser(by: indexPath.section).id
+        if !userId.isEmpty {
+            cell.setUp(task: presenter.getTasks(for: userId)[indexPath.row])
         }
-        cell.setUp(task: presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row])
         return cell
     }
     
-    
     // количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        group.users.count
+        presenter?.usersCount ?? 0
     }
-
 
     // заголовок секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionHeaderView = SectionHeaderView()
-        sectionHeaderView.setUp(owner: group.users[section].name)
+        let owner = presenter?.getUser(by: section).name ?? ""
+        sectionHeaderView.setUp(owner: owner)
         return sectionHeaderView
     }
     
@@ -154,8 +165,11 @@ extension GroupController: UITableViewDelegate {
             self.showErrorAlert()
             return
         }
-        let currentTask = presenter.getTasks(for: group.users[indexPath.section], from: group)[indexPath.row]
-        presenter.showTaskCotroller(group: group, task: currentTask, isChanging: true)
+        let userId = presenter.getUser(by: indexPath.section).id
+        if !userId.isEmpty {
+            let currentTask = presenter.getTasks(for: userId)[indexPath.row]
+            presenter.showTaskCotroller(task: currentTask, isChanging: true)
+        }
     }
     
     // размер ячейки

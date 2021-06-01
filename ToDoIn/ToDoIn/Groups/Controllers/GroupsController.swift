@@ -1,36 +1,37 @@
 import UIKit
 import PinLayout
 
-class GroupsController: UIViewController, GroupsView {
+protocol GroupsViewProtocol: AnyObject {
+    func setPresenter(presenter: GroupsPresenterProtocol, coordinator: GroupsChildCoordinator)
+    func reloadView()
+    func loadData()
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+}
+
+final class GroupsController: UIViewController {
         
     // MARK: - Properties
     
-    private var presenter: GroupsViewPresenter?
-    
-    private var groups = [Group]()
+    private var presenter: GroupsPresenterProtocol?
     
     private let tableView = UITableView()
     
-    // MARK: - Init
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func loadView() {
-        super.loadView()
-        setBackground()
-        presenter?.getGroups()
-        self.view.addSubview(tableView)
-    }
+    // MARK: - Override functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadData()
+        
+        setupNavigationItem()
+        setBackground()
+        
         configureTableView()
+        
+        self.view.addSubview(tableView)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: Notification.Name("AuthChanged"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -40,7 +41,7 @@ class GroupsController: UIViewController, GroupsView {
     
     // MARK: Configures
     
-    func configureTableView() {
+    private func configureTableView() {
         tableView.register(GroupTableViewCell.self, forCellReuseIdentifier: GroupTableViewCell.identifier)
         
         tableView.backgroundColor = .clear
@@ -48,29 +49,67 @@ class GroupsController: UIViewController, GroupsView {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+    }
+    
+    private func setupNavigationItem() {
+        navigationController?.configureBarButtonItems(screen: .groups, for: self)
+        navigationItem.rightBarButtonItem?.target = self
+        navigationItem.rightBarButtonItem?.action = #selector(addGroupButtonTapped)
     }
     
     // MARK: - Handlers
     
-    func setGroups(groups: [Group]) {
-        self.groups = groups
-        tableView.reloadData()
+    @objc
+    private func addGroupButtonTapped() {
+        presenter?.addGroupButtonTapped()
     }
     
-    func setPresenter(presenter: GroupsViewPresenter, coordinator: GroupsChildCoordinator) {
-        self.presenter = presenter
-        self.presenter?.setCoordinator(with: coordinator)
+    @objc
+    private func receivedNotification(notification: Notification){
+        loadData()
     }
+    
+    @objc
+    private func didPullToRefresh() {
+        loadData()
+    }
+    
 }
 
 
 // MARK: - Extensions
 
+extension GroupsController: GroupsViewProtocol {
+    
+    func loadData() {
+        presenter?.loadData()
+    }
+    
+    func reloadView() {
+        tableView.refreshControl?.endRefreshing()
+        tableView.reloadData()
+    }
+    
+    func setPresenter(presenter: GroupsPresenterProtocol, coordinator: GroupsChildCoordinator) {
+        self.presenter = presenter
+        self.presenter?.setCoordinator(with: coordinator)
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(url: url) { (image) in
+            completion(image)
+        }
+    }
+}
+
 extension GroupsController: UITableViewDataSource {
     
     // количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        presenter?.groupsCount ?? 0
     }
     
     // дизайн ячейки
@@ -78,7 +117,8 @@ extension GroupsController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier, for: indexPath) as? GroupTableViewCell else {
             return UITableViewCell()
         }
-        cell.setUp(group: groups[indexPath.row])
+        cell.setupController(with: self)
+        cell.setUp(group: presenter?.getGroup(at: indexPath.row) ?? Group())
         return cell
     }
 }
@@ -91,11 +131,33 @@ extension GroupsController: UITableViewDelegate {
             self.showErrorAlert()
             return
         }
-        presenter.showGroupController(group: groups[indexPath.row])
+        presenter.showGroupController(group: presenter.getGroup(at: indexPath.row))
     }
     
     // размер ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         tableView.bounds.height / 10
+    }
+    
+    // удаление комнаты
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let deletedGroup = presenter?.getGroup(at: indexPath.row) else { return }
+            presenter?.deleteTapped(for: deletedGroup, at: indexPath.row)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.alpha = 0
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.05 * Double(indexPath.row),
+            animations: {
+                cell.alpha = 1
+        })
     }
 }
