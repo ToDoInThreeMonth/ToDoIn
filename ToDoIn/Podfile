@@ -11,4 +11,5 @@ target 'ToDoIn' do
 	pod 'FirebaseFirestoreSwift'
 	pod 'Firebase/Auth'
 	pod 'Firebase/Storage'
+	pod 'RealmSwift'
 end

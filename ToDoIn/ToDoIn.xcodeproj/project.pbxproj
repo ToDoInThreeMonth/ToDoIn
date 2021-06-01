@@ -40,7 +40,6 @@
 		15CF8492264891EE00F2B73E /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845B264891EE00F2B73E /* SearchTextField.swift */; };
 		15CF8493264891EE00F2B73E /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845C264891EE00F2B73E /* AddFriendView.swift */; };
 		15CF8494264891EE00F2B73E /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845D264891EE00F2B73E /* FriendsTableView.swift */; };
-		15CF8495264891EE00F2B73E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845F264891EE00F2B73E /* ViewController.swift */; };
 		15CF8496264891EE00F2B73E /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8461264891EE00F2B73E /* CustomTabBar.swift */; };
 		15CF8497264891EE00F2B73E /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8462264891EE00F2B73E /* CustomTabBarController.swift */; };
 		15CF8499264891EE00F2B73E /* AlertControllerCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8465264891EE00F2B73E /* AlertControllerCreator.swift */; };
@@ -62,6 +61,19 @@
 		431744802650190300D7CC8E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4317447F2650190300D7CC8E /* ImagePicker.swift */; };
 		434CF26B2650F5C10095299E /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26A2650F5C10095299E /* Converter.swift */; };
 		434CF26E2650F68B0095299E /* FirestoreKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26D2650F68B0095299E /* FirestoreKeys.swift */; };
+		43EB69CE26663B91006E09B2 /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69CD26663B91006E09B2 /* MainProtocols.swift */; };
+		43EB69D726663BF3006E09B2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69D626663BF3006E09B2 /* MainViewController.swift */; };
+		43EB69DB26663C28006E09B2 /* OfflineTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69DA26663C28006E09B2 /* OfflineTaskController.swift */; };
+		43EB69DE26663C7A006E09B2 /* MainFrameRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69DD26663C7A006E09B2 /* MainFrameRealm.swift */; };
+		43EB69E126663D62006E09B2 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E026663D62006E09B2 /* MainPresenter.swift */; };
+		43EB69E426663D84006E09B2 /* OfflineTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E326663D84006E09B2 /* OfflineTaskPresenter.swift */; };
+		43EB69E726663DA9006E09B2 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E626663DA9006E09B2 /* AuthView.swift */; };
+		43EB69EA26663E04006E09B2 /* GradientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69E926663E04006E09B2 /* GradientProgressView.swift */; };
+		43EB69ED26663E1D006E09B2 /* MainOfflineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69EC26663E1D006E09B2 /* MainOfflineHeaderView.swift */; };
+		43EB69F026663E3B006E09B2 /* MainProgressTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69EF26663E3A006E09B2 /* MainProgressTableHeaderView.swift */; };
+		43EB69F326663E56006E09B2 /* MainTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69F226663E56006E09B2 /* MainTableView.swift */; };
+		43EB69F626663E73006E09B2 /* OfflineTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69F526663E73006E09B2 /* OfflineTaskTableViewCell.swift */; };
+		43EB69FD266640A2006E09B2 /* UIImage + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69FC266640A2006E09B2 /* UIImage + extension.swift */; };
 		F325B009327B2D27F66B19E0 /* Pods_ToDoIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,7 +112,6 @@
 		15CF845B264891EE00F2B73E /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		15CF845C264891EE00F2B73E /* AddFriendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		15CF845D264891EE00F2B73E /* FriendsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
-		15CF845F264891EE00F2B73E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		15CF8461264891EE00F2B73E /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		15CF8462264891EE00F2B73E /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		15CF8463264891EE00F2B73E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,6 +137,19 @@
 		4317447F2650190300D7CC8E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		434CF26A2650F5C10095299E /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		434CF26D2650F68B0095299E /* FirestoreKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreKeys.swift; sourceTree = "<group>"; };
+		43EB69CD26663B91006E09B2 /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
+		43EB69D626663BF3006E09B2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		43EB69DA26663C28006E09B2 /* OfflineTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskController.swift; sourceTree = "<group>"; };
+		43EB69DD26663C7A006E09B2 /* MainFrameRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFrameRealm.swift; sourceTree = "<group>"; };
+		43EB69E026663D62006E09B2 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		43EB69E326663D84006E09B2 /* OfflineTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskPresenter.swift; sourceTree = "<group>"; };
+		43EB69E626663DA9006E09B2 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		43EB69E926663E04006E09B2 /* GradientProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressView.swift; sourceTree = "<group>"; };
+		43EB69EC26663E1D006E09B2 /* MainOfflineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOfflineHeaderView.swift; sourceTree = "<group>"; };
+		43EB69EF26663E3A006E09B2 /* MainProgressTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProgressTableHeaderView.swift; sourceTree = "<group>"; };
+		43EB69F226663E56006E09B2 /* MainTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableView.swift; sourceTree = "<group>"; };
+		43EB69F526663E73006E09B2 /* OfflineTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskTableViewCell.swift; sourceTree = "<group>"; };
+		43EB69FC266640A2006E09B2 /* UIImage + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + extension.swift"; sourceTree = "<group>"; };
 		79A3C4BC3B8B7CDE7E930FE1 /* Pods_ToDoIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0B3DC4BF660E53D2E6FE999 /* Pods-ToDoIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoIn.debug.xcconfig"; path = "Target Support Files/Pods-ToDoIn/Pods-ToDoIn.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -247,6 +271,7 @@
 				15CF844B264891EE00F2B73E /* UIColor + extensions.swift */,
 				15CF844D264891EE00F2B73E /* UIStackView + extensions.swift */,
 				4317447C2650185A00D7CC8E /* Date + extension.swift */,
+				43EB69FC266640A2006E09B2 /* UIImage + extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -305,7 +330,11 @@
 		15CF845E264891EE00F2B73E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				15CF845F264891EE00F2B73E /* ViewController.swift */,
+				43EB69D126663BAA006E09B2 /* Controllers */,
+				43EB69D326663BB4006E09B2 /* Presenters */,
+				43EB69D426663BC7006E09B2 /* Models */,
+				43EB69D526663BD0006E09B2 /* Views */,
+				43EB69CD26663B91006E09B2 /* MainProtocols.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -367,6 +396,45 @@
 				434CF26D2650F68B0095299E /* FirestoreKeys.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		43EB69D126663BAA006E09B2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				43EB69D626663BF3006E09B2 /* MainViewController.swift */,
+				43EB69DA26663C28006E09B2 /* OfflineTaskController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		43EB69D326663BB4006E09B2 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				43EB69E026663D62006E09B2 /* MainPresenter.swift */,
+				43EB69E326663D84006E09B2 /* OfflineTaskPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		43EB69D426663BC7006E09B2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				43EB69DD26663C7A006E09B2 /* MainFrameRealm.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		43EB69D526663BD0006E09B2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				43EB69E626663DA9006E09B2 /* AuthView.swift */,
+				43EB69E926663E04006E09B2 /* GradientProgressView.swift */,
+				43EB69EC26663E1D006E09B2 /* MainOfflineHeaderView.swift */,
+				43EB69EF26663E3A006E09B2 /* MainProgressTableHeaderView.swift */,
+				43EB69F226663E56006E09B2 /* MainTableView.swift */,
+				43EB69F526663E73006E09B2 /* OfflineTaskTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		47D7D90511AFDE7F91945ED5 /* Pods */ = {
@@ -497,6 +565,7 @@
 				434CF26B2650F5C10095299E /* Converter.swift in Sources */,
 				4317445D265011D800D7CC8E /* ImagesManager.swift in Sources */,
 				15CF8475264891EE00F2B73E /* GroupSettingsController.swift in Sources */,
+				43EB69F626663E73006E09B2 /* OfflineTaskTableViewCell.swift in Sources */,
 				15CF8499264891EE00F2B73E /* AlertControllerCreator.swift in Sources */,
 				15CF8494264891EE00F2B73E /* FriendsTableView.swift in Sources */,
 				15CF8470264891EE00F2B73E /* GroupPresenter.swift in Sources */,
@@ -505,14 +574,18 @@
 				15CF8478264891EE00F2B73E /* TaskController.swift in Sources */,
 				15CF8486264891EE00F2B73E /* UINavigationController + extension.swift in Sources */,
 				431744732650177800D7CC8E /* AddUserToGroupPresenter.swift in Sources */,
+				43EB69F026663E3B006E09B2 /* MainProgressTableHeaderView.swift in Sources */,
 				431744802650190300D7CC8E /* ImagePicker.swift in Sources */,
 				15CF8492264891EE00F2B73E /* SearchTextField.swift in Sources */,
 				15CF8497264891EE00F2B73E /* CustomTabBarController.swift in Sources */,
+				43EB69DB26663C28006E09B2 /* OfflineTaskController.swift in Sources */,
 				4317445A265011A100D7CC8E /* AuthPresenter.swift in Sources */,
 				15CF8472264891EE00F2B73E /* Group.swift in Sources */,
+				43EB69E126663D62006E09B2 /* MainPresenter.swift in Sources */,
 				431744702650176400D7CC8E /* AddGroupPresenter.swift in Sources */,
 				43174461265011FC00D7CC8E /* CustomError.swift in Sources */,
 				15CF8476264891EE00F2B73E /* GroupsController.swift in Sources */,
+				43EB69DE26663C7A006E09B2 /* MainFrameRealm.swift in Sources */,
 				4317447D2650185A00D7CC8E /* Date + extension.swift in Sources */,
 				15CF8468264891EE00F2B73E /* AppCoordinator.swift in Sources */,
 				15CF8479264891EE00F2B73E /* SectionHeaderView.swift in Sources */,
@@ -525,7 +598,7 @@
 				15CF8496264891EE00F2B73E /* CustomTabBar.swift in Sources */,
 				15CF848B264891EE00F2B73E /* AccountPresenter.swift in Sources */,
 				15CF8489264891EE00F2B73E /* UIStackView + extensions.swift in Sources */,
-				15CF8495264891EE00F2B73E /* ViewController.swift in Sources */,
+				43EB69CE26663B91006E09B2 /* MainProtocols.swift in Sources */,
 				15CF8474264891EE00F2B73E /* GroupController.swift in Sources */,
 				15CF847B264891EE00F2B73E /* CustomTextField.swift in Sources */,
 				15CF8485264891EE00F2B73E /* UIViewController+extension.swift in Sources */,
@@ -534,14 +607,21 @@
 				15CF8487264891EE00F2B73E /* UIColor + extensions.swift in Sources */,
 				434CF26E2650F68B0095299E /* FirestoreKeys.swift in Sources */,
 				15CF8493264891EE00F2B73E /* AddFriendView.swift in Sources */,
+				43EB69F326663E56006E09B2 /* MainTableView.swift in Sources */,
+				43EB69E426663D84006E09B2 /* OfflineTaskPresenter.swift in Sources */,
 				43174477265017EB00D7CC8E /* AddGroupController.swift in Sources */,
 				43174465265014E600D7CC8E /* CustomButton.swift in Sources */,
+				43EB69E726663DA9006E09B2 /* AuthView.swift in Sources */,
 				4317447A265017FF00D7CC8E /* AddUserToGroupController.swift in Sources */,
 				15CF8473264891EE00F2B73E /* GroupsManager.swift in Sources */,
+				43EB69D726663BF3006E09B2 /* MainViewController.swift in Sources */,
 				431744572650118D00D7CC8E /* LoginPresenter.swift in Sources */,
 				15CF846D264891EE00F2B73E /* TaskPresenter.swift in Sources */,
+				43EB69ED26663E1D006E09B2 /* MainOfflineHeaderView.swift in Sources */,
+				43EB69EA26663E04006E09B2 /* GradientProgressView.swift in Sources */,
 				4317444C265010C100D7CC8E /* AuthManager.swift in Sources */,
 				15CF848A264891EE00F2B73E /* AppDelegate.swift in Sources */,
+				43EB69FD266640A2006E09B2 /* UIImage + extension.swift in Sources */,
 				15CF847A264891EE00F2B73E /* GroupTableViewCell.swift in Sources */,
 				43174468265014F600D7CC8E /* CustomImageView.swift in Sources */,
 			);

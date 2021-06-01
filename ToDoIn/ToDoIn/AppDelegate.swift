@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController(), title: "Главная")
+        let mainFlowCoordinator = MainFlowCoordinator(navigationController: UINavigationController())
         
         let acсountFlowCoordinator = AccountFlowCoordinator(navigationController: UINavigationController(), imageName: "account", title: "Аккаунт")
 
