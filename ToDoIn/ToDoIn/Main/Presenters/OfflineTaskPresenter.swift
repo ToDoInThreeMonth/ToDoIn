@@ -1,6 +1,6 @@
 import UIKit
 
-protocol OfflineTaskViewPresenter {
+protocol OfflineTaskPresenterProtocol {
     func setCoordinator(with coordinator: MainChildCoordinator)
     
     func addTask(_ task: OfflineTask, in indexPath: IndexPath)
@@ -12,19 +12,19 @@ protocol OfflineTaskViewPresenter {
     func showDeleteAlertController(on viewController: UIViewController, completion: @escaping () -> ())
 }
 
-final class OfflineTaskPresenter: OfflineTaskViewPresenter {
+final class OfflineTaskPresenter: OfflineTaskPresenterProtocol {
     
     // MARK: - Properties
     
     weak var coordinator: MainChildCoordinator?
     
-    private let taskView: OfflineTaskView?
+    private let taskView: OfflineTaskViewProtocol?
     
     private var realmBase: MainFrameRealmProtocol = MainFrameRealm.shared
     
     // MARK: - Init
     
-    required init(taskView: OfflineTaskView) {
+    required init(taskView: OfflineTaskViewProtocol) {
         self.taskView = taskView
     }
     

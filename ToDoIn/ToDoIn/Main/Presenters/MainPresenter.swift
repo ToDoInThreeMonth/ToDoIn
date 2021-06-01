@@ -1,6 +1,6 @@
 import Foundation
 
-protocol MainViewPresenter {
+protocol MainPresenterProtocol {
     func showChangeSectionController(with section: Int)
     func getProgress() -> Float
     func showAddTaskController(with section: Int)
@@ -19,7 +19,7 @@ protocol MainViewPresenter {
     func deleteTask(section: Int, row: Int, isArchive: Bool)
 }
 
-class MainPresenter: MainViewPresenter {
+class MainPresenter: MainPresenterProtocol {
     private let realmBase: MainFrameRealmProtocol = MainFrameRealm.shared
     private weak var coordinator: MainFlowCoordinator?
     

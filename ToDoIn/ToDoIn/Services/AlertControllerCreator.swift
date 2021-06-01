@@ -66,9 +66,7 @@ class ErrorAlertController: UIAlertController {
     
     // UI configure methods
     private func setupButton() {
-        let reportButton = UIAlertAction(title: "Сообщить об ошибке", style: .default) { [unowned self] _ in
-            print(self.message)
-        }
+        let reportButton = UIAlertAction(title: "Сообщить об ошибке", style: .default)
         addAction(reportButton)
     }
 }

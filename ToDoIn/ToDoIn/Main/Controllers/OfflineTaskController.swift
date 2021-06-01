@@ -1,7 +1,7 @@
 import UIKit
 import PinLayout
 
-protocol OfflineTaskView: class {
+protocol OfflineTaskViewProtocol: class {
     func setPresenter(presenter: OfflineTaskPresenter, coordinator: MainChildCoordinator)
     func setDate(with date: String)
 }
@@ -10,7 +10,7 @@ final class OfflineTaskController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: OfflineTaskViewPresenter?
+    private var presenter: OfflineTaskPresenterProtocol?
     
     private var task: Task
     private var indexPath: IndexPath
@@ -296,7 +296,7 @@ final class OfflineTaskController: UIViewController {
 
 // MARK: - Extensions
 
-extension OfflineTaskController: OfflineTaskView {
+extension OfflineTaskController: OfflineTaskViewProtocol {
     
     func setPresenter(presenter: OfflineTaskPresenter, coordinator: MainChildCoordinator) {
         self.presenter = presenter

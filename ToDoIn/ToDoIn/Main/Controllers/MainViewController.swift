@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: MainViewPresenter?
+    private var presenter: MainPresenterProtocol?
     
     private lazy var mainTVDelegate = MainTVDelegate(controller: self)
     private lazy var mainTVDataSource = MainTVDataSource(controller: self)
@@ -62,7 +62,7 @@ class MainViewController: UIViewController {
     
     // MARK: - Init
     
-    init(presenter: MainViewPresenter) {
+    init(presenter: MainPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
