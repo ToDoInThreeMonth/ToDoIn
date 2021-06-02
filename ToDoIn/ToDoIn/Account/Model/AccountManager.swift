@@ -3,7 +3,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol AccountManagerDescription {
-    func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void)
+    func observeCurrentUser(completion: @escaping (Result<User, СustomError>) -> Void)
     
     func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void)
     func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void)
@@ -21,14 +21,9 @@ final class AccountManager: AccountManagerDescription {
     
     private init() {}
     
-    func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void) {
-        let saveUserId: String
-        if userId == nil {
-            saveUserId = Auth.auth().currentUser?.uid ?? ""
-        } else {
-            saveUserId = userId!
-        }
-        database.collection(Collection.users.rawValue).document(saveUserId).addSnapshotListener { (snapshot, error) in
+    func observeCurrentUser(completion: @escaping (Result<User, СustomError>) -> Void) {
+        let userId = Auth.auth().currentUser?.uid ?? ""
+        database.collection(Collection.users.rawValue).document(userId).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
                 return

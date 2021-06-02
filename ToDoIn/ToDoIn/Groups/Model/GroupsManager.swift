@@ -4,7 +4,7 @@ import FirebaseAuth
 
 protocol GroupsManagerDescription {
     func observeGroup(by userId: String, completion: @escaping (Result<Group, СustomError>) -> Void)
-    func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void)
+    func observeCurrentUser(completion: @escaping (Result<User, СustomError>) -> Void)
     
     func addGroup(title: String, users: [String], photo: UIImage?, completion: @escaping (Error?) -> Void)
     func addUsers(_ users: [User], to group: Group)
@@ -49,14 +49,9 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void) {
-        let saveUserId: String
-        if userId == nil {
-            saveUserId = Auth.auth().currentUser?.uid ?? ""
-        } else {
-            saveUserId = userId!
-        }
-        database.collection(Collection.users.rawValue).document(saveUserId).addSnapshotListener { (snapshot, error) in
+    func observeCurrentUser(completion: @escaping (Result<User, СustomError>) -> Void) {
+        let userId = Auth.auth().currentUser?.uid ?? ""
+        database.collection(Collection.users.rawValue).document(userId).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
                 return

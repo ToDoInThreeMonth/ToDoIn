@@ -69,7 +69,7 @@ final class AccountPresenter: AccountPresenterProtocol {
     // MARK: - Loading Data
     
     func didLoadView() {
-        accountManager.observeUser(by: nil) { [weak self] (result) in
+        accountManager.observeCurrentUser { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let user):
