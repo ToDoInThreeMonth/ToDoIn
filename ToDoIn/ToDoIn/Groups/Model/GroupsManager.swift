@@ -76,21 +76,29 @@ final class GroupsManager: GroupsManagerDescription {
         let ref = database.collection(Collection.groups.rawValue).document()
         let docId = ref.documentID
         var imageName: String = "default"
-        ImagesManager.loadPhotoToStorage(id: docId, photo: photo) { (myResult) in
-            switch myResult {
-            case .success(let url):
-                imageName = url.absoluteString
-            case .failure(_):
-                imageName = "default"
+        
+        ref.setData([GroupKey.id.rawValue : docId,
+                     GroupKey.title.rawValue : title,
+                     GroupKey.image.rawValue : imageName,
+                     GroupKey.tasks.rawValue : [],
+                     GroupKey.users.rawValue : users]) { (error) in
+                if error != nil {
+                    completion(error)
+                } else {
+                    completion(nil)
+                    ImagesManager.loadPhotoToStorage(id: docId, photo: photo) { (res) in
+                        switch res {
+                        case .success(let url):
+                            imageName = url.absoluteString
+                            ref.updateData([UserKey.image.rawValue : imageName]) { (_) in
+                                completion(nil)
+                            }
+                        case .failure(_):
+                            imageName = "default"
+                        }
+                    }
+                }
             }
-            ref.setData([GroupKey.id.rawValue : docId,
-                         GroupKey.title.rawValue : title,
-                         GroupKey.image.rawValue : imageName,
-                         GroupKey.tasks.rawValue : [],
-                         GroupKey.users.rawValue : users]) { err in
-                completion(err)
-            }
-        }
     }
     
     func addUsers(_ users: [User], to group: Group) {
