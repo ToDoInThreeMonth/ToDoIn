@@ -8,6 +8,7 @@ struct AlertControllerCreator {
         case error
         case addSection
         case deleteSection
+        case deleteTask
         case changeSection
         case signIn
     }
@@ -28,7 +29,10 @@ struct AlertControllerCreator {
             let alertController = ChangeSectionAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
         case .deleteSection:
-            let alertController = DeleteAlertController(title: title, message: message, preferredStyle: .alert)
+            let alertController = DeleteSectionAlertController(title: title, message: message, preferredStyle: .alert)
+            return alertController
+        case .deleteTask:
+            let alertController = DeleteTaskAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
         case .signIn:
             let alertController = PleaseSignInAlertController(title: title, message: message, preferredStyle: .alert)
@@ -139,7 +143,7 @@ class ChangeSectionAlertController: UIAlertController {
     }
 }
 
-class DeleteAlertController: UIAlertController {
+class DeleteSectionAlertController: UIAlertController {
     weak var delegate: DeleteAlertDelegate?
     var section: Int?
     
@@ -160,6 +164,30 @@ class DeleteAlertController: UIAlertController {
         addAction(deleteButton)
     }
     
+}
+
+class DeleteTaskAlertController: UIAlertController {
+    var onButtonTapped: (() -> ())?
+    
+    // ViewController lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButton()
+    }
+    
+    // UI configure methods
+    private func setupButton() {
+        let agreeButton = UIAlertAction(title: "Отменить", style: .default, handler: nil)
+        let disagreeButton = UIAlertAction(title: "Удалить", style: .destructive) {[unowned self] _ in
+            disagreeButtonTapped()
+        }
+        addAction(disagreeButton)
+        addAction(agreeButton)
+    }
+    
+    private func disagreeButtonTapped() {
+        onButtonTapped?()
+    }
 }
 
 

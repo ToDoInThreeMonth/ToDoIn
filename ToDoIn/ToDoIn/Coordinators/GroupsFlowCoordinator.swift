@@ -79,7 +79,7 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     func presentDeleteController(on viewController: UIViewController, completion: @escaping () -> ()) {
         let alertTitle = "Удаление задачи"
         let alertMessage = "Вы действительно хотите удалить задачу?"
-        guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .logOut) as? ExitAlertController else { return }
+        guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .deleteTask) as? DeleteTaskAlertController else { return }
         alertVC.onButtonTapped = completion
         viewController.present(alertVC, animated: true, completion: nil)
     }

@@ -58,7 +58,7 @@ class MainFlowCoordinator: MainChildCoordinator {
     
     func presentDeleteSectionController(_ number: Int) {
         guard let controller = navigationController.viewControllers.last as? MainViewController else { return }
-        guard let alertController = AlertControllerCreator.getController(title: "Удаление секции?", message: "Вы действительно хотите удалить секцию?", style: .alert, type: .deleteSection) as? DeleteAlertController else { return }
+        guard let alertController = AlertControllerCreator.getController(title: "Удаление секции?", message: "Вы действительно хотите удалить секцию?", style: .alert, type: .deleteSection) as? DeleteSectionAlertController else { return }
         alertController.delegate = controller
         alertController.section = number
         
