@@ -36,7 +36,9 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
     func setUp(with task: OfflineTask, isArchive: Bool) {
         taskLabel.text = task.title
         if isArchive {
-            isDoneView.isHidden = true
+            isDoneView.backgroundColor = UIColor.lightGreenColor.withAlphaComponent(0.5)
+        } else {
+            isDoneView.backgroundColor = UIColor.lightRedColor
         }
     }
     

@@ -76,8 +76,8 @@ final class AddUserToGroupController: UIViewController {
         let selectedIndexes = friendsTableView.indexPathsForSelectedRows ?? []
         if selectedIndexes.count != 0 {
             presenter?.addButtonTapped(selectedUsers: selectedIndexes)
-            dismiss(animated: true, completion: nil)
         }
+        dismiss(animated: true, completion: nil)
     }
 
 }

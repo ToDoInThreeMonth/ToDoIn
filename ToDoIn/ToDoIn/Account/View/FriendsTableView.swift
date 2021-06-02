@@ -63,6 +63,13 @@ final class FriendsTVDataSource: NSObject, UITableViewDataSource {
 
 // MARK: - Friends TableViewDelegate
 final class FriendsTVDelegate: NSObject, UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? FriendTableViewCell else { return }
+        cell.showUserIsSelectedView()
+    }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? FriendTableViewCell else { return }
+        cell.showUserIsSelectedView()
+    }
 }
 
