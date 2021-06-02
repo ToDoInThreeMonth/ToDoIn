@@ -8,6 +8,7 @@ protocol GroupsChildCoordinator: ChildCoordinator {
     func showAddUser(to group: Group, with participants: [User])
     func presentErrorController(with message: String)
     func presentDeleteController(on viewController: UIViewController, completion: @escaping () -> ())
+    func presentSignInAlert()
 }
 
 class GroupsFlowCoordinator: GroupsChildCoordinator {
@@ -81,5 +82,11 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
         guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .logOut) as? ExitAlertController else { return }
         alertVC.onButtonTapped = completion
         viewController.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func presentSignInAlert() {
+        let alertTitle = "Авторизируйтесь, чтобы создавать комнаты и участвовать в них"
+        let alertVC = AlertControllerCreator.getController(title: alertTitle, message: nil, style: .alert, type: .signIn)
+        navigationController.present(alertVC, animated: true)
     }
 }

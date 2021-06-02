@@ -62,6 +62,8 @@ final class GroupsPresenter: GroupsPresenterProtocol {
     func addGroupButtonTapped() {
         if authManager.isSignedIn() {
             coordinator?.showAddGroup()
+        } else {
+            coordinator?.presentSignInAlert()
         }
     }
     

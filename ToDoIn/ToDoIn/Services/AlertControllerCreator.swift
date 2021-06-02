@@ -9,6 +9,7 @@ struct AlertControllerCreator {
         case addSection
         case deleteSection
         case changeSection
+        case signIn
     }
     
     // Static functions
@@ -28,6 +29,9 @@ struct AlertControllerCreator {
             return alertController
         case .deleteSection:
             let alertController = DeleteAlertController(title: title, message: message, preferredStyle: .alert)
+            return alertController
+        case .signIn:
+            let alertController = PleaseSignInAlertController(title: title, message: message, preferredStyle: .alert)
             return alertController
         }
     }
@@ -156,5 +160,20 @@ class DeleteAlertController: UIAlertController {
         addAction(deleteButton)
     }
     
+}
+
+
+class PleaseSignInAlertController: UIAlertController {
+    // ViewController lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButton()
+    }
+    
+    // UI configure methods
+    private func setupButton() {
+        let reportButton = UIAlertAction(title: "Хорошо", style: .default)
+        addAction(reportButton)
+    }
 }
 
