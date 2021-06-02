@@ -255,7 +255,6 @@ class TaskController: UIViewController {
     @objc
     func addButtonTapped() {
         guard let title = nameTextField.text, !title.isEmpty, !(userTextField.text?.isEmpty ?? true) else {
-            dismiss(animated: true, completion: nil)
             return
         }
         var date = task.date

@@ -3,19 +3,16 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol GroupsManagerDescription {
-    func observeGroups(completion: @escaping (Result<[Group], СustomError>) -> Void)
     func observeGroup(by userId: String, completion: @escaping (Result<Group, СustomError>) -> Void)
     func observeUser(by userId: String?, completion: @escaping (Result<User, СustomError>) -> Void)
     
     func addGroup(title: String, users: [String], photo: UIImage?, completion: @escaping (Error?) -> Void)
-    func addFriend(friend: User)
     func addUsers(_ users: [User], to group: Group)
     func addTask(_ task: Task, in group: Group)
 
     func getGroups(completion: @escaping (Result<[Group], СustomError>) -> Void)
     func getTasks(for userId: String, from group: Group) -> [Task]
     func getUser(userId: String, completion: @escaping (Result<User, СustomError>) -> Void)
-    func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void)
     
     func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void)
     func changeTitle(in group: Group, with title: String, completion: @escaping (СustomError?) -> Void)
@@ -34,32 +31,6 @@ final class GroupsManager: GroupsManagerDescription {
     private init() {}
     
     // MARK: - Observe
-    
-    func observeGroups(completion: @escaping (Result<[Group], СustomError>) -> Void) {
-        guard let currentUserId = Auth.auth().currentUser?.uid else {
-            completion(.failure(СustomError.noSignedUser))
-            return
-        }
-        database.collection(Collection.groups.rawValue).addSnapshotListener { (querySnapshot, error) in
-            if error != nil {
-                completion(.failure(СustomError.error))
-                return
-            }
-            
-            guard let documents = querySnapshot?.documents else {
-                completion(.failure(СustomError.unexpected))
-                return
-            }
-            var groups = [Group]()
-            for document in documents {
-                guard let group = GroupsConverter.group(from: document) else { continue }
-                if group.users.contains(currentUserId) {
-                    groups.append(group)
-                }
-            }
-            completion(.success(groups))
-        }
-    }
     
     func observeGroup(by userId: String, completion: @escaping (Result<Group, СustomError>) -> Void) {
         database.collection(Collection.groups.rawValue).document(userId).addSnapshotListener { (querySnapshot, error) in
@@ -122,13 +93,6 @@ final class GroupsManager: GroupsManagerDescription {
         }
     }
     
-    func addFriend(friend: User) {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            return
-        }
-        database.collection(Collection.users.rawValue).document(userId).updateData([UserKey.friends.rawValue : FieldValue.arrayUnion([friend.id])])
-    }
-    
     func addUsers(_ users: [User], to group: Group) {
         var usersId = [String]()
         for user in users {
@@ -189,30 +153,6 @@ final class GroupsManager: GroupsManagerDescription {
             
             let user = GroupsConverter.user(from: data)
             completion(.success(user))
-        }
-    }
-    
-    func getUser(email: String, completion: @escaping (Result<User, СustomError>) -> Void) {
-        database.collection(Collection.users.rawValue).getDocuments { (snapshot, error) in
-            if error != nil {
-                completion(.failure(СustomError.error))
-                return
-            }
-            guard let documents = snapshot?.documents else {
-                completion(.failure(СustomError.unexpected))
-                return
-            }
-            for document in documents {
-                guard let docEmail = document[UserKey.email.rawValue] as? String else {
-                    continue
-                }
-                if docEmail == email {
-                   let user = GroupsConverter.user(from: document.data())
-                    completion(.success(user))
-                    return
-                }
-            }
-            completion(.failure(СustomError.noUser))
         }
     }
     

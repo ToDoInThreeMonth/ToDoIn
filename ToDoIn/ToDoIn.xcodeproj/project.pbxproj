@@ -34,7 +34,7 @@
 		15CF8489264891EE00F2B73E /* UIStackView + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF844D264891EE00F2B73E /* UIStackView + extensions.swift */; };
 		15CF848A264891EE00F2B73E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF844E264891EE00F2B73E /* AppDelegate.swift */; };
 		15CF848B264891EE00F2B73E /* AccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8451264891EE00F2B73E /* AccountPresenter.swift */; };
-		15CF848D264891EE00F2B73E /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8454264891EE00F2B73E /* AccountViewController.swift */; };
+		15CF848D264891EE00F2B73E /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8454264891EE00F2B73E /* AccountController.swift */; };
 		15CF8490264891EE00F2B73E /* AccountUIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF8459264891EE00F2B73E /* AccountUIComponents.swift */; };
 		15CF8491264891EE00F2B73E /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845A264891EE00F2B73E /* FriendTableViewCell.swift */; };
 		15CF8492264891EE00F2B73E /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF845B264891EE00F2B73E /* SearchTextField.swift */; };
@@ -61,6 +61,7 @@
 		431744802650190300D7CC8E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4317447F2650190300D7CC8E /* ImagePicker.swift */; };
 		434CF26B2650F5C10095299E /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26A2650F5C10095299E /* Converter.swift */; };
 		434CF26E2650F68B0095299E /* FirestoreKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CF26D2650F68B0095299E /* FirestoreKeys.swift */; };
+		434F151E2667DA0D00D000AC /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434F151D2667DA0D00D000AC /* AccountManager.swift */; };
 		43EB69D726663BF3006E09B2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69D626663BF3006E09B2 /* MainViewController.swift */; };
 		43EB69DB26663C28006E09B2 /* OfflineTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69DA26663C28006E09B2 /* OfflineTaskController.swift */; };
 		43EB69DE26663C7A006E09B2 /* MainFrameRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EB69DD26663C7A006E09B2 /* MainFrameRealm.swift */; };
@@ -104,7 +105,7 @@
 		15CF844D264891EE00F2B73E /* UIStackView + extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView + extensions.swift"; sourceTree = "<group>"; };
 		15CF844E264891EE00F2B73E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15CF8451264891EE00F2B73E /* AccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPresenter.swift; sourceTree = "<group>"; };
-		15CF8454264891EE00F2B73E /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		15CF8454264891EE00F2B73E /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
 		15CF8459264891EE00F2B73E /* AccountUIComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUIComponents.swift; sourceTree = "<group>"; };
 		15CF845A264891EE00F2B73E /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		15CF845B264891EE00F2B73E /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 		4317447F2650190300D7CC8E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		434CF26A2650F5C10095299E /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		434CF26D2650F68B0095299E /* FirestoreKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreKeys.swift; sourceTree = "<group>"; };
+		434F151D2667DA0D00D000AC /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		43EB69D626663BF3006E09B2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		43EB69DA26663C28006E09B2 /* OfflineTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTaskController.swift; sourceTree = "<group>"; };
 		43EB69DD26663C7A006E09B2 /* MainFrameRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFrameRealm.swift; sourceTree = "<group>"; };
@@ -296,7 +298,7 @@
 		15CF8453264891EE00F2B73E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				15CF8454264891EE00F2B73E /* AccountViewController.swift */,
+				15CF8454264891EE00F2B73E /* AccountController.swift */,
 				4317444F2650110200D7CC8E /* LoginController.swift */,
 				431744522650110D00D7CC8E /* AuthController.swift */,
 			);
@@ -307,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				4317444B265010C100D7CC8E /* AuthManager.swift */,
+				434F151D2667DA0D00D000AC /* AccountManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -555,7 +558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15CF8491264891EE00F2B73E /* FriendTableViewCell.swift in Sources */,
-				15CF848D264891EE00F2B73E /* AccountViewController.swift in Sources */,
+				15CF848D264891EE00F2B73E /* AccountController.swift in Sources */,
 				434CF26B2650F5C10095299E /* Converter.swift in Sources */,
 				4317445D265011D800D7CC8E /* ImagesManager.swift in Sources */,
 				15CF8475264891EE00F2B73E /* GroupSettingsController.swift in Sources */,
@@ -604,6 +607,7 @@
 				43EB69E426663D84006E09B2 /* OfflineTaskPresenter.swift in Sources */,
 				43174477265017EB00D7CC8E /* AddGroupController.swift in Sources */,
 				43174465265014E600D7CC8E /* CustomButton.swift in Sources */,
+				434F151E2667DA0D00D000AC /* AccountManager.swift in Sources */,
 				4317447A265017FF00D7CC8E /* AddUserToGroupController.swift in Sources */,
 				15CF8473264891EE00F2B73E /* GroupsManager.swift in Sources */,
 				43EB69D726663BF3006E09B2 /* MainViewController.swift in Sources */,

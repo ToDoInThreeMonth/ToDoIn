@@ -59,28 +59,6 @@ struct AccountUIComponents {
         return button
     }()
     
-    static var exitButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
-        button.setTitle("Выйти", for: .normal)
-        button.backgroundColor = .accentColor
-        button.tintColor = .darkTextColor
-        button.alpha = 0
-        return button
-    }()
-    
-    static var notificationButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "offNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.setTitle("Уведомления", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
-        button.backgroundColor = .accentColor
-        button.tintColor = .darkTextColor
-        button.alpha = 0
-        return button
-    }()
-    
     static var settingsBackgroundView: UIView = {
         let view = UIView()
         view.alpha = 0

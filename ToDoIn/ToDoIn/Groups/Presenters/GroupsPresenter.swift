@@ -71,7 +71,8 @@ final class GroupsPresenter: GroupsPresenterProtocol {
         groupsManager.deleteGroup(group) { [weak self] (err) in
             guard let self = self else { return }
             guard let err = err else {
-                self.loadData()
+                self.groups.remove(at: index)
+                self.groupsView?.reloadView()
                 return
             }
             self.showErrorAlertController(with: err.toString())

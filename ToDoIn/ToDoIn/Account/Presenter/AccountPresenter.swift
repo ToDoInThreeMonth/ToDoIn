@@ -8,9 +8,8 @@ protocol AccountPresenterProtocol {
     func showErrorAlertController(with message: String)
     
     func exitButtonTapped()
-    
-    func toggleNotifications() -> UIImage?
-    func getFriends(from text: String) -> [User]
+    func deleteTapped(for friend: User)
+        
     func getAllFriends() -> [User]
     func getFriend(by index: Int) -> User?
     func getFriends(for user: User)
@@ -26,8 +25,8 @@ final class AccountPresenter: AccountPresenterProtocol {
     
     private weak var coordinator: AccountChildCoordinator?
     
-    private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     private let authManager: AuthManagerDescription = AuthManager.shared
+    private let accountManager: AccountManagerDescription = AccountManager.shared
     
     private let accountView: AccountViewProtocol?
     
@@ -48,8 +47,29 @@ final class AccountPresenter: AccountPresenterProtocol {
     
     // MARK: - Handlers
     
+    func showExitAlertController(completion: @escaping () -> ()) {
+        coordinator?.presentExitController(completion: completion)
+    }
+    
+    // MARK: - Buttons tapped
+    
+    func exitButtonTapped() {
+        let err = authManager.signOut()
+        guard let error = err else {
+            coordinator?.showLogin()
+            return
+        }
+        showErrorAlertController(with: error.toString())
+    }
+    
+    func deleteTapped(for friend: User) {
+        accountManager.deleteFriend(friend)
+    }
+    
+    // MARK: - Loading Data
+    
     func didLoadView() {
-        groupsManager.observeUser(by: nil) { [weak self] (result) in
+        accountManager.observeUser(by: nil) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let user):
@@ -66,7 +86,7 @@ final class AccountPresenter: AccountPresenterProtocol {
     func getFriends(for user: User) {
         friends.removeAll()
         for friendId in user.friends {
-            groupsManager.getUser(userId: friendId) { [weak self] (result) in
+            accountManager.getUser(userId: friendId) { [weak self] (result) in
                 guard let self = self else { return }
                 switch result {
                 case .success(let user):
@@ -90,34 +110,6 @@ final class AccountPresenter: AccountPresenterProtocol {
         }
     }
     
-    func showExitAlertController(completion: @escaping () -> ()) {
-        coordinator?.presentExitController(completion: completion)
-    }
-    
-    func toggleNotifications() -> UIImage? {
-        // Включение/Выключение уведомлений
-        isNotificationTurnedOn.toggle()
-        if isNotificationTurnedOn {
-            return UIImage(named: "turnedNotification")?.withRenderingMode(.alwaysOriginal)
-        } else {
-            return UIImage(named: "offNotification")?.withRenderingMode(.alwaysOriginal)
-        }
-    }
-    
-    func exitButtonTapped() {
-        let err = authManager.signOut()
-        guard let error = err else {
-            coordinator?.showLogin()
-            return
-        }
-        showErrorAlertController(with: error.toString())
-    }
-    
-    func getFriends(from text: String) -> [User] {
-        // Реализация поиска
-        return []
-    }
-    
     func showErrorAlertController(with message: String) {
         coordinator?.presentErrorController(with: message)
     }
@@ -134,11 +126,11 @@ final class AccountPresenter: AccountPresenterProtocol {
     }
     
     func addNewFriend(_ email: String) {
-        groupsManager.getUser(email: email) { [weak self] (result) in
+        accountManager.getUser(email: email) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let user):
-                self.groupsManager.addFriend(friend: user)
+                self.accountManager.addFriend(friend: user)
                 self.accountView?.cleanErrorLabel()
                 self.accountView?.cleanFriendTextField()
                 self.accountView?.dismissAddNewFriendView()

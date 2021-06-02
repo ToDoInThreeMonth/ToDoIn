@@ -1,17 +1,6 @@
 import UIKit
 import PinLayout
 
-protocol FriendsTableViewOutput: AnyObject {
-
-    func showErrorAlertController(with message: String)
-    
-    func reloadView()
-    
-    func getFriend(by index: Int) -> User?
-    func getAllFriends() -> [User]?
-    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void)
-}
-
 protocol AddFriendViewOutput: AnyObject {
     func addNewFriend(_ mail: String)
     func dismissAddNewFriendView()
@@ -19,7 +8,9 @@ protocol AddFriendViewOutput: AnyObject {
     func cleanErrorLabel()
 }
 
-protocol AccountViewProtocol: FriendsTableViewOutput, AddFriendViewOutput {
+protocol AccountViewProtocol: AddFriendViewOutput {
+    func showErrorAlertController(with message: String)
+    func reloadView()
     func showError(with error: String)
     func setUp(with user: User)
 }
@@ -48,12 +39,14 @@ final class AccountController: UIViewController {
         return button
     }()
     
-    private lazy var friendsTVDelegate = FriendsTVDelegate()
-    private lazy var friendsTVDataSource = FriendsTVDataSource(controller: self)
     private lazy var friendsTableView: UITableView = {
-        let tableView = FriendsTableView(frame: .zero, style: .plain)
-        tableView.dataSource = friendsTVDataSource
-        tableView.delegate = friendsTVDelegate
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(FriendTableViewCell.self, forCellReuseIdentifier: String(describing: FriendTableViewCell.self))
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         return tableView
     }()
     
@@ -244,13 +237,10 @@ final class AccountController: UIViewController {
     }
 }
 
+
+// MARK: - Extensions
+
 extension AccountController: AccountViewProtocol {
-    
-    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
-        presenter?.loadImage(url: url) { (image) in
-            completion(image)
-        }
-    }
 
     func showErrorAlertController(with message: String) {
         presenter?.showErrorAlertController(with: message)
@@ -282,14 +272,6 @@ extension AccountController: AccountViewProtocol {
         }
     }
     
-    func getFriend(by index: Int) -> User? {
-        presenter?.getFriend(by: index)
-    }
-    
-    func getAllFriends() -> [User]? {
-        presenter?.getAllFriends()
-    }
-    
     func addNewFriend(_ email: String) {
         presenter?.addNewFriend(email)
     }
@@ -299,3 +281,52 @@ extension AccountController: AccountViewProtocol {
     }
 
 }
+
+
+extension AccountController: UITableViewDataSource {
+    
+    // количество ячеек
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        presenter?.getAllFriends().count ?? 0
+    }
+    
+    // дизайн ячейки
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendTableViewCell.self), for: indexPath) as? FriendTableViewCell, let user = presenter?.getFriend(by: indexPath.row) else {
+            return UITableViewCell()
+        }
+        
+        cell.friend = user
+        let friendImage = user.image
+        presenter?.loadImage(url: friendImage) { (image) in
+            cell.setFriendAvatar(with: image)
+        }
+        return cell
+    }
+}
+
+
+extension AccountController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let friend = presenter?.getFriend(by: indexPath.row) else { return }
+            presenter?.deleteTapped(for: friend)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.alpha = 0
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.05 * Double(indexPath.row),
+            animations: {
+                cell.alpha = 1
+        })
+    }
+}
+

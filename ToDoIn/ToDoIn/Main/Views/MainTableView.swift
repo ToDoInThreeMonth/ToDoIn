@@ -25,7 +25,7 @@ class MainTableView: UITableView {
     }
 }
 
-//MARK: - Friends TableViewDataSource
+// MARK: - Friends TableViewDataSource
 class MainTVDataSource: NSObject, UITableViewDataSource {
     private weak var controller: MainTableViewOutput?
     

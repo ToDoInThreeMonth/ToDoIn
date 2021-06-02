@@ -2,7 +2,9 @@ import UIKit
 import PinLayout
 
 final class FriendTableViewCell: UITableViewCell {
-    // Computable properties
+    
+    // MARK: - Properties
+    
     var friend: User? {
         didSet {
             guard let friend = friend else { return }
@@ -11,7 +13,6 @@ final class FriendTableViewCell: UITableViewCell {
         }
     }
     
-    // Lazy stored properties
     private lazy var friendAvatar: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -41,7 +42,8 @@ final class FriendTableViewCell: UITableViewCell {
         return view
     }()
     
-    // Initializers
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = UIColor.clear.withAlphaComponent(0)
@@ -53,7 +55,8 @@ final class FriendTableViewCell: UITableViewCell {
         fatalError()
     }
     
-    // UI configure methods
+    // MARK: - Configures
+    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         contentView.pin.width(size.width)
         setupLayouts()
