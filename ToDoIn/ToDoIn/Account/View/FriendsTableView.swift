@@ -1,7 +1,19 @@
 import UIKit
 
+protocol FriendsTableViewOutput: AnyObject {
+    func showErrorAlertController(with message: String)
+    
+    func reloadView()
+    
+    func getFriend(by index: Int) -> User?
+    func getAllFriends() -> [User]?
+    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void)
+}
+
 final class FriendsTableView: UITableView {
-    // Initializers
+    
+    // MARK: - Init
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         setupCells()
@@ -12,7 +24,8 @@ final class FriendsTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // UI configure methods
+    // MARK: - Configures
+    
     private func setupViews() {
         backgroundColor = UIColor.clear
         separatorStyle = .none
@@ -24,7 +37,7 @@ final class FriendsTableView: UITableView {
     }
 }
 
-//MARK: - Friends TableViewDataSource
+// MARK: - Friends TableViewDataSource
 
 final class FriendsTVDataSource: NSObject, UITableViewDataSource {
     private weak var controller: FriendsTableViewOutput?
@@ -61,8 +74,18 @@ final class FriendsTVDataSource: NSObject, UITableViewDataSource {
     }
 }
 
-//MARK: - Friends TableViewDelegate
+// MARK: - Friends TableViewDelegate
+
 final class FriendsTVDelegate: NSObject, UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? FriendTableViewCell else { return }
+        cell.showUserIsSelectedView()
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? FriendTableViewCell else { return }
+        cell.showUserIsSelectedView()
+    }
 }
 

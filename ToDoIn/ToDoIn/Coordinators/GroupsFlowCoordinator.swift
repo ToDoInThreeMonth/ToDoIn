@@ -8,6 +8,7 @@ protocol GroupsChildCoordinator: ChildCoordinator {
     func showAddUser(to group: Group, with participants: [User])
     func presentErrorController(with message: String)
     func presentDeleteController(on viewController: UIViewController, completion: @escaping () -> ())
+    func presentSignInAlert()
 }
 
 class GroupsFlowCoordinator: GroupsChildCoordinator {
@@ -28,10 +29,8 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
         
         let tabBarImage = imageName.isEmpty ? nil : UIImage(named: imageName)
         
-        // Пример настройки tabBar'a
         viewController.tabBarItem = UITabBarItem(title: title, image: tabBarImage?.withRenderingMode(.alwaysOriginal), selectedImage: tabBarImage?.withRenderingMode(.alwaysOriginal))
         
-        // Пример настройки viewController
         viewController.title = title
         
         navigationController.pushViewController(viewController, animated: false)
@@ -80,8 +79,14 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     func presentDeleteController(on viewController: UIViewController, completion: @escaping () -> ()) {
         let alertTitle = "Удаление задачи"
         let alertMessage = "Вы действительно хотите удалить задачу?"
-        guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .delete) as? ExitAlertController else { return }
+        guard let alertVC = AlertControllerCreator.getController(title: alertTitle, message: alertMessage, style: .alert, type: .deleteTask) as? DeleteTaskAlertController else { return }
         alertVC.onButtonTapped = completion
         viewController.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func presentSignInAlert() {
+        let alertTitle = "Авторизируйтесь, чтобы создавать комнаты и участвовать в них"
+        let alertVC = AlertControllerCreator.getController(title: alertTitle, message: nil, style: .alert, type: .signIn)
+        navigationController.present(alertVC, animated: true)
     }
 }

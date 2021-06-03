@@ -48,7 +48,7 @@ final class AddGroupPresenter: AddGroupPresenterProtocol {
     // MARK: - Handlers
     
     func didLoadView() {
-        groupsManager.observeUser(by: nil) { [weak self] (result) in
+        groupsManager.observeCurrentUser{ [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let user):

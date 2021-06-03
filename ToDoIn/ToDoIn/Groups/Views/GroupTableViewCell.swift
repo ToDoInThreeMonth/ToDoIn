@@ -40,6 +40,10 @@ final class GroupTableViewCell: UITableViewCell {
         setupSublayers()
     }
     
+    override func prepareForReuse() {
+        groupImageView.image = UIImage(named: "default")
+    }
+    
     // MARK: - Configures
     
     private func setupLayouts() {

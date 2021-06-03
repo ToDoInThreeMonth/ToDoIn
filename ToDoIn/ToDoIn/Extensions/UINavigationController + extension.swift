@@ -1,10 +1,3 @@
-//
-//  UINavigationController + extension.swift
-//  ToDoIn
-//
-//  Created by Philip on 26.04.2021.
-//
-
 import UIKit
 
 extension UINavigationController {
@@ -27,9 +20,6 @@ extension UINavigationController {
         self.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.darkTextColor, .font : UIFont(name: "Georgia", size: 24) as Any]
         switch screen {
         case .main:
-            let addSectionButtonImage = UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
-            let addSectionButton = UIBarButtonItem(image: addSectionButtonImage, style: .plain, target: nil, action: nil)
-            view.navigationItem.setRightBarButton(addSectionButton, animated: true)
             view.title = "Главная"
         case .groups:
             let addRoomButtonImage =  UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal)
@@ -37,7 +27,7 @@ extension UINavigationController {
             view.navigationItem.setRightBarButton(addRoomButton, animated: true)
             view.title = "Комнаты"
         case .account:
-            let rightButtonImage = UIImage(named: "accountSettings")?.withRenderingMode(.alwaysOriginal)
+            let rightButtonImage = UIImage(named: "closedDoor")?.withRenderingMode(.alwaysOriginal)
             let rightButton = UIBarButtonItem(image: rightButtonImage, style: .plain, target: nil, action: nil)
             view.navigationItem.setRightBarButton(rightButton, animated: true)
             view.title = "Аккаунт"

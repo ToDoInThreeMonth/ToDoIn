@@ -2,7 +2,9 @@ import UIKit
 import PinLayout
 
 final class FriendTableViewCell: UITableViewCell {
-    // Computable properties
+    
+    // MARK: - Properties
+    
     var friend: User? {
         didSet {
             guard let friend = friend else { return }
@@ -11,7 +13,6 @@ final class FriendTableViewCell: UITableViewCell {
         }
     }
     
-    // Lazy stored properties
     private lazy var friendAvatar: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -34,19 +35,28 @@ final class FriendTableViewCell: UITableViewCell {
         return label
     }()
     
-    // Initializers
+    private lazy var selectedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGreenColor
+        view.isHidden = true
+        return view
+    }()
+    
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = UIColor.clear.withAlphaComponent(0)
         setupViews()
-        
+        selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-    // UI configure methods
+    // MARK: - Configures
+    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         contentView.pin.width(size.width)
         setupLayouts()
@@ -55,7 +65,7 @@ final class FriendTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-        contentView.addSubviews(friendView, friendName)
+        contentView.addSubviews(friendView, friendName, selectedView)
         friendView.addSubview(friendAvatar)
         friendAvatar.backgroundColor = .systemGray3
     }
@@ -74,12 +84,17 @@ final class FriendTableViewCell: UITableViewCell {
             .marginStart(10)
             .vCenter(to: friendView.edge.vCenter)
             .sizeToFit()
+        selectedView.pin
+            .right(10)
+            .vCenter()
+            .size(friendView.frame.height - 20)
     }
     
     private func configureViews() {
         if friendView.layer.cornerRadius == 0 {
             friendView.makeRound()
             friendAvatar.makeRound()
+            selectedView.makeRound()
 
             friendView.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -2)
             friendView.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 3)
@@ -88,5 +103,9 @@ final class FriendTableViewCell: UITableViewCell {
     
     func setFriendAvatar(with image: UIImage?) {
         friendAvatar.image = image
+    }
+    
+    func showUserIsSelectedView() {
+        selectedView.isHidden.toggle()
     }
 }

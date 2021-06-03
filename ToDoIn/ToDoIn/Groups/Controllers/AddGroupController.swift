@@ -155,9 +155,9 @@ final class AddGroupController: UIViewController, UIImagePickerControllerDelegat
     
     @objc
     private func addButtonTapped() {
-        startActivityIndicator()
-        let selectedIndexes = friendsTableView.indexPathsForSelectedRows
         if let groupName = nameTextField.text, !groupName.isEmpty {
+            startActivityIndicator()
+            let selectedIndexes = friendsTableView.indexPathsForSelectedRows
             presenter?.addButtonTapped(title: groupName, selectedUsers: selectedIndexes ?? [], photo: imageView.getImage())
         }
     }

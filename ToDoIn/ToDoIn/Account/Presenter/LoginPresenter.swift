@@ -27,7 +27,7 @@ final class LoginPresenter: LoginPresenterProtocol {
         self.coordinator = coordinator
     }
     
-    //MARK: - Handlers
+    // MARK: - Handlers
     
     func buttonSignPressed(isSignIn: Bool) {
         coordinator?.showAuthController(isSignIn: isSignIn)

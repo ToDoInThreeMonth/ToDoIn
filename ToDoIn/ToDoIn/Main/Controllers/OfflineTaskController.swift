@@ -1,24 +1,24 @@
 import UIKit
 import PinLayout
 
-protocol TaskViewProtocol: AnyObject {
-    func setPresenter(presenter: TaskPresenterProtocol, coordinator: GroupsChildCoordinator)
-
+protocol OfflineTaskViewProtocol: class {
+    func setPresenter(presenter: OfflineTaskPresenter, coordinator: MainChildCoordinator)
     func setDate(with date: String)
-    func setUser(with name: String)
 }
 
-class TaskController: UIViewController {
+final class OfflineTaskController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: TaskPresenterProtocol?
+    private var presenter: OfflineTaskPresenterProtocol?
     
-    private var group: Group
     private var task: Task
-    private var users: [User]
-    private let isChanging: Bool
-    
+    private var indexPath: IndexPath
+    private var isChanging: Bool
+    private var isArchive: Bool
+    private var isDone: Bool = false
+    weak var delegate: MainTableViewOutput?
+        
     private struct LayersConstants {
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         static let textFieldCornerRadius: CGFloat = 15
@@ -36,18 +36,17 @@ class TaskController: UIViewController {
     private let descriptionTextView = UITextView()
     private let shadowDescriptionSubview = UIView()
     private let dateTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
-    private let userTextField = CustomTextField(insets: LayersConstants.textFieldInsets)
     private let isDoneView = UIView()
     private let addButton = CustomButton()
     private let deleteButton = CustomButton(with: "Удалить")
     
     // MARK: - Init
     
-    init(group: Group, task: Task, users: [User], isChanging: Bool) {
-        self.group = group
-        self.task = task
+    init(task: OfflineTask = OfflineTask(), indexPath: IndexPath, isChanging: Bool = false, isArchive: Bool = false) {
+        self.task = Task(id: "", userId: "", title: task.title, description: task.descriptionText, date: task.date, isDone: false)
+        self.indexPath = indexPath
         self.isChanging = isChanging
-        self.users = users
+        self.isArchive = isArchive
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -60,10 +59,13 @@ class TaskController: UIViewController {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .accentColor
-        if isChanging {
+        if isChanging || isArchive {
             view.addSubview(deleteButton)
         }
-        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, userTextField, addButton, shadowDescriptionSubview, isDoneView)
+        if !isArchive {
+            view.addSubview(addButton)
+        }
+        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, shadowDescriptionSubview, isDoneView)
     }
     
     override func viewDidLoad() {
@@ -127,15 +129,9 @@ class TaskController: UIViewController {
             .horizontally(LayersConstants.horizontalPadding * 2)
             .height(35)
         
-        userTextField.pin
-            .below(of: dateTextField)
-            .marginTop(30)
-            .horizontally(LayersConstants.horizontalPadding * 2)
-            .height(35)
-        
         if isChanging {
             isDoneView.pin
-                .below(of: userTextField, aligned: .center)
+                .below(of: dateTextField, aligned: .center)
                 .marginTop(20)
                 .size(CGSize(width: 40, height: 40))
             
@@ -146,6 +142,10 @@ class TaskController: UIViewController {
             addButton.pin
                 .above(of: deleteButton, aligned: .center)
                 .marginBottom(15)
+        } else if isArchive {
+            deleteButton.pin
+                .bottom(view.pin.safeArea.bottom + 20)
+                .hCenter()
         } else {
             addButton.pin
                 .bottom(view.pin.safeArea.bottom + 20)
@@ -167,6 +167,9 @@ class TaskController: UIViewController {
         nameTextField.textColor = .darkTextColor
         nameTextField.backgroundColor = .white
         nameTextField.text = task.title
+        if isArchive {
+            nameTextField.isUserInteractionEnabled = true
+        }
     }
     
     private func configureDescriptionTextView() {
@@ -187,29 +190,27 @@ class TaskController: UIViewController {
             descriptionTextView.text = task.description
             descriptionTextView.textColor = .darkTextColor
         }
+        if isArchive {
+            descriptionTextView.isUserInteractionEnabled = true
+        }
     }
     
     private func configurePickers() {
-        [dateTextField, userTextField].forEach {
+        [dateTextField].forEach {
             $0.textColor = .darkTextColor
             $0.backgroundColor = .white
             $0.textAlignment = .center
         }
         dateTextField.placeholder = "Выбрать время"
-        userTextField.placeholder = "Адресовать пользователю"
 
         self.dateTextField.setInputViewTimePicker(target: self, selector: #selector(doneDateTapped))
         
-        let screenWidth = UIScreen.main.bounds.width
-        let userPicker = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
-        userPicker.dataSource = self
-        userPicker.delegate = self
-        self.userTextField.setInputViewUserPicker(with: userPicker, target: self, selector: #selector(doneUserTapped))
-
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "dd.MM.yyyy HH:mm"
         dateTextField.text = dateformatter.string(from: task.date)
-        userTextField.text = presenter?.getUser(by: task.userId, in: users).name
+        if isArchive {
+            dateTextField.isUserInteractionEnabled = true
+        }
     }
     
     private func configureIsDoneView() {
@@ -227,9 +228,9 @@ class TaskController: UIViewController {
     
     private func configureShadowsAndCornerRadius() {
         if nameTextField.layer.cornerRadius == 0 {
-            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
-            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
-            [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
+            [nameTextField, shadowDescriptionSubview, dateTextField].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
+            [nameTextField, shadowDescriptionSubview, dateTextField].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
+            [nameTextField, shadowDescriptionSubview, dateTextField].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
             isDoneView.makeRound()
         }
     }
@@ -245,62 +246,59 @@ class TaskController: UIViewController {
     }
     
     @objc
-    private func doneUserTapped() {
-        if let userPicker = self.userTextField.inputView as? UIPickerView {
-            presenter?.doneUserTapped(user: users[userPicker.selectedRow(inComponent: 0)])
-        }
-        self.userTextField.resignFirstResponder()
-    }
-    
-    @objc
     func addButtonTapped() {
-        guard let title = nameTextField.text, !title.isEmpty, !(userTextField.text?.isEmpty ?? true) else {
-            return
+        let task = getTask()
+        if isDone {
+            presenter?.taskIsComplete(in: indexPath)
+        } else if isChanging {
+            presenter?.changeTask(task, in: indexPath)
+        } else {
+            presenter?.addTask(task, in: indexPath)
         }
-        var date = task.date
-        var userId = task.userId
-        if let userPicker = self.userTextField.inputView as? UIPickerView,
-           let datePicker = self.dateTextField.inputView as? UIDatePicker {
-            if userTextField.text == users[userPicker.selectedRow(inComponent: 0)].name {
-                userId = users[userPicker.selectedRow(inComponent: 0)].id
-            }
-            if dateTextField.text == datePicker.date.toString() {
-                date = datePicker.date
-            }
-        }
-        var description = ""
-        if descriptionTextView.text != placeholderText {
-            description = descriptionTextView.text
-        }
-        var newTask = Task(userId: userId, title: title, description: description, date: date, isDone: task.isDone)
-        if isChanging {
-            newTask.id = task.id
-        }
-        presenter?.addButtonTapped(isChanging, task: newTask, group: group)
         dismiss(animated: true, completion: nil)
     }
     
     @objc
     private func deleteButtonTapped() {
-        presenter?.showDeleteAlertController(on: self, completion: {
-            self.presenter?.deleteButtonTapped(task: self.task, group: self.group)
+        presenter?.showDeleteAlertController(on: self) {
+            self.presenter?.deleteButtonTapped(section: self.indexPath.section, row: self.indexPath.row, isArchive: self.isArchive)
             self.dismiss(animated: true, completion: nil)
-        })
+        }
     }
     
     @objc
     private func isDoneViewTapped() {
-        task.isDone.toggle()
-        isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
+        isDone.toggle()
+        isDoneView.backgroundColor = isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
+    }
+    
+    private func getTask() -> OfflineTask {
+        let task = OfflineTask()
+        guard let description = descriptionTextView.text else {
+            return task
+        }
+        guard let title = nameTextField.text else {
+            return task
+        }
+        var date = self.task.date
+        if let datePicker = self.dateTextField.inputView as? UIDatePicker {
+            if dateTextField.text == datePicker.date.toString() {
+                date = datePicker.date
+            }
+        }
+        task.date = date
+        task.descriptionText = (description == placeholderText) ? "" : description
+        task.title = title
+        return task
     }
 }
 
 
 // MARK: - Extensions
 
-extension TaskController: TaskViewProtocol {
+extension OfflineTaskController: OfflineTaskViewProtocol {
     
-    func setPresenter(presenter: TaskPresenterProtocol, coordinator: GroupsChildCoordinator) {
+    func setPresenter(presenter: OfflineTaskPresenter, coordinator: MainChildCoordinator) {
         self.presenter = presenter
         self.presenter?.setCoordinator(with: coordinator)
     }
@@ -308,13 +306,9 @@ extension TaskController: TaskViewProtocol {
     func setDate(with date: String) {
         dateTextField.text = date
     }
-    
-    func setUser(with name: String) {
-        userTextField.text = name
-    }
 }
 
-extension TaskController: UITextViewDelegate {
+extension OfflineTaskController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == placeholderText {
             textView.text = ""
@@ -338,23 +332,3 @@ extension TaskController: UITextViewDelegate {
     
 }
 
-
-extension TaskController: UIPickerViewDataSource {
-
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
-    }
-
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        group.users.count
-    }
-
-}
-
-extension TaskController: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        users[row].name
-    }
-
-}
