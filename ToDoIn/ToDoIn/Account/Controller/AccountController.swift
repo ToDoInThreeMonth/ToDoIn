@@ -22,7 +22,7 @@ final class AccountController: UIViewController {
     private var presenter: AccountPresenterProtocol?
     
     private lazy var userImageView = CustomImageView()
-    private lazy var userNameLabel = AccountUIComponents.userNameLabel
+    private lazy var userNameTextField = AccountUIComponents.userNameTextField
     private lazy var toDoInLabel = AccountUIComponents.toDoInLabel
     private lazy var friendsLabel = AccountUIComponents.friendsLabel
     private lazy var friendUnderlineView = AccountUIComponents.friendUnderlineView
@@ -95,7 +95,7 @@ final class AccountController: UIViewController {
         view.backgroundColor = .accentColor
         view.addSubviews(userImageView,
                          friendsTableView,
-                         userNameLabel,
+                         userNameTextField,
                          toDoInLabel,
                          friendsLabel,
                          addFriendButton,
@@ -109,14 +109,14 @@ final class AccountController: UIViewController {
             .topCenter(view.pin.safeArea.top)
             .margin(30)
         
-        userNameLabel.pin
+        userNameTextField.pin
             .top(to: userImageView.edge.bottom)
             .hCenter()
             .marginTop(20)
             .size(CGSize(width: 300, height: 24))
         
         toDoInLabel.pin
-            .top(to: userNameLabel.edge.bottom)
+            .top(to: userNameTextField.edge.bottom)
             .hCenter()
             .size(CGSize(width: 300, height: 24))
         
@@ -165,6 +165,7 @@ final class AccountController: UIViewController {
     }
     
     private func configureViews() {
+        userNameTextField.addTarget(self, action: #selector(userNameDidChange), for: .editingDidEnd)
         if addFriendButton.layer.cornerRadius == 0 {
             
             addFriendButton.layer.cornerRadius = 20
@@ -213,6 +214,12 @@ final class AccountController: UIViewController {
             self?.userImageView.setImage(with: image)
             self?.userImageView.contentMode = .scaleAspectFill
         }
+    }
+    
+    @objc
+    private func userNameDidChange() {
+        guard let newName = userNameTextField.text else { return }
+        presenter?.userNameDidChange(with: newName)
     }
     
     private func addViewAnimation() {
@@ -274,7 +281,7 @@ extension AccountController: AccountViewProtocol {
     }
 
     func setUp(with user: User) {
-        userNameLabel.text = user.name
+        userNameTextField.text = user.name
         toDoInLabel.text = user.email
         if user.image != "default" {
             presenter?.loadImage(url: user.image) { (image) in

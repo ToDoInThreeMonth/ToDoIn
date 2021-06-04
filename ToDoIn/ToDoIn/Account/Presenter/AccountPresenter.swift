@@ -10,6 +10,7 @@ protocol AccountPresenterProtocol {
     func exitButtonTapped()
     func deleteTapped(for friend: User)
     func imageIsChanged(with image: UIImage?)
+    func userNameDidChange(with name: String)
         
     func getAllFriends() -> [User]
     func getFriend(by index: Int) -> User?
@@ -79,6 +80,16 @@ final class AccountPresenter: AccountPresenterProtocol {
         }
     }
     
+    func userNameDidChange(with name: String) {
+        // изменение названия комнаты
+        if user.name != name {
+            accountManager.changeName(for: user, newName: name) { [weak self] (err) in
+                guard let err = err else { return }
+                self?.showErrorAlertController(with: err.toString())
+            }
+        }
+    }
+    
     // MARK: - Loading Data
     
     func didLoadView() {
@@ -86,12 +97,13 @@ final class AccountPresenter: AccountPresenterProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let user):
+                self.user = user
                 self.accountView?.setUp(with: user)
+                self.loadData()
             case .failure(let error):
                 self.showErrorAlertController(with: error.toString())
             }
         }
-        loadData()
     }
     
     private func loadData() {

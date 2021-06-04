@@ -4,13 +4,13 @@ struct AccountUIComponents {
     
     // MARK: - Properties
     
-    static var userNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textColor = .darkTextColor
-        return label
+    static var userNameTextField: UITextField = {
+        let textField = UITextField()
+        textField.text = ""
+        textField.textAlignment = .center
+        textField.font = UIFont.systemFont(ofSize: 20)
+        textField.textColor = .darkTextColor
+        return textField
     }()
     
     static var toDoInLabel: UILabel = {

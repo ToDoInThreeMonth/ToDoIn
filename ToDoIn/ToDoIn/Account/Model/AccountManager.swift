@@ -13,6 +13,7 @@ protocol AccountManagerDescription {
     func deleteFriend(_ friend: User)
     
     func changeUserAvatar(with image: UIImage?, completion: @escaping (СustomError?) -> Void)
+    func changeName(for user: User, newName: String, completion: @escaping (СustomError?) -> Void)
 }
 
 final class AccountManager: AccountManagerDescription {
@@ -44,11 +45,13 @@ final class AccountManager: AccountManagerDescription {
         if let userID = userId {
             saveUserId = userID
         } else {
-            guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+            guard let currentUserId = Auth.auth().currentUser?.uid else {
+                completion(.failure(СustomError.noSignedUser))
+                return
+            }
             saveUserId = currentUserId
         }
-        let docRef = database.collection(Collection.users.rawValue).document(saveUserId)
-        docRef.getDocument { (document, error) in
+        database.collection(Collection.users.rawValue).document(saveUserId).getDocument { (document, error) in
             if error != nil {
                 completion(.failure(СustomError.error))
                 return
@@ -113,6 +116,16 @@ final class AccountManager: AccountManagerDescription {
                 self?.database.collection(Collection.users.rawValue).document(userId).updateData([UserKey.image.rawValue : url.absoluteString])
             case .failure(_):
                 completion(СustomError.failedToChangeAvatar)
+            }
+        }
+    }
+    
+    func changeName(for user: User, newName: String, completion: @escaping (СustomError?) -> Void) {
+        database.collection(Collection.users.rawValue).document(user.id).updateData([UserKey.name.rawValue : newName]) { err in
+            if err != nil {
+                completion(СustomError.error)
+            } else {
+                completion(nil)
             }
         }
     }
