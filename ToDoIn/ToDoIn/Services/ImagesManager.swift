@@ -7,8 +7,9 @@ final class ImagesManager {
     
     static func loadPhotoToStorage(id: String, photo: UIImage?, completion: @escaping (Result<URL, СustomError>) -> Void) {
         let ref = Storage.storage().reference().child(id)
-        
-        guard let imageData = photo?.jpegData(compressionQuality: 0.3) else { return }
+        guard let photo = photo, let imageData = photo.jpegData(compressionQuality: 0.3) else {
+            return
+        }
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
@@ -22,6 +23,7 @@ final class ImagesManager {
                         return
                     }
                     completion(.success(url))
+                    imageCache.setObject(photo, forKey: url.absoluteString as NSString)
                 }
             }
         }

@@ -57,6 +57,10 @@ final class FriendTableViewCell: UITableViewCell {
     
     // MARK: - Configures
     
+    override func prepareForReuse() {
+        friendAvatar.image = UIImage(named: "default")
+    }
+    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         contentView.pin.width(size.width)
         setupLayouts()

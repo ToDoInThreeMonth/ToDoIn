@@ -4,7 +4,7 @@ protocol GroupsChildCoordinator: ChildCoordinator {
     func showAddGroup()
     func showTaskController(group: Group, task: Task, users: [User], isChanging: Bool)
     func showGroupController(group: Group)
-    func showSettingsGroupController(group: Group)
+    func showSettingsGroupController(group: Group, delegate: GroupsViewProtocol?)
     func showAddUser(to group: Group, with participants: [User])
     func presentErrorController(with message: String)
     func presentDeleteController(on viewController: UIViewController, completion: @escaping () -> ())
@@ -53,13 +53,17 @@ class GroupsFlowCoordinator: GroupsChildCoordinator {
     
     func showGroupController(group: Group) {
         let groupController = GroupController(group: group)
-        groupController.setPresenter(presenter: GroupPresenter(groupView: groupController.self), coordinator: self)
+        let presenter = GroupPresenter(groupView: groupController.self)
+        presenter.setDelegate(navigationController.viewControllers.last as? GroupsViewProtocol)
+        groupController.setPresenter(presenter: presenter, coordinator: self)
         navigationController.pushViewController(groupController, animated: true)
     }
     
-    func showSettingsGroupController(group: Group) {
+    func showSettingsGroupController(group: Group, delegate: GroupsViewProtocol?) {
         let settingsGroupController = GroupSettingsController(group: group)
-        settingsGroupController.setPresenter(presenter: GroupSettingsPresenter(groupSettingsView: settingsGroupController.self, group: group), coordinator: self)
+        let presenter = GroupSettingsPresenter(groupSettingsView: settingsGroupController.self, group: group)
+        presenter.setDelegate(delegate)
+        settingsGroupController.setPresenter(presenter: presenter, coordinator: self)
         navigationController.pushViewController(settingsGroupController, animated: true)
     }
     

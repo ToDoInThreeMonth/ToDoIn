@@ -6,6 +6,7 @@ protocol GroupPresenterProtocol {
     init(groupView: GroupViewProtocol)
     func didLoadView(by userId: String)
     func setCoordinator(with coordinator: GroupsChildCoordinator)
+    func setDelegate(_ delegate: GroupsViewProtocol?)
     
     func getTasks(for userId: String) -> [Task]
     func getUser(by section: Int) -> User
@@ -21,7 +22,9 @@ final class GroupPresenter: GroupPresenterProtocol {
 
     // MARK: - Properties
     
-    weak var coordinator: GroupsChildCoordinator?
+    private weak var coordinator: GroupsChildCoordinator?
+    
+    private weak var delegate: GroupsViewProtocol?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     
@@ -46,6 +49,10 @@ final class GroupPresenter: GroupPresenterProtocol {
         self.coordinator = coordinator
     }
     
+    func setDelegate(_ delegate: GroupsViewProtocol?) {
+        self.delegate = delegate
+    }
+    
     // MARK: - Handlers
     
     func didLoadView(by userId: String) {
@@ -54,6 +61,7 @@ final class GroupPresenter: GroupPresenterProtocol {
             switch result {
             case .success(let group):
                 self.group = group
+                self.groupView?.setTitle(with: group.title)
                 self.getUsers(from: group.users)
             case .failure(let error):
                 self.showErrorAlertController(with: error.toString())
@@ -99,7 +107,7 @@ final class GroupPresenter: GroupPresenterProtocol {
     }
     
     func showSettingsGroupController() {
-        coordinator?.showSettingsGroupController(group: group)
+        coordinator?.showSettingsGroupController(group: group, delegate: delegate)
     }
     
     func showErrorAlertController(with message: String) {

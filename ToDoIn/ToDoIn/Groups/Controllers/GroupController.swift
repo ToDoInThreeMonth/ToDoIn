@@ -4,6 +4,7 @@ import PinLayout
 protocol GroupViewProtocol: AnyObject {
     func setPresenter(presenter: GroupPresenterProtocol, coordinator: GroupsChildCoordinator)
     func reloadView()
+    func setTitle(with title: String)
 }
 
 final class GroupController: UIViewController {
@@ -102,6 +103,10 @@ extension GroupController: GroupViewProtocol {
 
     func reloadView() {
         tableView.reloadData()
+    }
+    
+    func setTitle(with title: String) {
+        self.title = title
     }
 }
 

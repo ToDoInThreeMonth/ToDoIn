@@ -75,7 +75,7 @@ final class AccountController: UIViewController {
         
         setupViews()
         setupNavigationItem()
-        
+        configureImageView()
     }
     
     override func viewWillLayoutSubviews() {
@@ -185,6 +185,12 @@ final class AccountController: UIViewController {
                                                                       right: 0)
     }
     
+    private func configureImageView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+        userImageView.addGestureRecognizer(tap)
+        userImageView.isUserInteractionEnabled = true
+    }
+    
     // MARK: - Handlers
     
     @objc
@@ -197,6 +203,15 @@ final class AccountController: UIViewController {
         presenter?.showExitAlertController { [weak self] in
             guard let self = self else { return }
             self.presenter?.exitButtonTapped()
+        }
+    }
+    
+    @objc
+    private func imageViewTapped() {
+        ImagePickerManager().pickImage(self) { [weak self] image in
+            self?.presenter?.imageIsChanged(with: image)
+            self?.userImageView.setImage(with: image)
+            self?.userImageView.contentMode = .scaleAspectFill
         }
     }
     
@@ -313,16 +328,6 @@ extension AccountController: UITableViewDelegate {
             guard let friend = presenter?.getFriend(by: indexPath.row) else { return }
             presenter?.deleteTapped(for: friend)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.alpha = 0
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0.05 * Double(indexPath.row),
-            animations: {
-                cell.alpha = 1
-        })
     }
 }
 

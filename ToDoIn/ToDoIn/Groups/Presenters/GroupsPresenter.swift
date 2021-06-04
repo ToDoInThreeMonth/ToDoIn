@@ -85,7 +85,7 @@ final class GroupsPresenter: GroupsPresenterProtocol {
                 guard let self = self else { return }
                 switch result {
                 case .success(let groups):
-                    self.groups = groups.map { $0 }
+                    self.groups = groups
                     self.groupsView?.reloadView()
                 case .failure(let error):
                     self.groups.removeAll()

@@ -95,7 +95,7 @@ final class AuthPresenter: AuthPresenterProtocol {
         coordinator?.showAccount()
     }
     
-    func validateInput(email: String, name: String = "", password1: String, password2: String = "", isSignIn: Bool) -> СustomError? {
+    private func validateInput(email: String, name: String = "", password1: String, password2: String = "", isSignIn: Bool) -> СustomError? {
         
         // Все ли поля заполнены
         if email.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||

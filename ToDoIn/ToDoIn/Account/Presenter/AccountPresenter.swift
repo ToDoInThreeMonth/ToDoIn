@@ -9,6 +9,7 @@ protocol AccountPresenterProtocol {
     
     func exitButtonTapped()
     func deleteTapped(for friend: User)
+    func imageIsChanged(with image: UIImage?)
         
     func getAllFriends() -> [User]
     func getFriend(by index: Int) -> User?
@@ -64,6 +65,18 @@ final class AccountPresenter: AccountPresenterProtocol {
     
     func deleteTapped(for friend: User) {
         accountManager.deleteFriend(friend)
+        guard let friendInd = friends.firstIndex(of: friend) else { return }
+        friends.remove(at: friendInd)
+        accountView?.reloadView()
+    }
+    
+    func imageIsChanged(with image: UIImage?) {
+        accountManager.changeUserAvatar(with: image) { [weak self] (err) in
+            guard let self = self else { return }
+            if let error = err {
+                self.showErrorAlertController(with: error.toString())
+            }
+        }
     }
     
     // MARK: - Loading Data
@@ -73,12 +86,23 @@ final class AccountPresenter: AccountPresenterProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let user):
+                self.accountView?.setUp(with: user)
+            case .failure(let error):
+                self.showErrorAlertController(with: error.toString())
+            }
+        }
+        loadData()
+    }
+    
+    private func loadData() {
+        accountManager.getUser(userId: nil) { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let user):
                 self.user = user
                 self.getFriends(for: user)
-                self.accountView?.setUp(with: user)
-                self.accountView?.reloadView()
             case .failure(let error):
-                self.accountView?.showErrorAlertController(with: error.toString())
+                self.showErrorAlertController(with: error.toString())
             }
         }
     }
@@ -93,7 +117,7 @@ final class AccountPresenter: AccountPresenterProtocol {
                     self.friends.append(user)
                     self.accountView?.reloadView()
                 case .failure(let error):
-                    self.accountView?.showErrorAlertController(with: error.toString())
+                    self.showErrorAlertController(with: error.toString())
                 }
             }
         }
@@ -131,6 +155,10 @@ final class AccountPresenter: AccountPresenterProtocol {
             switch result {
             case .success(let user):
                 self.accountManager.addFriend(friend: user)
+                if !self.friends.contains(user) {
+                    self.friends.append(user)
+                }
+                self.accountView?.reloadView()
                 self.accountView?.cleanErrorLabel()
                 self.accountView?.cleanFriendTextField()
                 self.accountView?.dismissAddNewFriendView()

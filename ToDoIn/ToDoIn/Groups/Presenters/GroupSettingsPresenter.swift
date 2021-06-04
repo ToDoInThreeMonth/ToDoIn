@@ -4,12 +4,14 @@ import UIKit
 protocol GroupSettingsPresenterProtocol {
     func didLoadView()
     func setCoordinator(with coordinator: GroupsChildCoordinator)
+    func setDelegate(_ delegate: GroupsViewProtocol?)
     
     var usersCount: Int { get }
     
     func groupTitleDidChange(with title: String)
     func addUserButtonTapped()
     func deleteTapped(for user: User, in group: Group)
+    func imageIsChanged(with image: UIImage?)
     
     func getUser(by section: Int) -> User
     func getAllUsers() -> [User]
@@ -21,7 +23,9 @@ final class GroupSettingsPresenter: GroupSettingsPresenterProtocol {
     
     // MARK: - Properties
     
-    weak var coordinator: GroupsChildCoordinator?
+    private weak var coordinator: GroupsChildCoordinator?
+    
+    private weak var delegate: GroupsViewProtocol?
     
     private let groupsManager: GroupsManagerDescription = GroupsManager.shared
     
@@ -43,6 +47,10 @@ final class GroupSettingsPresenter: GroupSettingsPresenterProtocol {
     
     func setCoordinator(with coordinator: GroupsChildCoordinator) {
         self.coordinator = coordinator
+    }
+    
+    func setDelegate(_ delegate: GroupsViewProtocol?) {
+        self.delegate = delegate
     }
 
     // MARK: - Handlers
@@ -88,7 +96,10 @@ final class GroupSettingsPresenter: GroupSettingsPresenterProtocol {
         // изменение названия комнаты
         if group.title != title {
             groupsManager.changeTitle(in: group, with: title) { [weak self] (err) in
-                guard let err = err else { return }
+                guard let err = err else {
+                    self?.delegate?.loadData()
+                    return
+                }
                 self?.showErrorAlertController(with: err.toString())
             }
         }
@@ -101,6 +112,17 @@ final class GroupSettingsPresenter: GroupSettingsPresenterProtocol {
     
     func deleteTapped(for user: User, in group: Group) {
         groupsManager.deleteUser(user, from: group)
+    }
+    
+    func imageIsChanged(with image: UIImage?) {
+        groupsManager.changeGroupAvatar(with: image, in: group.id) { [weak self] (err) in
+            guard let self = self else { return }
+            if let error = err {
+                self.showErrorAlertController(with: error.toString())
+            } else {
+                self.delegate?.loadData()
+            }
+        }
     }
     
     func loadImage(url: String, completion: @escaping (UIImage) -> Void) {

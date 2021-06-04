@@ -16,6 +16,7 @@ protocol GroupsManagerDescription {
     
     func changeTask(_ task: Task, in group: Group, completion: @escaping (СustomError?) -> Void)
     func changeTitle(in group: Group, with title: String, completion: @escaping (СustomError?) -> Void)
+    func changeGroupAvatar(with image: UIImage?, in groupId: String, completion: @escaping (СustomError?) -> Void)
     
     func deleteTask(_ task: Task, in group: Group)
     func deleteGroup(_ group: Group, completion: @escaping (СustomError?) -> Void)
@@ -188,7 +189,26 @@ final class GroupsManager: GroupsManagerDescription {
     func changeTitle(in group: Group, with title: String, completion: @escaping (СustomError?) -> Void) {
         database.collection(Collection.groups.rawValue).document(group.id).updateData([GroupKey.title.rawValue : title]) { err in
             if err != nil {
-                completion(.unexpected)
+                completion(СustomError.error)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    func changeGroupAvatar(with image: UIImage?, in groupId: String, completion: @escaping (СustomError?) -> Void) {
+        ImagesManager.loadPhotoToStorage(id: groupId, photo: image) { [weak self] (res) in
+            switch res {
+            case .success(let url):
+                self?.database.collection(Collection.groups.rawValue).document(groupId).updateData([GroupKey.image.rawValue : url.absoluteString]) { (err) in
+                    if err != nil {
+                        completion(СustomError.unexpected)
+                    } else {
+                        completion(nil)
+                    }
+                }
+            case .failure(_):
+                completion(СustomError.failedToChangeAvatar)
             }
         }
     }

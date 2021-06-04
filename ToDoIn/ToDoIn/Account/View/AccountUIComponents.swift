@@ -6,7 +6,7 @@ struct AccountUIComponents {
     
     static var userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Неопознанный объект"
+        label.text = ""
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .darkTextColor
@@ -15,7 +15,7 @@ struct AccountUIComponents {
     
     static var toDoInLabel: UILabel = {
         let label = UILabel()
-        label.text = "Пользователь ToDoIn"
+        label.text = ""
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .lightTextColor

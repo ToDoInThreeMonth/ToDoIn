@@ -93,10 +93,13 @@ final class GroupSettingsController: UIViewController {
     }
     
     private func configureImageView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
         // Подгружаем картинку из сети
         if group.image != "default" {
-            presenter?.loadImage(url: group.image) { (image) in
-                self.imageView.setImage(with: image)
+            presenter?.loadImage(url: group.image) { [weak self] (image) in
+                self?.imageView.setImage(with: image)
             }
         }
     }
@@ -127,6 +130,15 @@ final class GroupSettingsController: UIViewController {
     private func addUserButtonTapped() {
         // добавление нового участника
         presenter?.addUserButtonTapped()
+    }
+    
+    @objc
+    private func imageViewTapped() {
+        ImagePickerManager().pickImage(self) { [weak self] image in
+            self?.presenter?.imageIsChanged(with: image)
+            self?.imageView.setImage(with: image)
+            self?.imageView.contentMode = .scaleAspectFill
+        }
     }
 }
 
