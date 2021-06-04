@@ -73,7 +73,8 @@ struct AccountUIComponents {
     }
     
     static func getSettingButtonShadow(_ button: UIButton) {
-        button.addShadow(type: .outside, power: 3, alpha: 0.3, offset: 0)
+        button.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
+        button.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
     }
     
     static func getAddButtonShadow(_ button: UIButton) {

@@ -30,11 +30,7 @@ final class AccountController: UIViewController {
     private lazy var tapAddFriendRecognizer = UITapGestureRecognizer(target: self, action: #selector(addFriendButtonTapped))
     
     private lazy var addFriendButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Добавить друга", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Georgia", size: 14)
-        button.tintColor = .darkTextColor
-        button.backgroundColor = .accentColor
+        let button = AccountUIComponents.addFriendButton
         button.addTarget(self, action: #selector(addFriendButtonTapped), for: .touchUpInside)
         return button
     }()
