@@ -10,13 +10,15 @@ final class GroupSettingsController: UIViewController {
     
     // MARK: - Properties
     
-    private var presenter: GroupSettingsPresenterProtocol?
-    
-    private let group: Group
-    
-    private let imageView = CustomImageView()
-    private let groupTitle = UITextField()
-    private let tableView = UITableView()
+    private var presenter  : GroupSettingsPresenterProtocol?
+    private let group      : Group
+    private let imageView  = CustomImageView()
+    private let tableView  = UITableView()
+    private let groupTitle : CustomSearchTextField = {
+        let textField = CustomSearchTextField()
+        textField.rightView = nil
+        return textField
+    }()
     
     // MARK: - Init
     
@@ -48,7 +50,7 @@ final class GroupSettingsController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         configureLayouts()
-       
+        configureShadows()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,7 +68,7 @@ final class GroupSettingsController: UIViewController {
         groupTitle.pin
             .below(of: imageView, aligned: .center)
             .marginTop(20)
-            .size(CGSize(width: UIScreen.main.bounds.width - 10, height: 40))
+            .size(CGSize(width: UIScreen.main.bounds.width - 70, height: 40))
         
         tableView.pin
             .top(to: groupTitle.edge.bottom)
@@ -106,15 +108,24 @@ final class GroupSettingsController: UIViewController {
 
     private func configureGroupTitle() {
         groupTitle.text = group.title
+        groupTitle.placeholder = "Введите название"
         groupTitle.font = UIFont.systemFont(ofSize: 20)
         groupTitle.textColor = .darkTextColor
-        groupTitle.textAlignment = .center
+        groupTitle.backgroundColor = .accentColor
         groupTitle.addTarget(self, action: #selector(groupTitleDidChange), for: .editingDidEnd)
     }
     
     
     private func setupInsets() {
         tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: tableView.bounds.width - 8)
+    }
+    
+    private func configureShadows() {
+        if groupTitle.layer.cornerRadius == 0 {
+            groupTitle.layer.cornerRadius = 20
+            groupTitle.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1)
+            groupTitle.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1)
+        }
     }
     
     // MARK: - Handlers

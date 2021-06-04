@@ -53,6 +53,7 @@ final class OfflineTaskTableViewCell: TaskTableViewCell {
     private func doneViewTapped() {
         guard let index = index else { return }
         delegate?.doneViewTapped(with: index)
+        isDoneView.isUserInteractionEnabled = false
     }
     
     override func setupLayouts() {

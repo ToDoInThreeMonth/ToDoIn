@@ -18,7 +18,7 @@ final class ArchiveSection: Object {
     var tasks = List<OfflineTask>()
 }
 
-protocol MainFrameRealmProtocol: class {
+protocol MainFrameRealmProtocol: AnyObject {
     func getOfflineSections() -> [OfflineSection]
     func getArchiveSection() -> ArchiveSection?
     func getNumberOfSections() -> Int
@@ -84,12 +84,12 @@ final class MainFrameRealm: MainFrameRealmProtocol {
     
     private func addArchiveSection() {
         guard let realm = realm else { return }
-        let archiveSection = getArchiveSection()
-        if archiveSection == nil {
+        guard let _ = getArchiveSection() else  {
             let section = ArchiveSection()
             try? realm.write {
                 realm.add(section)
             }
+            return
         }
     }
     
