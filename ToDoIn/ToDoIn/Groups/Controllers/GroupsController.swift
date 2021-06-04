@@ -68,7 +68,7 @@ final class GroupsController: UIViewController {
     }
     
     @objc
-    private func receivedNotification(notification: Notification){
+    private func receivedNotification(notification: Notification) {
         loadData()
     }
     

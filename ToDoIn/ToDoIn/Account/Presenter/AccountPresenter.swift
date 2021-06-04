@@ -41,6 +41,7 @@ final class AccountPresenter: AccountPresenterProtocol {
     
     init(accountView: AccountViewProtocol) {
         self.accountView = accountView
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: Notification.Name("ImageIsLoaded"), object: nil)
     }
     
     func setCoordinator(with coordinator: AccountChildCoordinator) {
@@ -93,25 +94,12 @@ final class AccountPresenter: AccountPresenterProtocol {
     // MARK: - Loading Data
     
     func didLoadView() {
-        accountManager.observeCurrentUser { [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .success(let user):
-                self.user = user
-                self.accountView?.setUp(with: user)
-                self.loadData()
-            case .failure(let error):
-                self.showErrorAlertController(with: error.toString())
-            }
-        }
-    }
-    
-    private func loadData() {
         accountManager.getUser(userId: nil) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let user):
                 self.user = user
+                self.accountView?.setUp(with: user)
                 self.getFriends(for: user)
             case .failure(let error):
                 self.showErrorAlertController(with: error.toString())
@@ -180,4 +168,17 @@ final class AccountPresenter: AccountPresenterProtocol {
         }
     }
     
+    @objc
+    private func receivedNotification(notification: Notification) {
+        accountManager.getUser(userId: nil) { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.accountView?.setUp(with: user)
+            case .failure(let error):
+                self.showErrorAlertController(with: error.toString())
+            }
+        }
+    }
 }

@@ -51,7 +51,13 @@ final class AuthManager: AuthManagerDescription {
                                 self?.database
                                     .collection(Collection.users.rawValue)
                                     .document(result.user.uid)
-                                    .updateData([UserKey.image.rawValue : imageName])
+                                    .updateData([UserKey.image.rawValue : imageName]) { (err) in
+                                        if error != nil {
+                                            completion(.failure(СustomError.failedToSaveUserInFireStore))
+                                        } else {
+                                            NotificationCenter.default.post(name: Notification.Name("ImageIsLoaded"), object: nil, userInfo: nil)
+                                        }
+                                    }
                             case .failure(_):
                                 imageName = "default"
                             }

@@ -66,7 +66,7 @@ final class GroupSettingsController: UIViewController {
         groupTitle.pin
             .below(of: imageView, aligned: .center)
             .marginTop(20)
-            .size(CGSize(width: 200, height: 40))
+            .size(CGSize(width: UIScreen.main.bounds.width - 10, height: 40))
         
         tableView.pin
             .top(to: groupTitle.edge.bottom)
