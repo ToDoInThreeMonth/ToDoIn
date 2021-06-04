@@ -40,6 +40,7 @@ class TaskController: UIViewController {
     private let isDoneView = UIView()
     private let addButton = CustomButton()
     private let deleteButton = CustomButton(with: "Удалить")
+    private let doneLabel = UILabel()
     
     // MARK: - Init
     
@@ -63,7 +64,7 @@ class TaskController: UIViewController {
         if isChanging {
             view.addSubview(deleteButton)
         }
-        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, userTextField, addButton, shadowDescriptionSubview, isDoneView)
+        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, userTextField, addButton, shadowDescriptionSubview, isDoneView, doneLabel)
     }
     
     override func viewDidLoad() {
@@ -139,6 +140,11 @@ class TaskController: UIViewController {
                 .marginTop(20)
                 .size(CGSize(width: 40, height: 40))
             
+            doneLabel.pin
+                .below(of: isDoneView, aligned: .center)
+                .marginTop(15)
+                .size(CGSize(width: UIScreen.main.bounds.width, height: 30))
+            
             deleteButton.pin
                 .bottom(view.pin.safeArea.bottom + 20)
                 .hCenter()
@@ -155,6 +161,10 @@ class TaskController: UIViewController {
     }
     
     private func configureLabels() {
+        doneLabel.text = task.isDone ? "Задача выполнена" : "Задача в процессе..."
+        doneLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        doneLabel.textAlignment = .center
+        doneLabel.textColor = .darkTextColor
         titleLabel.text = isChanging ? task.title : "Создать новую задачу"
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         nameLabel.text = "Название"
@@ -227,10 +237,13 @@ class TaskController: UIViewController {
     
     private func configureShadowsAndCornerRadius() {
         if nameTextField.layer.cornerRadius == 0 {
+            isDoneView.makeRound()
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.layer.cornerRadius = LayersConstants.cornerRadius }
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
             [nameTextField, shadowDescriptionSubview, dateTextField, userTextField].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
-            isDoneView.makeRound()
+            isDoneView.layer.shadowOpacity = 0.5
+            isDoneView.layer.shadowColor = UIColor.black.cgColor
+            isDoneView.layer.shadowRadius = 1
         }
     }
     
@@ -292,6 +305,7 @@ class TaskController: UIViewController {
     private func isDoneViewTapped() {
         task.isDone.toggle()
         isDoneView.backgroundColor = task.isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
+        doneLabel.text = task.isDone ? "Задача выполнена" : "Задача в процессе..."
     }
 }
 

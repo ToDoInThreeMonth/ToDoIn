@@ -17,6 +17,7 @@ final class OfflineTaskController: UIViewController {
     private var isChanging: Bool
     private var isArchive: Bool
     private var isDone: Bool = false
+    private let doneLabel = UILabel()
     weak var delegate: MainTableViewOutput?
         
     private struct LayersConstants {
@@ -65,7 +66,7 @@ final class OfflineTaskController: UIViewController {
         if !isArchive {
             view.addSubview(addButton)
         }
-        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, shadowDescriptionSubview, isDoneView)
+        view.addSubviews(titleLabel, nameLabel, nameTextField, descriptionLabel, descriptionTextView, dateTextField, shadowDescriptionSubview, isDoneView, doneLabel)
     }
     
     override func viewDidLoad() {
@@ -135,6 +136,11 @@ final class OfflineTaskController: UIViewController {
                 .marginTop(20)
                 .size(CGSize(width: 40, height: 40))
             
+            doneLabel.pin
+                .below(of: isDoneView, aligned: .center)
+                .marginTop(15)
+                .size(CGSize(width: UIScreen.main.bounds.width, height: 30))
+            
             deleteButton.pin
                 .bottom(view.pin.safeArea.bottom + 20)
                 .hCenter()
@@ -155,6 +161,10 @@ final class OfflineTaskController: UIViewController {
     }
     
     private func configureLabels() {
+        doneLabel.text = task.isDone ? "Задача выполнена" : "Задача в процессе..."
+        doneLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        doneLabel.textAlignment = .center
+        doneLabel.textColor = .darkTextColor
         titleLabel.text = isChanging ? task.title : "Создать новую задачу"
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         nameLabel.text = "Название"
@@ -232,6 +242,9 @@ final class OfflineTaskController: UIViewController {
             [nameTextField, shadowDescriptionSubview, dateTextField].forEach { $0.addShadow(type: .outside, color: .white, power: 1, alpha: 1, offset: -1) }
             [nameTextField, shadowDescriptionSubview, dateTextField].forEach { $0.addShadow(type: .outside, power: 1, alpha: 0.15, offset: 1) }
             isDoneView.makeRound()
+            isDoneView.layer.shadowOpacity = 0.5
+            isDoneView.layer.shadowColor = UIColor.black.cgColor
+            isDoneView.layer.shadowRadius = 1
         }
     }
     
@@ -270,6 +283,7 @@ final class OfflineTaskController: UIViewController {
     private func isDoneViewTapped() {
         isDone.toggle()
         isDoneView.backgroundColor = isDone ? UIColor.lightGreenColor : UIColor.lightRedColor
+        doneLabel.text = isDone ? "Задача выполнена" : "Задача в процессе..."
     }
     
     private func getTask() -> OfflineTask {
