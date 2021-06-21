@@ -284,7 +284,7 @@ extension AccountController: AccountViewProtocol {
         userNameTextField.text = user.name
         toDoInLabel.text = user.email
         if user.image != "default" {
-            presenter?.loadImage(url: user.image) { (image) in
+            presenter?.loadImage(id: user.id) { (image) in
                 self.userImageView.setImage(with: image)
             }
         }
@@ -316,7 +316,7 @@ extension AccountController: UITableViewDataSource {
         
         cell.friend = user
         let friendImage = user.image
-        presenter?.loadImage(url: friendImage) { (image) in
+        presenter?.loadImage(id: user.id) { (image) in
             cell.setFriendAvatar(with: image)
         }
         return cell

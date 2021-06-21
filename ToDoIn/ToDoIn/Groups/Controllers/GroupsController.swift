@@ -6,7 +6,7 @@ protocol GroupsViewProtocol: AnyObject {
     func reloadView()
     func loadData()
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void)
 }
 
 final class GroupsController: UIViewController {
@@ -98,8 +98,8 @@ extension GroupsController: GroupsViewProtocol {
         self.presenter?.setCoordinator(with: coordinator)
     }
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        presenter?.loadImage(url: url) { (image) in
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(id: id) { (image) in
             completion(image)
         }
     }

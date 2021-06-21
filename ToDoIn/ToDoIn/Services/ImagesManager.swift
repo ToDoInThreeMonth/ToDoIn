@@ -23,20 +23,20 @@ final class ImagesManager {
                         return
                     }
                     completion(.success(url))
-                    imageCache.setObject(photo, forKey: url.absoluteString as NSString)
+                    imageCache.setObject(photo, forKey: id as NSString)
                 }
             }
         }
     }
     
-    static func loadPhotoFromStorage(url: String, completion: @escaping (Result<UIImage, СustomError>) -> Void) {
+    static func loadPhotoFromStorage(id: String, completion: @escaping (Result<UIImage, СustomError>) -> Void) {
         
-        if let cachedImage = imageCache.object(forKey: url as NSString) {
+        if let cachedImage = imageCache.object(forKey: id as NSString) {
             completion(.success(cachedImage))
             return
         }
         
-        let ref = Storage.storage().reference(forURL: url)
+        let ref = Storage.storage().reference().child(id)
         let megaByte = Int64(1 * 1024 * 1024)
         ref.getData(maxSize: megaByte) { (data, error) in
             if error != nil {
@@ -47,7 +47,7 @@ final class ImagesManager {
                 completion(.failure(СustomError.unexpected))
                 return
             }
-            imageCache.setObject(image, forKey: url as NSString)
+            imageCache.setObject(image, forKey: id as NSString)
             completion(.success(image))
         }
     }

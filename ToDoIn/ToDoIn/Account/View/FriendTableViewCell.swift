@@ -71,7 +71,7 @@ final class FriendTableViewCell: UITableViewCell {
     private func setupViews() {
         contentView.addSubviews(friendView, friendName, selectedView)
         friendView.addSubview(friendAvatar)
-        friendAvatar.backgroundColor = .systemGray3
+        friendAvatar.backgroundColor = .accentColor
     }
     private func setupLayouts() {
         friendView.pin

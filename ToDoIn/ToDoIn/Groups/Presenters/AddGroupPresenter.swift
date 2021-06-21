@@ -11,7 +11,7 @@ protocol AddGroupPresenterProtocol {
     
     func addButtonTapped(title: String, selectedUsers: [IndexPath], photo: UIImage?)
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void)
     
     func showErrorAlertController(with message: String)
 }
@@ -107,8 +107,8 @@ final class AddGroupPresenter: AddGroupPresenterProtocol {
         }
     }
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        ImagesManager.loadPhotoFromStorage(url: url) { (result) in
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhotoFromStorage(id: id) { (result) in
             switch result {
             case .success(let resImage):
                 completion(resImage)

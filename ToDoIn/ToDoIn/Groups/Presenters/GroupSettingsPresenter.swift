@@ -16,7 +16,7 @@ protocol GroupSettingsPresenterProtocol {
     func getUser(by section: Int) -> User
     func getAllUsers() -> [User]
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void)
 }
 
 final class GroupSettingsPresenter: GroupSettingsPresenterProtocol {
@@ -125,8 +125,8 @@ final class GroupSettingsPresenter: GroupSettingsPresenterProtocol {
         }
     }
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        ImagesManager.loadPhotoFromStorage(url: url) { (result) in
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhotoFromStorage(id: id) { (result) in
             switch result {
             case .success(let resImage):
                 completion(resImage)

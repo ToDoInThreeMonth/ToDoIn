@@ -10,7 +10,7 @@ protocol AddUserToGroupPresenterProtocol {
     func getFriend(by index: Int) -> User?
     func getAllFriends() -> [User]
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void)
     
     func showErrorAlertController(with message: String)
 }
@@ -95,8 +95,8 @@ final class AddUserToGroupPresenter: AddUserToGroupPresenterProtocol {
         return nil
     }
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        ImagesManager.loadPhotoFromStorage(url: url) { (result) in
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhotoFromStorage(id: id) { (result) in
             switch result {
             case .success(let resImage):
                 completion(resImage)

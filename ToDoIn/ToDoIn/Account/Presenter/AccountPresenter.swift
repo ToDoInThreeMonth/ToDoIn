@@ -18,7 +18,7 @@ protocol AccountPresenterProtocol {
     
     func addNewFriend(_ email: String)
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void)
 }
 
 final class AccountPresenter: AccountPresenterProtocol {
@@ -123,8 +123,8 @@ final class AccountPresenter: AccountPresenterProtocol {
         }
     }
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        ImagesManager.loadPhotoFromStorage(url: url) { (result) in
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhotoFromStorage(id: id) { (result) in
             switch result {
             case .success(let resImage):
                 completion(resImage)

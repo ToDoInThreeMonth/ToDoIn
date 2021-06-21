@@ -106,7 +106,7 @@ final class GroupTableViewCell: UITableViewCell {
     func setUp(group: Group) {
         groupLabel.text = group.title
         if group.image != "default" {
-            controller?.loadImage(url: group.image) { [weak self] (image) in
+            controller?.loadImage(id: group.id) { [weak self] (image) in
                 self?.groupImageView.image = image
             }
         }

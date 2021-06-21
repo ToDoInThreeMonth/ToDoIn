@@ -100,7 +100,7 @@ final class GroupSettingsController: UIViewController {
         imageView.isUserInteractionEnabled = true
         // Подгружаем картинку из сети
         if group.image != "default" {
-            presenter?.loadImage(url: group.image) { [weak self] (image) in
+            presenter?.loadImage(id: group.id) { [weak self] (image) in
                 self?.imageView.setImage(with: image)
             }
         }
@@ -182,8 +182,7 @@ extension GroupSettingsController: UITableViewDataSource {
         }
         
         cell.friend = user
-        let friendImage = user.image
-        presenter?.loadImage(url: friendImage) { (image) in
+        presenter?.loadImage(id: user.id) { (image) in
             cell.setFriendAvatar(with: image)
         }
         return cell

@@ -9,7 +9,7 @@ protocol GroupsPresenterProtocol {
     func loadData()
 
     func getGroup(at index: Int) -> Group
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void)
 
     func showGroupController(group: Group)
     func showErrorAlertController(with message: String)
@@ -99,8 +99,8 @@ final class GroupsPresenter: GroupsPresenterProtocol {
         }
     }
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        ImagesManager.loadPhotoFromStorage(url: url) { (result) in
+    func loadImage(id: String, completion: @escaping (UIImage) -> Void) {
+        ImagesManager.loadPhotoFromStorage(id: id) { (result) in
             switch result {
             case .success(let resImage):
                 completion(resImage)

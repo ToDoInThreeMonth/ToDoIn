@@ -7,7 +7,7 @@ protocol FriendsTableViewOutput: AnyObject {
     
     func getFriend(by index: Int) -> User?
     func getAllFriends() -> [User]?
-    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void)
+    func getPhoto(id: String, completion: @escaping (UIImage) -> Void)
 }
 
 final class FriendsTableView: UITableView {
@@ -64,9 +64,9 @@ final class FriendsTVDataSource: NSObject, UITableViewDataSource {
       
         let friend = controller.getFriend(by: indexPath.row)
         safeCell.friend = friend
-        let friendImage = friend?.image
+        let friendImage = friend?.id
         if let friendImage = friendImage {
-            controller.getPhoto(by: friendImage) { (image) in
+            controller.getPhoto(id: friendImage) { (image) in
                 safeCell.setFriendAvatar(with: image)
             }
         }

@@ -186,8 +186,8 @@ extension AddGroupController: AddGroupViewProtocol {
         activityIndicator.stopAnimating()
     }
     
-    func getPhoto(by url: String, completion: @escaping (UIImage) -> Void) {
-        presenter?.loadImage(url: url) { (image) in
+    func getPhoto(id: String, completion: @escaping (UIImage) -> Void) {
+        presenter?.loadImage(id: id) { (image) in
             completion(image)
         }
     }
